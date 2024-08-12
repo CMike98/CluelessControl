@@ -1,8 +1,8 @@
 namespace CluelessControl
 {
-    public partial class Form1 : Form
+    public partial class DirectorForm : Form
     {
-        public Form1()
+        public DirectorForm()
         {
             InitializeComponent();
         }
