@@ -6,5 +6,10 @@ namespace CluelessControl
         {
             InitializeComponent();
         }
+
+        private void DirectorForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

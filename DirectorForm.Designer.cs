@@ -37,6 +37,7 @@
             ClientSize = new Size(800, 450);
             Name = "DirectorForm";
             Text = "Director Form";
+            Load += DirectorForm_Load;
             ResumeLayout(false);
         }
 
