@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace CluelessControl
 {
@@ -19,9 +14,9 @@ namespace CluelessControl
 
             string[] optionsArray = root.GetProperty("answers")
                 .EnumerateArray()
-                .Select(answer =>
+                .Select(answerElement =>
                 {
-                    string? answerText = answer.GetString();
+                    string? answerText = answerElement.GetString();
                     if (string.IsNullOrWhiteSpace(answerText))
                         throw new JsonException("At least answer is null or white space.");
                     return answerText;
