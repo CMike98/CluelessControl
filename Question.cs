@@ -32,7 +32,7 @@
                 throw new ArgumentNullException(nameof(answers));
             if (answers.Length != Constants.ANSWERS_PER_QUESTION)
                 throw new ArgumentException($"There must be exactly {Constants.ANSWERS_PER_QUESTION} answers.", nameof(answers));
-            if (answers.Any(answer => string.IsNullOrWhiteSpace(answer)))
+            if (answers.Any(string.IsNullOrWhiteSpace))
                 throw new ArgumentException("At least one answer is null or white space string.", nameof(answers));
             if (correctAnswerIndex < 0 || correctAnswerIndex >= answers.Length)
                 throw new ArgumentOutOfRangeException(nameof(correctAnswerIndex), $"Correct answer index must be between 0 and {Constants.ANSWERS_PER_QUESTION - 1}.");
