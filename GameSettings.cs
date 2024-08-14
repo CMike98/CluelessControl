@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CluelessControl
 {
-    internal class GameSettings
+    public class GameSettings
     {
     }
 }
