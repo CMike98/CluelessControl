@@ -34,8 +34,12 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(800, 450);
+            DoubleBuffered = true;
             Name = "DirectorForm";
+            SizeGripStyle = SizeGripStyle.Hide;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Gra w Ciemno - Reżyserka";
             Load += DirectorForm_Load;
             ResumeLayout(false);
