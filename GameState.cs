@@ -25,15 +25,40 @@ namespace CluelessControl
         }
         #endregion
 
+        #region Fields/Variables
         public GameSettings Settings
         {
             get;
             private set;
         }
 
+        public QuestionSet QuestionSet
+        {
+            get;
+            private set;
+        }
+        #endregion
+
+        #region Constructor
         private GameState()
         {
             Settings = new GameSettings();
+            QuestionSet = new QuestionSet();
         }
+        #endregion
+
+        #region Loading
+        public void LoadGameSettings(GameSettings settings)
+        {
+            ArgumentNullException.ThrowIfNull(settings, nameof(settings));
+            Settings = settings;
+        }
+
+        public void LoadQuestionSet(QuestionSet questionSet)
+        {
+            ArgumentNullException.ThrowIfNull(questionSet, nameof(questionSet));
+            QuestionSet = questionSet;
+        }
+        #endregion
     }
 }
