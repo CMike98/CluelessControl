@@ -21,5 +21,22 @@ namespace CluelessControl
         {
 
         }
+
+        #region Form Closing
+        private void ContestantScreenForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            switch (e.CloseReason)
+            {
+                case CloseReason.WindowsShutDown:
+                case CloseReason.TaskManagerClosing:
+                case CloseReason.ApplicationExitCall:
+                    break;
+                default:
+                    MessageBox.Show("Zamknij reżyserkę, by zamknąć program.", Constants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    e.Cancel = true;
+                    break;
+            }
+        }
+        #endregion
     }
 }
