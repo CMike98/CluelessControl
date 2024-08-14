@@ -36,7 +36,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Name = "DirectorForm";
-            Text = "Director Form";
+            Text = "Gra w Ciemno - Reżyserka";
             Load += DirectorForm_Load;
             ResumeLayout(false);
         }
