@@ -34,9 +34,16 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.Black;
+            BackgroundImageLayout = ImageLayout.Center;
+            ClientSize = new Size(1924, 1061);
+            DoubleBuffered = true;
+            MaximizeBox = false;
             Name = "HostScreenForm";
-            Text = "HostScreenForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Prowadzący";
+            WindowState = FormWindowState.Maximized;
+            FormClosing += HostScreenForm_FormClosing;
             Load += HostScreenForm_Load;
             ResumeLayout(false);
         }
