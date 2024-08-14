@@ -43,7 +43,7 @@ namespace CluelessControl
         private GameState()
         {
             Settings = new GameSettings();
-            QuestionSet = QuestionSet.Create();
+            QuestionSet = new QuestionSet();
         }
         #endregion
 
