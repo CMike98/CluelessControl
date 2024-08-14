@@ -13,22 +13,29 @@ namespace CluelessControl
         [JsonIgnore]
         public int QuestionCount => QuestionList.Count;
 
-        public QuestionSet()
+        private QuestionSet()
         {
             QuestionList = new List<Question>();
         }
 
-        public QuestionSet(int questionSetSize)
+        private QuestionSet(IList<Question> questions)
         {
-            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(questionSetSize, nameof(questionSetSize));
-            QuestionList = new List<Question>(questionSetSize);
+            QuestionList = questions.ToList();
         }
 
-        [JsonConstructor]
-        public QuestionSet(List<Question> questionList)
+        internal static QuestionSet Create()
         {
-            ArgumentNullException.ThrowIfNull(questionList, nameof(questionList));
-            QuestionList = questionList;
+            return new QuestionSet();
+        }
+
+        internal static QuestionSet Create(IList<Question> questions)
+        {
+            if (questions == null)
+                throw new ArgumentNullException(nameof(questions));
+            if (questions.Any(question => question == null))
+                throw new ArgumentException($"At least one question is null.", nameof(questions));
+
+            return new QuestionSet(questions);
         }
 
         public void AddNewQuestion(Question newQuestion)
