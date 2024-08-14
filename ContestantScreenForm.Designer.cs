@@ -34,9 +34,16 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.Black;
+            BackgroundImageLayout = ImageLayout.Center;
+            ClientSize = new Size(1924, 1061);
+            DoubleBuffered = true;
+            MaximizeBox = false;
             Name = "ContestantScreenForm";
-            Text = "ContestantScreenForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Zawodnik";
+            WindowState = FormWindowState.Maximized;
+            FormClosing += ContestantScreenForm_FormClosing;
             Load += ContestantScreenForm_Load;
             ResumeLayout(false);
         }
