@@ -21,6 +21,10 @@ namespace CluelessControl
             IsOpen = true;
         }
 
+        public void CloseEnvelope()
+        {
+            IsOpen = false;
+        }
 
         public abstract string ToValueString();
     }
