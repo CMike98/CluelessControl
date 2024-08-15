@@ -23,7 +23,7 @@ namespace CluelessControl
             return new PercentageEnvelope(percentage);
         }
 
-        protected override string ToInternalString()
+        public override string ToHostString()
         {
             decimal fraction = Percentage / 100;
             return fraction.ToString("+0.##############################%;-0.##############################%");

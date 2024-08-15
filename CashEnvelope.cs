@@ -18,7 +18,7 @@
             return new CashEnvelope(amount);
         }
 
-        protected override string ToInternalString()
+        public override string ToHostString()
         {
             if (CashAmount % 1 == 0)
                 return CashAmount.ToString("#,##0");
