@@ -21,14 +21,7 @@ namespace CluelessControl
             IsOpen = true;
         }
 
-        public string ToContestantString()
-        {
-            if (IsOpen)
-                return ToHostString();
-            else
-                return string.Empty;
-        }
 
-        public abstract string ToHostString();
+        public abstract string ToValueString();
     }
 }
