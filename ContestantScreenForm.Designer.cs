@@ -36,7 +36,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             BackgroundImageLayout = ImageLayout.Center;
-            ClientSize = new Size(1924, 1061);
+            ClientSize = new Size(1924, 1011);
             DoubleBuffered = true;
             MaximizeBox = false;
             Name = "ContestantScreenForm";
