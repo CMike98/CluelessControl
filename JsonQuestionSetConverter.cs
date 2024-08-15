@@ -10,6 +10,7 @@ namespace CluelessControl
             using var jsonDoc = JsonDocument.ParseValue(ref reader);
             var root = jsonDoc.RootElement;
 
+            // Read the question list (use the JsonQuestionConverter for each question)
             IList<Question> questions = root.GetProperty("questionList")
                 .EnumerateArray()
                 .Select(questionElement =>
@@ -18,6 +19,7 @@ namespace CluelessControl
                 })
                 .ToList();
 
+            // Create the question set
             return QuestionSet.Create(questions);
         }
 
