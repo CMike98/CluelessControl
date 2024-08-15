@@ -1,3 +1,7 @@
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
+
 namespace CluelessControl
 {
     public partial class DirectorForm : Form
@@ -5,6 +9,15 @@ namespace CluelessControl
         #region Other Forms
         private static readonly HostScreenForm _hostScreenForm = new();
         private static readonly ContestantScreenForm _contestantScreenForm = new();
+        #endregion
+
+        #region Json Serializer Options
+        private static readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions()
+        {
+            Converters = { new JsonEnvelopeConverter(), new JsonQuestionConverter(), new JsonQuestionSetConverter() },
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+            WriteIndented = true
+        };
         #endregion
 
         public DirectorForm()
