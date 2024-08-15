@@ -30,7 +30,7 @@ namespace CluelessControl
         private Question(string text, string[] answers, int correctAnswerIndex, string? explanation)
         {
             Text = text.Trim();
-            Answers = answers;
+            Answers = answers.Select(answer => answer.Trim()).ToArray();
             CorrectAnswerIndex = correctAnswerIndex;
             Explanation = explanation;
         }
