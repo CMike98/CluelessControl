@@ -33,6 +33,7 @@
             AnswerBLabel = new Label();
             AnswerDLabel = new Label();
             AnswerCLabel = new Label();
+            CorrectAnswerLabel = new Label();
             SuspendLayout();
             // 
             // QuestionLabel
@@ -54,7 +55,7 @@
             AnswerALabel.ForeColor = Color.White;
             AnswerALabel.Location = new Point(12, 801);
             AnswerALabel.Name = "AnswerALabel";
-            AnswerALabel.Size = new Size(930, 95);
+            AnswerALabel.Size = new Size(900, 95);
             AnswerALabel.TabIndex = 1;
             AnswerALabel.Text = "A: ?";
             AnswerALabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -64,9 +65,9 @@
             AnswerBLabel.BorderStyle = BorderStyle.FixedSingle;
             AnswerBLabel.Font = new Font("Arial", 24F);
             AnswerBLabel.ForeColor = Color.White;
-            AnswerBLabel.Location = new Point(982, 801);
+            AnswerBLabel.Location = new Point(1012, 801);
             AnswerBLabel.Name = "AnswerBLabel";
-            AnswerBLabel.Size = new Size(930, 95);
+            AnswerBLabel.Size = new Size(900, 95);
             AnswerBLabel.TabIndex = 2;
             AnswerBLabel.Text = "B: ?";
             AnswerBLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -76,9 +77,9 @@
             AnswerDLabel.BorderStyle = BorderStyle.FixedSingle;
             AnswerDLabel.Font = new Font("Arial", 24F);
             AnswerDLabel.ForeColor = Color.White;
-            AnswerDLabel.Location = new Point(982, 904);
+            AnswerDLabel.Location = new Point(1012, 904);
             AnswerDLabel.Name = "AnswerDLabel";
-            AnswerDLabel.Size = new Size(930, 95);
+            AnswerDLabel.Size = new Size(900, 95);
             AnswerDLabel.TabIndex = 4;
             AnswerDLabel.Text = "D: ?";
             AnswerDLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -90,10 +91,21 @@
             AnswerCLabel.ForeColor = Color.White;
             AnswerCLabel.Location = new Point(12, 904);
             AnswerCLabel.Name = "AnswerCLabel";
-            AnswerCLabel.Size = new Size(930, 95);
+            AnswerCLabel.Size = new Size(900, 95);
             AnswerCLabel.TabIndex = 3;
             AnswerCLabel.Text = "C: ?";
             AnswerCLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // CorrectAnswerLabel
+            // 
+            CorrectAnswerLabel.Font = new Font("Arial", 24F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            CorrectAnswerLabel.ForeColor = Color.White;
+            CorrectAnswerLabel.Location = new Point(918, 801);
+            CorrectAnswerLabel.Name = "CorrectAnswerLabel";
+            CorrectAnswerLabel.Size = new Size(88, 198);
+            CorrectAnswerLabel.TabIndex = 5;
+            CorrectAnswerLabel.Tag = "";
+            CorrectAnswerLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // HostScreenForm
             // 
@@ -102,6 +114,7 @@
             BackColor = Color.Black;
             BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(1924, 1011);
+            Controls.Add(CorrectAnswerLabel);
             Controls.Add(AnswerDLabel);
             Controls.Add(AnswerCLabel);
             Controls.Add(AnswerBLabel);
@@ -125,5 +138,6 @@
         private Label AnswerBLabel;
         private Label AnswerDLabel;
         private Label AnswerCLabel;
+        private Label CorrectAnswerLabel;
     }
 }
