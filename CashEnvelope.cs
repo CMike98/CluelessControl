@@ -1,4 +1,6 @@
-﻿namespace CluelessControl
+﻿using System.Text.Json.Serialization;
+
+namespace CluelessControl
 {
     public sealed class CashEnvelope : BaseEnvelope
     {
@@ -24,6 +26,14 @@
                 return CashAmount.ToString("#,##0");
             else
                 return CashAmount.ToString("#,##0.00");
+        }
+
+        public override Color GetTextColor()
+        {
+            if (CashAmount < 0)
+                return Color.Red;
+            else
+                return Color.Black;
         }
     }
 }

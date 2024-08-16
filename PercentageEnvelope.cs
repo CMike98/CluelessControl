@@ -28,5 +28,15 @@ namespace CluelessControl
             decimal fraction = Percentage / 100;
             return fraction.ToString("+0.##############################%;-0.##############################%");
         }
+
+        public override Color GetTextColor()
+        {
+            if (Percentage < 0)
+                return Color.Red;
+            else if (Percentage > 0)
+                return Color.Green;
+            else
+                return Color.Black;
+        }
     }
 }

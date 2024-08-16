@@ -26,6 +26,13 @@ namespace CluelessControl
             IsOpen = false;
         }
 
+        public Color GetBackgroundColor()
+        {
+            return Color.White;
+        }
+
+        public abstract Color GetTextColor();
+
         public abstract string ToValueString();
     }
 }
