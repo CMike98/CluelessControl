@@ -2,7 +2,7 @@
 
 namespace CluelessControl
 {
-    public sealed class PercentageEnvelope : BaseEnvelope
+    public sealed class PercentageCheque : BaseCheque
     {
         public decimal Percentage
         {
@@ -12,15 +12,15 @@ namespace CluelessControl
         [JsonIgnore]
         public decimal Multiplier => 1 + (Percentage / 100);
 
-        private PercentageEnvelope(decimal percentage)
+        private PercentageCheque(decimal percentage)
             : base()
         {
             Percentage = percentage;
         }
 
-        internal static PercentageEnvelope Create(decimal percentage)
+        internal static PercentageCheque Create(decimal percentage)
         {
-            return new PercentageEnvelope(percentage);
+            return new PercentageCheque(percentage);
         }
 
         public override string ToValueString()

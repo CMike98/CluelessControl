@@ -1,23 +1,21 @@
-﻿using System.Text.Json.Serialization;
-
-namespace CluelessControl
+﻿namespace CluelessControl
 {
-    public sealed class CashEnvelope : BaseEnvelope
+    public sealed class CashCheque : BaseCheque
     {
         public decimal CashAmount
         {
             get;
         }
 
-        private CashEnvelope(decimal amount)
+        private CashCheque(decimal amount)
             : base()
         {
             CashAmount = amount;
         }
 
-        internal static CashEnvelope Create(decimal amount)
+        internal static CashCheque Create(decimal amount)
         {
-            return new CashEnvelope(amount);
+            return new CashCheque(amount);
         }
 
         public override string ToValueString()

@@ -3,9 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace CluelessControl
 {
-    public class JsonEnvelopeConverter : JsonConverter<BaseEnvelope>
+    public class JsonChequeConverter : JsonConverter<BaseCheque>
     {
-        public override BaseEnvelope? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override BaseCheque? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             using var jsonDoc = JsonDocument.ParseValue(ref reader);
             var root = jsonDoc.RootElement;
@@ -22,10 +22,10 @@ namespace CluelessControl
                 throw new JsonException("Envelope value is missing");
 
             // Create the envelope
-            return EnvelopeFactory.CreateEnvelope(envelopeType, valueProp);
+            return ChequeFactory.CreateCheque(envelopeType, valueProp);
         }
 
-        public override void Write(Utf8JsonWriter writer, BaseEnvelope value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, BaseCheque value, JsonSerializerOptions options)
         {
             // Start writing the object
             writer.WriteStartObject();

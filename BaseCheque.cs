@@ -2,7 +2,7 @@
 
 namespace CluelessControl
 {
-    public abstract class BaseEnvelope
+    public abstract class BaseCheque
     {
         [JsonIgnore]
         public bool IsOpen
@@ -18,7 +18,7 @@ namespace CluelessControl
             private set;
         }
 
-        protected BaseEnvelope()
+        protected BaseCheque()
         {
             IsOpen = false;
         }
