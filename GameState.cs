@@ -37,6 +37,30 @@ namespace CluelessControl
             get;
             private set;
         }
+
+        public List<Envelope> ContestantEnvelopes
+        {
+            get;
+            private set;
+        }
+
+        public List<Envelope> HostEnvelopes
+        {
+            get;
+            private set;
+        }
+
+        public decimal Cash
+        {
+            get;
+            private set;
+        }
+
+        public decimal CashOffer
+        {
+            get;
+            private set;
+        }
         #endregion
 
         #region Constructor
@@ -44,6 +68,8 @@ namespace CluelessControl
         {
             Settings = new GameSettings();
             QuestionSet = QuestionSet.Create();
+            ContestantEnvelopes = [];
+            HostEnvelopes = [];
         }
         #endregion
 
@@ -58,6 +84,16 @@ namespace CluelessControl
         {
             ArgumentNullException.ThrowIfNull(questionSet, nameof(questionSet));
             QuestionSet = questionSet;
+        }
+        #endregion
+
+        #region Envelopes
+        public void AddEnvelopeToContestant(Envelope envelope)
+        {
+            if (envelope == null)
+                throw new ArgumentNullException(nameof(envelope));
+
+            ContestantEnvelopes.Add(envelope);
         }
         #endregion
     }
