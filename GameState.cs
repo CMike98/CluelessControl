@@ -96,5 +96,25 @@ namespace CluelessControl
             ContestantEnvelopes.Add(envelope);
         }
         #endregion
+
+        #region Cash And Offers
+
+        public void SetContestantCash(decimal newCash)
+        {
+            if (newCash < 0)
+                throw new ArgumentOutOfRangeException(nameof(newCash), $"Contestant's cash mustn't be negative.");
+
+            Cash = newCash;
+        }
+
+        public void SetCashOffer(decimal newOffer)
+        {
+            if (Cash + newOffer < 0)
+                throw new ArgumentOutOfRangeException(nameof(newOffer), $"Offer cannot make the contestant's cash go negative.");
+
+            CashOffer = newOffer;
+        }
+
+        #endregion
     }
 }
