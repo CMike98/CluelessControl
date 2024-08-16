@@ -11,6 +11,13 @@ namespace CluelessControl
             private set;
         }
 
+        [JsonIgnore]
+        public EnvelopeState State
+        {
+            get;
+            private set;
+        }
+
         protected BaseEnvelope()
         {
             IsOpen = false;
@@ -28,7 +35,16 @@ namespace CluelessControl
 
         public Color GetBackgroundColor()
         {
-            return Color.White;
+            return State switch
+            {
+                EnvelopeState.NEUTRAL => Color.White,
+                EnvelopeState.PLAYING_FOR => Color.Orange,
+                EnvelopeState.WON => Color.Green,
+                EnvelopeState.MARKED_FOR_TRADE => Color.Orange,
+                EnvelopeState.TO_BE_DESTROYED => Color.Red,
+                EnvelopeState.DESTROYED => Color.Gray,
+                _ => throw new InvalidOperationException($"Not recognized envelope state: '{State}'"),
+            };
         }
 
         public abstract Color GetTextColor();
