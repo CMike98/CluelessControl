@@ -2,8 +2,16 @@
 {
     public abstract class BaseCheque
     {
+        /// <summary>
+        /// Get the color of the amount text
+        /// </summary>
+        /// <returns>The color of the cheque</returns>
         public abstract Color GetTextColor();
 
+        /// <summary>
+        /// Get the string representing the amount
+        /// </summary>
+        /// <returns>String representing the amount</returns>
         public abstract string ToValueString();
     }
 }

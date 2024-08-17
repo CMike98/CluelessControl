@@ -2,30 +2,47 @@
 {
     public class Envelope
     {
+        /// <summary>
+        /// The envelope number
+        /// </summary>
         public int EnvelopeNumber
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// The cheque inside the envelope
+        /// </summary>
         public BaseCheque Cheque
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// The state of the envelope
+        /// </summary>
         public EnvelopeState State
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Is the envelope open?
+        /// </summary>
         public bool IsOpen
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Constructor - creates a closed, neutral envelope.
+        /// </summary>
+        /// <param name="envelopeNumber">The envelope number</param>
+        /// <param name="cheque">The cheque</param>
         private Envelope(int envelopeNumber, BaseCheque cheque)
         {
             EnvelopeNumber = envelopeNumber;
@@ -34,6 +51,14 @@
             IsOpen = false;
         }
 
+        /// <summary>
+        /// Creates the envelope - closed, neutral envelope.
+        /// </summary>
+        /// <param name="envelopeNumber">The envelope number</param>
+        /// <param name="cheque">The cheque inside the envelope</param>
+        /// <returns>Created envelope</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the envelope number is not allowed</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the cheque is null</exception>
         internal static Envelope Create(int envelopeNumber, BaseCheque cheque)
         {
             if (envelopeNumber < Constants.MIN_ENVELOPE_NUMBER || envelopeNumber > Constants.MAX_ENVELOPE_NUMBER)
@@ -44,6 +69,11 @@
             return new Envelope(envelopeNumber, cheque);
         }
 
+        /// <summary>
+        /// Get the envelope background color
+        /// </summary>
+        /// <returns>The background color</returns>
+        /// <exception cref="InvalidOperationException">Thrown if not recognized envelope state</exception>
         public Color GetBackgroundColor()
         {
             return State switch
