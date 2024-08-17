@@ -26,7 +26,7 @@
         public EnvelopeState State
         {
             get;
-            private set;
+            set;
         }
 
         /// <summary>
