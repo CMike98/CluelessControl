@@ -26,11 +26,28 @@ namespace CluelessControl
         /// <summary>
         /// How much envelopes to pick?
         /// </summary>
-        public const int DEFAULT_NUMBER_TO_PICK = 5;
+        public const int HOW_MUCH_ENVELOPES_TO_PICK = 5;
 
         /// <summary>
         /// Number of answers to each question in the game.
         /// </summary>
         public const int ANSWERS_PER_QUESTION = 4;
+
+        #region Drawing
+        /// <summary>
+        /// Font family used when drawing the envelopes
+        /// </summary>
+        public static readonly FontFamily DRAWING_FONT_FAMILY = new("Arial");
+
+        /// <summary>
+        /// Font size used when drawing the envelopes
+        /// </summary>
+        public const float DRAWING_FONT_SIZE = 24.0f;
+
+        /// <summary>
+        /// Font used when drawing the envelopes
+        /// </summary>
+        public static readonly Font DRAWING_FONT = new(DRAWING_FONT_FAMILY, DRAWING_FONT_SIZE);
+        #endregion
     }
 }
