@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CluelessControl
+﻿namespace CluelessControl
 {
     public class Envelope
     {
@@ -26,11 +20,18 @@ namespace CluelessControl
             private set;
         }
 
+        public bool IsOpen
+        {
+            get;
+            set;
+        }
+
         private Envelope(int envelopeNumber, BaseCheque cheque)
         {
             EnvelopeNumber = envelopeNumber;
             Cheque = cheque;
             State = EnvelopeState.NEUTRAL;
+            IsOpen = false;
         }
 
         internal static Envelope Create(int envelopeNumber, BaseCheque cheque)
