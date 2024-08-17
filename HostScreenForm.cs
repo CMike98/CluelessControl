@@ -68,7 +68,7 @@ namespace CluelessControl
 
             if (envelope != null)
             {
-                e.Graphics.DrawString(envelope.EnvelopeNumber.ToString("00"), Constants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
+                e.Graphics.DrawString(envelope.EnvelopeNumber.ToString(), Constants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
 
                 var cheque = envelope.Cheque;
                 string chequeString = cheque.ToValueString();
