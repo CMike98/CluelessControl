@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CluelessControl
+﻿namespace CluelessControl
 {
     public class GameState
     {
@@ -95,6 +89,28 @@ namespace CluelessControl
 
             ContestantEnvelopes.Add(envelope);
         }
+
+        public Envelope? GetContestantEnvelope(int index)
+        {
+            if (index < 0 || index >= Constants.HOW_MUCH_ENVELOPES_TO_PICK)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {Constants.HOW_MUCH_ENVELOPES_TO_PICK - 1}.");
+
+            if (index >= ContestantEnvelopes.Count)
+                return null;
+            else
+                return ContestantEnvelopes[index];
+        }
+
+        public Envelope? GetHostEnvelope(int index)
+        {
+            if (index < 0 || index >= Constants.HOW_MUCH_ENVELOPES_TO_PICK)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {Constants.HOW_MUCH_ENVELOPES_TO_PICK - 1}.");
+
+            if (index >= HostEnvelopes.Count)
+                return null;
+            else
+                return HostEnvelopes[index];
+        }
         #endregion
 
         #region Cash And Offers
@@ -113,6 +129,29 @@ namespace CluelessControl
                 throw new ArgumentOutOfRangeException(nameof(newOffer), $"Offer cannot make the contestant's cash go negative.");
 
             CashOffer = newOffer;
+        }
+
+        #endregion
+
+        #region Helper
+        public Envelope? GetEnvelopeFromTag(string tag)
+        {
+            if (tag == null)
+                throw new ArgumentNullException(nameof(tag));
+            if (tag.Length != 2)
+                throw new ArgumentException($"The tag must be 2 characters. First 'C' or 'H' (contestant/host) and the other: the envelope index.", nameof(tag));
+
+            char playerTag = char.ToUpper(tag[0]);
+            int envelopeIndex = (int) char.GetNumericValue(tag[1]);
+            if (envelopeIndex < 0 || envelopeIndex >= Constants.HOW_MUCH_ENVELOPES_TO_PICK)
+                throw new ArgumentException($"The second character (envelope index) must be a digit between 0 and {Constants.HOW_MUCH_ENVELOPES_TO_PICK - 1}.", nameof(tag));
+
+            return playerTag switch
+            {
+                'C' => GetContestantEnvelope(envelopeIndex),
+                'H' => GetHostEnvelope(envelopeIndex),
+                _ => null
+            };
         }
 
         #endregion
