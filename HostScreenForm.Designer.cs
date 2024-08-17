@@ -85,7 +85,7 @@
             AnswerALabel.Size = new Size(900, 95);
             AnswerALabel.TabIndex = 1;
             AnswerALabel.Text = "A: ?";
-            AnswerALabel.TextAlign = ContentAlignment.MiddleCenter;
+            AnswerALabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // AnswerBLabel
             // 
@@ -97,7 +97,7 @@
             AnswerBLabel.Size = new Size(900, 95);
             AnswerBLabel.TabIndex = 2;
             AnswerBLabel.Text = "B: ?";
-            AnswerBLabel.TextAlign = ContentAlignment.MiddleCenter;
+            AnswerBLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // AnswerDLabel
             // 
@@ -109,7 +109,7 @@
             AnswerDLabel.Size = new Size(900, 95);
             AnswerDLabel.TabIndex = 4;
             AnswerDLabel.Text = "D: ?";
-            AnswerDLabel.TextAlign = ContentAlignment.MiddleCenter;
+            AnswerDLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // AnswerCLabel
             // 
@@ -121,7 +121,7 @@
             AnswerCLabel.Size = new Size(900, 95);
             AnswerCLabel.TabIndex = 3;
             AnswerCLabel.Text = "C: ?";
-            AnswerCLabel.TextAlign = ContentAlignment.MiddleCenter;
+            AnswerCLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // CorrectAnswerLabel
             // 
@@ -161,9 +161,9 @@
             // 
             ExplanationLabel.Font = new Font("Arial", 24F, FontStyle.Regular, GraphicsUnit.Point, 238);
             ExplanationLabel.ForeColor = Color.White;
-            ExplanationLabel.Location = new Point(415, 437);
+            ExplanationLabel.Location = new Point(560, 459);
             ExplanationLabel.Name = "ExplanationLabel";
-            ExplanationLabel.Size = new Size(1094, 194);
+            ExplanationLabel.Size = new Size(804, 172);
             ExplanationLabel.TabIndex = 6;
             ExplanationLabel.Tag = "";
             ExplanationLabel.Text = "Wyjaśnienie";
@@ -174,7 +174,7 @@
             CashTextLabel.BorderStyle = BorderStyle.FixedSingle;
             CashTextLabel.Font = new Font("Arial", 20.25F);
             CashTextLabel.ForeColor = Color.White;
-            CashTextLabel.Location = new Point(415, 116);
+            CashTextLabel.Location = new Point(413, 116);
             CashTextLabel.Name = "CashTextLabel";
             CashTextLabel.Size = new Size(524, 48);
             CashTextLabel.TabIndex = 19;
@@ -186,7 +186,7 @@
             OfferTextLabel.BorderStyle = BorderStyle.FixedSingle;
             OfferTextLabel.Font = new Font("Arial", 20.25F);
             OfferTextLabel.ForeColor = Color.White;
-            OfferTextLabel.Location = new Point(985, 116);
+            OfferTextLabel.Location = new Point(987, 115);
             OfferTextLabel.Name = "OfferTextLabel";
             OfferTextLabel.Size = new Size(524, 48);
             OfferTextLabel.TabIndex = 20;
@@ -198,7 +198,7 @@
             OfferLabel.BorderStyle = BorderStyle.FixedSingle;
             OfferLabel.Font = new Font("Arial", 24F);
             OfferLabel.ForeColor = Color.White;
-            OfferLabel.Location = new Point(985, 164);
+            OfferLabel.Location = new Point(987, 163);
             OfferLabel.Name = "OfferLabel";
             OfferLabel.Size = new Size(524, 104);
             OfferLabel.TabIndex = 22;
@@ -210,7 +210,7 @@
             CashLabel.BorderStyle = BorderStyle.FixedSingle;
             CashLabel.Font = new Font("Arial", 24F);
             CashLabel.ForeColor = Color.White;
-            CashLabel.Location = new Point(415, 164);
+            CashLabel.Location = new Point(413, 163);
             CashLabel.Name = "CashLabel";
             CashLabel.Size = new Size(524, 104);
             CashLabel.TabIndex = 21;
@@ -227,6 +227,8 @@
             ContestantEnvelope4Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope4Picture.TabIndex = 23;
             ContestantEnvelope4Picture.TabStop = false;
+            ContestantEnvelope4Picture.Tag = "C4";
+            ContestantEnvelope4Picture.Paint += EnvelopePicture_Paint;
             // 
             // ContestantEnvelope1Picture
             // 
@@ -238,6 +240,8 @@
             ContestantEnvelope1Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope1Picture.TabIndex = 24;
             ContestantEnvelope1Picture.TabStop = false;
+            ContestantEnvelope1Picture.Tag = "C1";
+            ContestantEnvelope1Picture.Paint += EnvelopePicture_Paint;
             // 
             // ContestantEnvelope2Picture
             // 
@@ -249,6 +253,8 @@
             ContestantEnvelope2Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope2Picture.TabIndex = 25;
             ContestantEnvelope2Picture.TabStop = false;
+            ContestantEnvelope2Picture.Tag = "C2";
+            ContestantEnvelope2Picture.Paint += EnvelopePicture_Paint;
             // 
             // ContestantEnvelope3Picture
             // 
@@ -260,6 +266,8 @@
             ContestantEnvelope3Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope3Picture.TabIndex = 26;
             ContestantEnvelope3Picture.TabStop = false;
+            ContestantEnvelope3Picture.Tag = "C3";
+            ContestantEnvelope3Picture.Paint += EnvelopePicture_Paint;
             // 
             // ContestantEnvelope0Picture
             // 
@@ -271,6 +279,8 @@
             ContestantEnvelope0Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope0Picture.TabIndex = 27;
             ContestantEnvelope0Picture.TabStop = false;
+            ContestantEnvelope0Picture.Tag = "C0";
+            ContestantEnvelope0Picture.Paint += EnvelopePicture_Paint;
             // 
             // HostEnvelope4Picture
             // 
@@ -282,6 +292,8 @@
             HostEnvelope4Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope4Picture.TabIndex = 32;
             HostEnvelope4Picture.TabStop = false;
+            HostEnvelope4Picture.Tag = "H4";
+            HostEnvelope4Picture.Paint += EnvelopePicture_Paint;
             // 
             // HostEnvelope3Picture
             // 
@@ -293,6 +305,8 @@
             HostEnvelope3Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope3Picture.TabIndex = 31;
             HostEnvelope3Picture.TabStop = false;
+            HostEnvelope3Picture.Tag = "H3";
+            HostEnvelope3Picture.Paint += EnvelopePicture_Paint;
             // 
             // HostEnvelope2Picture
             // 
@@ -304,6 +318,8 @@
             HostEnvelope2Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope2Picture.TabIndex = 30;
             HostEnvelope2Picture.TabStop = false;
+            HostEnvelope2Picture.Tag = "H2";
+            HostEnvelope2Picture.Paint += EnvelopePicture_Paint;
             // 
             // HostEnvelope1Picture
             // 
@@ -315,6 +331,8 @@
             HostEnvelope1Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope1Picture.TabIndex = 29;
             HostEnvelope1Picture.TabStop = false;
+            HostEnvelope1Picture.Tag = "H1";
+            HostEnvelope1Picture.Paint += EnvelopePicture_Paint;
             // 
             // HostEnvelope0Picture
             // 
@@ -326,6 +344,8 @@
             HostEnvelope0Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope0Picture.TabIndex = 28;
             HostEnvelope0Picture.TabStop = false;
+            HostEnvelope0Picture.Tag = "H0";
+            HostEnvelope0Picture.Paint += EnvelopePicture_Paint;
             // 
             // HostScreenForm
             // 
@@ -386,10 +406,6 @@
         private Label AnswerDLabel;
         private Label AnswerCLabel;
         private Label CorrectAnswerLabel;
-        private Label ContestantEnvelope1Label;
-        private Label ContestantEnvelope3Label;
-        private Label ContestantEnvelope2Label;
-        private Label ContestantEnvelope4Label;
         private Label ContestantTextLabel;
         private Label HostTextLabel;
         private Label ExplanationLabel;
