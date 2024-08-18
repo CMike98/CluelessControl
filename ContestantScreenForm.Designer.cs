@@ -202,6 +202,7 @@
             OfferLabel.TabIndex = 45;
             OfferLabel.Text = "0";
             OfferLabel.TextAlign = ContentAlignment.MiddleCenter;
+            OfferLabel.Visible = false;
             // 
             // CashLabel
             // 
@@ -214,6 +215,7 @@
             CashLabel.TabIndex = 44;
             CashLabel.Text = "0";
             CashLabel.TextAlign = ContentAlignment.MiddleCenter;
+            CashLabel.Visible = false;
             // 
             // OfferTextLabel
             // 
@@ -226,6 +228,7 @@
             OfferTextLabel.TabIndex = 43;
             OfferTextLabel.Text = "OFERTA";
             OfferTextLabel.TextAlign = ContentAlignment.MiddleCenter;
+            OfferTextLabel.Visible = false;
             // 
             // CashTextLabel
             // 
@@ -238,6 +241,7 @@
             CashTextLabel.TabIndex = 42;
             CashTextLabel.Text = "GOTÓWKA";
             CashTextLabel.TextAlign = ContentAlignment.MiddleCenter;
+            CashTextLabel.Visible = false;
             // 
             // HostTextLabel
             // 
@@ -249,6 +253,7 @@
             HostTextLabel.TabIndex = 41;
             HostTextLabel.Text = "PROWADZĄCY";
             HostTextLabel.TextAlign = ContentAlignment.MiddleCenter;
+            HostTextLabel.Visible = false;
             // 
             // ContestantTextLabel
             // 
@@ -260,6 +265,7 @@
             ContestantTextLabel.TabIndex = 40;
             ContestantTextLabel.Text = "ZAWODNIK";
             ContestantTextLabel.TextAlign = ContentAlignment.MiddleCenter;
+            ContestantTextLabel.Visible = false;
             // 
             // AnswerDLabel
             // 

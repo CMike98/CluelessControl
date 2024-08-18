@@ -56,6 +56,7 @@ namespace CluelessControl
             }
 
             pictureBox.Visible = true;
+            pictureBox.BackColor = envelope.GetBackgroundColor();
 
             Point size = (Point)pictureBox.ClientRectangle.Size;
 
