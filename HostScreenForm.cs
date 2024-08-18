@@ -32,7 +32,7 @@ namespace CluelessControl
                 case CloseReason.ApplicationExitCall:
                     break;
                 default:
-                    MessageBox.Show("Zamknij reżyserkę, by zamknąć program.", Constants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(Constants.CLOSE_ON_DIRECTOR_FORM_MESSAGE, Constants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     e.Cancel = true;
                     break;
             }

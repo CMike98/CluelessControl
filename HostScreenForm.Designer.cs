@@ -380,6 +380,7 @@
             DoubleBuffered = true;
             MaximizeBox = false;
             Name = "HostScreenForm";
+            SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Prowadzący";
             WindowState = FormWindowState.Maximized;
