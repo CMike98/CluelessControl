@@ -221,7 +221,7 @@
             // 
             ContestantEnvelope4Picture.BackColor = Color.White;
             ContestantEnvelope4Picture.BackgroundImageLayout = ImageLayout.Center;
-            ContestantEnvelope4Picture.Location = new Point(12, 544);
+            ContestantEnvelope4Picture.Location = new Point(12, 116);
             ContestantEnvelope4Picture.Name = "ContestantEnvelope4Picture";
             ContestantEnvelope4Picture.Size = new Size(268, 87);
             ContestantEnvelope4Picture.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -234,7 +234,7 @@
             // 
             ContestantEnvelope1Picture.BackColor = Color.White;
             ContestantEnvelope1Picture.BackgroundImageLayout = ImageLayout.Center;
-            ContestantEnvelope1Picture.Location = new Point(12, 223);
+            ContestantEnvelope1Picture.Location = new Point(12, 437);
             ContestantEnvelope1Picture.Name = "ContestantEnvelope1Picture";
             ContestantEnvelope1Picture.Size = new Size(268, 87);
             ContestantEnvelope1Picture.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -260,7 +260,7 @@
             // 
             ContestantEnvelope3Picture.BackColor = Color.White;
             ContestantEnvelope3Picture.BackgroundImageLayout = ImageLayout.Center;
-            ContestantEnvelope3Picture.Location = new Point(12, 437);
+            ContestantEnvelope3Picture.Location = new Point(12, 223);
             ContestantEnvelope3Picture.Name = "ContestantEnvelope3Picture";
             ContestantEnvelope3Picture.Size = new Size(268, 87);
             ContestantEnvelope3Picture.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -273,7 +273,7 @@
             // 
             ContestantEnvelope0Picture.BackColor = Color.White;
             ContestantEnvelope0Picture.BackgroundImageLayout = ImageLayout.Center;
-            ContestantEnvelope0Picture.Location = new Point(12, 116);
+            ContestantEnvelope0Picture.Location = new Point(12, 544);
             ContestantEnvelope0Picture.Name = "ContestantEnvelope0Picture";
             ContestantEnvelope0Picture.Size = new Size(268, 87);
             ContestantEnvelope0Picture.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -286,7 +286,7 @@
             // 
             HostEnvelope4Picture.BackColor = Color.White;
             HostEnvelope4Picture.BackgroundImageLayout = ImageLayout.Center;
-            HostEnvelope4Picture.Location = new Point(1644, 544);
+            HostEnvelope4Picture.Location = new Point(1644, 115);
             HostEnvelope4Picture.Name = "HostEnvelope4Picture";
             HostEnvelope4Picture.Size = new Size(268, 87);
             HostEnvelope4Picture.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -299,7 +299,7 @@
             // 
             HostEnvelope3Picture.BackColor = Color.White;
             HostEnvelope3Picture.BackgroundImageLayout = ImageLayout.Center;
-            HostEnvelope3Picture.Location = new Point(1644, 437);
+            HostEnvelope3Picture.Location = new Point(1644, 223);
             HostEnvelope3Picture.Name = "HostEnvelope3Picture";
             HostEnvelope3Picture.Size = new Size(268, 87);
             HostEnvelope3Picture.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -325,7 +325,7 @@
             // 
             HostEnvelope1Picture.BackColor = Color.White;
             HostEnvelope1Picture.BackgroundImageLayout = ImageLayout.Center;
-            HostEnvelope1Picture.Location = new Point(1644, 223);
+            HostEnvelope1Picture.Location = new Point(1644, 437);
             HostEnvelope1Picture.Name = "HostEnvelope1Picture";
             HostEnvelope1Picture.Size = new Size(268, 87);
             HostEnvelope1Picture.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -338,7 +338,7 @@
             // 
             HostEnvelope0Picture.BackColor = Color.White;
             HostEnvelope0Picture.BackgroundImageLayout = ImageLayout.Center;
-            HostEnvelope0Picture.Location = new Point(1644, 116);
+            HostEnvelope0Picture.Location = new Point(1644, 544);
             HostEnvelope0Picture.Name = "HostEnvelope0Picture";
             HostEnvelope0Picture.Size = new Size(268, 87);
             HostEnvelope0Picture.SizeMode = PictureBoxSizeMode.CenterImage;
