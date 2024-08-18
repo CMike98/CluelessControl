@@ -38,5 +38,45 @@ namespace CluelessControl
             }
         }
         #endregion
+
+        private void EnvelopePicture_Paint(object sender, PaintEventArgs e)
+        {
+            if (sender is not PictureBox pictureBox)
+                return;
+
+            if (!pictureBox.Visible)
+                return;
+
+            string tag = (pictureBox.Tag as string) ?? string.Empty;
+            Envelope? envelope = GameState.Instance.GetEnvelopeFromTag(tag);
+            if (envelope == null)
+            {
+                pictureBox.Visible = false;
+                return;
+            }
+
+            pictureBox.Visible = true;
+
+            Point size = (Point)pictureBox.ClientRectangle.Size;
+
+            Point leftPoint = pictureBox.ClientRectangle.Location;
+            Point centerPoint = new(leftPoint.X + size.X / 2, leftPoint.Y + size.Y / 2);
+            Point rightPoint = new(leftPoint.X + size.X, leftPoint.Y);
+
+            e.Graphics.DrawLine(Pens.Black, leftPoint, centerPoint);
+            e.Graphics.DrawLine(Pens.Black, centerPoint, rightPoint);
+
+            if (envelope != null)
+            {
+                e.Graphics.DrawString(envelope.EnvelopeNumber.ToString(), Constants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
+
+                BaseCheque cheque = envelope.Cheque;
+                string chequeString = cheque.ToValueString();
+                using Brush brush = new SolidBrush(cheque.GetTextColor());
+
+                SizeF valueSize = e.Graphics.MeasureString(chequeString, Constants.DRAWING_FONT);
+                e.Graphics.DrawString(chequeString, Constants.DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
+            }
+        }
     }
 }
