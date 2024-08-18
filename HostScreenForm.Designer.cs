@@ -134,6 +134,7 @@
             CorrectAnswerLabel.Tag = "";
             CorrectAnswerLabel.Text = "A";
             CorrectAnswerLabel.TextAlign = ContentAlignment.MiddleCenter;
+            CorrectAnswerLabel.Visible = false;
             // 
             // ContestantTextLabel
             // 
@@ -145,6 +146,7 @@
             ContestantTextLabel.TabIndex = 12;
             ContestantTextLabel.Text = "ZAWODNIK";
             ContestantTextLabel.TextAlign = ContentAlignment.MiddleCenter;
+            ContestantTextLabel.Visible = false;
             // 
             // HostTextLabel
             // 
@@ -156,6 +158,7 @@
             HostTextLabel.TabIndex = 18;
             HostTextLabel.Text = "PROWADZĄCY";
             HostTextLabel.TextAlign = ContentAlignment.MiddleCenter;
+            HostTextLabel.Visible = false;
             // 
             // ExplanationLabel
             // 
@@ -168,6 +171,7 @@
             ExplanationLabel.Tag = "";
             ExplanationLabel.Text = "Wyjaśnienie";
             ExplanationLabel.TextAlign = ContentAlignment.MiddleCenter;
+            ExplanationLabel.Visible = false;
             // 
             // CashTextLabel
             // 
@@ -180,6 +184,7 @@
             CashTextLabel.TabIndex = 19;
             CashTextLabel.Text = "GOTÓWKA";
             CashTextLabel.TextAlign = ContentAlignment.MiddleCenter;
+            CashTextLabel.Visible = false;
             // 
             // OfferTextLabel
             // 
@@ -192,6 +197,7 @@
             OfferTextLabel.TabIndex = 20;
             OfferTextLabel.Text = "OFERTA";
             OfferTextLabel.TextAlign = ContentAlignment.MiddleCenter;
+            OfferTextLabel.Visible = false;
             // 
             // OfferLabel
             // 
@@ -204,6 +210,7 @@
             OfferLabel.TabIndex = 22;
             OfferLabel.Text = "0";
             OfferLabel.TextAlign = ContentAlignment.MiddleCenter;
+            OfferLabel.Visible = false;
             // 
             // CashLabel
             // 
@@ -216,6 +223,7 @@
             CashLabel.TabIndex = 21;
             CashLabel.Text = "0";
             CashLabel.TextAlign = ContentAlignment.MiddleCenter;
+            CashLabel.Visible = false;
             // 
             // ContestantEnvelope4Picture
             // 
