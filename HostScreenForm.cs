@@ -70,7 +70,7 @@ namespace CluelessControl
             {
                 e.Graphics.DrawString(envelope.EnvelopeNumber.ToString(), Constants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
 
-                var cheque = envelope.Cheque;
+                BaseCheque cheque = envelope.Cheque;
                 string chequeString = cheque.ToValueString();
                 using Brush brush = new SolidBrush(cheque.GetTextColor());
 
