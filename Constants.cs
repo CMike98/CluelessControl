@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,11 @@ namespace CluelessControl
         /// The title of the program.
         /// </summary>
         public const string PROGRAM_TITLE = "Gra w Ciemno - Reżyserka";
+
+        /// <summary>
+        /// Closing message - closing the program should be done via the director form.
+        /// </summary>
+        public const string CLOSE_ON_DIRECTOR_FORM_MESSAGE = "Zamknij reżyserkę, by zamknąć program.";
 
         /// <summary>
         /// Minimum number of the envelope
