@@ -9,6 +9,7 @@ namespace CluelessControl
         #region Other Forms
         private static readonly HostScreenForm _hostScreenForm = new();
         private static readonly ContestantScreenForm _contestantScreenForm = new();
+        private static readonly TVScreenForm _tvScreenForm = new();
         #endregion
 
         #region Json Serializer Options
@@ -34,6 +35,7 @@ namespace CluelessControl
         {
             _hostScreenForm.Show();
             _contestantScreenForm.Show();
+            _tvScreenForm.Show();
         }
     }
 }
