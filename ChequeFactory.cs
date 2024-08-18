@@ -16,14 +16,12 @@ namespace CluelessControl
         {
             Register(nameof(CashCheque).ToLowerInvariant(), element =>
             {
-                var amountElement = element.GetProperty("CashAmount");
-                decimal amount = amountElement.GetDecimal();
+                decimal amount = element.GetProperty("CashAmount").GetDecimal();
                 return CreateCashCheque(amount);
             });
             Register(nameof(PercentageCheque).ToLowerInvariant(), element =>
             {
-                var percentageElement = element.GetProperty("Percentage");
-                decimal percentage = percentageElement.GetDecimal();
+                decimal percentage = element.GetProperty("Percentage").GetDecimal();
                 return CreatePercentageCheque(percentage);
             });
         }
