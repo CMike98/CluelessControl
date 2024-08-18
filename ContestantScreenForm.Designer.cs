@@ -352,6 +352,7 @@
             DoubleBuffered = true;
             MaximizeBox = false;
             Name = "ContestantScreenForm";
+            SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Zawodnik";
             WindowState = FormWindowState.Maximized;
