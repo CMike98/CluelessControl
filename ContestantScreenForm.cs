@@ -68,13 +68,15 @@ namespace CluelessControl
             
             e.Graphics.DrawString(envelope.EnvelopeNumber.ToString(), Constants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
 
-            BaseCheque cheque = envelope.Cheque;
-            string chequeString = cheque.ToValueString();
-            using Brush brush = new SolidBrush(cheque.GetTextColor());
+            if (envelope.IsOpen)
+            {
+                BaseCheque cheque = envelope.Cheque;
+                string chequeString = cheque.ToValueString();
+                using Brush brush = new SolidBrush(cheque.GetTextColor());
 
-            SizeF valueSize = e.Graphics.MeasureString(chequeString, Constants.DRAWING_FONT);
-            e.Graphics.DrawString(chequeString, Constants.DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
-            
+                SizeF valueSize = e.Graphics.MeasureString(chequeString, Constants.DRAWING_FONT);
+                e.Graphics.DrawString(chequeString, Constants.DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
+            }
         }
     }
 }
