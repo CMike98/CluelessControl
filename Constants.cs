@@ -30,6 +30,11 @@ namespace CluelessControl
         public const int MAX_ENVELOPE_NUMBER = 50;
 
         /// <summary>
+        /// How much maximum envelopes there are?
+        /// </summary>
+        public const int MAX_ENVELOPES_COUNT = 50;
+
+        /// <summary>
         /// How much envelopes to pick?
         /// </summary>
         public const int HOW_MUCH_ENVELOPES_TO_PICK = 5;
