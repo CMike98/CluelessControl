@@ -38,6 +38,11 @@ namespace CluelessControl
         /// Number of answers to each question in the game.
         /// </summary>
         public const int ANSWERS_PER_QUESTION = 4;
+        
+        /// <summary>
+        /// Minimum percentage cheque
+        /// </summary>
+        public const decimal MIN_PERCENTAGE = -100;
 
         #region Drawing
         /// <summary>
