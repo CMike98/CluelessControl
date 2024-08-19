@@ -26,5 +26,16 @@
                 throw new ArgumentException($"At least one of the cheques on the list is null.", nameof(chequeList));
             return new ChequeSettings(chequeList);
         }
+
+        public void Randomise(Random? rand = null)
+        {
+            rand ??= new Random();
+
+            for (int i = ChequeList.Count - 1; i > 0; --i)
+            {
+                int randomIndex = rand.Next(i + 1);
+                (ChequeList[i], ChequeList[randomIndex]) = (ChequeList[randomIndex], ChequeList[i]);
+            }
+        }
     }
 }
