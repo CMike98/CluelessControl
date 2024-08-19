@@ -278,6 +278,7 @@
             AnswerDLabel.TabIndex = 37;
             AnswerDLabel.Text = "D: ?";
             AnswerDLabel.TextAlign = ContentAlignment.MiddleLeft;
+            AnswerDLabel.Visible = false;
             // 
             // AnswerCLabel
             // 
@@ -290,6 +291,7 @@
             AnswerCLabel.TabIndex = 36;
             AnswerCLabel.Text = "C: ?";
             AnswerCLabel.TextAlign = ContentAlignment.MiddleLeft;
+            AnswerCLabel.Visible = false;
             // 
             // AnswerBLabel
             // 
@@ -302,6 +304,7 @@
             AnswerBLabel.TabIndex = 35;
             AnswerBLabel.Text = "B: ?";
             AnswerBLabel.TextAlign = ContentAlignment.MiddleLeft;
+            AnswerBLabel.Visible = false;
             // 
             // AnswerALabel
             // 
@@ -314,6 +317,7 @@
             AnswerALabel.TabIndex = 34;
             AnswerALabel.Text = "A: ?";
             AnswerALabel.TextAlign = ContentAlignment.MiddleLeft;
+            AnswerALabel.Visible = false;
             // 
             // QuestionLabel
             // 
@@ -326,6 +330,7 @@
             QuestionLabel.TabIndex = 33;
             QuestionLabel.Text = "Pytanie testowe";
             QuestionLabel.TextAlign = ContentAlignment.MiddleCenter;
+            QuestionLabel.Visible = false;
             // 
             // ContestantScreenForm
             // 
