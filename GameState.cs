@@ -55,15 +55,36 @@
             get;
             private set;
         }
+
+        public int QuestionNumber
+        {
+            get;
+            private set;
+        }
+
         #endregion
 
         #region Constructor
         private GameState()
         {
-            Settings = new GameSettings();
+            Settings = GameSettings.Create();
             QuestionSet = QuestionSet.Create();
-            ContestantEnvelopes = [];
-            HostEnvelopes = [];
+            ContestantEnvelopes = new List<Envelope>(Constants.HOW_MUCH_ENVELOPES_TO_PICK);
+            HostEnvelopes = new List<Envelope>(Constants.HOW_MUCH_ENVELOPES_TO_PICK);
+
+            ResetGame();
+        }
+        #endregion
+
+        #region Reset
+        public void ResetGame()
+        {
+            ContestantEnvelopes.Clear();
+            HostEnvelopes.Clear();
+
+            QuestionNumber = -1;
+            Cash = 0;
+            CashOffer = 0;
         }
         #endregion
 
@@ -82,13 +103,6 @@
         #endregion
 
         #region Envelopes
-        public void AddEnvelopeToContestant(Envelope envelope)
-        {
-            if (envelope == null)
-                throw new ArgumentNullException(nameof(envelope));
-
-            ContestantEnvelopes.Add(envelope);
-        }
 
         public Envelope? GetContestantEnvelope(int index)
         {
@@ -111,6 +125,26 @@
             else
                 return HostEnvelopes[index];
         }
+
+        public Envelope? GetEnvelopeFromTag(string tag)
+        {
+            if (tag == null)
+                throw new ArgumentNullException(nameof(tag));
+            if (tag.Length != 2)
+                throw new ArgumentException($"The tag must be 2 characters. First 'C' or 'H' (contestant/host) and the other: the envelope index.", nameof(tag));
+
+            char playerTag = char.ToUpper(tag[0]);
+            int envelopeIndex = (int)char.GetNumericValue(tag[1]);
+            if (envelopeIndex < 0 || envelopeIndex >= Constants.HOW_MUCH_ENVELOPES_TO_PICK)
+                throw new ArgumentException($"The second character (envelope index) must be a digit between 0 and {Constants.HOW_MUCH_ENVELOPES_TO_PICK - 1}.", nameof(tag));
+
+            return playerTag switch
+            {
+                'C' => GetContestantEnvelope(envelopeIndex),
+                'H' => GetHostEnvelope(envelopeIndex),
+                _ => null
+            };
+        }
         #endregion
 
         #region Cash And Offers
@@ -129,29 +163,6 @@
                 throw new ArgumentOutOfRangeException(nameof(newOffer), $"Offer cannot make the contestant's cash go negative.");
 
             CashOffer = newOffer;
-        }
-
-        #endregion
-
-        #region Helper
-        public Envelope? GetEnvelopeFromTag(string tag)
-        {
-            if (tag == null)
-                throw new ArgumentNullException(nameof(tag));
-            if (tag.Length != 2)
-                throw new ArgumentException($"The tag must be 2 characters. First 'C' or 'H' (contestant/host) and the other: the envelope index.", nameof(tag));
-
-            char playerTag = char.ToUpper(tag[0]);
-            int envelopeIndex = (int) char.GetNumericValue(tag[1]);
-            if (envelopeIndex < 0 || envelopeIndex >= Constants.HOW_MUCH_ENVELOPES_TO_PICK)
-                throw new ArgumentException($"The second character (envelope index) must be a digit between 0 and {Constants.HOW_MUCH_ENVELOPES_TO_PICK - 1}.", nameof(tag));
-
-            return playerTag switch
-            {
-                'C' => GetContestantEnvelope(envelopeIndex),
-                'H' => GetHostEnvelope(envelopeIndex),
-                _ => null
-            };
         }
 
         #endregion
