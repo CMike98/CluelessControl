@@ -75,6 +75,8 @@
         {
             GameSettings = GameSettings.Create();
             QuestionSet = QuestionSet.Create();
+            ChequeSettings = ChequeSettings.Create();
+
             ContestantEnvelopes = new List<Envelope>(Constants.HOW_MUCH_ENVELOPES_TO_PICK);
             HostEnvelopes = new List<Envelope>(Constants.HOW_MUCH_ENVELOPES_TO_PICK);
 
