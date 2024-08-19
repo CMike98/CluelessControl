@@ -20,7 +20,13 @@
         #endregion
 
         #region Fields/Variables
-        public GameSettings Settings
+        public GameSettings GameSettings
+        {
+            get;
+            private set;
+        }
+
+        public ChequeSettings ChequeSettings
         {
             get;
             private set;
@@ -67,7 +73,7 @@
         #region Constructor
         private GameState()
         {
-            Settings = GameSettings.Create();
+            GameSettings = GameSettings.Create();
             QuestionSet = QuestionSet.Create();
             ContestantEnvelopes = new List<Envelope>(Constants.HOW_MUCH_ENVELOPES_TO_PICK);
             HostEnvelopes = new List<Envelope>(Constants.HOW_MUCH_ENVELOPES_TO_PICK);
@@ -92,7 +98,7 @@
         public void LoadGameSettings(GameSettings settings)
         {
             ArgumentNullException.ThrowIfNull(settings, nameof(settings));
-            Settings = settings;
+            GameSettings = settings;
         }
 
         public void LoadQuestionSet(QuestionSet questionSet)
