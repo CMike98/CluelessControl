@@ -33,15 +33,19 @@ namespace CluelessControl
         /// </summary>
         /// <param name="percentage">The percentage on the cheque</param>
         /// <returns>The created cheque</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the percentage is less than -100%.</exception>
         internal static PercentageCheque Create(decimal percentage)
         {
+            if (percentage < -100)
+                throw new ArgumentOutOfRangeException(nameof(percentage), "Minus percentage mustn't be less than -100%!");
+
             return new PercentageCheque(percentage);
         }
 
         public override string ToValueString()
         {
             decimal fraction = Percentage / 100;
-            return fraction.ToString("+0.##############################%;-0.##############################%");
+            return fraction.ToString("+0.##########%;-0.##########%");
         }
 
         public override Color GetTextColor()
