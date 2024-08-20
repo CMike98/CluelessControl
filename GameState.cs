@@ -108,6 +108,12 @@
             ArgumentNullException.ThrowIfNull(questionSet, nameof(questionSet));
             QuestionSet = questionSet;
         }
+
+        public void LoadChequeSettings(ChequeSettings chequeSettings)
+        {
+            ArgumentNullException.ThrowIfNull(chequeSettings, nameof(chequeSettings));
+            ChequeSettings = chequeSettings;
+        }
         #endregion
 
         #region Envelopes
