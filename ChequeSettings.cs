@@ -1,4 +1,6 @@
-﻿namespace CluelessControl
+﻿using System.Text.Json;
+
+namespace CluelessControl
 {
     public class ChequeSettings
     {
@@ -36,6 +38,26 @@
                 int randomIndex = rand.Next(i + 1);
                 (ChequeList[i], ChequeList[randomIndex]) = (ChequeList[randomIndex], ChequeList[i]);
             }
+        }
+
+        public static ChequeSettings LoadFromFile(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                throw new ArgumentNullException(nameof(fileName));
+            if (!File.Exists(fileName))
+                throw new FileNotFoundException("File not found.", nameof(fileName));
+
+            string json = File.ReadAllText(fileName);
+            return JsonSerializer.Deserialize<ChequeSettings>(json, Constants.JSON_SERIALIZER_OPTIONS) ?? throw new FileFormatException("Envelope settings loading failed.");
+        }
+
+        public void SaveToFile(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                throw new ArgumentNullException(nameof(fileName));
+
+            string json = JsonSerializer.Serialize<ChequeSettings>(this, Constants.JSON_SERIALIZER_OPTIONS);
+            File.WriteAllText(fileName, json);
         }
     }
 }

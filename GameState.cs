@@ -103,16 +103,34 @@
             GameSettings = settings;
         }
 
+        public void LoadGameSettingsFromFile(string fileName)
+        {
+            ArgumentNullException.ThrowIfNull(fileName, nameof(fileName));
+            GameSettings = GameSettings.LoadFromFile(fileName);
+        }
+
         public void LoadQuestionSet(QuestionSet questionSet)
         {
             ArgumentNullException.ThrowIfNull(questionSet, nameof(questionSet));
             QuestionSet = questionSet;
         }
 
+        public void LoadQuestionSetFromFile(string fileName)
+        {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(fileName, nameof(fileName));
+            QuestionSet = QuestionSet.LoadFromFile(fileName);
+        }
+
         public void LoadChequeSettings(ChequeSettings chequeSettings)
         {
             ArgumentNullException.ThrowIfNull(chequeSettings, nameof(chequeSettings));
             ChequeSettings = chequeSettings;
+        }
+
+        public void LoadChequeSettingsFromFile(string fileName)
+        {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(fileName, nameof(fileName));
+            ChequeSettings = ChequeSettings.LoadFromFile(fileName);
         }
         #endregion
 
