@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
@@ -11,15 +12,6 @@ namespace CluelessControl
         private static readonly HostScreenForm _hostScreenForm = new();
         private static readonly ContestantScreenForm _contestantScreenForm = new();
         private static readonly TVScreenForm _tvScreenForm = new();
-        #endregion
-
-        #region Json Serializer Options
-        private static readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions()
-        {
-            Converters = { new JsonChequeConverter(), new JsonQuestionConverter(), new JsonQuestionSetConverter() },
-            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
-            WriteIndented = true
-        };
         #endregion
 
         private const int NO_ITEM_INDEX = -1;
@@ -54,6 +46,14 @@ namespace CluelessControl
                 throw new ArgumentNullException(nameof(message));
 
             MessageBox.Show(message, Constants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        public void ShowOkMessage(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+                throw new ArgumentNullException(nameof(message));
+
+            MessageBox.Show(message, Constants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #endregion
@@ -160,19 +160,6 @@ namespace CluelessControl
                 default:
                     throw new NotSupportedException($"Not recognised envelope type selected.");
             }
-        }
-
-        private void EnvelopeSettingsLoadFromFile(string fileName)
-        {
-            if (string.IsNullOrWhiteSpace(fileName))
-                throw new ArgumentNullException(nameof(fileName));
-            if (!File.Exists(fileName))
-                throw new FileNotFoundException("File not found.", nameof(fileName));
-
-            string json = File.ReadAllText(fileName);
-            ChequeSettings settings = JsonSerializer.Deserialize<ChequeSettings>(json, _jsonSerializerOptions) ?? throw new FileFormatException("Envelope settings loading failed.");
-
-            GameState.Instance.LoadChequeSettings(settings);
         }
 
         private void EnvelopeSettingsCashRadio_CheckedChanged(object sender, EventArgs e)
@@ -430,6 +417,8 @@ namespace CluelessControl
                 EnvelopeSettingsListBox.SelectedIndex = selectedIndex;
 
                 _envelopeSettingsSkipIndexChange = false;
+
+                ShowOkMessage("Zapisywanie zakoñczono pomyœlnie!");
             }
             catch (Exception ex)
             {
@@ -450,14 +439,22 @@ namespace CluelessControl
 
             try
             {
-                EnvelopeSettingsLoadFromFile(fileName);
+                GameState.Instance.LoadChequeSettingsFromFile(fileName);
+
+                EnvelopeSettingsUpdate();
+
+                _envelopeSettingsEdited = false;
+                _envelopeSettingsSkipIndexChange = false;
+                _envelopeSettingsLastSelectedIndex = NO_ITEM_INDEX;
+
+                ShowOkMessage("Wczytywanie zakoñczono pomyœlnie!");
             }
             catch (Exception ex)
             {
 #if DEBUG
                 ShowErrorMessage(ex.ToString());
 #else
-                ShowErrorMessage("Zapisywanie zakoñczone niepowodzeniem!");
+                ShowErrorMessage("Wczytywanie zakoñczone niepowodzeniem!");
 #endif
             }
         }
@@ -471,7 +468,21 @@ namespace CluelessControl
 
             try
             {
+                int selectedIndex = EnvelopeSettingsListBox.SelectedIndex;
 
+                GameState.Instance.ChequeSettings.SaveToFile(fileName);
+
+                EnvelopeSettingsUpdate();
+
+                _envelopeSettingsEdited = false;
+                _envelopeSettingsSkipIndexChange = true;
+                _envelopeSettingsLastSelectedIndex = NO_ITEM_INDEX;
+
+                EnvelopeSettingsListBox.SelectedIndex = selectedIndex;
+
+                _envelopeSettingsSkipIndexChange = false;
+
+                ShowOkMessage("Zapisywanie zakoñczono pomyœlnie!");
             }
             catch (Exception ex)
             {
@@ -482,7 +493,6 @@ namespace CluelessControl
 #endif
             }
         }
-
-#endregion
+        #endregion
     }
 }
