@@ -34,6 +34,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.Black;
             BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(1924, 1011);
             DoubleBuffered = true;
