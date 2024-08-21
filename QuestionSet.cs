@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CluelessControl
 {
@@ -55,6 +56,26 @@ namespace CluelessControl
         public void ClearQuestionSet()
         {
             QuestionList.Clear();
+        }
+
+        public static QuestionSet LoadFromFile(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                throw new ArgumentNullException(nameof(fileName));
+            if (!File.Exists(fileName))
+                throw new FileNotFoundException("File not found.", nameof(fileName));
+
+            string json = File.ReadAllText(fileName);
+            return JsonSerializer.Deserialize<QuestionSet>(json, Constants.JSON_SERIALIZER_OPTIONS) ?? throw new FileFormatException("Question set loading failed.");
+        }
+
+        public void SaveToFile(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                throw new ArgumentNullException(nameof(fileName));
+
+            string json = JsonSerializer.Serialize<QuestionSet>(this, Constants.JSON_SERIALIZER_OPTIONS);
+            File.WriteAllText(fileName, json);
         }
     }
 }
