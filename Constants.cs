@@ -5,6 +5,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using System.Threading.Tasks;
 
@@ -73,6 +74,7 @@ namespace CluelessControl
         public static readonly JsonSerializerOptions JSON_SERIALIZER_OPTIONS = new()
         {
             Converters = {
+                new JsonStringEnumConverter(),
                 new JsonChequeConverter(),
                 new JsonChequeSettingsConverter(),
                 new JsonQuestionConverter(),
