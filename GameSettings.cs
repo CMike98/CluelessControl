@@ -28,7 +28,7 @@ namespace CluelessControl
 
         internal static GameSettings Create()
         {
-            return new GameSettings(decimalPlaces: 0, onlyWorstMinusCounts: true, onlyBestPlusCounts: true);
+            return new GameSettings(decimalPlaces: 0, onlyWorstMinusCounts: false, onlyBestPlusCounts: false);
         }
 
         internal static GameSettings Create(int decimalPlaces, bool onlyWorstMinusCounts, bool onlyBestPlusCounts)
