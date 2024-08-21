@@ -9,7 +9,12 @@ namespace CluelessControl
             get;
         }
 
-        public bool MultipleMinusesAccumulate
+        public bool OnlyWorstMinusCounts
+        {
+            get;
+        }
+
+        public bool OnlyBestPlusCounts
         {
             get;
         }
@@ -24,26 +29,28 @@ namespace CluelessControl
             get;
         }
 
-        private GameSettings(int decimalPlaces, bool multipleMinusesAccumulate, bool fireworksActive, decimal minimumCashPrizeForFireworks)
+        private GameSettings(int decimalPlaces, bool onlyWorstMinusCounts, bool onlyBestPlusCounts, bool fireworksActive, decimal minimumCashPrizeForFireworks)
         {
             DecimalPlaces = decimalPlaces;
+            OnlyWorstMinusCounts = onlyWorstMinusCounts;
+            OnlyBestPlusCounts = onlyBestPlusCounts;
             FireworksActive = fireworksActive;
             MinimumCashPrizeForFireworks = minimumCashPrizeForFireworks;
         }
 
         internal static GameSettings Create()
         {
-            return new GameSettings(decimalPlaces: 0, multipleMinusesAccumulate: true, fireworksActive: false, minimumCashPrizeForFireworks: 0);
+            return new GameSettings(decimalPlaces: 0, onlyWorstMinusCounts: true, onlyBestPlusCounts: true, fireworksActive: false, minimumCashPrizeForFireworks: 0);
         }
 
-        internal static GameSettings Create(int decimalPlaces, bool multipleMinusesAccumulate, bool fireworksActive, decimal minimumCashPrizeForFireworks)
+        internal static GameSettings Create(int decimalPlaces, bool onlyWorstMinusCounts, bool onlyBestPlusCounts, bool fireworksActive, decimal minimumCashPrizeForFireworks)
         {
             if (decimalPlaces < 0)
                 throw new ArgumentOutOfRangeException(nameof(decimalPlaces), $"Number of decimal places in the prize money must be non-negative.");
             if (minimumCashPrizeForFireworks < 0)
                 throw new ArgumentOutOfRangeException(nameof(minimumCashPrizeForFireworks), $"Minimum cash prize for fireworks must be non-negative.");
 
-            return new GameSettings(decimalPlaces, multipleMinusesAccumulate, fireworksActive, minimumCashPrizeForFireworks);
+            return new GameSettings(decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, fireworksActive, minimumCashPrizeForFireworks);
         }
 
         public static GameSettings LoadFromFile(string fileName)

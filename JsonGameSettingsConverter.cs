@@ -11,11 +11,12 @@ namespace CluelessControl
             var root = jsonDoc.RootElement;
 
             int decimalPlaces = root.GetProperty("decimalPlaces").GetInt32();
-            bool multipleMinusesAccumulate = root.GetProperty("multipleMinusesAccumulate").GetBoolean();
+            bool onlyWorstMinusCounts = root.GetProperty("onlyWorstMinusCounts").GetBoolean();
+            bool onlyBestPlusCounts = root.GetProperty("onlyBestPlusCounts").GetBoolean();
             bool fireworksActive = root.GetProperty("fireworksActive").GetBoolean();
             decimal minimumCashPrizeForFireworks = root.GetProperty("minimumCashPrizeForFireworks").GetDecimal();
 
-            return GameSettings.Create(decimalPlaces, multipleMinusesAccumulate, fireworksActive, minimumCashPrizeForFireworks);
+            return GameSettings.Create(decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, fireworksActive, minimumCashPrizeForFireworks);
         }
 
         public override void Write(Utf8JsonWriter writer, GameSettings value, JsonSerializerOptions options)
@@ -23,7 +24,8 @@ namespace CluelessControl
             writer.WriteStartObject();
 
             writer.WriteNumber("decimalPlaces", value.DecimalPlaces);
-            writer.WriteBoolean("multipleMinusesAccumulate", value.MultipleMinusesAccumulate);
+            writer.WriteBoolean("onlyWorstMinusCounts", value.OnlyWorstMinusCounts);
+            writer.WriteBoolean("onlyBestPlusCounts", value.OnlyBestPlusCounts);
             writer.WriteBoolean("fireworksActive", value.FireworksActive);
             writer.WriteNumber("minimumCashPrizeForFireworks", value.MinimumCashPrizeForFireworks);
 
