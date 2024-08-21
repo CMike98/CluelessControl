@@ -74,7 +74,6 @@
             QuestionLabel.TabIndex = 0;
             QuestionLabel.Text = "Pytanie testowe";
             QuestionLabel.TextAlign = ContentAlignment.MiddleCenter;
-            QuestionLabel.Visible = false;
             // 
             // AnswerALabel
             // 
@@ -87,7 +86,6 @@
             AnswerALabel.TabIndex = 1;
             AnswerALabel.Text = "A: ?";
             AnswerALabel.TextAlign = ContentAlignment.MiddleLeft;
-            AnswerALabel.Visible = false;
             // 
             // AnswerBLabel
             // 
@@ -100,7 +98,6 @@
             AnswerBLabel.TabIndex = 2;
             AnswerBLabel.Text = "B: ?";
             AnswerBLabel.TextAlign = ContentAlignment.MiddleLeft;
-            AnswerBLabel.Visible = false;
             // 
             // AnswerDLabel
             // 
@@ -113,7 +110,6 @@
             AnswerDLabel.TabIndex = 4;
             AnswerDLabel.Text = "D: ?";
             AnswerDLabel.TextAlign = ContentAlignment.MiddleLeft;
-            AnswerDLabel.Visible = false;
             // 
             // AnswerCLabel
             // 
@@ -126,7 +122,6 @@
             AnswerCLabel.TabIndex = 3;
             AnswerCLabel.Text = "C: ?";
             AnswerCLabel.TextAlign = ContentAlignment.MiddleLeft;
-            AnswerCLabel.Visible = false;
             // 
             // CorrectAnswerLabel
             // 
@@ -139,7 +134,6 @@
             CorrectAnswerLabel.Tag = "";
             CorrectAnswerLabel.Text = "A";
             CorrectAnswerLabel.TextAlign = ContentAlignment.MiddleCenter;
-            CorrectAnswerLabel.Visible = false;
             // 
             // ContestantTextLabel
             // 
@@ -176,7 +170,6 @@
             ExplanationLabel.Tag = "";
             ExplanationLabel.Text = "Wyjaśnienie";
             ExplanationLabel.TextAlign = ContentAlignment.MiddleCenter;
-            ExplanationLabel.Visible = false;
             // 
             // CashTextLabel
             // 
