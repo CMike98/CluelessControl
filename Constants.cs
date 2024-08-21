@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 
 namespace CluelessControl
@@ -64,6 +67,20 @@ namespace CluelessControl
         /// Font used when drawing the envelopes
         /// </summary>
         public static readonly Font DRAWING_FONT = new(DRAWING_FONT_FAMILY, DRAWING_FONT_SIZE);
+        #endregion
+
+        #region Json Serializer Options
+        public static readonly JsonSerializerOptions JSON_SERIALIZER_OPTIONS = new()
+        {
+            Converters = {
+                new JsonChequeConverter(),
+                new JsonChequeSettingsConverter(),
+                new JsonQuestionConverter(),
+                new JsonQuestionSetConverter()
+            },
+            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+            WriteIndented = true
+        };
         #endregion
     }
 }
