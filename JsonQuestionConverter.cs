@@ -24,11 +24,11 @@ namespace CluelessControl
             if (correctAnswerNumber < 1 || correctAnswerNumber > 4)
                 throw new JsonException($"The correct answer number must be in range [1...4].");
 
-            // Read the explanation (may be null)
-            string explanation = root.GetProperty("explanation").GetString() ?? throw new JsonException("No explanation.");
+            // Read the comment
+            string comment = root.GetProperty("comment").GetString() ?? throw new JsonException("Comment is null.");
 
             // Create the question
-            return Question.Create(text, answer1, answer2, answer3, answer4, correctAnswerNumber, explanation);
+            return Question.Create(text, answer1, answer2, answer3, answer4, correctAnswerNumber, comment);
         }
 
         public override void Write(Utf8JsonWriter writer, Question value, JsonSerializerOptions options)
@@ -48,8 +48,8 @@ namespace CluelessControl
             // Write the correct answer
             writer.WriteNumber("correctAnswerNumber", value.CorrectAnswerNumber);
 
-            // Write the explanation
-            writer.WriteString("explanation", value.Explanation);
+            // Write the comment
+            writer.WriteString("comment", value.Comment);
 
             // End writing the question
             writer.WriteEndObject();
