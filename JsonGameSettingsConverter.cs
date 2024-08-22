@@ -10,17 +10,19 @@ namespace CluelessControl
             using var jsonDoc = JsonDocument.ParseValue(ref reader);
             var root = jsonDoc.RootElement;
 
+            int startEnvelopeCount = root.GetProperty("startEnvelopeCount").GetInt32();
             int decimalPlaces = root.GetProperty("decimalPlaces").GetInt32();
             bool onlyWorstMinusCounts = root.GetProperty("onlyWorstMinusCounts").GetBoolean();
             bool onlyBestPlusCounts = root.GetProperty("onlyBestPlusCounts").GetBoolean();
 
-            return GameSettings.Create(decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts);
+            return GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts);
         }
 
         public override void Write(Utf8JsonWriter writer, GameSettings value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
 
+            writer.WriteNumber("startEnvelopeCount", value.StartEnvelopeCount);
             writer.WriteNumber("decimalPlaces", value.DecimalPlaces);
             writer.WriteBoolean("onlyWorstMinusCounts", value.OnlyWorstMinusCounts);
             writer.WriteBoolean("onlyBestPlusCounts", value.OnlyBestPlusCounts);

@@ -4,6 +4,11 @@ namespace CluelessControl
 {
     public class GameSettings
     {
+        public int StartEnvelopeCount
+        {
+            get;
+        }
+
         public int DecimalPlaces
         {
             get;
@@ -19,8 +24,9 @@ namespace CluelessControl
             get;
         }
 
-        private GameSettings(int decimalPlaces, bool onlyWorstMinusCounts, bool onlyBestPlusCounts)
+        private GameSettings(int startEnvelopeCount, int decimalPlaces, bool onlyWorstMinusCounts, bool onlyBestPlusCounts)
         {
+            StartEnvelopeCount = startEnvelopeCount;
             DecimalPlaces = decimalPlaces;
             OnlyWorstMinusCounts = onlyWorstMinusCounts;
             OnlyBestPlusCounts = onlyBestPlusCounts;
@@ -28,15 +34,17 @@ namespace CluelessControl
 
         internal static GameSettings Create()
         {
-            return new GameSettings(decimalPlaces: 0, onlyWorstMinusCounts: false, onlyBestPlusCounts: false);
+            return new GameSettings(startEnvelopeCount: Constants.ENVELOPE_DEFAULT_COUNT, decimalPlaces: 0, onlyWorstMinusCounts: false, onlyBestPlusCounts: false);
         }
 
-        internal static GameSettings Create(int decimalPlaces, bool onlyWorstMinusCounts, bool onlyBestPlusCounts)
+        internal static GameSettings Create(int startEnvelopeCount, int decimalPlaces, bool onlyWorstMinusCounts, bool onlyBestPlusCounts)
         {
+            if (startEnvelopeCount < 0 || startEnvelopeCount > Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
+                throw new ArgumentOutOfRangeException(nameof(startEnvelopeCount), $"Number of envelopes to pick must be between 1 and {Constants.MAX_ENVELOPE_POSSIBLE_COUNT}.");
             if (decimalPlaces < 0)
                 throw new ArgumentOutOfRangeException(nameof(decimalPlaces), $"Number of decimal places in the prize money must be non-negative.");
 
-            return new GameSettings(decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts);
+            return new GameSettings(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts);
         }
 
         public static GameSettings LoadFromFile(string fileName)
