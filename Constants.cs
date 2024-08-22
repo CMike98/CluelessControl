@@ -75,6 +75,7 @@ namespace CluelessControl
         {
             Converters = {
                 new JsonStringEnumConverter(),
+                new JsonGameSettingsConverter(),
                 new JsonChequeConverter(),
                 new JsonChequeSettingsConverter(),
                 new JsonQuestionConverter(),
