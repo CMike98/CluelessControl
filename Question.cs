@@ -9,12 +9,27 @@ namespace CluelessControl
             get;
         }
 
-        public string[] Answers
+        public string Answer1
         {
             get;
         }
 
-        public int CorrectAnswerIndex
+        public string Answer2
+        {
+            get;
+        }
+
+        public string Answer3
+        {
+            get;
+        }
+
+        public string Answer4
+        {
+            get;
+        }
+
+        public int CorrectAnswerNumber
         {
             get;
         }
@@ -27,33 +42,51 @@ namespace CluelessControl
         [JsonIgnore]
         public bool IsExplanationPresent => !string.IsNullOrWhiteSpace(Explanation);
 
-        private Question(string text, string[] answers, int correctAnswerIndex, string? explanation)
+        private Question(string text, string answer1, string answer2, string answer3, string answer4, int correctAnswerNumber, string? explanation)
         {
             Text = text.Trim();
-            Answers = answers.Select(answer => answer.Trim()).ToArray();
-            CorrectAnswerIndex = correctAnswerIndex;
+            Answer1 = answer1.Trim();
+            Answer2 = answer2.Trim();
+            Answer3 = answer3.Trim();
+            Answer4 = answer4.Trim();
+            CorrectAnswerNumber = correctAnswerNumber;
             Explanation = explanation;
         }
 
-        public static Question Create(string text, string[] answers, int correctAnswerIndex, string? explanation)
+        public static Question Create(string text, string answer1, string answer2, string answer3, string answer4, int correctAnswerNumber, string? explanation)
         {
             if (string.IsNullOrWhiteSpace(text))
                 throw new ArgumentNullException(nameof(text));
-            if (answers == null)
-                throw new ArgumentNullException(nameof(answers));
-            if (answers.Length != Constants.ANSWERS_PER_QUESTION)
-                throw new ArgumentException($"There must be exactly {Constants.ANSWERS_PER_QUESTION} answers.", nameof(answers));
-            if (answers.Any(string.IsNullOrWhiteSpace))
-                throw new ArgumentException("At least one answer is null or white space string.", nameof(answers));
-            if (correctAnswerIndex < 0 || correctAnswerIndex >= answers.Length)
-                throw new ArgumentOutOfRangeException(nameof(correctAnswerIndex), $"Correct answer index must be between 0 and {Constants.ANSWERS_PER_QUESTION - 1}.");
+            if (string.IsNullOrWhiteSpace(answer1))
+                throw new ArgumentNullException(nameof(answer1));
+            if (string.IsNullOrWhiteSpace(answer2))
+                throw new ArgumentNullException(nameof(answer2));
+            if (string.IsNullOrWhiteSpace(answer3))
+                throw new ArgumentNullException(nameof(answer3));
+            if (string.IsNullOrWhiteSpace(answer4))
+                throw new ArgumentNullException(nameof(answer4));
+            if (correctAnswerNumber < 0 || correctAnswerNumber > 3)
+                throw new ArgumentOutOfRangeException(nameof(correctAnswerNumber), $"Correct answer number must be between 1 and 4.");
 
-            return new Question(text, answers, correctAnswerIndex, explanation);
+            return new Question(text, answer1, answer2, answer3, answer4, correctAnswerNumber, explanation);
         }
 
-        public static Question Create(string text, string[] answers, int correctAnswerIndex)
+        public static Question Create(string text, string answer1, string answer2, string answer3, string answer4, int correctAnswerNumber)
         {
-            return Create(text, answers, correctAnswerIndex, null);
+            if (string.IsNullOrWhiteSpace(text))
+                throw new ArgumentNullException(nameof(text));
+            if (string.IsNullOrWhiteSpace(answer1))
+                throw new ArgumentNullException(nameof(answer1));
+            if (string.IsNullOrWhiteSpace(answer2))
+                throw new ArgumentNullException(nameof(answer2));
+            if (string.IsNullOrWhiteSpace(answer3))
+                throw new ArgumentNullException(nameof(answer3));
+            if (string.IsNullOrWhiteSpace(answer4))
+                throw new ArgumentNullException(nameof(answer4));
+            if (correctAnswerNumber < 0 || correctAnswerNumber > 3)
+                throw new ArgumentOutOfRangeException(nameof(correctAnswerNumber), $"Correct answer number must be between 1 and 4.");
+
+            return new Question(text, answer1, answer2, answer3, answer4, correctAnswerNumber, explanation: null);
         }
     }
 }

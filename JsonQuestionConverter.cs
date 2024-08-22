@@ -13,32 +13,22 @@ namespace CluelessControl
             // Read the question text
             string text = root.GetProperty("text").GetString() ?? throw new JsonException("No question text.");
 
-            // Read answers array
-            string[] optionsArray = root.GetProperty("answers")
-                .EnumerateArray()
-                .Select(answerElement =>
-                {
-                    string? answerText = answerElement.GetString();
-                    if (string.IsNullOrWhiteSpace(answerText))
-                        throw new JsonException("At least answer is null or white space.");
-                    return answerText;
-                })
-                .ToArray();
-
-            // Check the array length
-            if (optionsArray.Length != Constants.ANSWERS_PER_QUESTION)
-                throw new JsonException($"There must be exactly {Constants.ANSWERS_PER_QUESTION} answers.");
+            // Read answers
+            string answer1 = root.GetProperty("answer1").GetString() ?? throw new JsonException("No answer 1 text.");
+            string answer2 = root.GetProperty("answer2").GetString() ?? throw new JsonException("No answer 2 text.");
+            string answer3 = root.GetProperty("answer3").GetString() ?? throw new JsonException("No answer 3 text.");
+            string answer4 = root.GetProperty("answer4").GetString() ?? throw new JsonException("No answer 4 text.");
 
             // Read the correct answer
-            int correctAnswerIndex = root.GetProperty("correctAnswerIndex").GetInt32();
-            if (correctAnswerIndex < 0 || correctAnswerIndex >= Constants.ANSWERS_PER_QUESTION)
-                throw new JsonException($"The correct answer index must be between 0 and {Constants.ANSWERS_PER_QUESTION - 1}.");
+            int correctAnswerNumber = root.GetProperty("correctAnswerNumber").GetInt32();
+            if (correctAnswerNumber < 1 || correctAnswerNumber > 4)
+                throw new JsonException($"The correct answer number must be in range [1...4].");
 
             // Read the explanation (may be null)
             string? explanation = root.GetProperty("explanation").GetString();
 
             // Create the question
-            return Question.Create(text, optionsArray, correctAnswerIndex, explanation);
+            return Question.Create(text, answer1, answer2, answer3, answer4, correctAnswerNumber, explanation);
         }
 
         public override void Write(Utf8JsonWriter writer, Question value, JsonSerializerOptions options)
@@ -50,16 +40,13 @@ namespace CluelessControl
             writer.WriteString("text", value.Text);
 
             // Write the possible answers
-            writer.WritePropertyName("answers");
-            writer.WriteStartArray();
-            foreach (string answer in value.Answers)
-            {
-                writer.WriteStringValue(answer);
-            }
-            writer.WriteEndArray();
+            writer.WriteString("answer1", value.Answer1);
+            writer.WriteString("answer2", value.Answer2);
+            writer.WriteString("answer3", value.Answer3);
+            writer.WriteString("answer4", value.Answer4);
 
             // Write the correct answer
-            writer.WriteNumber("correctAnswerIndex", value.CorrectAnswerIndex);
+            writer.WriteNumber("correctAnswerNumber", value.CorrectAnswerNumber);
 
             // Write the explanation
             writer.WriteString("explanation", value.Explanation);
