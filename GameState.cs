@@ -77,8 +77,8 @@
             QuestionSet = QuestionSet.Create();
             ChequeSettings = ChequeSettings.Create();
 
-            ContestantEnvelopes = new List<Envelope>(Constants.HOW_MUCH_ENVELOPES_TO_PICK);
-            HostEnvelopes = new List<Envelope>(Constants.HOW_MUCH_ENVELOPES_TO_PICK);
+            ContestantEnvelopes = new List<Envelope>(Constants.MAX_ENVELOPE_POSSIBLE_COUNT);
+            HostEnvelopes = new List<Envelope>(Constants.MAX_ENVELOPE_POSSIBLE_COUNT);
 
             ResetGame();
         }
@@ -138,8 +138,8 @@
 
         public Envelope? GetContestantEnvelope(int index)
         {
-            if (index < 0 || index >= Constants.HOW_MUCH_ENVELOPES_TO_PICK)
-                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {Constants.HOW_MUCH_ENVELOPES_TO_PICK - 1}.");
+            if (index < 0 || index >= Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {Constants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.");
 
             if (index >= ContestantEnvelopes.Count)
                 return null;
@@ -149,8 +149,8 @@
 
         public Envelope? GetHostEnvelope(int index)
         {
-            if (index < 0 || index >= Constants.HOW_MUCH_ENVELOPES_TO_PICK)
-                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {Constants.HOW_MUCH_ENVELOPES_TO_PICK - 1}.");
+            if (index < 0 || index >= Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {Constants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.");
 
             if (index >= HostEnvelopes.Count)
                 return null;
@@ -167,8 +167,8 @@
 
             char playerTag = char.ToUpper(tag[0]);
             int envelopeIndex = (int)char.GetNumericValue(tag[1]);
-            if (envelopeIndex < 0 || envelopeIndex >= Constants.HOW_MUCH_ENVELOPES_TO_PICK)
-                throw new ArgumentException($"The second character (envelope index) must be a digit between 0 and {Constants.HOW_MUCH_ENVELOPES_TO_PICK - 1}.", nameof(tag));
+            if (envelopeIndex < 0 || envelopeIndex >= Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
+                throw new ArgumentException($"The second character (envelope index) must be a digit between 0 and {Constants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.", nameof(tag));
 
             return playerTag switch
             {
