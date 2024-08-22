@@ -25,7 +25,7 @@ namespace CluelessControl
                 throw new JsonException($"The correct answer number must be in range [1...4].");
 
             // Read the explanation (may be null)
-            string? explanation = root.GetProperty("explanation").GetString();
+            string explanation = root.GetProperty("explanation").GetString() ?? throw new JsonException("No explanation.");
 
             // Create the question
             return Question.Create(text, answer1, answer2, answer3, answer4, correctAnswerNumber, explanation);
