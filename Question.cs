@@ -34,7 +34,7 @@ namespace CluelessControl
             get;
         }
 
-        public string? Explanation
+        public string Explanation
         {
             get;
         }
@@ -42,7 +42,7 @@ namespace CluelessControl
         [JsonIgnore]
         public bool IsExplanationPresent => !string.IsNullOrWhiteSpace(Explanation);
 
-        private Question(string text, string answer1, string answer2, string answer3, string answer4, int correctAnswerNumber, string? explanation)
+        private Question(string text, string answer1, string answer2, string answer3, string answer4, int correctAnswerNumber, string explanation)
         {
             Text = text.Trim();
             Answer1 = answer1.Trim();
@@ -53,7 +53,7 @@ namespace CluelessControl
             Explanation = explanation;
         }
 
-        public static Question Create(string text, string answer1, string answer2, string answer3, string answer4, int correctAnswerNumber, string? explanation)
+        public static Question Create(string text, string answer1, string answer2, string answer3, string answer4, int correctAnswerNumber, string explanation)
         {
             if (string.IsNullOrWhiteSpace(text))
                 throw new ArgumentNullException(nameof(text));
@@ -65,7 +65,7 @@ namespace CluelessControl
                 throw new ArgumentNullException(nameof(answer3));
             if (string.IsNullOrWhiteSpace(answer4))
                 throw new ArgumentNullException(nameof(answer4));
-            if (correctAnswerNumber < 0 || correctAnswerNumber > 3)
+            if (correctAnswerNumber < 1 || correctAnswerNumber > 4)
                 throw new ArgumentOutOfRangeException(nameof(correctAnswerNumber), $"Correct answer number must be between 1 and 4.");
 
             return new Question(text, answer1, answer2, answer3, answer4, correctAnswerNumber, explanation);
@@ -83,10 +83,10 @@ namespace CluelessControl
                 throw new ArgumentNullException(nameof(answer3));
             if (string.IsNullOrWhiteSpace(answer4))
                 throw new ArgumentNullException(nameof(answer4));
-            if (correctAnswerNumber < 0 || correctAnswerNumber > 3)
+            if (correctAnswerNumber < 1 || correctAnswerNumber > 4)
                 throw new ArgumentOutOfRangeException(nameof(correctAnswerNumber), $"Correct answer number must be between 1 and 4.");
 
-            return new Question(text, answer1, answer2, answer3, answer4, correctAnswerNumber, explanation: null);
+            return new Question(text, answer1, answer2, answer3, answer4, correctAnswerNumber, explanation: string.Empty);
         }
     }
 }
