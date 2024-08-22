@@ -71,6 +71,9 @@ namespace CluelessControl
         #endregion
 
         #region Json Serializer Options
+        /// <summary>
+        /// The serializer options for all JSON serializations/deserializations
+        /// </summary>
         public static readonly JsonSerializerOptions JSON_SERIALIZER_OPTIONS = new()
         {
             Converters = {
