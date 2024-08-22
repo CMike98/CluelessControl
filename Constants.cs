@@ -24,6 +24,16 @@ namespace CluelessControl
         public const string CLOSE_ON_DIRECTOR_FORM_MESSAGE = "Zamknij reżyserkę, by zamknąć program.";
 
         /// <summary>
+        /// How much envelopes does the contestant select by default?
+        /// </summary>
+        public const int ENVELOPE_DEFAULT_COUNT = 5;
+
+        /// <summary>
+        /// How much envelopes can the system handle currently?
+        /// </summary>
+        public const int MAX_ENVELOPE_POSSIBLE_COUNT = 5;
+
+        /// <summary>
         /// Minimum number of the envelope
         /// </summary>
         public const int MIN_ENVELOPE_NUMBER = 1;
@@ -37,16 +47,6 @@ namespace CluelessControl
         /// How much maximum envelopes there are?
         /// </summary>
         public const int MAX_ENVELOPES_COUNT = 50;
-
-        /// <summary>
-        /// How much envelopes to pick?
-        /// </summary>
-        public const int HOW_MUCH_ENVELOPES_TO_PICK = 5;
-
-        /// <summary>
-        /// Number of answers to each question in the game.
-        /// </summary>
-        public const int ANSWERS_PER_QUESTION = 4;
         
         /// <summary>
         /// Minimum percentage cheque
