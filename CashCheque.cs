@@ -32,7 +32,10 @@
 
         public override string ToValueString()
         {
-            return CashAmount.ToString("#,##0.########");
+            if (CashAmount % 1 == 0)
+                return CashAmount.ToString("#,##0");
+            else
+                return CashAmount.ToString("#,##0.00######");
         }
 
         public override Color GetTextColor()
