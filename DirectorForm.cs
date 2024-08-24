@@ -1,9 +1,3 @@
-using System.Net;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
-
 namespace CluelessControl
 {
     public partial class DirectorForm : Form
@@ -28,7 +22,11 @@ namespace CluelessControl
         private int _questionEditorLastSelectedIndex = NO_ITEM_INDEX;
         #endregion
 
-        private bool EditedBeforeSave => _envelopeSettingsEdited || _questionEditorEdited;
+        #region Events
+
+        #endregion
+
+        private bool EditedBeforeSave => _envelopeSettingsEdited || _questionEditorEdited || EnvelopeSettingsDidChequeChange() || QuestionEditorDidQuestionChange();
 
         public DirectorForm()
         {
@@ -49,7 +47,17 @@ namespace CluelessControl
 
         private void DirectorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ;
+            if (EditedBeforeSave)
+            {
+                var closingResult = MessageBox.Show(
+                    text: "Masz niezapisane zmiany! Jeżeli wyjdziesz, one przepadną! Na pewno chcesz wyjść?",
+                    Constants.PROGRAM_TITLE,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (closingResult == DialogResult.No)
+                    e.Cancel = true;
+            }
         }
 
         #region Messages
@@ -80,6 +88,17 @@ namespace CluelessControl
 
         private void PreShowStartGameBtn_Click(object sender, EventArgs e)
         {
+            var gameState = GameState.Instance;
+            if (gameState.ChequeSettings.ChequeList.Count < Constants.MAX_ENVELOPES_COUNT || gameState.QuestionSet.QuestionList.Count < gameState.GameSettings.StartEnvelopeCount)
+            {
+                string message = string.Format(
+                    "Musisz najpierw wczytać koperty (min. {0} kopert) i zestaw pytań (min. {1} pytań)!",
+                    Constants.MAX_ENVELOPES_COUNT,
+                    gameState.GameSettings.StartEnvelopeCount);
+                
+                ShowErrorMessage(message);
+                return;
+            }
             DirectorTabControl.SelectTab("GamePickEnvelopesTab");
         }
 
@@ -761,6 +780,9 @@ namespace CluelessControl
         private bool QuestionEditorDidQuestionChange()
         {
             int selectedIndex = QuestionEditorListBox.SelectedIndex;
+            if (selectedIndex < 0)
+                return false;
+
             Question question = GameState.Instance.QuestionSet.QuestionList[selectedIndex];
 
             if (QuestionEditorTextBox.Text.Trim() != question.Text)

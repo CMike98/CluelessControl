@@ -653,19 +653,19 @@
             // 
             QuestionEditorCommentTxtBox.Enabled = false;
             QuestionEditorCommentTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorCommentTxtBox.Location = new Point(319, 362);
+            QuestionEditorCommentTxtBox.Location = new Point(286, 362);
             QuestionEditorCommentTxtBox.Multiline = true;
             QuestionEditorCommentTxtBox.Name = "QuestionEditorCommentTxtBox";
-            QuestionEditorCommentTxtBox.Size = new Size(743, 70);
+            QuestionEditorCommentTxtBox.Size = new Size(776, 70);
             QuestionEditorCommentTxtBox.TabIndex = 21;
             QuestionEditorCommentTxtBox.TextAlign = HorizontalAlignment.Center;
             // 
             // QuestionEditorCommentLbl
             // 
             QuestionEditorCommentLbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorCommentLbl.Location = new Point(319, 320);
+            QuestionEditorCommentLbl.Location = new Point(286, 320);
             QuestionEditorCommentLbl.Name = "QuestionEditorCommentLbl";
-            QuestionEditorCommentLbl.Size = new Size(743, 35);
+            QuestionEditorCommentLbl.Size = new Size(776, 35);
             QuestionEditorCommentLbl.TabIndex = 20;
             QuestionEditorCommentLbl.Text = "Komentarz:";
             QuestionEditorCommentLbl.TextAlign = ContentAlignment.MiddleLeft;
@@ -674,9 +674,9 @@
             // 
             QuestionEditorAnsDTxtBox.Enabled = false;
             QuestionEditorAnsDTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsDTxtBox.Location = new Point(377, 273);
+            QuestionEditorAnsDTxtBox.Location = new Point(346, 274);
             QuestionEditorAnsDTxtBox.Name = "QuestionEditorAnsDTxtBox";
-            QuestionEditorAnsDTxtBox.Size = new Size(685, 35);
+            QuestionEditorAnsDTxtBox.Size = new Size(716, 35);
             QuestionEditorAnsDTxtBox.TabIndex = 19;
             QuestionEditorAnsDTxtBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -685,7 +685,7 @@
             QuestionEditorAnsDRadio.AutoSize = true;
             QuestionEditorAnsDRadio.Enabled = false;
             QuestionEditorAnsDRadio.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsDRadio.Location = new Point(319, 273);
+            QuestionEditorAnsDRadio.Location = new Point(286, 274);
             QuestionEditorAnsDRadio.Name = "QuestionEditorAnsDRadio";
             QuestionEditorAnsDRadio.Size = new Size(54, 31);
             QuestionEditorAnsDRadio.TabIndex = 18;
@@ -697,9 +697,9 @@
             // 
             QuestionEditorAnsCTxtBox.Enabled = false;
             QuestionEditorAnsCTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsCTxtBox.Location = new Point(377, 226);
+            QuestionEditorAnsCTxtBox.Location = new Point(346, 227);
             QuestionEditorAnsCTxtBox.Name = "QuestionEditorAnsCTxtBox";
-            QuestionEditorAnsCTxtBox.Size = new Size(685, 35);
+            QuestionEditorAnsCTxtBox.Size = new Size(716, 35);
             QuestionEditorAnsCTxtBox.TabIndex = 17;
             QuestionEditorAnsCTxtBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -708,7 +708,7 @@
             QuestionEditorAnsCRadio.AutoSize = true;
             QuestionEditorAnsCRadio.Enabled = false;
             QuestionEditorAnsCRadio.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsCRadio.Location = new Point(319, 226);
+            QuestionEditorAnsCRadio.Location = new Point(286, 227);
             QuestionEditorAnsCRadio.Name = "QuestionEditorAnsCRadio";
             QuestionEditorAnsCRadio.Size = new Size(54, 31);
             QuestionEditorAnsCRadio.TabIndex = 16;
@@ -720,9 +720,9 @@
             // 
             QuestionEditorAnsBTxtBox.Enabled = false;
             QuestionEditorAnsBTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsBTxtBox.Location = new Point(377, 179);
+            QuestionEditorAnsBTxtBox.Location = new Point(345, 180);
             QuestionEditorAnsBTxtBox.Name = "QuestionEditorAnsBTxtBox";
-            QuestionEditorAnsBTxtBox.Size = new Size(685, 35);
+            QuestionEditorAnsBTxtBox.Size = new Size(717, 35);
             QuestionEditorAnsBTxtBox.TabIndex = 15;
             QuestionEditorAnsBTxtBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -731,7 +731,7 @@
             QuestionEditorAnsBRadio.AutoSize = true;
             QuestionEditorAnsBRadio.Enabled = false;
             QuestionEditorAnsBRadio.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsBRadio.Location = new Point(319, 179);
+            QuestionEditorAnsBRadio.Location = new Point(286, 180);
             QuestionEditorAnsBRadio.Name = "QuestionEditorAnsBRadio";
             QuestionEditorAnsBRadio.Size = new Size(53, 31);
             QuestionEditorAnsBRadio.TabIndex = 14;
@@ -743,9 +743,9 @@
             // 
             QuestionEditorAnsATxtBox.Enabled = false;
             QuestionEditorAnsATxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsATxtBox.Location = new Point(377, 132);
+            QuestionEditorAnsATxtBox.Location = new Point(344, 133);
             QuestionEditorAnsATxtBox.Name = "QuestionEditorAnsATxtBox";
-            QuestionEditorAnsATxtBox.Size = new Size(685, 35);
+            QuestionEditorAnsATxtBox.Size = new Size(718, 35);
             QuestionEditorAnsATxtBox.TabIndex = 13;
             QuestionEditorAnsATxtBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -754,7 +754,7 @@
             QuestionEditorAnsARadio.AutoSize = true;
             QuestionEditorAnsARadio.Enabled = false;
             QuestionEditorAnsARadio.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsARadio.Location = new Point(319, 132);
+            QuestionEditorAnsARadio.Location = new Point(286, 133);
             QuestionEditorAnsARadio.Name = "QuestionEditorAnsARadio";
             QuestionEditorAnsARadio.Size = new Size(52, 31);
             QuestionEditorAnsARadio.TabIndex = 12;
@@ -766,19 +766,19 @@
             // 
             QuestionEditorTextBox.Enabled = false;
             QuestionEditorTextBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorTextBox.Location = new Point(319, 50);
+            QuestionEditorTextBox.Location = new Point(286, 50);
             QuestionEditorTextBox.Multiline = true;
             QuestionEditorTextBox.Name = "QuestionEditorTextBox";
-            QuestionEditorTextBox.Size = new Size(743, 70);
+            QuestionEditorTextBox.Size = new Size(776, 70);
             QuestionEditorTextBox.TabIndex = 11;
             QuestionEditorTextBox.TextAlign = HorizontalAlignment.Center;
             // 
             // QuestionEditorTextLbl
             // 
             QuestionEditorTextLbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorTextLbl.Location = new Point(319, 12);
+            QuestionEditorTextLbl.Location = new Point(286, 12);
             QuestionEditorTextLbl.Name = "QuestionEditorTextLbl";
-            QuestionEditorTextLbl.Size = new Size(743, 35);
+            QuestionEditorTextLbl.Size = new Size(776, 35);
             QuestionEditorTextLbl.TabIndex = 10;
             QuestionEditorTextLbl.Text = "Pytanie:";
             QuestionEditorTextLbl.TextAlign = ContentAlignment.MiddleLeft;
@@ -787,7 +787,7 @@
             // 
             QuestionEditorMoveDownBtn.Enabled = false;
             QuestionEditorMoveDownBtn.Font = new Font("Arial", 12F);
-            QuestionEditorMoveDownBtn.Location = new Point(162, 214);
+            QuestionEditorMoveDownBtn.Location = new Point(152, 214);
             QuestionEditorMoveDownBtn.Name = "QuestionEditorMoveDownBtn";
             QuestionEditorMoveDownBtn.Size = new Size(128, 50);
             QuestionEditorMoveDownBtn.TabIndex = 3;
@@ -799,7 +799,7 @@
             // 
             QuestionEditorMoveUpBtn.Enabled = false;
             QuestionEditorMoveUpBtn.Font = new Font("Arial", 12F);
-            QuestionEditorMoveUpBtn.Location = new Point(22, 214);
+            QuestionEditorMoveUpBtn.Location = new Point(12, 214);
             QuestionEditorMoveUpBtn.Name = "QuestionEditorMoveUpBtn";
             QuestionEditorMoveUpBtn.Size = new Size(128, 50);
             QuestionEditorMoveUpBtn.TabIndex = 2;
@@ -811,7 +811,7 @@
             // 
             QuestionEditorDeleteBtn.Enabled = false;
             QuestionEditorDeleteBtn.Font = new Font("Arial", 12F);
-            QuestionEditorDeleteBtn.Location = new Point(162, 270);
+            QuestionEditorDeleteBtn.Location = new Point(152, 270);
             QuestionEditorDeleteBtn.Name = "QuestionEditorDeleteBtn";
             QuestionEditorDeleteBtn.Size = new Size(128, 50);
             QuestionEditorDeleteBtn.TabIndex = 5;
@@ -822,7 +822,7 @@
             // QuestionEditorNewBtn
             // 
             QuestionEditorNewBtn.Font = new Font("Arial", 12F);
-            QuestionEditorNewBtn.Location = new Point(22, 270);
+            QuestionEditorNewBtn.Location = new Point(12, 270);
             QuestionEditorNewBtn.Name = "QuestionEditorNewBtn";
             QuestionEditorNewBtn.Size = new Size(128, 50);
             QuestionEditorNewBtn.TabIndex = 4;
@@ -835,7 +835,7 @@
             QuestionEditorListBox.Font = new Font("Arial", 14.25F);
             QuestionEditorListBox.FormattingEnabled = true;
             QuestionEditorListBox.ItemHeight = 22;
-            QuestionEditorListBox.Location = new Point(22, 50);
+            QuestionEditorListBox.Location = new Point(12, 50);
             QuestionEditorListBox.Name = "QuestionEditorListBox";
             QuestionEditorListBox.Size = new Size(268, 158);
             QuestionEditorListBox.TabIndex = 1;
@@ -844,7 +844,7 @@
             // QuestionEditorCountLbl
             // 
             QuestionEditorCountLbl.Font = new Font("Arial", 14.25F);
-            QuestionEditorCountLbl.Location = new Point(22, 12);
+            QuestionEditorCountLbl.Location = new Point(12, 12);
             QuestionEditorCountLbl.Name = "QuestionEditorCountLbl";
             QuestionEditorCountLbl.Size = new Size(268, 35);
             QuestionEditorCountLbl.TabIndex = 0;
@@ -855,7 +855,7 @@
             // 
             QuestionEditorSaveToFileBtn.Enabled = false;
             QuestionEditorSaveToFileBtn.Font = new Font("Arial", 12F);
-            QuestionEditorSaveToFileBtn.Location = new Point(162, 382);
+            QuestionEditorSaveToFileBtn.Location = new Point(152, 382);
             QuestionEditorSaveToFileBtn.Name = "QuestionEditorSaveToFileBtn";
             QuestionEditorSaveToFileBtn.Size = new Size(128, 50);
             QuestionEditorSaveToFileBtn.TabIndex = 9;
@@ -867,7 +867,7 @@
             // 
             QuestionEditorSaveBtn.Enabled = false;
             QuestionEditorSaveBtn.Font = new Font("Arial", 12F);
-            QuestionEditorSaveBtn.Location = new Point(162, 326);
+            QuestionEditorSaveBtn.Location = new Point(152, 326);
             QuestionEditorSaveBtn.Name = "QuestionEditorSaveBtn";
             QuestionEditorSaveBtn.Size = new Size(128, 50);
             QuestionEditorSaveBtn.TabIndex = 7;
@@ -878,7 +878,7 @@
             // QuestionEditorLoadFromFileBtn
             // 
             QuestionEditorLoadFromFileBtn.Font = new Font("Arial", 12F);
-            QuestionEditorLoadFromFileBtn.Location = new Point(22, 382);
+            QuestionEditorLoadFromFileBtn.Location = new Point(12, 382);
             QuestionEditorLoadFromFileBtn.Name = "QuestionEditorLoadFromFileBtn";
             QuestionEditorLoadFromFileBtn.Size = new Size(128, 50);
             QuestionEditorLoadFromFileBtn.TabIndex = 8;
@@ -890,7 +890,7 @@
             // 
             QuestionEditorClearBtn.Enabled = false;
             QuestionEditorClearBtn.Font = new Font("Arial", 12F);
-            QuestionEditorClearBtn.Location = new Point(22, 326);
+            QuestionEditorClearBtn.Location = new Point(12, 326);
             QuestionEditorClearBtn.Name = "QuestionEditorClearBtn";
             QuestionEditorClearBtn.Size = new Size(128, 50);
             QuestionEditorClearBtn.TabIndex = 6;
