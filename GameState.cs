@@ -32,6 +32,12 @@
             private set;
         }
 
+        public EnvelopeTable EnvelopeTable
+        {
+            get;
+            private set;
+        }
+
         public QuestionSet QuestionSet
         {
             get;
@@ -45,6 +51,12 @@
         }
 
         public List<Envelope> HostEnvelopes
+        {
+            get;
+            private set;
+        }
+
+        public Envelope? EnvelopePlayedFor
         {
             get;
             private set;
@@ -70,30 +82,47 @@
 
         #endregion
 
+        #region Events
+        #endregion
+
         #region Constructor
         private GameState()
         {
             GameSettings = GameSettings.Create();
             QuestionSet = QuestionSet.Create();
             ChequeSettings = ChequeSettings.Create();
+            EnvelopeTable = new EnvelopeTable();
 
             ContestantEnvelopes = new List<Envelope>(Constants.MAX_ENVELOPE_POSSIBLE_COUNT);
             HostEnvelopes = new List<Envelope>(Constants.MAX_ENVELOPE_POSSIBLE_COUNT);
-
-            ResetGame();
-        }
-        #endregion
-
-        #region Reset
-        public void ResetGame()
-        {
-            ContestantEnvelopes.Clear();
-            HostEnvelopes.Clear();
+            EnvelopePlayedFor = null;
 
             QuestionNumber = -1;
             Cash = 0;
             CashOffer = 0;
         }
+        #endregion
+
+        #region New Game
+        public void NewGame()
+        {
+            ContestantEnvelopes.Clear();
+            HostEnvelopes.Clear();
+
+            EnvelopeTable = EnvelopeTable.GenerateTable(ChequeSettings);
+
+            EnvelopePlayedFor = null;
+            QuestionNumber = -1;
+            Cash = 0;
+            CashOffer = 0;
+        }
+
+        public void NextQuestion()
+        {
+            QuestionNumber++;
+            EnvelopePlayedFor = null;
+        }
+
         #endregion
 
         #region Loading
