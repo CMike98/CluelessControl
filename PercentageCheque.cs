@@ -44,8 +44,7 @@ namespace CluelessControl
 
         public override string ToValueString()
         {
-            decimal fraction = Percentage / 100;
-            return fraction.ToString("+0.##########%;-0.##########%");
+            return Utils.PercentageToString(Percentage);
         }
 
         public override Color GetTextColor()
