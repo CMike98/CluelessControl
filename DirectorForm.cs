@@ -22,6 +22,10 @@ namespace CluelessControl
         private int _questionEditorLastSelectedIndex = NO_ITEM_INDEX;
         #endregion
 
+        #region Envelope Selection
+        private readonly Dictionary<TextBox, Label> _envelopeSelectTxtBoxesAndLabels = [];
+        #endregion
+
         #region Events
 
         #endregion
@@ -36,6 +40,7 @@ namespace CluelessControl
         private void DirectorForm_Load(object sender, EventArgs e)
         {
             ShowAllForms();
+            PrepareEnvelopeSelectionBoxes();
         }
 
         private static void ShowAllForms()
@@ -43,6 +48,20 @@ namespace CluelessControl
             _hostScreenForm.Show();
             _contestantScreenForm.Show();
             _tvScreenForm.Show();
+        }
+
+        private void PrepareEnvelopeSelectionBoxes()
+        {
+            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            {
+                string numberName = string.Format("EnvelopeSelectionNum{0}TxtBox", i);
+                string valueName = string.Format("EnvelopeSelectionContent{0}Lbl", i);
+
+                TextBox numberControl = (TextBox?)Controls.Find(numberName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, numberName);
+                Label valueControl = (Label?)Controls.Find(valueName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, valueName);
+
+                _envelopeSelectTxtBoxesAndLabels.Add(numberControl, valueControl);
+            }
         }
 
         private void DirectorForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -95,10 +114,14 @@ namespace CluelessControl
                     "Musisz najpierw wczytać koperty (min. {0} kopert) i zestaw pytań (min. {1} pytań)!",
                     Constants.MAX_ENVELOPES_COUNT,
                     gameState.GameSettings.StartEnvelopeCount);
-                
+
                 ShowErrorMessage(message);
                 return;
             }
+
+            gameState.NewGame();
+
+            EnvelopeSelectionUnlockFirstBoxes();
             DirectorTabControl.SelectTab("GamePickEnvelopesTab");
         }
 
@@ -124,7 +147,7 @@ namespace CluelessControl
         {
             try
             {
-                int startEnvelopeCount = (int) SettingsEnvelopeStartCountNumeric.Value;
+                int startEnvelopeCount = (int)SettingsEnvelopeStartCountNumeric.Value;
                 int decimalPlaces = int.Parse(SettingsDecimalPlacesTxtBox.Text);
 
                 bool onlyWorstMinusCounts;
@@ -650,7 +673,7 @@ namespace CluelessControl
                 if (confirmResult == DialogResult.No)
                     return;
             }
-            
+
 
             if (EnvelopeSettingsOpen.ShowDialog() != DialogResult.OK)
                 return;
@@ -685,7 +708,7 @@ namespace CluelessControl
             try
             {
                 int selectedIndex = EnvelopeSettingsListBox.SelectedIndex;
-                
+
                 GameState.Instance.ChequeSettings.ChequeList[selectedIndex] = EnvelopeSettingsCreateChequeFromRadios();
 
                 EnvelopeSettingsUpdateAll();
@@ -867,7 +890,7 @@ namespace CluelessControl
             QuestionEditorAnsBTxtBox.Text = question.Answer2;
             QuestionEditorAnsCTxtBox.Text = question.Answer3;
             QuestionEditorAnsDTxtBox.Text = question.Answer4;
-            
+
             switch (question.CorrectAnswerNumber)
             {
                 case 1:
@@ -982,7 +1005,7 @@ namespace CluelessControl
                 answer4: "Odp D",
                 correctAnswerNumber: 1,
                 comment: string.Empty);
-            
+
             var questionSet = GameState.Instance.QuestionSet;
 
             questionSet.AddNewQuestion(blankQuestion);
@@ -1034,6 +1057,9 @@ namespace CluelessControl
             _questionEditorEdited = false;
             _questionEditorSkipIndexChange = false;
             _questionEditorLastSelectedIndex = NO_ITEM_INDEX;
+
+            // We have to call this manually, because we set the index to -1
+            QuestionEditorListBox_SelectedIndexChanged(this, e);
         }
 
         private void QuestionEditorSaveBtn_Click(object sender, EventArgs e)
@@ -1140,6 +1166,150 @@ namespace CluelessControl
                 ShowErrorMessage("Zapisywanie zakończone niepowodzeniem!");
 #endif
             }
+        }
+
+        #endregion
+
+        #region Game - Envelope Selection
+
+        private void EnvelopeSelectionUnlockFirstBoxes()
+        {
+            // Unlock the first envelope
+            EnvelopeSelectionNum0TxtBox.Enabled = true;
+
+            // Unlock the confirmation button
+            EnvelopeSelectionConfirmBtn.Enabled = true;
+        }
+
+        private void EnvelopeSelectionLockBoxes()
+        {
+            // Lock all unlocked buttons
+            EnvelopeSelectionConfirmBtn.Enabled = false;
+            EnvelopeSelectionRetractBtn.Enabled = false;
+            EnvelopeSelectionNextPartBtn.Enabled = false;
+        }
+
+        private void EnvelopeSelectionUpdateAvailability()
+        {
+            var gameStateInstance = GameState.Instance;
+            int envelopeCount = gameStateInstance.ContestantEnvelopes.Count;
+            int startEnvelopeCount = gameStateInstance.GameSettings.StartEnvelopeCount;
+
+            TextBox[] numberTextBoxes = _envelopeSelectTxtBoxesAndLabels.Keys.ToArray();
+
+            for (int i = 0; i < numberTextBoxes.Length; ++i)
+            {
+                numberTextBoxes[i].Enabled = (i == envelopeCount);
+
+            }
+
+            EnvelopeSelectionConfirmBtn.Enabled = envelopeCount < startEnvelopeCount;
+            EnvelopeSelectionRetractBtn.Enabled = envelopeCount > 0;
+            EnvelopeSelectionNextPartBtn.Enabled = envelopeCount >= startEnvelopeCount;
+        }
+
+        private void EnvelopeSelectionNumTxtBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                EnvelopeSelectionConfirmBtn_Click(this, e);
+                e.Handled = e.SuppressKeyPress = true;
+            }
+        }
+
+        private void EnvelopeSelectionNumTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            // Check if the sender is a textbox
+            if (sender is not TextBox numberBox)
+                throw new ArgumentException("The sender is not a textbox.");
+
+            // Get the appropriate value label
+            Label valueLabel = _envelopeSelectTxtBoxesAndLabels[numberBox];
+
+            // If the textbox is empty, then clear the value label
+            if (string.IsNullOrEmpty(numberBox.Text))
+            {
+                valueLabel.Text = string.Empty;
+                return;
+            }
+
+            // Check for errors
+            string errorMessage = string.Empty;
+            if (!int.TryParse(numberBox.Text, out int envelopeNumber))
+            {
+                errorMessage = "Podany numer koperty nie jest liczbą!";
+            }
+            else if (envelopeNumber < Constants.MIN_ENVELOPE_NUMBER || envelopeNumber > Constants.MAX_ENVELOPE_NUMBER)
+            {
+                errorMessage = string.Format("Numer koperty musi być z przedziału {0}...{1}!", Constants.MIN_ENVELOPE_NUMBER, Constants.MAX_ENVELOPE_NUMBER);
+            }
+
+            // If there's no error message, display the correct envelope value
+            // If there is an error, display it
+            if (string.IsNullOrEmpty(errorMessage))
+            {
+                Envelope envelope = GameState.Instance.EnvelopeTable.GetEnvelope(envelopeNumber);
+
+                valueLabel.Text = envelope.Cheque.ToValueString();
+                valueLabel.ForeColor = Color.Black;
+            }
+            else
+            {
+                valueLabel.Text = errorMessage;
+                valueLabel.ForeColor = Color.Red;
+            }
+        }
+
+        private void EnvelopeSelectionConfirmBtn_Click(object sender, EventArgs e)
+        {
+            var gameStateInstance = GameState.Instance;
+            var contestantEnvelopes = gameStateInstance.ContestantEnvelopes;
+            int index = contestantEnvelopes.Count;
+
+            // Get the correct textbox
+            TextBox[] numberTextBoxes = _envelopeSelectTxtBoxesAndLabels.Keys.ToArray();
+
+            // Check if the envelope number is valid
+            if (!int.TryParse(numberTextBoxes[index].Text, out int envelopeNumber) ||
+                envelopeNumber < Constants.MIN_ENVELOPE_NUMBER || envelopeNumber > Constants.MAX_ENVELOPE_NUMBER)
+            {
+                string message = string.Format("Numer koperty musi być liczbą [{0}...{1}].", Constants.MIN_ENVELOPE_NUMBER, Constants.MAX_ENVELOPE_NUMBER);
+                ShowErrorMessage(message);
+                return;
+            }
+
+            // Get the envelope and add to the contestant envelopes
+            var newEnvelope = gameStateInstance.EnvelopeTable.GetEnvelope(envelopeNumber);
+            gameStateInstance.ContestantEnvelopes.Add(newEnvelope);
+
+            // Update button availability
+            EnvelopeSelectionUpdateAvailability();
+        }
+
+        private void EnvelopeSelectionRetractBtn_Click(object sender, EventArgs e)
+        {
+            var gameStateInstance = GameState.Instance;
+            var contestantEnvelopes = gameStateInstance.ContestantEnvelopes;
+            int lastEnvelopeIndex = contestantEnvelopes.Count - 1;
+
+            // Remove the last envelope
+            contestantEnvelopes.RemoveAt(lastEnvelopeIndex);
+
+            // Get the last textbox and clear it
+            TextBox[] numberTextBoxes = _envelopeSelectTxtBoxesAndLabels.Keys.ToArray();
+            TextBox currentNumberTxtBox = numberTextBoxes[lastEnvelopeIndex];
+
+            currentNumberTxtBox.Clear();
+
+            // Update button availability
+            EnvelopeSelectionUpdateAvailability();
+        }
+
+        private void EnvelopeSelectionNextPartBtn_Click(object sender, EventArgs e)
+        {
+            EnvelopeSelectionLockBoxes();
+
+            DirectorTabControl.SelectTab("GameQuestionsTab");
         }
 
         #endregion

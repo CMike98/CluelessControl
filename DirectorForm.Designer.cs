@@ -94,6 +94,21 @@
             QuestionEditorLoadFromFileBtn = new Button();
             QuestionEditorClearBtn = new Button();
             GamePickEnvelopesTab = new TabPage();
+            EnvelopeSelectionNextPartBtn = new Button();
+            EnvelopeSelectionRetractBtn = new Button();
+            EnvelopeSelectionConfirmBtn = new Button();
+            EnvelopeSelectionContentLbl = new Label();
+            EnvelopeSelectionNumberLbl = new Label();
+            EnvelopeSelectionContent4Lbl = new Label();
+            EnvelopeSelectionNum4TxtBox = new TextBox();
+            EnvelopeSelectionContent2Lbl = new Label();
+            EnvelopeSelectionNum2TxtBox = new TextBox();
+            EnvelopeSelectionContent3Lbl = new Label();
+            EnvelopeSelectionNum3TxtBox = new TextBox();
+            EnvelopeSelectionContent1Lbl = new Label();
+            EnvelopeSelectionNum1TxtBox = new TextBox();
+            EnvelopeSelectionContent0Lbl = new Label();
+            EnvelopeSelectionNum0TxtBox = new TextBox();
             GameQuestionsTab = new TabPage();
             GameTradingTab = new TabPage();
             GameOverTab = new TabPage();
@@ -113,6 +128,7 @@
             SettingsMinusPercentGroup.SuspendLayout();
             GameSettingsEnvelopesTab.SuspendLayout();
             QuestionEditorTab.SuspendLayout();
+            GamePickEnvelopesTab.SuspendLayout();
             SuspendLayout();
             // 
             // DirectorTabControl
@@ -157,7 +173,7 @@
             PreShowWarningLbl.Name = "PreShowWarningLbl";
             PreShowWarningLbl.Size = new Size(1069, 183);
             PreShowWarningLbl.TabIndex = 6;
-            PreShowWarningLbl.Text = "Pamiętaj o załadowaniu ustawień gry, ustawień kopert i zestawu pytań przed grą!";
+            PreShowWarningLbl.Text = "Pamiętaj o załadowaniu ustawień gry, ustawień kopert i zestawu pytań przed grą! Pamiętaj o wylosowaniu kolejności czeków w kopertach!";
             PreShowWarningLbl.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // PreShowQuestionEditorBtn
@@ -653,19 +669,19 @@
             // 
             QuestionEditorCommentTxtBox.Enabled = false;
             QuestionEditorCommentTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorCommentTxtBox.Location = new Point(286, 362);
+            QuestionEditorCommentTxtBox.Location = new Point(304, 362);
             QuestionEditorCommentTxtBox.Multiline = true;
             QuestionEditorCommentTxtBox.Name = "QuestionEditorCommentTxtBox";
-            QuestionEditorCommentTxtBox.Size = new Size(776, 70);
+            QuestionEditorCommentTxtBox.Size = new Size(758, 70);
             QuestionEditorCommentTxtBox.TabIndex = 21;
             QuestionEditorCommentTxtBox.TextAlign = HorizontalAlignment.Center;
             // 
             // QuestionEditorCommentLbl
             // 
             QuestionEditorCommentLbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorCommentLbl.Location = new Point(286, 320);
+            QuestionEditorCommentLbl.Location = new Point(304, 320);
             QuestionEditorCommentLbl.Name = "QuestionEditorCommentLbl";
-            QuestionEditorCommentLbl.Size = new Size(776, 35);
+            QuestionEditorCommentLbl.Size = new Size(758, 35);
             QuestionEditorCommentLbl.TabIndex = 20;
             QuestionEditorCommentLbl.Text = "Komentarz:";
             QuestionEditorCommentLbl.TextAlign = ContentAlignment.MiddleLeft;
@@ -674,9 +690,9 @@
             // 
             QuestionEditorAnsDTxtBox.Enabled = false;
             QuestionEditorAnsDTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsDTxtBox.Location = new Point(346, 274);
+            QuestionEditorAnsDTxtBox.Location = new Point(364, 274);
             QuestionEditorAnsDTxtBox.Name = "QuestionEditorAnsDTxtBox";
-            QuestionEditorAnsDTxtBox.Size = new Size(716, 35);
+            QuestionEditorAnsDTxtBox.Size = new Size(698, 35);
             QuestionEditorAnsDTxtBox.TabIndex = 19;
             QuestionEditorAnsDTxtBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -685,7 +701,7 @@
             QuestionEditorAnsDRadio.AutoSize = true;
             QuestionEditorAnsDRadio.Enabled = false;
             QuestionEditorAnsDRadio.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsDRadio.Location = new Point(286, 274);
+            QuestionEditorAnsDRadio.Location = new Point(304, 274);
             QuestionEditorAnsDRadio.Name = "QuestionEditorAnsDRadio";
             QuestionEditorAnsDRadio.Size = new Size(54, 31);
             QuestionEditorAnsDRadio.TabIndex = 18;
@@ -697,9 +713,9 @@
             // 
             QuestionEditorAnsCTxtBox.Enabled = false;
             QuestionEditorAnsCTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsCTxtBox.Location = new Point(346, 227);
+            QuestionEditorAnsCTxtBox.Location = new Point(364, 227);
             QuestionEditorAnsCTxtBox.Name = "QuestionEditorAnsCTxtBox";
-            QuestionEditorAnsCTxtBox.Size = new Size(716, 35);
+            QuestionEditorAnsCTxtBox.Size = new Size(698, 35);
             QuestionEditorAnsCTxtBox.TabIndex = 17;
             QuestionEditorAnsCTxtBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -708,7 +724,7 @@
             QuestionEditorAnsCRadio.AutoSize = true;
             QuestionEditorAnsCRadio.Enabled = false;
             QuestionEditorAnsCRadio.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsCRadio.Location = new Point(286, 227);
+            QuestionEditorAnsCRadio.Location = new Point(304, 228);
             QuestionEditorAnsCRadio.Name = "QuestionEditorAnsCRadio";
             QuestionEditorAnsCRadio.Size = new Size(54, 31);
             QuestionEditorAnsCRadio.TabIndex = 16;
@@ -720,9 +736,9 @@
             // 
             QuestionEditorAnsBTxtBox.Enabled = false;
             QuestionEditorAnsBTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsBTxtBox.Location = new Point(345, 180);
+            QuestionEditorAnsBTxtBox.Location = new Point(364, 180);
             QuestionEditorAnsBTxtBox.Name = "QuestionEditorAnsBTxtBox";
-            QuestionEditorAnsBTxtBox.Size = new Size(717, 35);
+            QuestionEditorAnsBTxtBox.Size = new Size(698, 35);
             QuestionEditorAnsBTxtBox.TabIndex = 15;
             QuestionEditorAnsBTxtBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -731,7 +747,7 @@
             QuestionEditorAnsBRadio.AutoSize = true;
             QuestionEditorAnsBRadio.Enabled = false;
             QuestionEditorAnsBRadio.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsBRadio.Location = new Point(286, 180);
+            QuestionEditorAnsBRadio.Location = new Point(305, 181);
             QuestionEditorAnsBRadio.Name = "QuestionEditorAnsBRadio";
             QuestionEditorAnsBRadio.Size = new Size(53, 31);
             QuestionEditorAnsBRadio.TabIndex = 14;
@@ -743,9 +759,9 @@
             // 
             QuestionEditorAnsATxtBox.Enabled = false;
             QuestionEditorAnsATxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsATxtBox.Location = new Point(344, 133);
+            QuestionEditorAnsATxtBox.Location = new Point(364, 133);
             QuestionEditorAnsATxtBox.Name = "QuestionEditorAnsATxtBox";
-            QuestionEditorAnsATxtBox.Size = new Size(718, 35);
+            QuestionEditorAnsATxtBox.Size = new Size(698, 35);
             QuestionEditorAnsATxtBox.TabIndex = 13;
             QuestionEditorAnsATxtBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -754,7 +770,7 @@
             QuestionEditorAnsARadio.AutoSize = true;
             QuestionEditorAnsARadio.Enabled = false;
             QuestionEditorAnsARadio.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorAnsARadio.Location = new Point(286, 133);
+            QuestionEditorAnsARadio.Location = new Point(306, 134);
             QuestionEditorAnsARadio.Name = "QuestionEditorAnsARadio";
             QuestionEditorAnsARadio.Size = new Size(52, 31);
             QuestionEditorAnsARadio.TabIndex = 12;
@@ -766,19 +782,19 @@
             // 
             QuestionEditorTextBox.Enabled = false;
             QuestionEditorTextBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorTextBox.Location = new Point(286, 50);
+            QuestionEditorTextBox.Location = new Point(304, 50);
             QuestionEditorTextBox.Multiline = true;
             QuestionEditorTextBox.Name = "QuestionEditorTextBox";
-            QuestionEditorTextBox.Size = new Size(776, 70);
+            QuestionEditorTextBox.Size = new Size(758, 70);
             QuestionEditorTextBox.TabIndex = 11;
             QuestionEditorTextBox.TextAlign = HorizontalAlignment.Center;
             // 
             // QuestionEditorTextLbl
             // 
             QuestionEditorTextLbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            QuestionEditorTextLbl.Location = new Point(286, 12);
+            QuestionEditorTextLbl.Location = new Point(304, 12);
             QuestionEditorTextLbl.Name = "QuestionEditorTextLbl";
-            QuestionEditorTextLbl.Size = new Size(776, 35);
+            QuestionEditorTextLbl.Size = new Size(758, 35);
             QuestionEditorTextLbl.TabIndex = 10;
             QuestionEditorTextLbl.Text = "Pytanie:";
             QuestionEditorTextLbl.TextAlign = ContentAlignment.MiddleLeft;
@@ -871,7 +887,7 @@
             QuestionEditorSaveBtn.Name = "QuestionEditorSaveBtn";
             QuestionEditorSaveBtn.Size = new Size(128, 50);
             QuestionEditorSaveBtn.TabIndex = 7;
-            QuestionEditorSaveBtn.Text = "Zapisz zestaw";
+            QuestionEditorSaveBtn.Text = "Zapisz pytanie";
             QuestionEditorSaveBtn.UseVisualStyleBackColor = true;
             QuestionEditorSaveBtn.Click += QuestionEditorSaveBtn_Click;
             // 
@@ -901,12 +917,188 @@
             // GamePickEnvelopesTab
             // 
             GamePickEnvelopesTab.BackColor = SystemColors.Control;
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionNextPartBtn);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionRetractBtn);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionConfirmBtn);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionContentLbl);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionNumberLbl);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionContent4Lbl);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionNum4TxtBox);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionContent2Lbl);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionNum2TxtBox);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionContent3Lbl);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionNum3TxtBox);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionContent1Lbl);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionNum1TxtBox);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionContent0Lbl);
+            GamePickEnvelopesTab.Controls.Add(EnvelopeSelectionNum0TxtBox);
             GamePickEnvelopesTab.Location = new Point(4, 24);
             GamePickEnvelopesTab.Name = "GamePickEnvelopesTab";
             GamePickEnvelopesTab.Padding = new Padding(3);
             GamePickEnvelopesTab.Size = new Size(1084, 445);
             GamePickEnvelopesTab.TabIndex = 1;
             GamePickEnvelopesTab.Text = "Gra - Wybór kopert";
+            // 
+            // EnvelopeSelectionNextPartBtn
+            // 
+            EnvelopeSelectionNextPartBtn.Enabled = false;
+            EnvelopeSelectionNextPartBtn.Font = new Font("Arial", 14.25F);
+            EnvelopeSelectionNextPartBtn.Location = new Point(807, 366);
+            EnvelopeSelectionNextPartBtn.Name = "EnvelopeSelectionNextPartBtn";
+            EnvelopeSelectionNextPartBtn.Size = new Size(250, 62);
+            EnvelopeSelectionNextPartBtn.TabIndex = 14;
+            EnvelopeSelectionNextPartBtn.Text = "Przejdź dalej";
+            EnvelopeSelectionNextPartBtn.UseVisualStyleBackColor = true;
+            EnvelopeSelectionNextPartBtn.Click += EnvelopeSelectionNextPartBtn_Click;
+            // 
+            // EnvelopeSelectionRetractBtn
+            // 
+            EnvelopeSelectionRetractBtn.Enabled = false;
+            EnvelopeSelectionRetractBtn.Font = new Font("Arial", 14.25F);
+            EnvelopeSelectionRetractBtn.Location = new Point(414, 366);
+            EnvelopeSelectionRetractBtn.Name = "EnvelopeSelectionRetractBtn";
+            EnvelopeSelectionRetractBtn.Size = new Size(250, 62);
+            EnvelopeSelectionRetractBtn.TabIndex = 13;
+            EnvelopeSelectionRetractBtn.Text = "Wycofaj ostatnią kopertę";
+            EnvelopeSelectionRetractBtn.UseVisualStyleBackColor = true;
+            EnvelopeSelectionRetractBtn.Click += EnvelopeSelectionRetractBtn_Click;
+            // 
+            // EnvelopeSelectionConfirmBtn
+            // 
+            EnvelopeSelectionConfirmBtn.Enabled = false;
+            EnvelopeSelectionConfirmBtn.Font = new Font("Arial", 14.25F);
+            EnvelopeSelectionConfirmBtn.Location = new Point(21, 366);
+            EnvelopeSelectionConfirmBtn.Name = "EnvelopeSelectionConfirmBtn";
+            EnvelopeSelectionConfirmBtn.Size = new Size(250, 62);
+            EnvelopeSelectionConfirmBtn.TabIndex = 12;
+            EnvelopeSelectionConfirmBtn.Text = "Zatwierdź kopertę";
+            EnvelopeSelectionConfirmBtn.UseVisualStyleBackColor = true;
+            EnvelopeSelectionConfirmBtn.Click += EnvelopeSelectionConfirmBtn_Click;
+            // 
+            // EnvelopeSelectionContentLbl
+            // 
+            EnvelopeSelectionContentLbl.Font = new Font("Arial", 12F, FontStyle.Italic, GraphicsUnit.Point, 238);
+            EnvelopeSelectionContentLbl.Location = new Point(147, 17);
+            EnvelopeSelectionContentLbl.Name = "EnvelopeSelectionContentLbl";
+            EnvelopeSelectionContentLbl.Size = new Size(911, 35);
+            EnvelopeSelectionContentLbl.TabIndex = 11;
+            EnvelopeSelectionContentLbl.Text = "Zawartość";
+            EnvelopeSelectionContentLbl.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // EnvelopeSelectionNumberLbl
+            // 
+            EnvelopeSelectionNumberLbl.Font = new Font("Arial", 12F, FontStyle.Italic, GraphicsUnit.Point, 238);
+            EnvelopeSelectionNumberLbl.Location = new Point(21, 17);
+            EnvelopeSelectionNumberLbl.Name = "EnvelopeSelectionNumberLbl";
+            EnvelopeSelectionNumberLbl.Size = new Size(107, 35);
+            EnvelopeSelectionNumberLbl.TabIndex = 10;
+            EnvelopeSelectionNumberLbl.Text = "Nr koperty";
+            EnvelopeSelectionNumberLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // EnvelopeSelectionContent4Lbl
+            // 
+            EnvelopeSelectionContent4Lbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSelectionContent4Lbl.Location = new Point(147, 291);
+            EnvelopeSelectionContent4Lbl.Name = "EnvelopeSelectionContent4Lbl";
+            EnvelopeSelectionContent4Lbl.Size = new Size(911, 35);
+            EnvelopeSelectionContent4Lbl.TabIndex = 9;
+            EnvelopeSelectionContent4Lbl.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // EnvelopeSelectionNum4TxtBox
+            // 
+            EnvelopeSelectionNum4TxtBox.Enabled = false;
+            EnvelopeSelectionNum4TxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSelectionNum4TxtBox.Location = new Point(21, 291);
+            EnvelopeSelectionNum4TxtBox.Name = "EnvelopeSelectionNum4TxtBox";
+            EnvelopeSelectionNum4TxtBox.Size = new Size(107, 35);
+            EnvelopeSelectionNum4TxtBox.TabIndex = 8;
+            EnvelopeSelectionNum4TxtBox.TextAlign = HorizontalAlignment.Center;
+            EnvelopeSelectionNum4TxtBox.TextChanged += EnvelopeSelectionNumTxtBox_TextChanged;
+            EnvelopeSelectionNum4TxtBox.KeyDown += EnvelopeSelectionNumTxtBox_KeyDown;
+            // 
+            // EnvelopeSelectionContent2Lbl
+            // 
+            EnvelopeSelectionContent2Lbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSelectionContent2Lbl.Location = new Point(147, 173);
+            EnvelopeSelectionContent2Lbl.Name = "EnvelopeSelectionContent2Lbl";
+            EnvelopeSelectionContent2Lbl.Size = new Size(911, 35);
+            EnvelopeSelectionContent2Lbl.TabIndex = 7;
+            EnvelopeSelectionContent2Lbl.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // EnvelopeSelectionNum2TxtBox
+            // 
+            EnvelopeSelectionNum2TxtBox.Enabled = false;
+            EnvelopeSelectionNum2TxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSelectionNum2TxtBox.Location = new Point(21, 173);
+            EnvelopeSelectionNum2TxtBox.Name = "EnvelopeSelectionNum2TxtBox";
+            EnvelopeSelectionNum2TxtBox.Size = new Size(107, 35);
+            EnvelopeSelectionNum2TxtBox.TabIndex = 6;
+            EnvelopeSelectionNum2TxtBox.TextAlign = HorizontalAlignment.Center;
+            EnvelopeSelectionNum2TxtBox.TextChanged += EnvelopeSelectionNumTxtBox_TextChanged;
+            EnvelopeSelectionNum2TxtBox.KeyDown += EnvelopeSelectionNumTxtBox_KeyDown;
+            // 
+            // EnvelopeSelectionContent3Lbl
+            // 
+            EnvelopeSelectionContent3Lbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSelectionContent3Lbl.Location = new Point(147, 232);
+            EnvelopeSelectionContent3Lbl.Name = "EnvelopeSelectionContent3Lbl";
+            EnvelopeSelectionContent3Lbl.Size = new Size(911, 35);
+            EnvelopeSelectionContent3Lbl.TabIndex = 5;
+            EnvelopeSelectionContent3Lbl.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // EnvelopeSelectionNum3TxtBox
+            // 
+            EnvelopeSelectionNum3TxtBox.Enabled = false;
+            EnvelopeSelectionNum3TxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSelectionNum3TxtBox.Location = new Point(21, 232);
+            EnvelopeSelectionNum3TxtBox.Name = "EnvelopeSelectionNum3TxtBox";
+            EnvelopeSelectionNum3TxtBox.Size = new Size(107, 35);
+            EnvelopeSelectionNum3TxtBox.TabIndex = 4;
+            EnvelopeSelectionNum3TxtBox.TextAlign = HorizontalAlignment.Center;
+            EnvelopeSelectionNum3TxtBox.TextChanged += EnvelopeSelectionNumTxtBox_TextChanged;
+            EnvelopeSelectionNum3TxtBox.KeyDown += EnvelopeSelectionNumTxtBox_KeyDown;
+            // 
+            // EnvelopeSelectionContent1Lbl
+            // 
+            EnvelopeSelectionContent1Lbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSelectionContent1Lbl.Location = new Point(147, 114);
+            EnvelopeSelectionContent1Lbl.Name = "EnvelopeSelectionContent1Lbl";
+            EnvelopeSelectionContent1Lbl.Size = new Size(911, 35);
+            EnvelopeSelectionContent1Lbl.TabIndex = 3;
+            EnvelopeSelectionContent1Lbl.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // EnvelopeSelectionNum1TxtBox
+            // 
+            EnvelopeSelectionNum1TxtBox.Enabled = false;
+            EnvelopeSelectionNum1TxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSelectionNum1TxtBox.Location = new Point(21, 114);
+            EnvelopeSelectionNum1TxtBox.Name = "EnvelopeSelectionNum1TxtBox";
+            EnvelopeSelectionNum1TxtBox.Size = new Size(107, 35);
+            EnvelopeSelectionNum1TxtBox.TabIndex = 2;
+            EnvelopeSelectionNum1TxtBox.TextAlign = HorizontalAlignment.Center;
+            EnvelopeSelectionNum1TxtBox.TextChanged += EnvelopeSelectionNumTxtBox_TextChanged;
+            EnvelopeSelectionNum1TxtBox.KeyDown += EnvelopeSelectionNumTxtBox_KeyDown;
+            // 
+            // EnvelopeSelectionContent0Lbl
+            // 
+            EnvelopeSelectionContent0Lbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSelectionContent0Lbl.Location = new Point(147, 55);
+            EnvelopeSelectionContent0Lbl.Name = "EnvelopeSelectionContent0Lbl";
+            EnvelopeSelectionContent0Lbl.Size = new Size(911, 35);
+            EnvelopeSelectionContent0Lbl.TabIndex = 1;
+            EnvelopeSelectionContent0Lbl.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // EnvelopeSelectionNum0TxtBox
+            // 
+            EnvelopeSelectionNum0TxtBox.Enabled = false;
+            EnvelopeSelectionNum0TxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSelectionNum0TxtBox.Location = new Point(21, 55);
+            EnvelopeSelectionNum0TxtBox.Name = "EnvelopeSelectionNum0TxtBox";
+            EnvelopeSelectionNum0TxtBox.Size = new Size(107, 35);
+            EnvelopeSelectionNum0TxtBox.TabIndex = 0;
+            EnvelopeSelectionNum0TxtBox.TextAlign = HorizontalAlignment.Center;
+            EnvelopeSelectionNum0TxtBox.TextChanged += EnvelopeSelectionNumTxtBox_TextChanged;
+            EnvelopeSelectionNum0TxtBox.KeyDown += EnvelopeSelectionNumTxtBox_KeyDown;
             // 
             // GameQuestionsTab
             // 
@@ -992,6 +1184,8 @@
             GameSettingsEnvelopesTab.PerformLayout();
             QuestionEditorTab.ResumeLayout(false);
             QuestionEditorTab.PerformLayout();
+            GamePickEnvelopesTab.ResumeLayout(false);
+            GamePickEnvelopesTab.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1072,5 +1266,20 @@
         private GroupBox SettingsEnvelopeStartCountGroup;
         private NumericUpDown SettingsEnvelopeStartCountNumeric;
         private Label SettingsEnvelopeStartCountLbl;
+        private TextBox EnvelopeSelectionNum0TxtBox;
+        private Label EnvelopeSelectionContent0Lbl;
+        private Label EnvelopeSelectionContent4Lbl;
+        private TextBox EnvelopeSelectionNum4TxtBox;
+        private Label EnvelopeSelectionContent2Lbl;
+        private TextBox EnvelopeSelectionNum2TxtBox;
+        private Label EnvelopeSelectionContent3Lbl;
+        private TextBox EnvelopeSelectionNum3TxtBox;
+        private Label EnvelopeSelectionContent1Lbl;
+        private TextBox EnvelopeSelectionNum1TxtBox;
+        private Label EnvelopeSelectionContentLbl;
+        private Label EnvelopeSelectionNumberLbl;
+        private Button EnvelopeSelectionConfirmBtn;
+        private Button EnvelopeSelectionNextPartBtn;
+        private Button EnvelopeSelectionRetractBtn;
     }
 }
