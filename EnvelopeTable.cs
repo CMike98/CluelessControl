@@ -13,18 +13,25 @@
             EnvelopesOnTable = new List<Envelope>();
         }
 
-        public void GenerateTable(ChequeSettings settings)
+        public EnvelopeTable(List<Envelope> envelopesOnTable)
+        {
+            EnvelopesOnTable = envelopesOnTable;
+        }
+
+        public static EnvelopeTable GenerateTable(ChequeSettings settings)
         {
             if (settings == null)
                 throw new ArgumentNullException(nameof(settings));
 
-            EnvelopesOnTable = new List<Envelope>();
+            var envelopeList = new List<Envelope>();
 
             for (int i = Constants.MIN_ENVELOPE_NUMBER; i <= Constants.MAX_ENVELOPE_NUMBER; ++i)
             {
                 var newEnvelope = Envelope.Create(i, settings.ChequeList[i - Constants.MIN_ENVELOPE_NUMBER]);
-                EnvelopesOnTable.Add(newEnvelope);
+                envelopeList.Add(newEnvelope);
             }
+
+            return new(envelopeList);
         }
 
         public Envelope GetEnvelope(int envelopeNumber)
