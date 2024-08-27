@@ -91,10 +91,10 @@
             GameSettings = GameSettings.Create();
             QuestionSet = QuestionSet.Create();
             ChequeSettings = ChequeSettings.Create();
-            EnvelopeTable = new EnvelopeTable();
+            EnvelopeTable = EnvelopeTable.Create();
 
-            ContestantEnvelopes = new List<Envelope>(Constants.MAX_ENVELOPE_POSSIBLE_COUNT);
-            HostEnvelopes = new List<Envelope>(Constants.MAX_ENVELOPE_POSSIBLE_COUNT);
+            ContestantEnvelopes = new(Constants.MAX_ENVELOPE_POSSIBLE_COUNT);
+            HostEnvelopes = new(Constants.MAX_ENVELOPE_POSSIBLE_COUNT);
             EnvelopePlayedFor = null;
 
             QuestionNumber = -1;
@@ -109,7 +109,7 @@
             ContestantEnvelopes.Clear();
             HostEnvelopes.Clear();
 
-            EnvelopeTable = EnvelopeTable.GenerateTable(ChequeSettings);
+            EnvelopeTable = EnvelopeTable.Create(ChequeSettings);
 
             EnvelopePlayedFor = null;
             QuestionNumber = -1;
