@@ -2,28 +2,33 @@
 {
     public class EnvelopeTable
     {
-        private List<Envelope> EnvelopesOnTable
+        private HashSet<Envelope> EnvelopesOnTable
         {
             get;
             set;
         }
 
-        public EnvelopeTable()
+        private EnvelopeTable()
         {
-            EnvelopesOnTable = new List<Envelope>();
+            EnvelopesOnTable = new HashSet<Envelope>();
         }
 
-        public EnvelopeTable(List<Envelope> envelopesOnTable)
+        private EnvelopeTable(HashSet<Envelope> envelopesOnTable)
         {
             EnvelopesOnTable = envelopesOnTable;
         }
 
-        public static EnvelopeTable GenerateTable(ChequeSettings settings)
+        public static EnvelopeTable Create()
+        {
+            return new EnvelopeTable();
+        }
+
+        public static EnvelopeTable Create(ChequeSettings settings)
         {
             if (settings == null)
                 throw new ArgumentNullException(nameof(settings));
 
-            var envelopeList = new List<Envelope>();
+            var envelopeList = new HashSet<Envelope>();
 
             for (int i = Constants.MIN_ENVELOPE_NUMBER; i <= Constants.MAX_ENVELOPE_NUMBER; ++i)
             {
@@ -34,19 +39,63 @@
             return new(envelopeList);
         }
 
+        public bool IsEnvelopePresent(int envelopeNumber)
+        {
+            if (envelopeNumber < Constants.MIN_ENVELOPE_NUMBER || envelopeNumber > Constants.MAX_ENVELOPE_NUMBER)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(envelopeNumber),
+                    $"Envelope number must be in range [{Constants.MIN_ENVELOPE_NUMBER}...{Constants.MAX_ENVELOPE_NUMBER}]!");
+            }
+
+            return EnvelopesOnTable.FirstOrDefault(current => current.EnvelopeNumber == envelopeNumber) is not null;
+        }
+
+        public bool IsEnvelopePresent(Envelope envelope)
+        {
+            if (envelope == null)
+                throw new ArgumentNullException(nameof(envelope));
+
+            return EnvelopesOnTable.Contains(envelope);
+        }
+
         public Envelope GetEnvelope(int envelopeNumber)
         {
+            if (envelopeNumber < Constants.MIN_ENVELOPE_NUMBER || envelopeNumber > Constants.MAX_ENVELOPE_NUMBER)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(envelopeNumber),
+                    $"Envelope number must be in range [{Constants.MIN_ENVELOPE_NUMBER}...{Constants.MAX_ENVELOPE_NUMBER}]!");
+            }
+
             return EnvelopesOnTable.Where(envelope => envelope.EnvelopeNumber == envelopeNumber).First();
+        }
+
+        public void AddEnvelope(Envelope envelope)
+        {
+            if (envelope == null)
+                throw new ArgumentNullException(nameof(envelope));
+
+            EnvelopesOnTable.Add(envelope);
         }
 
         public void DeleteEnvelope(int envelopeNumber)
         {
-            var foundEnvelope = GetEnvelope(envelopeNumber);
-            DeleteEnvelope(foundEnvelope);
+            if (envelopeNumber < Constants.MIN_ENVELOPE_NUMBER || envelopeNumber > Constants.MAX_ENVELOPE_NUMBER)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(envelopeNumber),
+                    $"Envelope number must be in range [{Constants.MIN_ENVELOPE_NUMBER}...{Constants.MAX_ENVELOPE_NUMBER}]!");
+            }
+
+            EnvelopesOnTable.RemoveWhere(current => current.EnvelopeNumber == envelopeNumber);
         }
 
         public void DeleteEnvelope(Envelope envelope)
         {
+            if (envelope == null)
+                throw new ArgumentNullException(nameof(envelope));
+
             EnvelopesOnTable.Remove(envelope);
         }
     }
