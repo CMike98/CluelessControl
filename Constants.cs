@@ -52,6 +52,17 @@ namespace CluelessControl
         public const decimal MIN_PERCENTAGE = -100;
         #endregion
 
+        #region Questions
+        /// <summary>
+        /// Number representing a first answer.
+        /// </summary>
+        public const int MIN_ANSWER_NUMBER = 1;
+
+        /// <summary>
+        /// Number representing the last answer.
+        /// </summary>
+        public const int MAX_ANSWER_NUMBER = 4;
+        #endregion
 
         #region Drawing
         /// <summary>
