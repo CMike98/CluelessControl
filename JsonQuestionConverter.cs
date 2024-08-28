@@ -21,8 +21,8 @@ namespace CluelessControl
 
             // Read the correct answer
             int correctAnswerNumber = root.GetProperty("correctAnswerNumber").GetInt32();
-            if (correctAnswerNumber < 1 || correctAnswerNumber > 4)
-                throw new JsonException($"The correct answer number must be in range [1...4].");
+            if (correctAnswerNumber < Constants.MIN_ANSWER_NUMBER || correctAnswerNumber > Constants.MAX_ANSWER_NUMBER)
+                throw new JsonException($"The correct answer number must be in range [{Constants.MIN_ANSWER_NUMBER}...{Constants.MAX_ANSWER_NUMBER}].");
 
             // Read the comment
             string comment = root.GetProperty("comment").GetString() ?? throw new JsonException("Comment is null.");
