@@ -39,7 +39,7 @@ namespace CluelessControl
 
         internal static GameSettings Create(int startEnvelopeCount, int decimalPlaces, bool onlyWorstMinusCounts, bool onlyBestPlusCounts)
         {
-            if (startEnvelopeCount < 0 || startEnvelopeCount > Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
+            if (startEnvelopeCount < 1 || startEnvelopeCount > Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
                 throw new ArgumentOutOfRangeException(nameof(startEnvelopeCount), $"Number of envelopes to pick must be between 1 and {Constants.MAX_ENVELOPE_POSSIBLE_COUNT}.");
             if (decimalPlaces < 0)
                 throw new ArgumentOutOfRangeException(nameof(decimalPlaces), $"Number of decimal places in the prize money must be non-negative.");
