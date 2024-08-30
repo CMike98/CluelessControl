@@ -15,5 +15,11 @@
             decimal fraction = percentage / 100;
             return fraction.ToString("+#,##0.##########%;-#,##0.##########%");
         }
+
+        public static string AnswerToLetter(int answer)
+        {
+            char letter = (char)(answer + 'A' - 1);
+            return letter.ToString();
+        }
     }
 }
