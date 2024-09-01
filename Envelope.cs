@@ -7,12 +7,12 @@
         /// </summary>
         private static readonly Dictionary<EnvelopeState, Color> statesToColors = new()
         {
-            { EnvelopeState.NEUTRAL, Color.White },
-            { EnvelopeState.PLAYING_FOR, Color.Orange },
-            { EnvelopeState.WON, Color.Green },
+            { EnvelopeState.NEUTRAL,          Color.White },
+            { EnvelopeState.PLAYING_FOR,      Color.Orange },
+            { EnvelopeState.WON,              Color.Green },
             { EnvelopeState.MARKED_FOR_TRADE, Color.Orange },
-            { EnvelopeState.TO_BE_DESTROYED, Color.Red },
-            { EnvelopeState.DESTROYED, Color.Gray }
+            { EnvelopeState.TO_BE_DESTROYED,  Color.Red },
+            { EnvelopeState.DESTROYED,        Color.Gray }
         };
 
         /// <summary>
