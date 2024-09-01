@@ -3,6 +3,19 @@
     public class Envelope
     {
         /// <summary>
+        /// Dictionary converting states to colors
+        /// </summary>
+        private static readonly Dictionary<EnvelopeState, Color> statesToColors = new()
+        {
+            { EnvelopeState.NEUTRAL, Color.White },
+            { EnvelopeState.PLAYING_FOR, Color.Orange },
+            { EnvelopeState.WON, Color.Green },
+            { EnvelopeState.MARKED_FOR_TRADE, Color.Orange },
+            { EnvelopeState.TO_BE_DESTROYED, Color.Red },
+            { EnvelopeState.DESTROYED, Color.Gray }
+        };
+
+        /// <summary>
         /// The envelope number
         /// </summary>
         public int EnvelopeNumber
@@ -76,16 +89,7 @@
         /// <exception cref="InvalidOperationException">Thrown if not recognized envelope state</exception>
         public Color GetBackgroundColor()
         {
-            return State switch
-            {
-                EnvelopeState.NEUTRAL => Color.White,
-                EnvelopeState.PLAYING_FOR => Color.Orange,
-                EnvelopeState.WON => Color.Green,
-                EnvelopeState.MARKED_FOR_TRADE => Color.Orange,
-                EnvelopeState.TO_BE_DESTROYED => Color.Red,
-                EnvelopeState.DESTROYED => Color.Gray,
-                _ => throw new InvalidOperationException($"Not recognized envelope state: '{State}'"),
-            };
+            return statesToColors[State];
         }
     }
 }
