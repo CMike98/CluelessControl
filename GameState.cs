@@ -274,6 +274,9 @@
         #region Questions
         public void CancelQuestion()
         {
+            if (EnvelopePlayedFor is not null)
+                EnvelopePlayedFor.State = EnvelopeState.NEUTRAL;
+
             QuestionIndex--;
             ClearAnswer();
             ClearEnvelopeToPlayFor();
