@@ -9,9 +9,7 @@
         {
             { EnvelopeState.NEUTRAL,          Color.White      },
             { EnvelopeState.PLAYING_FOR,      Color.Orange     },
-            { EnvelopeState.TO_BE_WON,        Color.LightGreen },
-            { EnvelopeState.WON,              Color.Green      },
-            { EnvelopeState.TO_BE_DESTROYED,  Color.DarkRed    },
+            { EnvelopeState.WON,              Color.LightGreen },
             { EnvelopeState.DESTROYED,        Color.Gray       },
             { EnvelopeState.MARKED_FOR_TRADE, Color.Orange     },
         };
