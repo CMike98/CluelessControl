@@ -4,9 +4,10 @@
     {
         NEUTRAL,
         PLAYING_FOR,
+        TO_BE_WON,
         WON,
-        MARKED_FOR_TRADE,
         TO_BE_DESTROYED,
         DESTROYED,
+        MARKED_FOR_TRADE,
     }
 }
