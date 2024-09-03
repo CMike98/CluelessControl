@@ -52,7 +52,7 @@ namespace CluelessControl
             if (Percentage < 0)
                 return Color.Red;
             else if (Percentage > 0)
-                return Color.Green;
+                return Color.Blue;
             else
                 return Color.Black;
         }
