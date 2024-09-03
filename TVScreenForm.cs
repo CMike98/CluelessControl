@@ -17,6 +17,11 @@ namespace CluelessControl
             InitializeComponent();
         }
 
+        public void ChangeBackgroundColor(Color newColor)
+        {
+            this.BackColor = newColor;
+        }
+
         #region Form Closing
         private void TVScreenForm_FormClosing(object sender, FormClosingEventArgs e)
         {
