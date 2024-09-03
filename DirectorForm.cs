@@ -10,6 +10,10 @@ namespace CluelessControl
 
         private const int NO_ITEM_INDEX = -1;
 
+        #region Sound Level
+        private int _volumeLevel = 100;
+        #endregion
+
         #region Envelope Settings Screen Variables
         private bool _envelopeSettingsEdited = false;
         private bool _envelopeSettingsSkipIndexChange = false;
@@ -22,12 +26,14 @@ namespace CluelessControl
         private int _questionEditorLastSelectedIndex = NO_ITEM_INDEX;
         #endregion
 
-        #region Envelope Selection
+        #region Envelope Selection Screen
         private readonly Dictionary<TextBox, Label> _envelopeSelectTxtBoxesAndLabels = [];
         #endregion
 
-        #region Events
-
+        #region Question Game Screen
+        private readonly Dictionary<int, Label> _questionGameAnswerLabels;
+        private bool _questionGameDrawEnvelope;
+        private int _questionGameEnvelopeIndex;
         #endregion
 
         private bool EditedBeforeSave => _envelopeSettingsEdited || _questionEditorEdited || EnvelopeSettingsDidChequeChange() || QuestionEditorDidQuestionChange();
@@ -35,6 +41,14 @@ namespace CluelessControl
         public DirectorForm()
         {
             InitializeComponent();
+
+            _questionGameAnswerLabels = new()
+            {
+                { 1, QuestionGameAns1Lbl },
+                { 2, QuestionGameAns2Lbl },
+                { 3, QuestionGameAns3Lbl },
+                { 4, QuestionGameAns4Lbl },
+            };
         }
 
         private void DirectorForm_Load(object sender, EventArgs e)
@@ -79,6 +93,33 @@ namespace CluelessControl
             }
         }
 
+        #region Sound Methods
+
+        private void VolumeTrackBar_Scroll(object sender, EventArgs e)
+        {
+            if (MuteCheckBox.Checked)
+                return;
+
+            _volumeLevel = VolumeTrackBar.Value;
+            VolumeLabel.Text = string.Format("Głośność: {0}%", _volumeLevel);
+        }
+
+        private void MuteCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (MuteCheckBox.Checked)
+            {
+                _volumeLevel = 0;
+            }
+            else
+            {
+                _volumeLevel = VolumeTrackBar.Value;
+            }
+
+            VolumeLabel.Text = string.Format("Głośność: {0}%", _volumeLevel);
+        }
+
+        #endregion
+
         #region Messages
         public void ShowErrorMessage(string message)
         {
@@ -121,7 +162,7 @@ namespace CluelessControl
 
             gameState.NewGame();
 
-            EnvelopeSelectionUnlockFirstBoxes();
+            EnvelopeSelectionUnlockButtons();
             DirectorTabControl.SelectTab("GamePickEnvelopesTab");
         }
 
@@ -143,6 +184,7 @@ namespace CluelessControl
         #endregion
 
         #region Game Settings
+
         public bool SettingsTryCreatingSettings(out GameSettings? result)
         {
             try
@@ -166,7 +208,9 @@ namespace CluelessControl
                 else
                     throw new InvalidOperationException("No plus radio checked.");
 
-                result = GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts);
+                Color tvBackgroundColor = SettingsTVBackgroundColorPicture.BackColor;
+
+                result = GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, tvBackgroundColor);
                 return true;
             }
             catch (Exception)
@@ -193,6 +237,9 @@ namespace CluelessControl
                 SettingsPlusPercentBestRadio.Checked = true;
             else
                 SettingsPlusPercentAllRadio.Checked = true;
+
+            SettingsTVBackgroundColorPicture.BackColor = gameSettings.TVBackgroundColor;
+            _tvScreenForm.ChangeBackgroundColor(gameSettings.TVBackgroundColor);
         }
 
         private void SettingsDecimalPlacesTxtBox_TextChanged(object sender, EventArgs e)
@@ -213,6 +260,14 @@ namespace CluelessControl
                 SettingsSaveToMemoryBtn.Enabled = false;
                 SettingsSaveToFileBtn.Enabled = false;
             }
+        }
+
+        private void SettingsTVBackgroundColorPicture_Click(object sender, EventArgs e)
+        {
+            if (SettingsTVBackgroundColorDialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            SettingsTVBackgroundColorPicture.BackColor = SettingsTVBackgroundColorDialog.Color;
         }
 
         private void SettingsLoadFromMemoryBtn_Click(object sender, EventArgs e)
@@ -240,6 +295,7 @@ namespace CluelessControl
             try
             {
                 GameState.Instance.LoadGameSettings(temp);
+                _tvScreenForm.ChangeBackgroundColor(temp.TVBackgroundColor);
 
                 ShowOkMessage("Ustawienia zapisano pomyślnie.");
             }
@@ -1172,7 +1228,7 @@ namespace CluelessControl
 
         #region Game - Envelope Selection
 
-        private void EnvelopeSelectionUnlockFirstBoxes()
+        private void EnvelopeSelectionUnlockButtons()
         {
             // Unlock the first envelope
             EnvelopeSelectionNum0TxtBox.Enabled = true;
@@ -1181,7 +1237,7 @@ namespace CluelessControl
             EnvelopeSelectionConfirmBtn.Enabled = true;
         }
 
-        private void EnvelopeSelectionLockBoxes()
+        private void EnvelopeSelectionLockButtons()
         {
             // Lock all unlocked buttons
             EnvelopeSelectionConfirmBtn.Enabled = false;
@@ -1200,7 +1256,11 @@ namespace CluelessControl
             for (int i = 0; i < numberTextBoxes.Length; ++i)
             {
                 numberTextBoxes[i].Enabled = (i == envelopeCount);
+            }
 
+            if (envelopeCount < startEnvelopeCount)
+            {
+                numberTextBoxes[envelopeCount].Focus();
             }
 
             EnvelopeSelectionConfirmBtn.Enabled = envelopeCount < startEnvelopeCount;
@@ -1233,6 +1293,8 @@ namespace CluelessControl
                 return;
             }
 
+            var envelopeTable = GameState.Instance.EnvelopeTable;
+
             // Check for errors
             string errorMessage = string.Empty;
             if (!int.TryParse(numberBox.Text, out int envelopeNumber))
@@ -1243,12 +1305,16 @@ namespace CluelessControl
             {
                 errorMessage = string.Format("Numer koperty musi być z przedziału {0}...{1}!", Constants.MIN_ENVELOPE_NUMBER, Constants.MAX_ENVELOPE_NUMBER);
             }
+            else if (!envelopeTable.IsEnvelopePresent(envelopeNumber))
+            {
+                errorMessage = "Koperta już wybrana wcześniej!";
+            }
 
             // If there's no error message, display the correct envelope value
             // If there is an error, display it
             if (string.IsNullOrEmpty(errorMessage))
             {
-                Envelope envelope = GameState.Instance.EnvelopeTable.GetEnvelope(envelopeNumber);
+                Envelope envelope = envelopeTable.GetEnvelope(envelopeNumber);
 
                 valueLabel.Text = envelope.Cheque.ToValueString();
                 valueLabel.ForeColor = Color.Black;
@@ -1279,7 +1345,15 @@ namespace CluelessControl
             }
 
             // Get the envelope and add to the contestant envelopes
-            var newEnvelope = gameStateInstance.EnvelopeTable.GetEnvelope(envelopeNumber);
+            var envelopeTable = gameStateInstance.EnvelopeTable;
+            if (!envelopeTable.IsEnvelopePresent(envelopeNumber))
+            {
+                ShowErrorMessage(message: "Koperta wybrana wcześniej.");
+                return;
+            }
+
+            var newEnvelope = envelopeTable.GetEnvelope(envelopeNumber);
+            envelopeTable.DeleteEnvelope(newEnvelope);
             gameStateInstance.ContestantEnvelopes.Add(newEnvelope);
 
             // Update button availability
@@ -1292,8 +1366,14 @@ namespace CluelessControl
             var contestantEnvelopes = gameStateInstance.ContestantEnvelopes;
             int lastEnvelopeIndex = contestantEnvelopes.Count - 1;
 
+            // Get the last envelope
+            var lastEnvelope = contestantEnvelopes[lastEnvelopeIndex];
+
+            // Bring the last envelope back to the table
+            gameStateInstance.EnvelopeTable.AddEnvelope(lastEnvelope);
+
             // Remove the last envelope
-            contestantEnvelopes.RemoveAt(lastEnvelopeIndex);
+            contestantEnvelopes.Remove(lastEnvelope);
 
             // Get the last textbox and clear it
             TextBox[] numberTextBoxes = _envelopeSelectTxtBoxesAndLabels.Keys.ToArray();
@@ -1307,9 +1387,285 @@ namespace CluelessControl
 
         private void EnvelopeSelectionNextPartBtn_Click(object sender, EventArgs e)
         {
-            EnvelopeSelectionLockBoxes();
+            EnvelopeSelectionLockButtons();
+            QuestionGameUnlockFirstButtons();
 
             DirectorTabControl.SelectTab("GameQuestionsTab");
+        }
+
+        #endregion
+
+        #region Game - Questions
+
+        private void QuestionGameUnlockFirstButtons()
+        {
+            _questionGameDrawEnvelope = true;
+            QuestionGameNextQuestionBtn.Enabled = true;
+        }
+
+        private void QuestionGameSetAnswerEnabled(bool enabled)
+        {
+            QuestionGameAns1Btn.Enabled = enabled;
+            QuestionGameAns2Btn.Enabled = enabled;
+            QuestionGameAns3Btn.Enabled = enabled;
+            QuestionGameAns4Btn.Enabled = enabled;
+        }
+
+        private void QuestionGameLockAllButtons()
+        {
+            QuestionGameSetAnswerEnabled(enabled: false);
+
+            QuestionGameNextQuestionBtn.Enabled = false;
+            QuestionGameShowQuestionBtn.Enabled = false;
+            QuestionGameDisplayEnvelopesBtn.Enabled = false;
+            QuestionGameConfirmEnvelopeBtn.Enabled = false;
+            QuestionGameShowAnswersBtn.Enabled = false;
+            QuestionGameShowCorrectBtn.Enabled = false;
+            QuestionGameCheckAnswerBtn.Enabled = false;
+            QuestionGameKeepDestroyEnvelopeBtn.Enabled = false;
+            QuestionGameCancelQuestionBtn.Enabled = false;
+            QuestionGameStartTradingBtn.Enabled = false;
+        }
+
+        private void QuestionGameUpdateEnvelopeButtons()
+        {
+            int startEnvelopeCount = GameState.Instance.GameSettings.StartEnvelopeCount;
+
+            if (_questionGameEnvelopeIndex < 0)
+            {
+                _questionGameEnvelopeIndex = 0;
+            }
+            else if (_questionGameEnvelopeIndex >= startEnvelopeCount)
+            {
+                _questionGameEnvelopeIndex = startEnvelopeCount - 1;
+            }
+
+            QuestionGamePreviousEnvelopeBtn.Enabled = _questionGameEnvelopeIndex > 0;
+            QuestionGameNextEnvelopeBtn.Enabled = _questionGameEnvelopeIndex < startEnvelopeCount - 1;
+            Refresh();
+        }
+
+        private void QuestionGameClearQuestionBoxes()
+        {
+            QuestionGameQuestionLbl.Text = string.Empty;
+
+            QuestionGameAns1Lbl.BackColor = SystemColors.Control;
+            QuestionGameAns2Lbl.BackColor = SystemColors.Control;
+            QuestionGameAns3Lbl.BackColor = SystemColors.Control;
+            QuestionGameAns4Lbl.BackColor = SystemColors.Control;
+
+            QuestionGameAns1Lbl.Text = string.Empty;
+            QuestionGameAns2Lbl.Text = string.Empty;
+            QuestionGameAns3Lbl.Text = string.Empty;
+            QuestionGameAns4Lbl.Text = string.Empty;
+
+            QuestionGameCorrectAnswerLabel.Text = string.Empty;
+
+            QuestionGameCommentLbl.Text = string.Empty;
+        }
+
+        private void QuestionGamePlaceCurrentQuestionInBoxes()
+        {
+            var gameState = GameState.Instance;
+            var currentQuestion = gameState.GetCurrentQuestion();
+
+            QuestionGameQuestionLbl.Text = string.Format("{0}/{1}: {2}", gameState.QuestionIndex + 1, gameState.MaxQuestionCount, currentQuestion.Text);
+
+            QuestionGameAns1Lbl.Text = currentQuestion.Answer1;
+            QuestionGameAns2Lbl.Text = currentQuestion.Answer2;
+            QuestionGameAns3Lbl.Text = currentQuestion.Answer3;
+            QuestionGameAns4Lbl.Text = currentQuestion.Answer4;
+
+            QuestionGameCorrectAnswerLabel.Text = Utils.AnswerToLetter(currentQuestion.CorrectAnswerNumber);
+
+            QuestionGameCommentLbl.Text = currentQuestion.IsCommentPresent ? "-" : currentQuestion.Comment;
+        }
+
+        private void QuestionGameLockAnswer(int answerNumber)
+        {
+            if (answerNumber < Constants.MIN_ANSWER_NUMBER || answerNumber > Constants.MAX_ANSWER_NUMBER)
+                throw new ArgumentOutOfRangeException(nameof(answerNumber), $"The answer number must be between {Constants.MIN_ANSWER_NUMBER} and {Constants.MAX_ANSWER_NUMBER}.");
+
+            GameState.Instance.SelectAnswer(answerNumber);
+
+            QuestionGameSetAnswerEnabled(enabled: false);
+            QuestionGameShowCorrectBtn.Enabled = true;
+
+            _questionGameAnswerLabels[answerNumber].BackColor = Color.Orange;
+        }
+
+        private void QuestionGameShowCorrectAnswer()
+        {
+            var gameState = GameState.Instance;
+            var currentQuestion = gameState.GetCurrentQuestion();
+
+            _questionGameAnswerLabels[currentQuestion.CorrectAnswerNumber].BackColor = Color.LightGreen;
+        }
+
+        private void QuestionGameAns1Btn_Click(object sender, EventArgs e)
+        {
+            QuestionGameLockAnswer(answerNumber: 1);
+        }
+
+        private void QuestionGameAns2Btn_Click(object sender, EventArgs e)
+        {
+            QuestionGameLockAnswer(answerNumber: 2);
+        }
+
+        private void QuestionGameAns3Btn_Click(object sender, EventArgs e)
+        {
+            QuestionGameLockAnswer(answerNumber: 3);
+        }
+
+        private void QuestionGameAns4Btn_Click(object sender, EventArgs e)
+        {
+            QuestionGameLockAnswer(answerNumber: 4);
+        }
+
+        private void QuestionGameNextQuestionBtn_Click(object sender, EventArgs e)
+        {
+            GameState.Instance.NextQuestion();
+            QuestionGameClearQuestionBoxes();
+            QuestionGamePlaceCurrentQuestionInBoxes();
+
+            QuestionGameCancelQuestionBtn.Enabled = true;
+            QuestionGameNextQuestionBtn.Enabled = false;
+            QuestionGameShowQuestionBtn.Enabled = true;
+        }
+
+        private void QuestionGameShowQuestionBtn_Click(object sender, EventArgs e)
+        {
+            QuestionGameShowQuestionBtn.Enabled = false;
+            QuestionGameDisplayEnvelopesBtn.Enabled = true;
+        }
+
+        private void QuestionGameDisplayEnvelopesBtn_Click(object sender, EventArgs e)
+        {
+            QuestionGameDisplayEnvelopesBtn.Enabled = false;
+            QuestionGameConfirmEnvelopeBtn.Enabled = true;
+
+            _questionGameEnvelopeIndex = 0;
+            QuestionGameUpdateEnvelopeButtons();
+        }
+
+        private void QuestionGameConfirmEnvelopeBtn_Click(object sender, EventArgs e)
+        {
+            var gameStateInstance = GameState.Instance;
+            var selectedEnvelope = gameStateInstance.ContestantEnvelopes[_questionGameEnvelopeIndex];
+            if (selectedEnvelope.State != EnvelopeState.NEUTRAL)
+            {
+                ShowErrorMessage(message: "Tę kopertę wybrano wcześniej! Wybierz inną!");
+                return;
+            }
+
+            gameStateInstance.SelectEnvelopeToPlayFor(selectedEnvelope);
+
+            QuestionGameConfirmEnvelopeBtn.Enabled = false;
+            QuestionGameShowAnswersBtn.Enabled = true;
+
+            QuestionGamePreviousEnvelopeBtn.Enabled = false;
+            QuestionGameNextEnvelopeBtn.Enabled = false;
+
+            Refresh();
+        }
+
+        private void QuestionGameShowAnswersBtn_Click(object sender, EventArgs e)
+        {
+            QuestionGameSetAnswerEnabled(enabled: true);
+            QuestionGameShowAnswersBtn.Enabled = false;
+        }
+
+        private void QuestionGameShowCorrectBtn_Click(object sender, EventArgs e)
+        {
+            QuestionGameShowCorrectAnswer();
+
+            QuestionGameShowCorrectBtn.Enabled = false;
+            QuestionGameCheckAnswerBtn.Enabled = true;
+        }
+
+        private void QuestionGameCheckAnswerBtn_Click(object sender, EventArgs e)
+        {
+            QuestionGameCheckAnswerBtn.Enabled = false;
+            QuestionGameKeepDestroyEnvelopeBtn.Enabled = true;
+            Refresh();
+        }
+
+        private void QuestionGameKeepDestroyEnvelopeBtn_Click(object sender, EventArgs e)
+        {
+            var gameStateInstance = GameState.Instance;
+            gameStateInstance.KeepOrDestroyBasedOnAnswer();
+
+            if (gameStateInstance.HasQuestionsLeft)
+            {
+                QuestionGameNextQuestionBtn.Enabled = true;
+            }
+            else
+            {
+                QuestionGameStartTradingBtn.Enabled = true;
+            }
+
+            QuestionGameKeepDestroyEnvelopeBtn.Enabled = false;
+            Refresh();
+        }
+
+        private void QuestionGameStartTradingBtn_Click(object sender, EventArgs e)
+        {
+            _questionGameDrawEnvelope = false;
+
+            QuestionGameLockAllButtons();
+            QuestionGameStartTradingBtn.Enabled = false;
+        }
+
+        private void QuestionGameCancelQuestionBtn_Click(object sender, EventArgs e)
+        {
+            var gameStateInstance = GameState.Instance;
+            gameStateInstance.CancelQuestion();
+
+            QuestionGameLockAllButtons();
+            QuestionGameNextQuestionBtn.Enabled = true;
+        }
+
+        private void QuestionGamePreviousEnvelopeBtn_Click(object sender, EventArgs e)
+        {
+            --_questionGameEnvelopeIndex;
+            QuestionGameUpdateEnvelopeButtons();
+        }
+
+        private void QuestionGameNextEnvelopeBtn_Click(object sender, EventArgs e)
+        {
+            ++_questionGameEnvelopeIndex;
+            QuestionGameUpdateEnvelopeButtons();
+        }
+
+        private void QuestionGameEnvelopePicture_Paint(object sender, PaintEventArgs e)
+        {
+            if (!_questionGameDrawEnvelope)
+            {
+                return;
+            }
+
+            Envelope envelope = GameState.Instance.ContestantEnvelopes[_questionGameEnvelopeIndex];
+
+            QuestionGameEnvelopePicture.BackColor = envelope.GetBackgroundColor();
+
+            Rectangle clientRectangle = QuestionGameEnvelopePicture.ClientRectangle;
+            Point size = (Point)clientRectangle.Size;
+
+            Point leftPoint = clientRectangle.Location;
+            Point centerPoint = new(leftPoint.X + size.X / 2, leftPoint.Y + size.Y / 2);
+            Point rightPoint = new(leftPoint.X + size.X, leftPoint.Y);
+
+            e.Graphics.DrawLine(Pens.Black, leftPoint, centerPoint);
+            e.Graphics.DrawLine(Pens.Black, centerPoint, rightPoint);
+
+            e.Graphics.DrawString(envelope.EnvelopeNumber.ToString(), Constants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
+
+            BaseCheque cheque = envelope.Cheque;
+            string chequeString = cheque.ToValueString();
+            using Brush brush = new SolidBrush(cheque.GetTextColor());
+
+            SizeF valueSize = e.Graphics.MeasureString(chequeString, Constants.DRAWING_FONT);
+            e.Graphics.DrawString(chequeString, Constants.DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
         }
 
         #endregion

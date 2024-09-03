@@ -38,6 +38,9 @@
             PreShowIntroBtn = new Button();
             PreShowTitleLbl = new Label();
             GameSettingsTab = new TabPage();
+            SettingsTVBackgroundColorGroup = new GroupBox();
+            SettingsTVBackgroundColorPicture = new PictureBox();
+            SettingsTVBackgroundColorLabel = new Label();
             SettingsEnvelopeStartCountGroup = new GroupBox();
             SettingsEnvelopeStartCountNumeric = new NumericUpDown();
             SettingsEnvelopeStartCountLbl = new Label();
@@ -110,6 +113,32 @@
             EnvelopeSelectionContent0Lbl = new Label();
             EnvelopeSelectionNum0TxtBox = new TextBox();
             GameQuestionsTab = new TabPage();
+            QuestionGameNextQuestionBtn = new Button();
+            QuestionGameEnvelopePicture = new PictureBox();
+            QuestionGameSelectEnvelopeLbl = new Label();
+            QuestionGameNextEnvelopeBtn = new Button();
+            QuestionGamePreviousEnvelopeBtn = new Button();
+            QuestionGameCorrectAnswerLabel = new Label();
+            QuestionGameCommentNameLbl = new Label();
+            QuestionGameCommentLbl = new Label();
+            QuestionGameCancelQuestionBtn = new Button();
+            QuestionGameKeepDestroyEnvelopeBtn = new Button();
+            QuestionGameStartTradingBtn = new Button();
+            QuestionGameCheckAnswerBtn = new Button();
+            QuestionGameShowCorrectBtn = new Button();
+            QuestionGameShowAnswersBtn = new Button();
+            QuestionGameConfirmEnvelopeBtn = new Button();
+            QuestionGameDisplayEnvelopesBtn = new Button();
+            QuestionGameShowQuestionBtn = new Button();
+            QuestionGameAns4Btn = new Button();
+            QuestionGameAns3Btn = new Button();
+            QuestionGameAns2Btn = new Button();
+            QuestionGameAns1Btn = new Button();
+            QuestionGameAns4Lbl = new Label();
+            QuestionGameAns3Lbl = new Label();
+            QuestionGameAns2Lbl = new Label();
+            QuestionGameAns1Lbl = new Label();
+            QuestionGameQuestionLbl = new Label();
             GameTradingTab = new TabPage();
             GameOverTab = new TabPage();
             EnvelopeSettingsOpen = new OpenFileDialog();
@@ -118,9 +147,15 @@
             SettingsSave = new SaveFileDialog();
             QuestionSetSave = new SaveFileDialog();
             QuestionSetOpen = new OpenFileDialog();
+            VolumeLabel = new Label();
+            VolumeTrackBar = new TrackBar();
+            MuteCheckBox = new CheckBox();
+            SettingsTVBackgroundColorDialog = new ColorDialog();
             DirectorTabControl.SuspendLayout();
             BeforeTheShowTab.SuspendLayout();
             GameSettingsTab.SuspendLayout();
+            SettingsTVBackgroundColorGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SettingsTVBackgroundColorPicture).BeginInit();
             SettingsEnvelopeStartCountGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)SettingsEnvelopeStartCountNumeric).BeginInit();
             SettingsRoundingGroup.SuspendLayout();
@@ -129,6 +164,9 @@
             GameSettingsEnvelopesTab.SuspendLayout();
             QuestionEditorTab.SuspendLayout();
             GamePickEnvelopesTab.SuspendLayout();
+            GameQuestionsTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)QuestionGameEnvelopePicture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)VolumeTrackBar).BeginInit();
             SuspendLayout();
             // 
             // DirectorTabControl
@@ -244,6 +282,7 @@
             // GameSettingsTab
             // 
             GameSettingsTab.BackColor = SystemColors.Control;
+            GameSettingsTab.Controls.Add(SettingsTVBackgroundColorGroup);
             GameSettingsTab.Controls.Add(SettingsEnvelopeStartCountGroup);
             GameSettingsTab.Controls.Add(SettingsRoundingGroup);
             GameSettingsTab.Controls.Add(SettingsSaveToFileBtn);
@@ -257,6 +296,38 @@
             GameSettingsTab.Size = new Size(1084, 445);
             GameSettingsTab.TabIndex = 6;
             GameSettingsTab.Text = "Ustawienia";
+            // 
+            // SettingsTVBackgroundColorGroup
+            // 
+            SettingsTVBackgroundColorGroup.Controls.Add(SettingsTVBackgroundColorPicture);
+            SettingsTVBackgroundColorGroup.Controls.Add(SettingsTVBackgroundColorLabel);
+            SettingsTVBackgroundColorGroup.Location = new Point(295, 265);
+            SettingsTVBackgroundColorGroup.Name = "SettingsTVBackgroundColorGroup";
+            SettingsTVBackgroundColorGroup.Size = new Size(491, 83);
+            SettingsTVBackgroundColorGroup.TabIndex = 25;
+            SettingsTVBackgroundColorGroup.TabStop = false;
+            SettingsTVBackgroundColorGroup.Text = "Kolor tła TV";
+            // 
+            // SettingsTVBackgroundColorPicture
+            // 
+            SettingsTVBackgroundColorPicture.BackColor = Color.Black;
+            SettingsTVBackgroundColorPicture.BorderStyle = BorderStyle.FixedSingle;
+            SettingsTVBackgroundColorPicture.Location = new Point(370, 17);
+            SettingsTVBackgroundColorPicture.Name = "SettingsTVBackgroundColorPicture";
+            SettingsTVBackgroundColorPicture.Size = new Size(103, 47);
+            SettingsTVBackgroundColorPicture.TabIndex = 1;
+            SettingsTVBackgroundColorPicture.TabStop = false;
+            SettingsTVBackgroundColorPicture.Click += SettingsTVBackgroundColorPicture_Click;
+            // 
+            // SettingsTVBackgroundColorLabel
+            // 
+            SettingsTVBackgroundColorLabel.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            SettingsTVBackgroundColorLabel.Location = new Point(6, 17);
+            SettingsTVBackgroundColorLabel.Name = "SettingsTVBackgroundColorLabel";
+            SettingsTVBackgroundColorLabel.Size = new Size(358, 47);
+            SettingsTVBackgroundColorLabel.TabIndex = 0;
+            SettingsTVBackgroundColorLabel.Text = "Kolor tła ekranu TV:";
+            SettingsTVBackgroundColorLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // SettingsEnvelopeStartCountGroup
             // 
@@ -1103,11 +1174,327 @@
             // GameQuestionsTab
             // 
             GameQuestionsTab.BackColor = SystemColors.Control;
+            GameQuestionsTab.Controls.Add(QuestionGameNextQuestionBtn);
+            GameQuestionsTab.Controls.Add(QuestionGameEnvelopePicture);
+            GameQuestionsTab.Controls.Add(QuestionGameSelectEnvelopeLbl);
+            GameQuestionsTab.Controls.Add(QuestionGameNextEnvelopeBtn);
+            GameQuestionsTab.Controls.Add(QuestionGamePreviousEnvelopeBtn);
+            GameQuestionsTab.Controls.Add(QuestionGameCorrectAnswerLabel);
+            GameQuestionsTab.Controls.Add(QuestionGameCommentNameLbl);
+            GameQuestionsTab.Controls.Add(QuestionGameCommentLbl);
+            GameQuestionsTab.Controls.Add(QuestionGameCancelQuestionBtn);
+            GameQuestionsTab.Controls.Add(QuestionGameKeepDestroyEnvelopeBtn);
+            GameQuestionsTab.Controls.Add(QuestionGameStartTradingBtn);
+            GameQuestionsTab.Controls.Add(QuestionGameCheckAnswerBtn);
+            GameQuestionsTab.Controls.Add(QuestionGameShowCorrectBtn);
+            GameQuestionsTab.Controls.Add(QuestionGameShowAnswersBtn);
+            GameQuestionsTab.Controls.Add(QuestionGameConfirmEnvelopeBtn);
+            GameQuestionsTab.Controls.Add(QuestionGameDisplayEnvelopesBtn);
+            GameQuestionsTab.Controls.Add(QuestionGameShowQuestionBtn);
+            GameQuestionsTab.Controls.Add(QuestionGameAns4Btn);
+            GameQuestionsTab.Controls.Add(QuestionGameAns3Btn);
+            GameQuestionsTab.Controls.Add(QuestionGameAns2Btn);
+            GameQuestionsTab.Controls.Add(QuestionGameAns1Btn);
+            GameQuestionsTab.Controls.Add(QuestionGameAns4Lbl);
+            GameQuestionsTab.Controls.Add(QuestionGameAns3Lbl);
+            GameQuestionsTab.Controls.Add(QuestionGameAns2Lbl);
+            GameQuestionsTab.Controls.Add(QuestionGameAns1Lbl);
+            GameQuestionsTab.Controls.Add(QuestionGameQuestionLbl);
             GameQuestionsTab.Location = new Point(4, 24);
             GameQuestionsTab.Name = "GameQuestionsTab";
             GameQuestionsTab.Size = new Size(1084, 445);
             GameQuestionsTab.TabIndex = 2;
             GameQuestionsTab.Text = "Gra - Pytania";
+            // 
+            // QuestionGameNextQuestionBtn
+            // 
+            QuestionGameNextQuestionBtn.Enabled = false;
+            QuestionGameNextQuestionBtn.Font = new Font("Arial", 12F);
+            QuestionGameNextQuestionBtn.Location = new Point(246, 221);
+            QuestionGameNextQuestionBtn.Name = "QuestionGameNextQuestionBtn";
+            QuestionGameNextQuestionBtn.Size = new Size(157, 50);
+            QuestionGameNextQuestionBtn.TabIndex = 11;
+            QuestionGameNextQuestionBtn.Text = "Następne pytanie";
+            QuestionGameNextQuestionBtn.UseVisualStyleBackColor = true;
+            QuestionGameNextQuestionBtn.Click += QuestionGameNextQuestionBtn_Click;
+            // 
+            // QuestionGameEnvelopePicture
+            // 
+            QuestionGameEnvelopePicture.BackColor = Color.White;
+            QuestionGameEnvelopePicture.BackgroundImageLayout = ImageLayout.Center;
+            QuestionGameEnvelopePicture.BorderStyle = BorderStyle.FixedSingle;
+            QuestionGameEnvelopePicture.Location = new Point(797, 276);
+            QuestionGameEnvelopePicture.Name = "QuestionGameEnvelopePicture";
+            QuestionGameEnvelopePicture.Size = new Size(268, 87);
+            QuestionGameEnvelopePicture.SizeMode = PictureBoxSizeMode.CenterImage;
+            QuestionGameEnvelopePicture.TabIndex = 30;
+            QuestionGameEnvelopePicture.TabStop = false;
+            QuestionGameEnvelopePicture.Tag = "C4";
+            QuestionGameEnvelopePicture.Paint += QuestionGameEnvelopePicture_Paint;
+            // 
+            // QuestionGameSelectEnvelopeLbl
+            // 
+            QuestionGameSelectEnvelopeLbl.Font = new Font("Arial", 12F);
+            QuestionGameSelectEnvelopeLbl.Location = new Point(797, 221);
+            QuestionGameSelectEnvelopeLbl.Name = "QuestionGameSelectEnvelopeLbl";
+            QuestionGameSelectEnvelopeLbl.Size = new Size(268, 46);
+            QuestionGameSelectEnvelopeLbl.TabIndex = 22;
+            QuestionGameSelectEnvelopeLbl.Text = "Wybrana koperta:";
+            QuestionGameSelectEnvelopeLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // QuestionGameNextEnvelopeBtn
+            // 
+            QuestionGameNextEnvelopeBtn.Enabled = false;
+            QuestionGameNextEnvelopeBtn.Font = new Font("Arial", 12F);
+            QuestionGameNextEnvelopeBtn.Location = new Point(935, 385);
+            QuestionGameNextEnvelopeBtn.Name = "QuestionGameNextEnvelopeBtn";
+            QuestionGameNextEnvelopeBtn.Size = new Size(130, 50);
+            QuestionGameNextEnvelopeBtn.TabIndex = 24;
+            QuestionGameNextEnvelopeBtn.Text = "Następna";
+            QuestionGameNextEnvelopeBtn.UseVisualStyleBackColor = true;
+            QuestionGameNextEnvelopeBtn.Click += QuestionGameNextEnvelopeBtn_Click;
+            // 
+            // QuestionGamePreviousEnvelopeBtn
+            // 
+            QuestionGamePreviousEnvelopeBtn.Enabled = false;
+            QuestionGamePreviousEnvelopeBtn.Font = new Font("Arial", 12F);
+            QuestionGamePreviousEnvelopeBtn.Location = new Point(797, 385);
+            QuestionGamePreviousEnvelopeBtn.Name = "QuestionGamePreviousEnvelopeBtn";
+            QuestionGamePreviousEnvelopeBtn.Size = new Size(130, 50);
+            QuestionGamePreviousEnvelopeBtn.TabIndex = 23;
+            QuestionGamePreviousEnvelopeBtn.Text = "Poprzednia";
+            QuestionGamePreviousEnvelopeBtn.UseVisualStyleBackColor = true;
+            QuestionGamePreviousEnvelopeBtn.Click += QuestionGamePreviousEnvelopeBtn_Click;
+            // 
+            // QuestionGameCorrectAnswerLabel
+            // 
+            QuestionGameCorrectAnswerLabel.Font = new Font("Arial", 12F);
+            QuestionGameCorrectAnswerLabel.Location = new Point(570, 222);
+            QuestionGameCorrectAnswerLabel.Name = "QuestionGameCorrectAnswerLabel";
+            QuestionGameCorrectAnswerLabel.Size = new Size(157, 50);
+            QuestionGameCorrectAnswerLabel.TabIndex = 19;
+            QuestionGameCorrectAnswerLabel.Text = "A/B/C/D";
+            QuestionGameCorrectAnswerLabel.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // QuestionGameCommentNameLbl
+            // 
+            QuestionGameCommentNameLbl.Font = new Font("Arial", 12F);
+            QuestionGameCommentNameLbl.Location = new Point(15, 224);
+            QuestionGameCommentNameLbl.Name = "QuestionGameCommentNameLbl";
+            QuestionGameCommentNameLbl.Size = new Size(225, 46);
+            QuestionGameCommentNameLbl.TabIndex = 9;
+            QuestionGameCommentNameLbl.Text = "Komentarz do pytania:";
+            QuestionGameCommentNameLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // QuestionGameCommentLbl
+            // 
+            QuestionGameCommentLbl.BorderStyle = BorderStyle.FixedSingle;
+            QuestionGameCommentLbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameCommentLbl.Location = new Point(15, 276);
+            QuestionGameCommentLbl.Name = "QuestionGameCommentLbl";
+            QuestionGameCommentLbl.Size = new Size(225, 159);
+            QuestionGameCommentLbl.TabIndex = 10;
+            // 
+            // QuestionGameCancelQuestionBtn
+            // 
+            QuestionGameCancelQuestionBtn.Enabled = false;
+            QuestionGameCancelQuestionBtn.Font = new Font("Arial", 12F);
+            QuestionGameCancelQuestionBtn.Location = new Point(570, 331);
+            QuestionGameCancelQuestionBtn.Name = "QuestionGameCancelQuestionBtn";
+            QuestionGameCancelQuestionBtn.Size = new Size(157, 50);
+            QuestionGameCancelQuestionBtn.TabIndex = 20;
+            QuestionGameCancelQuestionBtn.Text = "Wymień pytanie";
+            QuestionGameCancelQuestionBtn.UseVisualStyleBackColor = true;
+            QuestionGameCancelQuestionBtn.Click += QuestionGameCancelQuestionBtn_Click;
+            // 
+            // QuestionGameKeepDestroyEnvelopeBtn
+            // 
+            QuestionGameKeepDestroyEnvelopeBtn.Enabled = false;
+            QuestionGameKeepDestroyEnvelopeBtn.Font = new Font("Arial", 12F);
+            QuestionGameKeepDestroyEnvelopeBtn.Location = new Point(409, 386);
+            QuestionGameKeepDestroyEnvelopeBtn.Name = "QuestionGameKeepDestroyEnvelopeBtn";
+            QuestionGameKeepDestroyEnvelopeBtn.Size = new Size(157, 50);
+            QuestionGameKeepDestroyEnvelopeBtn.TabIndex = 18;
+            QuestionGameKeepDestroyEnvelopeBtn.Text = "Zachowaj/Zniszcz kopertę";
+            QuestionGameKeepDestroyEnvelopeBtn.UseVisualStyleBackColor = true;
+            QuestionGameKeepDestroyEnvelopeBtn.Click += QuestionGameKeepDestroyEnvelopeBtn_Click;
+            // 
+            // QuestionGameStartTradingBtn
+            // 
+            QuestionGameStartTradingBtn.Enabled = false;
+            QuestionGameStartTradingBtn.Font = new Font("Arial", 12F);
+            QuestionGameStartTradingBtn.Location = new Point(570, 386);
+            QuestionGameStartTradingBtn.Name = "QuestionGameStartTradingBtn";
+            QuestionGameStartTradingBtn.Size = new Size(157, 50);
+            QuestionGameStartTradingBtn.TabIndex = 21;
+            QuestionGameStartTradingBtn.Text = "Licytacja";
+            QuestionGameStartTradingBtn.UseVisualStyleBackColor = true;
+            QuestionGameStartTradingBtn.Click += QuestionGameStartTradingBtn_Click;
+            // 
+            // QuestionGameCheckAnswerBtn
+            // 
+            QuestionGameCheckAnswerBtn.Enabled = false;
+            QuestionGameCheckAnswerBtn.Font = new Font("Arial", 12F);
+            QuestionGameCheckAnswerBtn.Location = new Point(409, 331);
+            QuestionGameCheckAnswerBtn.Name = "QuestionGameCheckAnswerBtn";
+            QuestionGameCheckAnswerBtn.Size = new Size(157, 50);
+            QuestionGameCheckAnswerBtn.TabIndex = 17;
+            QuestionGameCheckAnswerBtn.Text = "Sprawdź odpowiedź";
+            QuestionGameCheckAnswerBtn.UseVisualStyleBackColor = true;
+            QuestionGameCheckAnswerBtn.Click += QuestionGameCheckAnswerBtn_Click;
+            // 
+            // QuestionGameShowCorrectBtn
+            // 
+            QuestionGameShowCorrectBtn.Enabled = false;
+            QuestionGameShowCorrectBtn.Font = new Font("Arial", 12F);
+            QuestionGameShowCorrectBtn.Location = new Point(409, 276);
+            QuestionGameShowCorrectBtn.Name = "QuestionGameShowCorrectBtn";
+            QuestionGameShowCorrectBtn.Size = new Size(157, 50);
+            QuestionGameShowCorrectBtn.TabIndex = 16;
+            QuestionGameShowCorrectBtn.Text = "Pokaż dobrą odp.";
+            QuestionGameShowCorrectBtn.UseVisualStyleBackColor = true;
+            QuestionGameShowCorrectBtn.Click += QuestionGameShowCorrectBtn_Click;
+            // 
+            // QuestionGameShowAnswersBtn
+            // 
+            QuestionGameShowAnswersBtn.Enabled = false;
+            QuestionGameShowAnswersBtn.Font = new Font("Arial", 12F);
+            QuestionGameShowAnswersBtn.Location = new Point(409, 221);
+            QuestionGameShowAnswersBtn.Name = "QuestionGameShowAnswersBtn";
+            QuestionGameShowAnswersBtn.Size = new Size(157, 50);
+            QuestionGameShowAnswersBtn.TabIndex = 15;
+            QuestionGameShowAnswersBtn.Text = "Pokaż odpowiedzi";
+            QuestionGameShowAnswersBtn.UseVisualStyleBackColor = true;
+            QuestionGameShowAnswersBtn.Click += QuestionGameShowAnswersBtn_Click;
+            // 
+            // QuestionGameConfirmEnvelopeBtn
+            // 
+            QuestionGameConfirmEnvelopeBtn.Enabled = false;
+            QuestionGameConfirmEnvelopeBtn.Font = new Font("Arial", 12F);
+            QuestionGameConfirmEnvelopeBtn.Location = new Point(246, 386);
+            QuestionGameConfirmEnvelopeBtn.Name = "QuestionGameConfirmEnvelopeBtn";
+            QuestionGameConfirmEnvelopeBtn.Size = new Size(157, 50);
+            QuestionGameConfirmEnvelopeBtn.TabIndex = 14;
+            QuestionGameConfirmEnvelopeBtn.Text = "Zatwierdź kopertę";
+            QuestionGameConfirmEnvelopeBtn.UseVisualStyleBackColor = true;
+            QuestionGameConfirmEnvelopeBtn.Click += QuestionGameConfirmEnvelopeBtn_Click;
+            // 
+            // QuestionGameDisplayEnvelopesBtn
+            // 
+            QuestionGameDisplayEnvelopesBtn.Enabled = false;
+            QuestionGameDisplayEnvelopesBtn.Font = new Font("Arial", 12F);
+            QuestionGameDisplayEnvelopesBtn.Location = new Point(246, 331);
+            QuestionGameDisplayEnvelopesBtn.Name = "QuestionGameDisplayEnvelopesBtn";
+            QuestionGameDisplayEnvelopesBtn.Size = new Size(157, 50);
+            QuestionGameDisplayEnvelopesBtn.TabIndex = 13;
+            QuestionGameDisplayEnvelopesBtn.Text = "Wybór koperty";
+            QuestionGameDisplayEnvelopesBtn.UseVisualStyleBackColor = true;
+            QuestionGameDisplayEnvelopesBtn.Click += QuestionGameDisplayEnvelopesBtn_Click;
+            // 
+            // QuestionGameShowQuestionBtn
+            // 
+            QuestionGameShowQuestionBtn.Enabled = false;
+            QuestionGameShowQuestionBtn.Font = new Font("Arial", 12F);
+            QuestionGameShowQuestionBtn.Location = new Point(246, 276);
+            QuestionGameShowQuestionBtn.Name = "QuestionGameShowQuestionBtn";
+            QuestionGameShowQuestionBtn.Size = new Size(157, 50);
+            QuestionGameShowQuestionBtn.TabIndex = 12;
+            QuestionGameShowQuestionBtn.Text = "Pokaż pytanie";
+            QuestionGameShowQuestionBtn.UseVisualStyleBackColor = true;
+            QuestionGameShowQuestionBtn.Click += QuestionGameShowQuestionBtn_Click;
+            // 
+            // QuestionGameAns4Btn
+            // 
+            QuestionGameAns4Btn.Enabled = false;
+            QuestionGameAns4Btn.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameAns4Btn.Location = new Point(565, 165);
+            QuestionGameAns4Btn.Name = "QuestionGameAns4Btn";
+            QuestionGameAns4Btn.Size = new Size(44, 50);
+            QuestionGameAns4Btn.TabIndex = 8;
+            QuestionGameAns4Btn.Text = "D";
+            QuestionGameAns4Btn.UseVisualStyleBackColor = true;
+            QuestionGameAns4Btn.Click += QuestionGameAns4Btn_Click;
+            // 
+            // QuestionGameAns3Btn
+            // 
+            QuestionGameAns3Btn.Enabled = false;
+            QuestionGameAns3Btn.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameAns3Btn.Location = new Point(15, 165);
+            QuestionGameAns3Btn.Name = "QuestionGameAns3Btn";
+            QuestionGameAns3Btn.Size = new Size(44, 50);
+            QuestionGameAns3Btn.TabIndex = 7;
+            QuestionGameAns3Btn.Text = "C";
+            QuestionGameAns3Btn.UseVisualStyleBackColor = true;
+            QuestionGameAns3Btn.Click += QuestionGameAns3Btn_Click;
+            // 
+            // QuestionGameAns2Btn
+            // 
+            QuestionGameAns2Btn.Enabled = false;
+            QuestionGameAns2Btn.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameAns2Btn.Location = new Point(565, 102);
+            QuestionGameAns2Btn.Name = "QuestionGameAns2Btn";
+            QuestionGameAns2Btn.Size = new Size(44, 50);
+            QuestionGameAns2Btn.TabIndex = 6;
+            QuestionGameAns2Btn.Text = "B";
+            QuestionGameAns2Btn.UseVisualStyleBackColor = true;
+            QuestionGameAns2Btn.Click += QuestionGameAns2Btn_Click;
+            // 
+            // QuestionGameAns1Btn
+            // 
+            QuestionGameAns1Btn.Enabled = false;
+            QuestionGameAns1Btn.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameAns1Btn.Location = new Point(15, 102);
+            QuestionGameAns1Btn.Name = "QuestionGameAns1Btn";
+            QuestionGameAns1Btn.Size = new Size(44, 50);
+            QuestionGameAns1Btn.TabIndex = 5;
+            QuestionGameAns1Btn.Text = "A";
+            QuestionGameAns1Btn.UseVisualStyleBackColor = true;
+            QuestionGameAns1Btn.Click += QuestionGameAns1Btn_Click;
+            // 
+            // QuestionGameAns4Lbl
+            // 
+            QuestionGameAns4Lbl.BorderStyle = BorderStyle.FixedSingle;
+            QuestionGameAns4Lbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameAns4Lbl.Location = new Point(615, 165);
+            QuestionGameAns4Lbl.Name = "QuestionGameAns4Lbl";
+            QuestionGameAns4Lbl.Size = new Size(450, 50);
+            QuestionGameAns4Lbl.TabIndex = 4;
+            // 
+            // QuestionGameAns3Lbl
+            // 
+            QuestionGameAns3Lbl.BorderStyle = BorderStyle.FixedSingle;
+            QuestionGameAns3Lbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameAns3Lbl.Location = new Point(65, 165);
+            QuestionGameAns3Lbl.Name = "QuestionGameAns3Lbl";
+            QuestionGameAns3Lbl.Size = new Size(450, 50);
+            QuestionGameAns3Lbl.TabIndex = 3;
+            // 
+            // QuestionGameAns2Lbl
+            // 
+            QuestionGameAns2Lbl.BorderStyle = BorderStyle.FixedSingle;
+            QuestionGameAns2Lbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameAns2Lbl.Location = new Point(615, 102);
+            QuestionGameAns2Lbl.Name = "QuestionGameAns2Lbl";
+            QuestionGameAns2Lbl.Size = new Size(450, 50);
+            QuestionGameAns2Lbl.TabIndex = 2;
+            // 
+            // QuestionGameAns1Lbl
+            // 
+            QuestionGameAns1Lbl.BorderStyle = BorderStyle.FixedSingle;
+            QuestionGameAns1Lbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameAns1Lbl.Location = new Point(65, 102);
+            QuestionGameAns1Lbl.Name = "QuestionGameAns1Lbl";
+            QuestionGameAns1Lbl.Size = new Size(450, 50);
+            QuestionGameAns1Lbl.TabIndex = 1;
+            // 
+            // QuestionGameQuestionLbl
+            // 
+            QuestionGameQuestionLbl.BorderStyle = BorderStyle.FixedSingle;
+            QuestionGameQuestionLbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameQuestionLbl.Location = new Point(15, 16);
+            QuestionGameQuestionLbl.Name = "QuestionGameQuestionLbl";
+            QuestionGameQuestionLbl.Size = new Size(1050, 75);
+            QuestionGameQuestionLbl.TabIndex = 0;
             // 
             // GameTradingTab
             // 
@@ -1157,12 +1544,52 @@
             QuestionSetOpen.Filter = "Pliki *.json|*.json";
             QuestionSetOpen.Title = "Wczytywanie zestawu pytań";
             // 
+            // VolumeLabel
+            // 
+            VolumeLabel.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            VolumeLabel.Location = new Point(206, 6);
+            VolumeLabel.Name = "VolumeLabel";
+            VolumeLabel.Size = new Size(195, 54);
+            VolumeLabel.TabIndex = 1;
+            VolumeLabel.Text = "Głośność: 100%";
+            VolumeLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // VolumeTrackBar
+            // 
+            VolumeTrackBar.Location = new Point(16, 15);
+            VolumeTrackBar.Maximum = 100;
+            VolumeTrackBar.Name = "VolumeTrackBar";
+            VolumeTrackBar.Size = new Size(184, 45);
+            VolumeTrackBar.TabIndex = 2;
+            VolumeTrackBar.Value = 100;
+            VolumeTrackBar.Scroll += VolumeTrackBar_Scroll;
+            // 
+            // MuteCheckBox
+            // 
+            MuteCheckBox.Font = new Font("Arial", 18F);
+            MuteCheckBox.Location = new Point(407, 10);
+            MuteCheckBox.Name = "MuteCheckBox";
+            MuteCheckBox.Size = new Size(161, 48);
+            MuteCheckBox.TabIndex = 3;
+            MuteCheckBox.Text = "Wycisz";
+            MuteCheckBox.UseVisualStyleBackColor = true;
+            MuteCheckBox.CheckedChanged += MuteCheckBox_CheckedChanged;
+            // 
+            // SettingsTVBackgroundColorDialog
+            // 
+            SettingsTVBackgroundColorDialog.AnyColor = true;
+            SettingsTVBackgroundColorDialog.FullOpen = true;
+            SettingsTVBackgroundColorDialog.SolidColorOnly = true;
+            // 
             // DirectorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(1116, 542);
+            Controls.Add(MuteCheckBox);
+            Controls.Add(VolumeTrackBar);
+            Controls.Add(VolumeLabel);
             Controls.Add(DirectorTabControl);
             DoubleBuffered = true;
             Name = "DirectorForm";
@@ -1174,6 +1601,8 @@
             DirectorTabControl.ResumeLayout(false);
             BeforeTheShowTab.ResumeLayout(false);
             GameSettingsTab.ResumeLayout(false);
+            SettingsTVBackgroundColorGroup.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)SettingsTVBackgroundColorPicture).EndInit();
             SettingsEnvelopeStartCountGroup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)SettingsEnvelopeStartCountNumeric).EndInit();
             SettingsRoundingGroup.ResumeLayout(false);
@@ -1186,7 +1615,11 @@
             QuestionEditorTab.PerformLayout();
             GamePickEnvelopesTab.ResumeLayout(false);
             GamePickEnvelopesTab.PerformLayout();
+            GameQuestionsTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)QuestionGameEnvelopePicture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)VolumeTrackBar).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -1281,5 +1714,38 @@
         private Button EnvelopeSelectionConfirmBtn;
         private Button EnvelopeSelectionNextPartBtn;
         private Button EnvelopeSelectionRetractBtn;
+        private Label QuestionGameQuestionLbl;
+        private Label QuestionGameAns4Lbl;
+        private Label QuestionGameAns3Lbl;
+        private Label QuestionGameAns2Lbl;
+        private Label QuestionGameAns1Lbl;
+        private Button QuestionGameAns4Btn;
+        private Button QuestionGameAns3Btn;
+        private Button QuestionGameAns2Btn;
+        private Button QuestionGameAns1Btn;
+        private Button QuestionGameStartTradingBtn;
+        private Button QuestionGameCheckAnswerBtn;
+        private Button QuestionGameShowCorrectBtn;
+        private Button QuestionGameShowAnswersBtn;
+        private Button QuestionGameConfirmEnvelopeBtn;
+        private Button QuestionGameDisplayEnvelopesBtn;
+        private Button QuestionGameShowQuestionBtn;
+        private Button QuestionGameKeepDestroyEnvelopeBtn;
+        private Button QuestionGameCancelQuestionBtn;
+        private Label QuestionGameCommentNameLbl;
+        private Label QuestionGameCommentLbl;
+        private Label QuestionGameCorrectAnswerLabel;
+        private Button QuestionGameNextEnvelopeBtn;
+        private Button QuestionGamePreviousEnvelopeBtn;
+        private Label QuestionGameSelectEnvelopeLbl;
+        private PictureBox QuestionGameEnvelopePicture;
+        private Button QuestionGameNextQuestionBtn;
+        private Label VolumeLabel;
+        private TrackBar VolumeTrackBar;
+        private CheckBox MuteCheckBox;
+        private GroupBox SettingsTVBackgroundColorGroup;
+        private Label SettingsTVBackgroundColorLabel;
+        private ColorDialog SettingsTVBackgroundColorDialog;
+        private PictureBox SettingsTVBackgroundColorPicture;
     }
 }
