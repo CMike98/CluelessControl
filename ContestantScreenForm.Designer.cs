@@ -276,7 +276,6 @@
             AnswerDLabel.Name = "AnswerDLabel";
             AnswerDLabel.Size = new Size(900, 95);
             AnswerDLabel.TabIndex = 37;
-            AnswerDLabel.Text = "D: ?";
             AnswerDLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // AnswerCLabel
@@ -288,7 +287,6 @@
             AnswerCLabel.Name = "AnswerCLabel";
             AnswerCLabel.Size = new Size(900, 95);
             AnswerCLabel.TabIndex = 36;
-            AnswerCLabel.Text = "C: ?";
             AnswerCLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // AnswerBLabel
@@ -300,7 +298,6 @@
             AnswerBLabel.Name = "AnswerBLabel";
             AnswerBLabel.Size = new Size(900, 95);
             AnswerBLabel.TabIndex = 35;
-            AnswerBLabel.Text = "B: ?";
             AnswerBLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // AnswerALabel
@@ -312,7 +309,6 @@
             AnswerALabel.Name = "AnswerALabel";
             AnswerALabel.Size = new Size(900, 95);
             AnswerALabel.TabIndex = 34;
-            AnswerALabel.Text = "A: ?";
             AnswerALabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // QuestionLabel
@@ -324,7 +320,6 @@
             QuestionLabel.Name = "QuestionLabel";
             QuestionLabel.Size = new Size(1900, 131);
             QuestionLabel.TabIndex = 33;
-            QuestionLabel.Text = "Pytanie testowe";
             QuestionLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ContestantScreenForm

@@ -72,7 +72,6 @@
             QuestionLabel.Name = "QuestionLabel";
             QuestionLabel.Size = new Size(1900, 131);
             QuestionLabel.TabIndex = 0;
-            QuestionLabel.Text = "Pytanie testowe";
             QuestionLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // AnswerALabel
@@ -84,7 +83,6 @@
             AnswerALabel.Name = "AnswerALabel";
             AnswerALabel.Size = new Size(900, 95);
             AnswerALabel.TabIndex = 1;
-            AnswerALabel.Text = "A: ?";
             AnswerALabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // AnswerBLabel
@@ -96,7 +94,6 @@
             AnswerBLabel.Name = "AnswerBLabel";
             AnswerBLabel.Size = new Size(900, 95);
             AnswerBLabel.TabIndex = 2;
-            AnswerBLabel.Text = "B: ?";
             AnswerBLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // AnswerDLabel
@@ -108,7 +105,6 @@
             AnswerDLabel.Name = "AnswerDLabel";
             AnswerDLabel.Size = new Size(900, 95);
             AnswerDLabel.TabIndex = 4;
-            AnswerDLabel.Text = "D: ?";
             AnswerDLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // AnswerCLabel
@@ -120,7 +116,6 @@
             AnswerCLabel.Name = "AnswerCLabel";
             AnswerCLabel.Size = new Size(900, 95);
             AnswerCLabel.TabIndex = 3;
-            AnswerCLabel.Text = "C: ?";
             AnswerCLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // CorrectAnswerLabel
@@ -132,7 +127,6 @@
             CorrectAnswerLabel.Size = new Size(88, 198);
             CorrectAnswerLabel.TabIndex = 5;
             CorrectAnswerLabel.Tag = "";
-            CorrectAnswerLabel.Text = "A";
             CorrectAnswerLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ContestantTextLabel
@@ -168,7 +162,6 @@
             ExplanationLabel.Size = new Size(804, 172);
             ExplanationLabel.TabIndex = 6;
             ExplanationLabel.Tag = "";
-            ExplanationLabel.Text = "Wyjaśnienie";
             ExplanationLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // CashTextLabel
