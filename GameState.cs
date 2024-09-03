@@ -241,28 +241,12 @@
             EnvelopePlayedFor.State = EnvelopeState.PLAYING_FOR;
         }
 
-        public void MarkEnvelopeBasedOnAnswer()
-        {
-            if (EnvelopePlayedFor is null)
-                throw new InvalidOperationException($"EnvelopePlayedFor is null");
-
-            if (IsAnswerCorrect())
-                EnvelopePlayedFor.State = EnvelopeState.TO_BE_WON;
-            else
-                EnvelopePlayedFor.State = EnvelopeState.TO_BE_DESTROYED;
-        }
-
         public void KeepOrDestroyBasedOnAnswer()
         {
             if (EnvelopePlayedFor is null)
                 throw new InvalidOperationException($"EnvelopePlayedFor is null");
 
-            if (EnvelopePlayedFor.State == EnvelopeState.TO_BE_WON)
-                EnvelopePlayedFor.State = EnvelopeState.WON;
-            else if (EnvelopePlayedFor.State == EnvelopeState.TO_BE_DESTROYED)
-                EnvelopePlayedFor.State = EnvelopeState.DESTROYED;
-            else
-                throw new InvalidOperationException($"EnvelopePlayedFor is in invalid state");
+            EnvelopePlayedFor.State = IsAnswerCorrect() ? EnvelopeState.WON : EnvelopeState.DESTROYED;
         }
 
         #endregion
@@ -288,6 +272,13 @@
         #endregion
 
         #region Questions
+        public void CancelQuestion()
+        {
+            QuestionIndex--;
+            ClearAnswer();
+            ClearEnvelopeToPlayFor();
+        }
+
         public Question GetCurrentQuestion()
         {
             if (QuestionIndex < 0 || QuestionIndex >= QuestionSet.QuestionCount)
