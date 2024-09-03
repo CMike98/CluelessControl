@@ -74,7 +74,13 @@
             private set;
         }
 
-        public int QuestionNumber
+        public int QuestionIndex
+        {
+            get;
+            private set;
+        }
+
+        public int? ContestantAnswer
         {
             get;
             private set;
@@ -82,7 +88,18 @@
 
         #endregion
 
+        #region Calculated Properties
+
+        public int QuestionNumber => QuestionIndex + 1;
+
+        public int MaxQuestionCount => Math.Min(GameSettings.StartEnvelopeCount, QuestionSet.QuestionCount);
+
+        public bool HasQuestionsLeft => QuestionNumber < MaxQuestionCount;
+
+        #endregion
+
         #region Events
+
         #endregion
 
         #region Constructor
@@ -97,13 +114,14 @@
             HostEnvelopes = new(Constants.MAX_ENVELOPE_POSSIBLE_COUNT);
             EnvelopePlayedFor = null;
 
-            QuestionNumber = -1;
+            ContestantAnswer = null;
+            QuestionIndex = -1;
             Cash = 0;
             CashOffer = 0;
         }
         #endregion
 
-        #region New Game
+        #region Moving The Game
         public void NewGame()
         {
             ContestantEnvelopes.Clear();
@@ -112,15 +130,17 @@
             EnvelopeTable = EnvelopeTable.Create(ChequeSettings);
 
             EnvelopePlayedFor = null;
-            QuestionNumber = -1;
+            ContestantAnswer = null;
+            QuestionIndex = -1;
             Cash = 0;
             CashOffer = 0;
         }
 
         public void NextQuestion()
         {
-            QuestionNumber++;
             EnvelopePlayedFor = null;
+            ContestantAnswer = null;
+            QuestionIndex++;
         }
 
         #endregion
@@ -206,6 +226,45 @@
                 _ => null
             };
         }
+
+        public void ClearEnvelopeToPlayFor()
+        {
+            EnvelopePlayedFor = null;
+        }
+
+        public void SelectEnvelopeToPlayFor(Envelope envelope)
+        {
+            if (envelope == null)
+                throw new ArgumentNullException(nameof(envelope));
+
+            EnvelopePlayedFor = envelope;
+            EnvelopePlayedFor.State = EnvelopeState.PLAYING_FOR;
+        }
+
+        public void MarkEnvelopeBasedOnAnswer()
+        {
+            if (EnvelopePlayedFor is null)
+                throw new InvalidOperationException($"EnvelopePlayedFor is null");
+
+            if (IsAnswerCorrect())
+                EnvelopePlayedFor.State = EnvelopeState.TO_BE_WON;
+            else
+                EnvelopePlayedFor.State = EnvelopeState.TO_BE_DESTROYED;
+        }
+
+        public void KeepOrDestroyBasedOnAnswer()
+        {
+            if (EnvelopePlayedFor is null)
+                throw new InvalidOperationException($"EnvelopePlayedFor is null");
+
+            if (EnvelopePlayedFor.State == EnvelopeState.TO_BE_WON)
+                EnvelopePlayedFor.State = EnvelopeState.WON;
+            else if (EnvelopePlayedFor.State == EnvelopeState.TO_BE_DESTROYED)
+                EnvelopePlayedFor.State = EnvelopeState.DESTROYED;
+            else
+                throw new InvalidOperationException($"EnvelopePlayedFor is in invalid state");
+        }
+
         #endregion
 
         #region Cash And Offers
@@ -226,6 +285,38 @@
             CashOffer = newOffer;
         }
 
+        #endregion
+
+        #region Questions
+        public Question GetCurrentQuestion()
+        {
+            if (QuestionIndex < 0 || QuestionIndex >= QuestionSet.QuestionCount)
+                throw new IndexOutOfRangeException($"Question index should be in valid range.");
+
+            return QuestionSet.QuestionList[QuestionIndex];
+        }
+
+        public void ClearAnswer()
+        {
+            ContestantAnswer = null;
+        }
+
+        public void SelectAnswer(int answer)
+        {
+            if (answer < Constants.MIN_ANSWER_NUMBER || answer > Constants.MAX_ANSWER_NUMBER)
+                throw new ArgumentOutOfRangeException(nameof(answer), $"The answer number must be between {Constants.MIN_ANSWER_NUMBER} and {Constants.MAX_ANSWER_NUMBER}!");
+
+            ContestantAnswer = answer;
+        }
+
+        public bool IsAnswerCorrect()
+        {
+            if (ContestantAnswer is null)
+                throw new InvalidOperationException();
+
+            var currentQuestion = GetCurrentQuestion();
+            return currentQuestion.CorrectAnswerNumber == ContestantAnswer;
+        }
         #endregion
     }
 }
