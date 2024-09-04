@@ -81,6 +81,28 @@ namespace CluelessControl
         public static readonly Font DRAWING_FONT = new(DRAWING_FONT_FAMILY, DRAWING_FONT_SIZE);
         #endregion
 
+        #region Answer Colors
+        /// <summary>
+        /// Color used to mark the locked in answers
+        /// </summary>
+        public static readonly Color LOCK_IN_ANS_COLOR = Color.Orange;
+
+        /// <summary>
+        /// Font color used to mark the locked in answers
+        /// </summary>
+        public static readonly Color LOCK_IN_ANS_FONT_COLOR = Color.Black;
+
+        /// <summary>
+        /// Color used to mark the correct answers
+        /// </summary>
+        public static readonly Color CORRECT_ANS_COLOR = Color.LightGreen;
+
+        /// <summary>
+        /// Font color used to mark the correct answers
+        /// </summary>
+        public static readonly Color CORRECT_ANS_FONT_COLOR = Color.Black;
+        #endregion
+
         #region Json Serializer Options
         /// <summary>
         /// The serializer options for all JSON serializations/deserializations
