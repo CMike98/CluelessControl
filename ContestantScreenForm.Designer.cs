@@ -276,7 +276,7 @@
             AnswerDLabel.Name = "AnswerDLabel";
             AnswerDLabel.Size = new Size(900, 95);
             AnswerDLabel.TabIndex = 37;
-            AnswerDLabel.TextAlign = ContentAlignment.MiddleLeft;
+            AnswerDLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // AnswerCLabel
             // 
@@ -287,7 +287,7 @@
             AnswerCLabel.Name = "AnswerCLabel";
             AnswerCLabel.Size = new Size(900, 95);
             AnswerCLabel.TabIndex = 36;
-            AnswerCLabel.TextAlign = ContentAlignment.MiddleLeft;
+            AnswerCLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // AnswerBLabel
             // 
@@ -298,7 +298,7 @@
             AnswerBLabel.Name = "AnswerBLabel";
             AnswerBLabel.Size = new Size(900, 95);
             AnswerBLabel.TabIndex = 35;
-            AnswerBLabel.TextAlign = ContentAlignment.MiddleLeft;
+            AnswerBLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // AnswerALabel
             // 
@@ -309,7 +309,7 @@
             AnswerALabel.Name = "AnswerALabel";
             AnswerALabel.Size = new Size(900, 95);
             AnswerALabel.TabIndex = 34;
-            AnswerALabel.TextAlign = ContentAlignment.MiddleLeft;
+            AnswerALabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // QuestionLabel
             // 
