@@ -185,6 +185,24 @@
 
         #region Envelopes
 
+        public void SortEnvelopesByNumber()
+        {
+            static int EnvelopeNumberComparer(Envelope env1, Envelope env2)
+            {
+                if (env1 == null && env2 == null)
+                    return 0;
+                if (env1 == null)
+                    return -1;
+                if (env2 == null)
+                    return 1;
+
+                return env1.EnvelopeNumber.CompareTo(env2.EnvelopeNumber);
+            }
+
+            ContestantEnvelopes.Sort(EnvelopeNumberComparer);
+            HostEnvelopes.Sort(EnvelopeNumberComparer);
+        }
+
         public Envelope? GetContestantEnvelope(int index)
         {
             if (index < 0 || index >= Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
