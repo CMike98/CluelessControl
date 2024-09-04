@@ -32,7 +32,9 @@
 
             for (int i = Constants.MIN_ENVELOPE_NUMBER; i <= Constants.MAX_ENVELOPE_NUMBER; ++i)
             {
-                var newEnvelope = Envelope.Create(i, settings.ChequeList[i - Constants.MIN_ENVELOPE_NUMBER]);
+                int chequeIndex = i - Constants.MIN_ENVELOPE_NUMBER;
+                BaseCheque originalCheque = settings.ChequeList[chequeIndex];
+                var newEnvelope = Envelope.Create(i, originalCheque.CloneCheque());
                 envelopeList.Add(newEnvelope);
             }
 
