@@ -42,5 +42,10 @@
             else
                 return Color.Black;
         }
+
+        public override BaseCheque CloneCheque()
+        {
+            return (this.MemberwiseClone() as CashCheque) ?? throw new NullReferenceException($"Cheque cloning failed.");
+        }
     }
 }

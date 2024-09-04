@@ -13,5 +13,11 @@
         /// </summary>
         /// <returns>String representing the amount</returns>
         public abstract string ToValueString();
+
+        /// <summary>
+        /// Creates a new cheque with the same values as the cloned cheque
+        /// </summary>
+        /// <returns></returns>
+        public abstract BaseCheque CloneCheque();
     }
 }

@@ -56,5 +56,10 @@ namespace CluelessControl
             else
                 return Color.Black;
         }
+
+        public override BaseCheque CloneCheque()
+        {
+            return (this.MemberwiseClone() as PercentageCheque) ?? throw new NullReferenceException($"Cheque cloning failed.");
+        }
     }
 }
