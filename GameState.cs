@@ -62,7 +62,7 @@
             private set;
         }
 
-        public decimal Cash
+        public decimal ContestantCash
         {
             get;
             private set;
@@ -116,7 +116,7 @@
 
             ContestantAnswer = null;
             QuestionIndex = -1;
-            Cash = 0;
+            ContestantCash = 0;
             CashOffer = 0;
         }
         #endregion
@@ -132,7 +132,7 @@
             EnvelopePlayedFor = null;
             ContestantAnswer = null;
             QuestionIndex = -1;
-            Cash = 0;
+            ContestantCash = 0;
             CashOffer = 0;
         }
 
@@ -258,12 +258,12 @@
             if (newCash < 0)
                 throw new ArgumentOutOfRangeException(nameof(newCash), $"Contestant's cash mustn't be negative.");
 
-            Cash = newCash;
+            ContestantCash = newCash;
         }
 
         public void SetCashOffer(decimal newOffer)
         {
-            if (Cash + newOffer < 0)
+            if (ContestantCash + newOffer < 0)
                 throw new ArgumentOutOfRangeException(nameof(newOffer), $"Offer cannot make the contestant's cash go negative.");
 
             CashOffer = newOffer;
