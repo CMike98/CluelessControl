@@ -249,6 +249,11 @@
             EnvelopePlayedFor.State = IsAnswerCorrect() ? EnvelopeState.WON : EnvelopeState.DESTROYED;
         }
 
+        public void RemoveDestroyedEnvelopes()
+        {
+            ContestantEnvelopes.RemoveAll(envelope => envelope.State == EnvelopeState.DESTROYED);
+        }
+
         #endregion
 
         #region Cash And Offers
