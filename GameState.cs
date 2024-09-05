@@ -101,7 +101,15 @@ namespace CluelessControl
         #endregion
 
         #region Events
-
+        public event EventHandler? EventClearQuestion;
+        public event EventHandler? EventShowQuestion;
+        public event EventHandler? EventShowAnswers;
+        public event EventHandler? EventAnswerSelected;
+        public event EventHandler? EventCorrectAnswerShown;
+        public event EventHandler? EventRefreshEnvelopes;
+        public event EventHandler? EventStartTrading;
+        public event EventHandler? EventRefreshOffer;
+        public event EventHandler? EventGameOver;
         #endregion
 
         #region Constructor
@@ -143,6 +151,8 @@ namespace CluelessControl
             EnvelopePlayedFor = null;
             ContestantAnswer = null;
             QuestionIndex++;
+
+            EventClearQuestion?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
@@ -203,6 +213,36 @@ namespace CluelessControl
 
             ContestantEnvelopes.Sort(EnvelopeNumberComparer);
             HostEnvelopes.Sort(EnvelopeNumberComparer);
+
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void AddContestantEnvelope(Envelope newEnvelope)
+        {
+            if (newEnvelope == null)
+                throw new ArgumentNullException(nameof(newEnvelope));
+
+            ContestantEnvelopes.Add(newEnvelope);
+
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ClearEnvelopeToPlayFor()
+        {
+            EnvelopePlayedFor = null;
+
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void SelectEnvelopeToPlayFor(Envelope envelope)
+        {
+            if (envelope == null)
+                throw new ArgumentNullException(nameof(envelope));
+
+            EnvelopePlayedFor = envelope;
+            EnvelopePlayedFor.State = EnvelopeState.PLAYING_FOR;
+
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
         public Envelope? GetContestantEnvelope(int index)
@@ -247,31 +287,21 @@ namespace CluelessControl
             };
         }
 
-        public void ClearEnvelopeToPlayFor()
-        {
-            EnvelopePlayedFor = null;
-        }
-
-        public void SelectEnvelopeToPlayFor(Envelope envelope)
-        {
-            if (envelope == null)
-                throw new ArgumentNullException(nameof(envelope));
-
-            EnvelopePlayedFor = envelope;
-            EnvelopePlayedFor.State = EnvelopeState.PLAYING_FOR;
-        }
-
         public void KeepOrDestroyBasedOnAnswer()
         {
             if (EnvelopePlayedFor is null)
                 throw new InvalidOperationException($"EnvelopePlayedFor is null");
 
             EnvelopePlayedFor.State = IsAnswerCorrect() ? EnvelopeState.WON : EnvelopeState.DESTROYED;
+
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
         public void RemoveDestroyedEnvelopes()
         {
             ContestantEnvelopes.RemoveAll(envelope => envelope.State == EnvelopeState.DESTROYED);
+
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
@@ -297,6 +327,22 @@ namespace CluelessControl
         #endregion
 
         #region Questions
+
+        public void ShowQuestion()
+        {
+            EventShowQuestion?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ShowPossibleAnswers()
+        {
+            EventShowAnswers?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ShowCorrectAnswer()
+        {
+            EventCorrectAnswerShown?.Invoke(this, EventArgs.Empty);
+        }
+
         public void CancelQuestion()
         {
             if (EnvelopePlayedFor is not null)
@@ -318,6 +364,8 @@ namespace CluelessControl
         public void ClearAnswer()
         {
             ContestantAnswer = null;
+
+            EventAnswerSelected?.Invoke(this, EventArgs.Empty);
         }
 
         public void SelectAnswer(int answer)
@@ -326,6 +374,8 @@ namespace CluelessControl
                 throw new ArgumentOutOfRangeException(nameof(answer), $"The answer number must be between {Constants.MIN_ANSWER_NUMBER} and {Constants.MAX_ANSWER_NUMBER}!");
 
             ContestantAnswer = answer;
+
+            EventAnswerSelected?.Invoke(this, EventArgs.Empty);
         }
 
         public bool IsAnswerCorrect()
@@ -339,6 +389,16 @@ namespace CluelessControl
         #endregion
 
         #region Trading
+
+        public void StartTrading()
+        {
+            RemoveDestroyedEnvelopes();
+
+            ContestantEnvelopes.ForEach(envelope => envelope.State = EnvelopeState.NEUTRAL);
+
+            EventStartTrading?.Invoke(this, EventArgs.Empty);
+        }
+
         #endregion
 
         #region Game Over
