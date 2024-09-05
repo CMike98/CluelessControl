@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CluelessControl
+namespace CluelessControl.Converters
 {
     public class JsonChequeSettingsConverter : JsonConverter<ChequeSettings>
     {
@@ -14,7 +14,7 @@ namespace CluelessControl
                 .EnumerateArray()
                 .Select(chequeElement =>
                 {
-                    return JsonSerializer.Deserialize<BaseCheque>(chequeElement, options) ?? throw new JsonException($"Invalid cheque list JSON.");
+                    return chequeElement.Deserialize<BaseCheque>(options) ?? throw new JsonException($"Invalid cheque list JSON.");
                 })
                 .ToList();
 

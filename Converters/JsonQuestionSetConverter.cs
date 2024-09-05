@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CluelessControl
+namespace CluelessControl.Converters
 {
     public class JsonQuestionSetConverter : JsonConverter<QuestionSet>
     {
@@ -15,7 +15,7 @@ namespace CluelessControl
                 .EnumerateArray()
                 .Select(questionElement =>
                 {
-                    return JsonSerializer.Deserialize<Question>(questionElement, options) ?? throw new JsonException($"Invalid question JSON.");
+                    return questionElement.Deserialize<Question>(options) ?? throw new JsonException($"Invalid question JSON.");
                 })
                 .ToList();
 

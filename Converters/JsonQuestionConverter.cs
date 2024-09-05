@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CluelessControl
+namespace CluelessControl.Converters
 {
     public class JsonQuestionConverter : JsonConverter<Question>
     {
@@ -35,7 +35,7 @@ namespace CluelessControl
         {
             // Start writing the question
             writer.WriteStartObject();
-            
+
             // Write the question text
             writer.WriteString("text", value.Text);
 

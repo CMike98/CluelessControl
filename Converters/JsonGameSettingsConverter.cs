@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CluelessControl
+namespace CluelessControl.Converters
 {
     public class JsonGameSettingsConverter : JsonConverter<GameSettings>
     {
@@ -14,9 +14,9 @@ namespace CluelessControl
             int decimalPlaces = root.GetProperty("decimalPlaces").GetInt32();
             bool onlyWorstMinusCounts = root.GetProperty("onlyWorstMinusCounts").GetBoolean();
             bool onlyBestPlusCounts = root.GetProperty("onlyBestPlusCounts").GetBoolean();
-            
+
             var tvBackgroundColorProperty = root.GetProperty("tvBackgroundColor");
-            Color tvBackgroundColor = JsonSerializer.Deserialize<Color>(tvBackgroundColorProperty, options);
+            Color tvBackgroundColor = tvBackgroundColorProperty.Deserialize<Color>(options);
 
             return GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, tvBackgroundColor);
         }

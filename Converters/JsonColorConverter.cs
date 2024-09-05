@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CluelessControl
+namespace CluelessControl.Converters
 {
     public class JsonColorConverter : JsonConverter<Color>
     {
