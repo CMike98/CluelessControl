@@ -10,10 +10,10 @@ namespace CluelessControl.Converters
             using var jsonDoc = JsonDocument.ParseValue(ref reader);
             var root = jsonDoc.RootElement;
 
-            byte a = root.GetProperty("a").GetByte();
-            byte r = root.GetProperty("r").GetByte();
-            byte g = root.GetProperty("g").GetByte();
-            byte b = root.GetProperty("b").GetByte();
+            int a = root.GetProperty("a").GetInt32();
+            int r = root.GetProperty("r").GetInt32();
+            int g = root.GetProperty("g").GetInt32();
+            int b = root.GetProperty("b").GetInt32();
 
             return Color.FromArgb(a, r, g, b);
         }
