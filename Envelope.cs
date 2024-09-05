@@ -90,5 +90,14 @@
         {
             return statesToColors[State];
         }
+
+        /// <summary>
+        /// Gets the text with envelope number and it's value
+        /// </summary>
+        /// <returns>Text with envelope number and it's value, separated with a new line</returns>
+        public string GetEnvelopeValueText()
+        {
+            return $"{EnvelopeNumber}{Environment.NewLine}{Cheque.ToValueString()}";
+        }
     }
 }
