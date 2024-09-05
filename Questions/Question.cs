@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace CluelessControl
+namespace CluelessControl.Questions
 {
     public class Question
     {

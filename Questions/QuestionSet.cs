@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace CluelessControl
+namespace CluelessControl.Questions
 {
     public class QuestionSet
     {
@@ -74,7 +74,7 @@ namespace CluelessControl
             if (string.IsNullOrWhiteSpace(fileName))
                 throw new ArgumentNullException(nameof(fileName));
 
-            string json = JsonSerializer.Serialize<QuestionSet>(this, Constants.JSON_SERIALIZER_OPTIONS);
+            string json = JsonSerializer.Serialize(this, Constants.JSON_SERIALIZER_OPTIONS);
             File.WriteAllText(fileName, json);
         }
     }
