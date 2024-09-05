@@ -42,6 +42,11 @@ namespace CluelessControl
         #region Trading Screen
         private readonly Label[] _tradingContestantEnvelopeLabels = new Label[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
         private readonly Label[] _tradingHostEnvelopeLabels = new Label[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
+
+        private readonly CheckBox[] _tradingContestantCheckboxes = new CheckBox[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
+        private readonly CheckBox[] _tradingHostCheckboxes = new CheckBox[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
+
+        private bool _tradingUnlocked = false;
         #endregion
 
         private bool EditedBeforeSave => _envelopeSettingsEdited || _questionEditorEdited || EnvelopeSettingsDidChequeChange() || QuestionEditorDidQuestionChange();
@@ -93,12 +98,20 @@ namespace CluelessControl
             {
                 string contestantEnvelopeName = string.Format("TradingContestantEnvelope{0}Lbl", i);
                 string hostEnvelopeName = string.Format("TradingHostEnvelope{0}Lbl", i);
+                string contestantCheckBoxName = string.Format("TradingContestantEnvelope{0}ChkBox", i);
+                string hostCheckBoxName = string.Format("TradingHostEnvelope{0}ChkBox", i);
 
-                Label contestantControl = (Label?)Controls.Find(contestantEnvelopeName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, contestantEnvelopeName);
-                Label hostControl = (Label?)Controls.Find(hostEnvelopeName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, hostEnvelopeName);
+                Label contestantControl = (Label)Controls.Find(contestantEnvelopeName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, contestantEnvelopeName);
+                Label hostControl = (Label)Controls.Find(hostEnvelopeName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, hostEnvelopeName);
+
+                CheckBox contestantCheckBox = (CheckBox) Controls.Find(contestantCheckBoxName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, contestantCheckBoxName);
+                CheckBox hostCheckBox = (CheckBox)Controls.Find(hostCheckBoxName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, hostCheckBoxName);
 
                 _tradingContestantEnvelopeLabels[i] = contestantControl;
                 _tradingHostEnvelopeLabels[i] = hostControl;
+
+                _tradingContestantCheckboxes[i] = contestantCheckBox;
+                _tradingHostCheckboxes[i] = hostCheckBox;
             }
         }
 
@@ -1705,12 +1718,30 @@ namespace CluelessControl
         #region Trading
         private void TradingUnlockButtons()
         {
-            ;
+            _tradingUnlocked = true;
+
+            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            {
+                _tradingContestantCheckboxes[i].Enabled = true;
+                _tradingContestantCheckboxes[i].Checked = false;
+
+                _tradingHostCheckboxes[i].Enabled = true;
+                _tradingHostCheckboxes[i].Checked = false;
+            }
         }
 
         private void TradingLockButtons()
         {
-            ;
+            _tradingUnlocked = false;
+
+            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            {
+                _tradingContestantCheckboxes[i].Enabled = false;
+                _tradingContestantCheckboxes[i].Checked = false;
+
+                _tradingHostCheckboxes[i].Enabled = false;
+                _tradingHostCheckboxes[i].Checked = false;
+            }
         }
 
         private void TradingUpdateEnvelopes()
