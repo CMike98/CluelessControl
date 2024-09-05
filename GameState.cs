@@ -403,9 +403,8 @@ namespace CluelessControl
         public void StartTrading()
         {
             RemoveDestroyedEnvelopes();
-
             ContestantEnvelopes.ForEach(envelope => envelope.State = EnvelopeState.NEUTRAL);
-
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
             EventStartTrading?.Invoke(this, EventArgs.Empty);
         }
 
