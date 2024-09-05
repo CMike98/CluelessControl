@@ -15,6 +15,8 @@ namespace CluelessControl
         public TVScreenForm()
         {
             InitializeComponent();
+
+            BackgroundImage = Image.FromFile("img/GwC.jpg");
         }
 
         public void ChangeBackgroundColor(Color newColor)
