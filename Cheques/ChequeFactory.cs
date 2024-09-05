@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace CluelessControl
+namespace CluelessControl.Cheques
 {
     public static class ChequeFactory
     {

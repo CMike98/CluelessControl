@@ -1,4 +1,4 @@
-﻿namespace CluelessControl
+﻿namespace CluelessControl.Cheques
 {
     public sealed class CashCheque : BaseCheque
     {
@@ -45,7 +45,7 @@
 
         public override BaseCheque CloneCheque()
         {
-            return (this.MemberwiseClone() as CashCheque) ?? throw new NullReferenceException($"Cheque cloning failed.");
+            return MemberwiseClone() as CashCheque ?? throw new NullReferenceException($"Cheque cloning failed.");
         }
     }
 }

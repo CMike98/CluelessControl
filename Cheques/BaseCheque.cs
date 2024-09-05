@@ -1,4 +1,4 @@
-﻿namespace CluelessControl
+﻿namespace CluelessControl.Cheques
 {
     public abstract class BaseCheque
     {

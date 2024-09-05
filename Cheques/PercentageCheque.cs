@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace CluelessControl
+namespace CluelessControl.Cheques
 {
     public sealed class PercentageCheque : BaseCheque
     {
@@ -16,7 +16,7 @@ namespace CluelessControl
         /// The multiplier to the prize money - created from the percentage
         /// </summary>
         [JsonIgnore]
-        public decimal CashMultiplier => 1 + (Percentage / 100);
+        public decimal CashMultiplier => 1 + Percentage / 100;
 
         /// <summary>
         /// Constructor
@@ -59,7 +59,7 @@ namespace CluelessControl
 
         public override BaseCheque CloneCheque()
         {
-            return (this.MemberwiseClone() as PercentageCheque) ?? throw new NullReferenceException($"Cheque cloning failed.");
+            return MemberwiseClone() as PercentageCheque ?? throw new NullReferenceException($"Cheque cloning failed.");
         }
     }
 }

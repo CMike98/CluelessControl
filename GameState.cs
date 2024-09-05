@@ -1,4 +1,6 @@
-﻿namespace CluelessControl
+﻿using CluelessControl.Cheques;
+
+namespace CluelessControl
 {
     public class GameState
     {

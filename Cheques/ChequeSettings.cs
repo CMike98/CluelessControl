@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace CluelessControl
+namespace CluelessControl.Cheques
 {
     public class ChequeSettings
     {
@@ -56,7 +56,7 @@ namespace CluelessControl
             if (string.IsNullOrWhiteSpace(fileName))
                 throw new ArgumentNullException(nameof(fileName));
 
-            string json = JsonSerializer.Serialize<ChequeSettings>(this, Constants.JSON_SERIALIZER_OPTIONS);
+            string json = JsonSerializer.Serialize(this, Constants.JSON_SERIALIZER_OPTIONS);
             File.WriteAllText(fileName, json);
         }
     }

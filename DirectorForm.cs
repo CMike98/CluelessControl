@@ -1,3 +1,5 @@
+using CluelessControl.Cheques;
+
 namespace CluelessControl
 {
     public partial class DirectorForm : Form
