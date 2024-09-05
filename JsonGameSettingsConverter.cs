@@ -31,7 +31,7 @@ namespace CluelessControl
             writer.WriteBoolean("onlyBestPlusCounts", value.OnlyBestPlusCounts);
 
             writer.WritePropertyName("tvBackgroundColor");
-            JsonSerializer.Serialize(writer, value.TVBackgroundColor, value.GetType(), options);
+            JsonSerializer.Serialize(writer, value.TVBackgroundColor, value.TVBackgroundColor.GetType(), options);
 
             writer.WriteEndObject();
         }
