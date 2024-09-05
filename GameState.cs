@@ -217,12 +217,22 @@ namespace CluelessControl
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
-        public void AddContestantEnvelope(Envelope newEnvelope)
+        public void AddContestantEnvelope(Envelope envelope)
         {
-            if (newEnvelope == null)
-                throw new ArgumentNullException(nameof(newEnvelope));
+            if (envelope == null)
+                throw new ArgumentNullException(nameof(envelope));
 
-            ContestantEnvelopes.Add(newEnvelope);
+            ContestantEnvelopes.Add(envelope);
+
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
+        }
+        
+        public void RemoveContestantEnvelope(Envelope envelope)
+        {
+            if (envelope == null)
+                throw new ArgumentNullException(nameof(envelope));
+
+            ContestantEnvelopes.Remove(envelope);
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
