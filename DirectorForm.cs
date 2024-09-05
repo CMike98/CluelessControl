@@ -34,8 +34,12 @@ namespace CluelessControl
 
         #region Question Game Screen
         private readonly Dictionary<int, Label> _questionGameAnswerLabels;
-        private bool _questionGameDrawEnvelope;
         private int _questionGameEnvelopeIndex;
+        #endregion
+
+        #region Trading Screen
+        private readonly Label[] _tradingContestantEnvelopeLabels = new Label[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
+        private readonly Label[] _tradingHostEnvelopeLabels = new Label[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
         #endregion
 
         private bool EditedBeforeSave => _envelopeSettingsEdited || _questionEditorEdited || EnvelopeSettingsDidChequeChange() || QuestionEditorDidQuestionChange();
@@ -55,8 +59,9 @@ namespace CluelessControl
 
         private void DirectorForm_Load(object sender, EventArgs e)
         {
-            ShowAllForms();
             PrepareEnvelopeSelectionBoxes();
+            PrepareTradingEnvelopeBoxes();
+            ShowAllForms();
         }
 
         private static void ShowAllForms()
@@ -77,6 +82,21 @@ namespace CluelessControl
                 Label valueControl = (Label?)Controls.Find(valueName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, valueName);
 
                 _envelopeSelectTxtBoxesAndLabels.Add(numberControl, valueControl);
+            }
+        }
+
+        private void PrepareTradingEnvelopeBoxes()
+        {
+            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            {
+                string contestantEnvelopeName = string.Format("TradingContestantEnvelope{0}Lbl", i);
+                string hostEnvelopeName = string.Format("TradingHostEnvelope{0}Lbl", i);
+
+                Label contestantControl = (Label?)Controls.Find(contestantEnvelopeName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, contestantEnvelopeName);
+                Label hostControl = (Label?)Controls.Find(hostEnvelopeName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, hostEnvelopeName);
+
+                _tradingContestantEnvelopeLabels[i] = contestantControl;
+                _tradingHostEnvelopeLabels[i] = hostControl;
             }
         }
 
@@ -1356,7 +1376,7 @@ namespace CluelessControl
 
             var newEnvelope = envelopeTable.GetEnvelope(envelopeNumber);
             envelopeTable.DeleteEnvelope(newEnvelope);
-            gameStateInstance.ContestantEnvelopes.Add(newEnvelope);
+            gameStateInstance.AddContestantEnvelope(newEnvelope);
 
             // Update button availability
             EnvelopeSelectionUpdateAvailability();
@@ -1389,6 +1409,8 @@ namespace CluelessControl
 
         private void EnvelopeSelectionNextPartBtn_Click(object sender, EventArgs e)
         {
+            GameState.Instance.SortEnvelopesByNumber();
+
             EnvelopeSelectionLockButtons();
             QuestionGameUnlockFirstButtons();
 
@@ -1401,7 +1423,6 @@ namespace CluelessControl
 
         private void QuestionGameUnlockFirstButtons()
         {
-            _questionGameDrawEnvelope = true;
             QuestionGameNextQuestionBtn.Enabled = true;
         }
 
@@ -1429,6 +1450,17 @@ namespace CluelessControl
             QuestionGameStartTradingBtn.Enabled = false;
         }
 
+        private void QuestionGameUpdateEnvelopeLabel()
+        {
+            Envelope? selectedEnvelope = GameState.Instance.GetContestantEnvelope(_questionGameEnvelopeIndex);
+
+            if (selectedEnvelope is null)
+                throw new NullReferenceException($"Selected envelope is null.");
+
+            QuestionGameEnvelopeLabel.BackColor = selectedEnvelope.GetBackgroundColor();
+            QuestionGameEnvelopeLabel.Text = selectedEnvelope.GetEnvelopeValueText();
+        }
+
         private void QuestionGameUpdateEnvelopeButtons()
         {
             int startEnvelopeCount = GameState.Instance.GameSettings.StartEnvelopeCount;
@@ -1444,8 +1476,8 @@ namespace CluelessControl
 
             QuestionGamePreviousEnvelopeBtn.Enabled = _questionGameEnvelopeIndex > 0;
             QuestionGameNextEnvelopeBtn.Enabled = _questionGameEnvelopeIndex < startEnvelopeCount - 1;
-            Refresh();
         }
+
 
         private void QuestionGameClearQuestionBoxes()
         {
@@ -1480,7 +1512,7 @@ namespace CluelessControl
 
             QuestionGameCorrectAnswerLabel.Text = Utils.AnswerToLetter(currentQuestion.CorrectAnswerNumber);
 
-            QuestionGameCommentLbl.Text = currentQuestion.IsCommentPresent ? "-" : currentQuestion.Comment;
+            QuestionGameCommentLbl.Text = currentQuestion.IsCommentPresent ? currentQuestion.Comment : "N/D";
         }
 
         private void QuestionGameLockAnswer(int answerNumber)
@@ -1493,7 +1525,7 @@ namespace CluelessControl
             QuestionGameSetAnswerEnabled(enabled: false);
             QuestionGameShowCorrectBtn.Enabled = true;
 
-            _questionGameAnswerLabels[answerNumber].BackColor = Color.Orange;
+            _questionGameAnswerLabels[answerNumber].BackColor = Constants.LOCK_IN_ANS_COLOR;
         }
 
         private void QuestionGameShowCorrectAnswer()
@@ -1501,7 +1533,9 @@ namespace CluelessControl
             var gameState = GameState.Instance;
             var currentQuestion = gameState.GetCurrentQuestion();
 
-            _questionGameAnswerLabels[currentQuestion.CorrectAnswerNumber].BackColor = Color.LightGreen;
+            _questionGameAnswerLabels[currentQuestion.CorrectAnswerNumber].BackColor = Constants.CORRECT_ANS_COLOR;
+
+            gameState.ShowCorrectAnswer();
         }
 
         private void QuestionGameAns1Btn_Click(object sender, EventArgs e)
@@ -1539,6 +1573,8 @@ namespace CluelessControl
         {
             QuestionGameShowQuestionBtn.Enabled = false;
             QuestionGameDisplayEnvelopesBtn.Enabled = true;
+
+            GameState.Instance.ShowQuestion();
         }
 
         private void QuestionGameDisplayEnvelopesBtn_Click(object sender, EventArgs e)
@@ -1553,7 +1589,10 @@ namespace CluelessControl
         private void QuestionGameConfirmEnvelopeBtn_Click(object sender, EventArgs e)
         {
             var gameStateInstance = GameState.Instance;
-            var selectedEnvelope = gameStateInstance.ContestantEnvelopes[_questionGameEnvelopeIndex];
+            var selectedEnvelope = gameStateInstance.GetContestantEnvelope(_questionGameEnvelopeIndex);
+            if (selectedEnvelope is null)
+                throw new NullReferenceException($"Envelope confirmed is null.");
+
             if (selectedEnvelope.State != EnvelopeState.NEUTRAL)
             {
                 ShowErrorMessage(message: "Tę kopertę wybrano wcześniej! Wybierz inną!");
@@ -1568,13 +1607,15 @@ namespace CluelessControl
             QuestionGamePreviousEnvelopeBtn.Enabled = false;
             QuestionGameNextEnvelopeBtn.Enabled = false;
 
-            Refresh();
+            QuestionGameUpdateEnvelopeLabel();
         }
 
         private void QuestionGameShowAnswersBtn_Click(object sender, EventArgs e)
         {
             QuestionGameSetAnswerEnabled(enabled: true);
             QuestionGameShowAnswersBtn.Enabled = false;
+
+            GameState.Instance.ShowPossibleAnswers();
         }
 
         private void QuestionGameShowCorrectBtn_Click(object sender, EventArgs e)
@@ -1589,7 +1630,8 @@ namespace CluelessControl
         {
             QuestionGameCheckAnswerBtn.Enabled = false;
             QuestionGameKeepDestroyEnvelopeBtn.Enabled = true;
-            Refresh();
+
+            QuestionGameUpdateEnvelopeLabel();
         }
 
         private void QuestionGameKeepDestroyEnvelopeBtn_Click(object sender, EventArgs e)
@@ -1607,15 +1649,8 @@ namespace CluelessControl
             }
 
             QuestionGameKeepDestroyEnvelopeBtn.Enabled = false;
-            Refresh();
-        }
-
-        private void QuestionGameStartTradingBtn_Click(object sender, EventArgs e)
-        {
-            _questionGameDrawEnvelope = false;
-
-            QuestionGameLockAllButtons();
-            QuestionGameStartTradingBtn.Enabled = false;
+            
+            QuestionGameUpdateEnvelopeLabel();
         }
 
         private void QuestionGameCancelQuestionBtn_Click(object sender, EventArgs e)
@@ -1630,44 +1665,68 @@ namespace CluelessControl
         private void QuestionGamePreviousEnvelopeBtn_Click(object sender, EventArgs e)
         {
             --_questionGameEnvelopeIndex;
+            QuestionGameUpdateEnvelopeLabel();
             QuestionGameUpdateEnvelopeButtons();
         }
 
         private void QuestionGameNextEnvelopeBtn_Click(object sender, EventArgs e)
         {
             ++_questionGameEnvelopeIndex;
+            QuestionGameUpdateEnvelopeLabel();
             QuestionGameUpdateEnvelopeButtons();
         }
 
-        private void QuestionGameEnvelopePicture_Paint(object sender, PaintEventArgs e)
+        private void QuestionGameStartTradingBtn_Click(object sender, EventArgs e)
         {
-            if (!_questionGameDrawEnvelope)
+            QuestionGameLockAllButtons();
+            QuestionGameStartTradingBtn.Enabled = false;
+
+            var gameStateInstance = GameState.Instance;
+            gameStateInstance.StartTrading();
+            if (gameStateInstance.ContestantEnvelopes.Count == 0)
             {
-                return;
+                // Game Over
+                DirectorTabControl.SelectTab("GameOverTab");
+            }
+            else
+            {
+                // Start trading
+                TradingUnlockButtons();
+                TradingUpdateEnvelopes();
+                DirectorTabControl.SelectTab("GameTradingTab");
+            }
+        }
+
+        #endregion
+
+        #region Trading
+        private void TradingUnlockButtons()
+        {
+            ;
+        }
+
+        private void TradingLockButtons()
+        {
+            ;
+        }
+
+        private void TradingUpdateEnvelopes()
+        {
+            var gameStateInstance = GameState.Instance;
+            
+            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            {
+                Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
+                _tradingContestantEnvelopeLabels[i].BackColor = envelope?.GetBackgroundColor() ?? Color.White;
+                _tradingContestantEnvelopeLabels[i].Text = envelope?.GetEnvelopeValueText() ?? string.Empty;
             }
 
-            Envelope envelope = GameState.Instance.ContestantEnvelopes[_questionGameEnvelopeIndex];
-
-            QuestionGameEnvelopePicture.BackColor = envelope.GetBackgroundColor();
-
-            Rectangle clientRectangle = QuestionGameEnvelopePicture.ClientRectangle;
-            Point size = (Point)clientRectangle.Size;
-
-            Point leftPoint = clientRectangle.Location;
-            Point centerPoint = new(leftPoint.X + size.X / 2, leftPoint.Y + size.Y / 2);
-            Point rightPoint = new(leftPoint.X + size.X, leftPoint.Y);
-
-            e.Graphics.DrawLine(Pens.Black, leftPoint, centerPoint);
-            e.Graphics.DrawLine(Pens.Black, centerPoint, rightPoint);
-
-            e.Graphics.DrawString(envelope.EnvelopeNumber.ToString(), Constants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
-
-            BaseCheque cheque = envelope.Cheque;
-            string chequeString = cheque.ToValueString();
-            using Brush brush = new SolidBrush(cheque.GetTextColor());
-
-            SizeF valueSize = e.Graphics.MeasureString(chequeString, Constants.DRAWING_FONT);
-            e.Graphics.DrawString(chequeString, Constants.DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
+            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            {
+                Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
+                _tradingHostEnvelopeLabels[i].BackColor = envelope?.GetBackgroundColor() ?? Color.White;
+                _tradingHostEnvelopeLabels[i].Text = envelope?.GetEnvelopeValueText() ?? string.Empty;
+            }
         }
 
         #endregion

@@ -113,8 +113,8 @@
             EnvelopeSelectionContent0Lbl = new Label();
             EnvelopeSelectionNum0TxtBox = new TextBox();
             GameQuestionsTab = new TabPage();
+            QuestionGameEnvelopeLabel = new Label();
             QuestionGameNextQuestionBtn = new Button();
-            QuestionGameEnvelopePicture = new PictureBox();
             QuestionGameSelectEnvelopeLbl = new Label();
             QuestionGameNextEnvelopeBtn = new Button();
             QuestionGamePreviousEnvelopeBtn = new Button();
@@ -140,6 +140,18 @@
             QuestionGameAns1Lbl = new Label();
             QuestionGameQuestionLbl = new Label();
             GameTradingTab = new TabPage();
+            TradingHostTitleLbl = new Label();
+            TradingHostEnvelope4Lbl = new Label();
+            TradingHostEnvelope3Lbl = new Label();
+            TradingHostEnvelope2Lbl = new Label();
+            TradingHostEnvelope1Lbl = new Label();
+            TradingHostEnvelope0Lbl = new Label();
+            TradingContestantTitleLbl = new Label();
+            TradingContestantEnvelope4Lbl = new Label();
+            TradingContestantEnvelope3Lbl = new Label();
+            TradingContestantEnvelope2Lbl = new Label();
+            TradingContestantEnvelope1Lbl = new Label();
+            TradingContestantEnvelope0Lbl = new Label();
             GameOverTab = new TabPage();
             EnvelopeSettingsOpen = new OpenFileDialog();
             EnvelopeSettingsSave = new SaveFileDialog();
@@ -165,7 +177,7 @@
             QuestionEditorTab.SuspendLayout();
             GamePickEnvelopesTab.SuspendLayout();
             GameQuestionsTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)QuestionGameEnvelopePicture).BeginInit();
+            GameTradingTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)VolumeTrackBar).BeginInit();
             SuspendLayout();
             // 
@@ -583,9 +595,9 @@
             // EnvelopeSettingsHintLbl
             // 
             EnvelopeSettingsHintLbl.Font = new Font("Arial", 18F, FontStyle.Italic, GraphicsUnit.Point, 238);
-            EnvelopeSettingsHintLbl.Location = new Point(309, 328);
+            EnvelopeSettingsHintLbl.Location = new Point(309, 359);
             EnvelopeSettingsHintLbl.Name = "EnvelopeSettingsHintLbl";
-            EnvelopeSettingsHintLbl.Size = new Size(743, 106);
+            EnvelopeSettingsHintLbl.Size = new Size(743, 75);
             EnvelopeSettingsHintLbl.TabIndex = 60;
             EnvelopeSettingsHintLbl.Text = "Podpowiedź: jeżeli chcesz zero w kopercie, lepiej zrób kopertę z kwotą 0, niż +0%.";
             EnvelopeSettingsHintLbl.TextAlign = ContentAlignment.MiddleCenter;
@@ -1174,8 +1186,8 @@
             // GameQuestionsTab
             // 
             GameQuestionsTab.BackColor = SystemColors.Control;
+            GameQuestionsTab.Controls.Add(QuestionGameEnvelopeLabel);
             GameQuestionsTab.Controls.Add(QuestionGameNextQuestionBtn);
-            GameQuestionsTab.Controls.Add(QuestionGameEnvelopePicture);
             GameQuestionsTab.Controls.Add(QuestionGameSelectEnvelopeLbl);
             GameQuestionsTab.Controls.Add(QuestionGameNextEnvelopeBtn);
             GameQuestionsTab.Controls.Add(QuestionGamePreviousEnvelopeBtn);
@@ -1206,6 +1218,16 @@
             GameQuestionsTab.TabIndex = 2;
             GameQuestionsTab.Text = "Gra - Pytania";
             // 
+            // QuestionGameEnvelopeLabel
+            // 
+            QuestionGameEnvelopeLabel.BorderStyle = BorderStyle.FixedSingle;
+            QuestionGameEnvelopeLabel.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameEnvelopeLabel.Location = new Point(797, 276);
+            QuestionGameEnvelopeLabel.Name = "QuestionGameEnvelopeLabel";
+            QuestionGameEnvelopeLabel.Size = new Size(268, 87);
+            QuestionGameEnvelopeLabel.TabIndex = 23;
+            QuestionGameEnvelopeLabel.TextAlign = ContentAlignment.TopCenter;
+            // 
             // QuestionGameNextQuestionBtn
             // 
             QuestionGameNextQuestionBtn.Enabled = false;
@@ -1217,20 +1239,6 @@
             QuestionGameNextQuestionBtn.Text = "Następne pytanie";
             QuestionGameNextQuestionBtn.UseVisualStyleBackColor = true;
             QuestionGameNextQuestionBtn.Click += QuestionGameNextQuestionBtn_Click;
-            // 
-            // QuestionGameEnvelopePicture
-            // 
-            QuestionGameEnvelopePicture.BackColor = Color.White;
-            QuestionGameEnvelopePicture.BackgroundImageLayout = ImageLayout.Center;
-            QuestionGameEnvelopePicture.BorderStyle = BorderStyle.FixedSingle;
-            QuestionGameEnvelopePicture.Location = new Point(797, 276);
-            QuestionGameEnvelopePicture.Name = "QuestionGameEnvelopePicture";
-            QuestionGameEnvelopePicture.Size = new Size(268, 87);
-            QuestionGameEnvelopePicture.SizeMode = PictureBoxSizeMode.CenterImage;
-            QuestionGameEnvelopePicture.TabIndex = 30;
-            QuestionGameEnvelopePicture.TabStop = false;
-            QuestionGameEnvelopePicture.Tag = "C4";
-            QuestionGameEnvelopePicture.Paint += QuestionGameEnvelopePicture_Paint;
             // 
             // QuestionGameSelectEnvelopeLbl
             // 
@@ -1249,7 +1257,7 @@
             QuestionGameNextEnvelopeBtn.Location = new Point(935, 385);
             QuestionGameNextEnvelopeBtn.Name = "QuestionGameNextEnvelopeBtn";
             QuestionGameNextEnvelopeBtn.Size = new Size(130, 50);
-            QuestionGameNextEnvelopeBtn.TabIndex = 24;
+            QuestionGameNextEnvelopeBtn.TabIndex = 25;
             QuestionGameNextEnvelopeBtn.Text = "Następna";
             QuestionGameNextEnvelopeBtn.UseVisualStyleBackColor = true;
             QuestionGameNextEnvelopeBtn.Click += QuestionGameNextEnvelopeBtn_Click;
@@ -1261,7 +1269,7 @@
             QuestionGamePreviousEnvelopeBtn.Location = new Point(797, 385);
             QuestionGamePreviousEnvelopeBtn.Name = "QuestionGamePreviousEnvelopeBtn";
             QuestionGamePreviousEnvelopeBtn.Size = new Size(130, 50);
-            QuestionGamePreviousEnvelopeBtn.TabIndex = 23;
+            QuestionGamePreviousEnvelopeBtn.TabIndex = 24;
             QuestionGamePreviousEnvelopeBtn.Text = "Poprzednia";
             QuestionGamePreviousEnvelopeBtn.UseVisualStyleBackColor = true;
             QuestionGamePreviousEnvelopeBtn.Click += QuestionGamePreviousEnvelopeBtn_Click;
@@ -1303,7 +1311,7 @@
             QuestionGameCancelQuestionBtn.Name = "QuestionGameCancelQuestionBtn";
             QuestionGameCancelQuestionBtn.Size = new Size(157, 50);
             QuestionGameCancelQuestionBtn.TabIndex = 20;
-            QuestionGameCancelQuestionBtn.Text = "Wymień pytanie";
+            QuestionGameCancelQuestionBtn.Text = "Wycofaj pytanie";
             QuestionGameCancelQuestionBtn.UseVisualStyleBackColor = true;
             QuestionGameCancelQuestionBtn.Click += QuestionGameCancelQuestionBtn_Click;
             // 
@@ -1499,11 +1507,153 @@
             // GameTradingTab
             // 
             GameTradingTab.BackColor = SystemColors.Control;
+            GameTradingTab.Controls.Add(TradingHostTitleLbl);
+            GameTradingTab.Controls.Add(TradingHostEnvelope4Lbl);
+            GameTradingTab.Controls.Add(TradingHostEnvelope3Lbl);
+            GameTradingTab.Controls.Add(TradingHostEnvelope2Lbl);
+            GameTradingTab.Controls.Add(TradingHostEnvelope1Lbl);
+            GameTradingTab.Controls.Add(TradingHostEnvelope0Lbl);
+            GameTradingTab.Controls.Add(TradingContestantTitleLbl);
+            GameTradingTab.Controls.Add(TradingContestantEnvelope4Lbl);
+            GameTradingTab.Controls.Add(TradingContestantEnvelope3Lbl);
+            GameTradingTab.Controls.Add(TradingContestantEnvelope2Lbl);
+            GameTradingTab.Controls.Add(TradingContestantEnvelope1Lbl);
+            GameTradingTab.Controls.Add(TradingContestantEnvelope0Lbl);
             GameTradingTab.Location = new Point(4, 24);
             GameTradingTab.Name = "GameTradingTab";
             GameTradingTab.Size = new Size(1084, 445);
             GameTradingTab.TabIndex = 3;
             GameTradingTab.Text = "Gra - Licytacja";
+            // 
+            // TradingHostTitleLbl
+            // 
+            TradingHostTitleLbl.Font = new Font("Arial", 12F);
+            TradingHostTitleLbl.Location = new Point(874, 4);
+            TradingHostTitleLbl.Name = "TradingHostTitleLbl";
+            TradingHostTitleLbl.Size = new Size(198, 36);
+            TradingHostTitleLbl.TabIndex = 35;
+            TradingHostTitleLbl.Text = "PROWADZĄCY";
+            TradingHostTitleLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TradingHostEnvelope4Lbl
+            // 
+            TradingHostEnvelope4Lbl.BorderStyle = BorderStyle.FixedSingle;
+            TradingHostEnvelope4Lbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingHostEnvelope4Lbl.Location = new Point(874, 364);
+            TradingHostEnvelope4Lbl.Name = "TradingHostEnvelope4Lbl";
+            TradingHostEnvelope4Lbl.Size = new Size(198, 67);
+            TradingHostEnvelope4Lbl.TabIndex = 34;
+            TradingHostEnvelope4Lbl.Text = "50\r\n100 000";
+            TradingHostEnvelope4Lbl.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // TradingHostEnvelope3Lbl
+            // 
+            TradingHostEnvelope3Lbl.BorderStyle = BorderStyle.FixedSingle;
+            TradingHostEnvelope3Lbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingHostEnvelope3Lbl.Location = new Point(874, 283);
+            TradingHostEnvelope3Lbl.Name = "TradingHostEnvelope3Lbl";
+            TradingHostEnvelope3Lbl.Size = new Size(198, 67);
+            TradingHostEnvelope3Lbl.TabIndex = 33;
+            TradingHostEnvelope3Lbl.Text = "50\r\n100 000";
+            TradingHostEnvelope3Lbl.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // TradingHostEnvelope2Lbl
+            // 
+            TradingHostEnvelope2Lbl.BorderStyle = BorderStyle.FixedSingle;
+            TradingHostEnvelope2Lbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingHostEnvelope2Lbl.Location = new Point(874, 202);
+            TradingHostEnvelope2Lbl.Name = "TradingHostEnvelope2Lbl";
+            TradingHostEnvelope2Lbl.Size = new Size(198, 67);
+            TradingHostEnvelope2Lbl.TabIndex = 32;
+            TradingHostEnvelope2Lbl.Text = "50\r\n100 000";
+            TradingHostEnvelope2Lbl.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // TradingHostEnvelope1Lbl
+            // 
+            TradingHostEnvelope1Lbl.BorderStyle = BorderStyle.FixedSingle;
+            TradingHostEnvelope1Lbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingHostEnvelope1Lbl.Location = new Point(874, 121);
+            TradingHostEnvelope1Lbl.Name = "TradingHostEnvelope1Lbl";
+            TradingHostEnvelope1Lbl.Size = new Size(198, 67);
+            TradingHostEnvelope1Lbl.TabIndex = 31;
+            TradingHostEnvelope1Lbl.Text = "50\r\n100 000";
+            TradingHostEnvelope1Lbl.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // TradingHostEnvelope0Lbl
+            // 
+            TradingHostEnvelope0Lbl.BorderStyle = BorderStyle.FixedSingle;
+            TradingHostEnvelope0Lbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingHostEnvelope0Lbl.Location = new Point(874, 40);
+            TradingHostEnvelope0Lbl.Name = "TradingHostEnvelope0Lbl";
+            TradingHostEnvelope0Lbl.Size = new Size(198, 67);
+            TradingHostEnvelope0Lbl.TabIndex = 30;
+            TradingHostEnvelope0Lbl.Text = "50\r\n100 000";
+            TradingHostEnvelope0Lbl.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // TradingContestantTitleLbl
+            // 
+            TradingContestantTitleLbl.Font = new Font("Arial", 12F);
+            TradingContestantTitleLbl.Location = new Point(13, 4);
+            TradingContestantTitleLbl.Name = "TradingContestantTitleLbl";
+            TradingContestantTitleLbl.Size = new Size(198, 36);
+            TradingContestantTitleLbl.TabIndex = 29;
+            TradingContestantTitleLbl.Text = "ZAWODNIK";
+            TradingContestantTitleLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TradingContestantEnvelope4Lbl
+            // 
+            TradingContestantEnvelope4Lbl.BorderStyle = BorderStyle.FixedSingle;
+            TradingContestantEnvelope4Lbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingContestantEnvelope4Lbl.Location = new Point(13, 364);
+            TradingContestantEnvelope4Lbl.Name = "TradingContestantEnvelope4Lbl";
+            TradingContestantEnvelope4Lbl.Size = new Size(198, 67);
+            TradingContestantEnvelope4Lbl.TabIndex = 28;
+            TradingContestantEnvelope4Lbl.Text = "50\r\n100 000";
+            TradingContestantEnvelope4Lbl.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // TradingContestantEnvelope3Lbl
+            // 
+            TradingContestantEnvelope3Lbl.BorderStyle = BorderStyle.FixedSingle;
+            TradingContestantEnvelope3Lbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingContestantEnvelope3Lbl.Location = new Point(13, 283);
+            TradingContestantEnvelope3Lbl.Name = "TradingContestantEnvelope3Lbl";
+            TradingContestantEnvelope3Lbl.Size = new Size(198, 67);
+            TradingContestantEnvelope3Lbl.TabIndex = 27;
+            TradingContestantEnvelope3Lbl.Text = "50\r\n100 000";
+            TradingContestantEnvelope3Lbl.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // TradingContestantEnvelope2Lbl
+            // 
+            TradingContestantEnvelope2Lbl.BorderStyle = BorderStyle.FixedSingle;
+            TradingContestantEnvelope2Lbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingContestantEnvelope2Lbl.Location = new Point(13, 202);
+            TradingContestantEnvelope2Lbl.Name = "TradingContestantEnvelope2Lbl";
+            TradingContestantEnvelope2Lbl.Size = new Size(198, 67);
+            TradingContestantEnvelope2Lbl.TabIndex = 26;
+            TradingContestantEnvelope2Lbl.Text = "50\r\n100 000";
+            TradingContestantEnvelope2Lbl.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // TradingContestantEnvelope1Lbl
+            // 
+            TradingContestantEnvelope1Lbl.BorderStyle = BorderStyle.FixedSingle;
+            TradingContestantEnvelope1Lbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingContestantEnvelope1Lbl.Location = new Point(13, 121);
+            TradingContestantEnvelope1Lbl.Name = "TradingContestantEnvelope1Lbl";
+            TradingContestantEnvelope1Lbl.Size = new Size(198, 67);
+            TradingContestantEnvelope1Lbl.TabIndex = 25;
+            TradingContestantEnvelope1Lbl.Text = "50\r\n100 000";
+            TradingContestantEnvelope1Lbl.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // TradingContestantEnvelope0Lbl
+            // 
+            TradingContestantEnvelope0Lbl.BorderStyle = BorderStyle.FixedSingle;
+            TradingContestantEnvelope0Lbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingContestantEnvelope0Lbl.Location = new Point(13, 40);
+            TradingContestantEnvelope0Lbl.Name = "TradingContestantEnvelope0Lbl";
+            TradingContestantEnvelope0Lbl.Size = new Size(198, 67);
+            TradingContestantEnvelope0Lbl.TabIndex = 24;
+            TradingContestantEnvelope0Lbl.Text = "50\r\n100 000";
+            TradingContestantEnvelope0Lbl.TextAlign = ContentAlignment.TopCenter;
             // 
             // GameOverTab
             // 
@@ -1616,7 +1766,7 @@
             GamePickEnvelopesTab.ResumeLayout(false);
             GamePickEnvelopesTab.PerformLayout();
             GameQuestionsTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)QuestionGameEnvelopePicture).EndInit();
+            GameTradingTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)VolumeTrackBar).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -1738,7 +1888,6 @@
         private Button QuestionGameNextEnvelopeBtn;
         private Button QuestionGamePreviousEnvelopeBtn;
         private Label QuestionGameSelectEnvelopeLbl;
-        private PictureBox QuestionGameEnvelopePicture;
         private Button QuestionGameNextQuestionBtn;
         private Label VolumeLabel;
         private TrackBar VolumeTrackBar;
@@ -1747,5 +1896,18 @@
         private Label SettingsTVBackgroundColorLabel;
         private ColorDialog SettingsTVBackgroundColorDialog;
         private PictureBox SettingsTVBackgroundColorPicture;
+        private Label QuestionGameEnvelopeLabel;
+        private Label TradingContestantEnvelope0Lbl;
+        private Label TradingHostTitleLbl;
+        private Label TradingHostEnvelope4Lbl;
+        private Label TradingHostEnvelope3Lbl;
+        private Label TradingHostEnvelope2Lbl;
+        private Label TradingHostEnvelope1Lbl;
+        private Label TradingHostEnvelope0Lbl;
+        private Label TradingContestantTitleLbl;
+        private Label TradingContestantEnvelope4Lbl;
+        private Label TradingContestantEnvelope3Lbl;
+        private Label TradingContestantEnvelope2Lbl;
+        private Label TradingContestantEnvelope1Lbl;
     }
 }
