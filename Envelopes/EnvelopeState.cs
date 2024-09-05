@@ -1,4 +1,4 @@
-﻿namespace CluelessControl
+﻿namespace CluelessControl.Envelopes
 {
     public enum EnvelopeState
     {

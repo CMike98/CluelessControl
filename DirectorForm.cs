@@ -1,4 +1,5 @@
 using CluelessControl.Cheques;
+using CluelessControl.Envelopes;
 
 namespace CluelessControl
 {
@@ -1270,7 +1271,7 @@ namespace CluelessControl
         private void EnvelopeSelectionUpdateAvailability()
         {
             var gameStateInstance = GameState.Instance;
-            int envelopeCount = gameStateInstance.ContestantEnvelopes.Count;
+            int envelopeCount = gameStateInstance.ContestantEnvelopeSet.EnvelopeCount;
             int startEnvelopeCount = gameStateInstance.GameSettings.StartEnvelopeCount;
 
             TextBox[] numberTextBoxes = _envelopeSelectTxtBoxesAndLabels.Keys.ToArray();
@@ -1351,8 +1352,8 @@ namespace CluelessControl
         private void EnvelopeSelectionConfirmBtn_Click(object sender, EventArgs e)
         {
             var gameStateInstance = GameState.Instance;
-            var contestantEnvelopes = gameStateInstance.ContestantEnvelopes;
-            int index = contestantEnvelopes.Count;
+            var contestantEnvelopes = gameStateInstance.ContestantEnvelopeSet;
+            int index = contestantEnvelopes.EnvelopeCount;
 
             // Get the correct textbox
             TextBox[] numberTextBoxes = _envelopeSelectTxtBoxesAndLabels.Keys.ToArray();
@@ -1385,11 +1386,11 @@ namespace CluelessControl
         private void EnvelopeSelectionRetractBtn_Click(object sender, EventArgs e)
         {
             var gameStateInstance = GameState.Instance;
-            var contestantEnvelopes = gameStateInstance.ContestantEnvelopes;
-            int lastEnvelopeIndex = contestantEnvelopes.Count - 1;
+            var contestantEnvelopes = gameStateInstance.ContestantEnvelopeSet;
+            int lastEnvelopeIndex = contestantEnvelopes.EnvelopeCount - 1;
 
             // Get the last envelope
-            var lastEnvelope = contestantEnvelopes[lastEnvelopeIndex];
+            var lastEnvelope = contestantEnvelopes.GetEnvelope(lastEnvelopeIndex);
 
             // Bring the last envelope back to the table
             gameStateInstance.EnvelopeTable.AddEnvelope(lastEnvelope);
@@ -1684,7 +1685,7 @@ namespace CluelessControl
 
             var gameStateInstance = GameState.Instance;
             gameStateInstance.StartTrading();
-            if (gameStateInstance.ContestantEnvelopes.Count == 0)
+            if (gameStateInstance.ContestantEnvelopeSet.IsEmpty)
             {
                 // Game Over
                 DirectorTabControl.SelectTab("GameOverTab");

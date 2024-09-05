@@ -1,6 +1,6 @@
 ﻿using CluelessControl.Cheques;
 
-namespace CluelessControl
+namespace CluelessControl.Envelopes
 {
     public class Envelope
     {

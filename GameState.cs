@@ -1,4 +1,5 @@
 ﻿using CluelessControl.Cheques;
+using CluelessControl.Envelopes;
 
 namespace CluelessControl
 {
@@ -46,13 +47,13 @@ namespace CluelessControl
             private set;
         }
 
-        public List<Envelope> ContestantEnvelopes
+        public EnvelopeSet ContestantEnvelopeSet
         {
             get;
             private set;
         }
 
-        public List<Envelope> HostEnvelopes
+        public EnvelopeSet HostEnvelopeSet
         {
             get;
             private set;
@@ -120,8 +121,8 @@ namespace CluelessControl
             ChequeSettings = ChequeSettings.Create();
             EnvelopeTable = EnvelopeTable.Create();
 
-            ContestantEnvelopes = new(Constants.MAX_ENVELOPE_POSSIBLE_COUNT);
-            HostEnvelopes = new(Constants.MAX_ENVELOPE_POSSIBLE_COUNT);
+            ContestantEnvelopeSet = EnvelopeSet.Create();
+            HostEnvelopeSet = EnvelopeSet.Create();
             EnvelopePlayedFor = null;
 
             ContestantAnswer = null;
@@ -134,8 +135,8 @@ namespace CluelessControl
         #region Moving The Game
         public void NewGame()
         {
-            ContestantEnvelopes.Clear();
-            HostEnvelopes.Clear();
+            ContestantEnvelopeSet.ClearEnvelopeList();
+            HostEnvelopeSet.ClearEnvelopeList();
 
             EnvelopeTable = EnvelopeTable.Create(ChequeSettings);
 
@@ -199,20 +200,8 @@ namespace CluelessControl
 
         public void SortEnvelopesByNumber()
         {
-            static int EnvelopeNumberComparer(Envelope env1, Envelope env2)
-            {
-                if (env1 == null && env2 == null)
-                    return 0;
-                if (env1 == null)
-                    return -1;
-                if (env2 == null)
-                    return 1;
-
-                return env1.EnvelopeNumber.CompareTo(env2.EnvelopeNumber);
-            }
-
-            ContestantEnvelopes.Sort(EnvelopeNumberComparer);
-            HostEnvelopes.Sort(EnvelopeNumberComparer);
+            ContestantEnvelopeSet.SortByEnvelopeNumbers();
+            HostEnvelopeSet.SortByEnvelopeNumbers();
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
@@ -222,7 +211,7 @@ namespace CluelessControl
             if (envelope == null)
                 throw new ArgumentNullException(nameof(envelope));
 
-            ContestantEnvelopes.Add(envelope);
+            ContestantEnvelopeSet.AddEnvelope(envelope);
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
@@ -232,7 +221,7 @@ namespace CluelessControl
             if (envelope == null)
                 throw new ArgumentNullException(nameof(envelope));
 
-            ContestantEnvelopes.Remove(envelope);
+            ContestantEnvelopeSet.RemoveEnvelope(envelope);
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
@@ -260,10 +249,10 @@ namespace CluelessControl
             if (index < 0 || index >= Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
                 throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {Constants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.");
 
-            if (index >= ContestantEnvelopes.Count)
+            if (index >= ContestantEnvelopeSet.EnvelopeCount)
                 return null;
             else
-                return ContestantEnvelopes[index];
+                return ContestantEnvelopeSet.GetEnvelope(index);
         }
 
         public Envelope? GetHostEnvelope(int index)
@@ -271,10 +260,10 @@ namespace CluelessControl
             if (index < 0 || index >= Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
                 throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {Constants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.");
 
-            if (index >= HostEnvelopes.Count)
+            if (index >= HostEnvelopeSet.EnvelopeCount)
                 return null;
             else
-                return HostEnvelopes[index];
+                return HostEnvelopeSet.GetEnvelope(index);
         }
 
         public Envelope? GetEnvelopeFromTag(string tag)
@@ -309,8 +298,7 @@ namespace CluelessControl
 
         public void RemoveDestroyedEnvelopes()
         {
-            ContestantEnvelopes.RemoveAll(envelope => envelope.State == EnvelopeState.DESTROYED);
-
+            ContestantEnvelopeSet.RemovePredicate(envelope => envelope.State == EnvelopeState.DESTROYED);
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
@@ -403,7 +391,7 @@ namespace CluelessControl
         public void StartTrading()
         {
             RemoveDestroyedEnvelopes();
-            ContestantEnvelopes.ForEach(envelope => envelope.State = EnvelopeState.NEUTRAL);
+            ContestantEnvelopeSet.ForEach(envelope => envelope.State = EnvelopeState.NEUTRAL);
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
             EventStartTrading?.Invoke(this, EventArgs.Empty);
         }
@@ -411,12 +399,13 @@ namespace CluelessControl
         #endregion
 
         #region Game Over
+
         public decimal CalculateFinalPrize()
         {
             decimal cash = ContestantCash;
             decimal multiplier = 1;
 
-            IEnumerable<BaseCheque> cheques = ContestantEnvelopes.Select(envelope => envelope.Cheque);
+            IEnumerable<BaseCheque> cheques = ContestantEnvelopeSet.GetCheques();
             foreach (var cheque in cheques)
             {
                 switch (cheque)
