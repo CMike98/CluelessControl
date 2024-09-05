@@ -1395,7 +1395,7 @@ namespace CluelessControl
             gameStateInstance.EnvelopeTable.AddEnvelope(lastEnvelope);
 
             // Remove the last envelope
-            contestantEnvelopes.Remove(lastEnvelope);
+            gameStateInstance.RemoveContestantEnvelope(lastEnvelope);
 
             // Get the last textbox and clear it
             TextBox[] numberTextBoxes = _envelopeSelectTxtBoxesAndLabels.Keys.ToArray();
