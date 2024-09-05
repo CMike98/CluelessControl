@@ -1583,6 +1583,7 @@ namespace CluelessControl
             QuestionGameConfirmEnvelopeBtn.Enabled = true;
 
             _questionGameEnvelopeIndex = 0;
+            QuestionGameUpdateEnvelopeLabel();
             QuestionGameUpdateEnvelopeButtons();
         }
 
