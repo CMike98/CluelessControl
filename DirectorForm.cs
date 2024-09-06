@@ -1,6 +1,7 @@
 using CluelessControl.Cheques;
 using CluelessControl.Envelopes;
 using CluelessControl.Questions;
+using CluelessControl.Sounds;
 
 namespace CluelessControl
 {
@@ -14,8 +15,9 @@ namespace CluelessControl
 
         private const int NO_ITEM_INDEX = -1;
 
-        #region Sound Level
+        #region Sound
         private int _volumeLevel = 100;
+        private SoundManager _soundManager = new();
         #endregion
 
         #region Envelope Settings Screen Variables
@@ -138,6 +140,7 @@ namespace CluelessControl
                 return;
 
             _volumeLevel = VolumeTrackBar.Value;
+            _soundManager.SetVolume(_volumeLevel / 100.0f);
             VolumeLabel.Text = string.Format("Głośność: {0}%", _volumeLevel);
         }
 
@@ -152,6 +155,7 @@ namespace CluelessControl
                 _volumeLevel = VolumeTrackBar.Value;
             }
 
+            _soundManager.SetVolume(_volumeLevel / 100.0f);
             VolumeLabel.Text = string.Format("Głośność: {0}%", _volumeLevel);
         }
 
