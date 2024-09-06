@@ -21,5 +21,14 @@
             char letter = (char)(answer + 'A' - 1);
             return letter.ToString();
         }
+
+        public static float Clamp(float val, float min, float max)
+        {
+            if (val < min)
+                return min;
+            if (val > max)
+                return max;
+            return val;
+        }
     }
 }
