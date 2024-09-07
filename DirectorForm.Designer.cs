@@ -173,6 +173,22 @@
             VolumeTrackBar = new TrackBar();
             MuteCheckBox = new CheckBox();
             SettingsTVBackgroundColorDialog = new ColorDialog();
+            TradingCashTitleLbl = new Label();
+            TradingOfferTextBox = new TextBox();
+            TradingOfferTitleLbl = new Label();
+            TradingCashWhenAcceptedTitleLbl = new Label();
+            TradingCashWhenAcceptedLbl = new Label();
+            TradingAcceptOfferBtn = new Button();
+            TradingMakeOfferButton = new Button();
+            TradingShredderBtn = new Button();
+            TradingClearOfferBtn = new Button();
+            TradingOpenCloseEnvelopeBtn = new Button();
+            TradingBringMoneyBtn = new Button();
+            TradingEndGameFireworksBtn = new Button();
+            TradingEndGameNormalBtn = new Button();
+            TradingCurrentPrizeLbl = new Label();
+            TradingCurrentPrizeTitleLbl = new Label();
+            TradingCashLbl = new Label();
             DirectorTabControl.SuspendLayout();
             BeforeTheShowTab.SuspendLayout();
             GameSettingsTab.SuspendLayout();
@@ -1517,6 +1533,22 @@
             // GameTradingTab
             // 
             GameTradingTab.BackColor = SystemColors.Control;
+            GameTradingTab.Controls.Add(TradingCashLbl);
+            GameTradingTab.Controls.Add(TradingCurrentPrizeLbl);
+            GameTradingTab.Controls.Add(TradingCurrentPrizeTitleLbl);
+            GameTradingTab.Controls.Add(TradingEndGameFireworksBtn);
+            GameTradingTab.Controls.Add(TradingEndGameNormalBtn);
+            GameTradingTab.Controls.Add(TradingBringMoneyBtn);
+            GameTradingTab.Controls.Add(TradingOpenCloseEnvelopeBtn);
+            GameTradingTab.Controls.Add(TradingShredderBtn);
+            GameTradingTab.Controls.Add(TradingClearOfferBtn);
+            GameTradingTab.Controls.Add(TradingMakeOfferButton);
+            GameTradingTab.Controls.Add(TradingAcceptOfferBtn);
+            GameTradingTab.Controls.Add(TradingCashWhenAcceptedLbl);
+            GameTradingTab.Controls.Add(TradingCashWhenAcceptedTitleLbl);
+            GameTradingTab.Controls.Add(TradingOfferTextBox);
+            GameTradingTab.Controls.Add(TradingOfferTitleLbl);
+            GameTradingTab.Controls.Add(TradingCashTitleLbl);
             GameTradingTab.Controls.Add(TradingHostEnvelope4ChkBox);
             GameTradingTab.Controls.Add(TradingHostEnvelope3ChkBox);
             GameTradingTab.Controls.Add(TradingHostEnvelope2ChkBox);
@@ -1551,7 +1583,7 @@
             TradingHostEnvelope4ChkBox.Location = new Point(901, 364);
             TradingHostEnvelope4ChkBox.Name = "TradingHostEnvelope4ChkBox";
             TradingHostEnvelope4ChkBox.Size = new Size(15, 67);
-            TradingHostEnvelope4ChkBox.TabIndex = 45;
+            TradingHostEnvelope4ChkBox.TabIndex = 66;
             TradingHostEnvelope4ChkBox.UseVisualStyleBackColor = true;
             // 
             // TradingHostEnvelope3ChkBox
@@ -1560,7 +1592,7 @@
             TradingHostEnvelope3ChkBox.Location = new Point(901, 283);
             TradingHostEnvelope3ChkBox.Name = "TradingHostEnvelope3ChkBox";
             TradingHostEnvelope3ChkBox.Size = new Size(15, 67);
-            TradingHostEnvelope3ChkBox.TabIndex = 44;
+            TradingHostEnvelope3ChkBox.TabIndex = 64;
             TradingHostEnvelope3ChkBox.UseVisualStyleBackColor = true;
             // 
             // TradingHostEnvelope2ChkBox
@@ -1569,7 +1601,7 @@
             TradingHostEnvelope2ChkBox.Location = new Point(901, 202);
             TradingHostEnvelope2ChkBox.Name = "TradingHostEnvelope2ChkBox";
             TradingHostEnvelope2ChkBox.Size = new Size(15, 67);
-            TradingHostEnvelope2ChkBox.TabIndex = 43;
+            TradingHostEnvelope2ChkBox.TabIndex = 62;
             TradingHostEnvelope2ChkBox.UseVisualStyleBackColor = true;
             // 
             // TradingHostEnvelope1ChkBox
@@ -1578,7 +1610,7 @@
             TradingHostEnvelope1ChkBox.Location = new Point(901, 121);
             TradingHostEnvelope1ChkBox.Name = "TradingHostEnvelope1ChkBox";
             TradingHostEnvelope1ChkBox.Size = new Size(15, 67);
-            TradingHostEnvelope1ChkBox.TabIndex = 42;
+            TradingHostEnvelope1ChkBox.TabIndex = 60;
             TradingHostEnvelope1ChkBox.UseVisualStyleBackColor = true;
             // 
             // TradingHostEnvelope0ChkBox
@@ -1587,7 +1619,7 @@
             TradingHostEnvelope0ChkBox.Location = new Point(901, 40);
             TradingHostEnvelope0ChkBox.Name = "TradingHostEnvelope0ChkBox";
             TradingHostEnvelope0ChkBox.Size = new Size(15, 67);
-            TradingHostEnvelope0ChkBox.TabIndex = 41;
+            TradingHostEnvelope0ChkBox.TabIndex = 58;
             TradingHostEnvelope0ChkBox.UseVisualStyleBackColor = true;
             // 
             // TradingContestantEnvelope4ChkBox
@@ -1596,7 +1628,7 @@
             TradingContestantEnvelope4ChkBox.Location = new Point(169, 364);
             TradingContestantEnvelope4ChkBox.Name = "TradingContestantEnvelope4ChkBox";
             TradingContestantEnvelope4ChkBox.Size = new Size(15, 67);
-            TradingContestantEnvelope4ChkBox.TabIndex = 40;
+            TradingContestantEnvelope4ChkBox.TabIndex = 39;
             TradingContestantEnvelope4ChkBox.UseVisualStyleBackColor = true;
             // 
             // TradingContestantEnvelope3ChkBox
@@ -1605,7 +1637,7 @@
             TradingContestantEnvelope3ChkBox.Location = new Point(169, 283);
             TradingContestantEnvelope3ChkBox.Name = "TradingContestantEnvelope3ChkBox";
             TradingContestantEnvelope3ChkBox.Size = new Size(15, 67);
-            TradingContestantEnvelope3ChkBox.TabIndex = 39;
+            TradingContestantEnvelope3ChkBox.TabIndex = 37;
             TradingContestantEnvelope3ChkBox.UseVisualStyleBackColor = true;
             // 
             // TradingContestantEnvelope2ChkBox
@@ -1614,7 +1646,7 @@
             TradingContestantEnvelope2ChkBox.Location = new Point(169, 202);
             TradingContestantEnvelope2ChkBox.Name = "TradingContestantEnvelope2ChkBox";
             TradingContestantEnvelope2ChkBox.Size = new Size(15, 67);
-            TradingContestantEnvelope2ChkBox.TabIndex = 38;
+            TradingContestantEnvelope2ChkBox.TabIndex = 35;
             TradingContestantEnvelope2ChkBox.UseVisualStyleBackColor = true;
             // 
             // TradingContestantEnvelope1ChkBox
@@ -1623,7 +1655,7 @@
             TradingContestantEnvelope1ChkBox.Location = new Point(169, 121);
             TradingContestantEnvelope1ChkBox.Name = "TradingContestantEnvelope1ChkBox";
             TradingContestantEnvelope1ChkBox.Size = new Size(15, 67);
-            TradingContestantEnvelope1ChkBox.TabIndex = 37;
+            TradingContestantEnvelope1ChkBox.TabIndex = 33;
             TradingContestantEnvelope1ChkBox.UseVisualStyleBackColor = true;
             // 
             // TradingContestantEnvelope0ChkBox
@@ -1632,7 +1664,7 @@
             TradingContestantEnvelope0ChkBox.Location = new Point(169, 40);
             TradingContestantEnvelope0ChkBox.Name = "TradingContestantEnvelope0ChkBox";
             TradingContestantEnvelope0ChkBox.Size = new Size(15, 67);
-            TradingContestantEnvelope0ChkBox.TabIndex = 36;
+            TradingContestantEnvelope0ChkBox.TabIndex = 31;
             TradingContestantEnvelope0ChkBox.UseVisualStyleBackColor = true;
             // 
             // TradingHostTitleLbl
@@ -1641,7 +1673,7 @@
             TradingHostTitleLbl.Location = new Point(901, 4);
             TradingHostTitleLbl.Name = "TradingHostTitleLbl";
             TradingHostTitleLbl.Size = new Size(171, 36);
-            TradingHostTitleLbl.TabIndex = 35;
+            TradingHostTitleLbl.TabIndex = 56;
             TradingHostTitleLbl.Text = "PROWADZĄCY";
             TradingHostTitleLbl.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -1652,7 +1684,7 @@
             TradingHostEnvelope4Lbl.Location = new Point(922, 364);
             TradingHostEnvelope4Lbl.Name = "TradingHostEnvelope4Lbl";
             TradingHostEnvelope4Lbl.Size = new Size(150, 67);
-            TradingHostEnvelope4Lbl.TabIndex = 34;
+            TradingHostEnvelope4Lbl.TabIndex = 65;
             TradingHostEnvelope4Lbl.Tag = "H4";
             TradingHostEnvelope4Lbl.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -1663,7 +1695,7 @@
             TradingHostEnvelope3Lbl.Location = new Point(922, 283);
             TradingHostEnvelope3Lbl.Name = "TradingHostEnvelope3Lbl";
             TradingHostEnvelope3Lbl.Size = new Size(150, 67);
-            TradingHostEnvelope3Lbl.TabIndex = 33;
+            TradingHostEnvelope3Lbl.TabIndex = 63;
             TradingHostEnvelope3Lbl.Tag = "H3";
             TradingHostEnvelope3Lbl.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -1674,7 +1706,7 @@
             TradingHostEnvelope2Lbl.Location = new Point(922, 202);
             TradingHostEnvelope2Lbl.Name = "TradingHostEnvelope2Lbl";
             TradingHostEnvelope2Lbl.Size = new Size(150, 67);
-            TradingHostEnvelope2Lbl.TabIndex = 32;
+            TradingHostEnvelope2Lbl.TabIndex = 61;
             TradingHostEnvelope2Lbl.Tag = "H2";
             TradingHostEnvelope2Lbl.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -1685,7 +1717,7 @@
             TradingHostEnvelope1Lbl.Location = new Point(922, 121);
             TradingHostEnvelope1Lbl.Name = "TradingHostEnvelope1Lbl";
             TradingHostEnvelope1Lbl.Size = new Size(150, 67);
-            TradingHostEnvelope1Lbl.TabIndex = 31;
+            TradingHostEnvelope1Lbl.TabIndex = 59;
             TradingHostEnvelope1Lbl.Tag = "H1";
             TradingHostEnvelope1Lbl.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -1696,7 +1728,7 @@
             TradingHostEnvelope0Lbl.Location = new Point(922, 40);
             TradingHostEnvelope0Lbl.Name = "TradingHostEnvelope0Lbl";
             TradingHostEnvelope0Lbl.Size = new Size(150, 67);
-            TradingHostEnvelope0Lbl.TabIndex = 30;
+            TradingHostEnvelope0Lbl.TabIndex = 57;
             TradingHostEnvelope0Lbl.Tag = "H0";
             TradingHostEnvelope0Lbl.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -1717,7 +1749,7 @@
             TradingContestantEnvelope4Lbl.Location = new Point(13, 364);
             TradingContestantEnvelope4Lbl.Name = "TradingContestantEnvelope4Lbl";
             TradingContestantEnvelope4Lbl.Size = new Size(150, 67);
-            TradingContestantEnvelope4Lbl.TabIndex = 28;
+            TradingContestantEnvelope4Lbl.TabIndex = 38;
             TradingContestantEnvelope4Lbl.Tag = "C4";
             TradingContestantEnvelope4Lbl.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -1728,7 +1760,7 @@
             TradingContestantEnvelope3Lbl.Location = new Point(13, 283);
             TradingContestantEnvelope3Lbl.Name = "TradingContestantEnvelope3Lbl";
             TradingContestantEnvelope3Lbl.Size = new Size(150, 67);
-            TradingContestantEnvelope3Lbl.TabIndex = 27;
+            TradingContestantEnvelope3Lbl.TabIndex = 36;
             TradingContestantEnvelope3Lbl.Tag = "C3";
             TradingContestantEnvelope3Lbl.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -1739,7 +1771,7 @@
             TradingContestantEnvelope2Lbl.Location = new Point(13, 202);
             TradingContestantEnvelope2Lbl.Name = "TradingContestantEnvelope2Lbl";
             TradingContestantEnvelope2Lbl.Size = new Size(150, 67);
-            TradingContestantEnvelope2Lbl.TabIndex = 26;
+            TradingContestantEnvelope2Lbl.TabIndex = 34;
             TradingContestantEnvelope2Lbl.Tag = "C2";
             TradingContestantEnvelope2Lbl.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -1750,7 +1782,7 @@
             TradingContestantEnvelope1Lbl.Location = new Point(13, 121);
             TradingContestantEnvelope1Lbl.Name = "TradingContestantEnvelope1Lbl";
             TradingContestantEnvelope1Lbl.Size = new Size(150, 67);
-            TradingContestantEnvelope1Lbl.TabIndex = 25;
+            TradingContestantEnvelope1Lbl.TabIndex = 32;
             TradingContestantEnvelope1Lbl.Tag = "C1";
             TradingContestantEnvelope1Lbl.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -1761,7 +1793,7 @@
             TradingContestantEnvelope0Lbl.Location = new Point(13, 40);
             TradingContestantEnvelope0Lbl.Name = "TradingContestantEnvelope0Lbl";
             TradingContestantEnvelope0Lbl.Size = new Size(150, 67);
-            TradingContestantEnvelope0Lbl.TabIndex = 24;
+            TradingContestantEnvelope0Lbl.TabIndex = 30;
             TradingContestantEnvelope0Lbl.Tag = "C0";
             TradingContestantEnvelope0Lbl.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -1841,6 +1873,167 @@
             SettingsTVBackgroundColorDialog.FullOpen = true;
             SettingsTVBackgroundColorDialog.SolidColorOnly = true;
             // 
+            // TradingCashTitleLbl
+            // 
+            TradingCashTitleLbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingCashTitleLbl.Location = new Point(367, 4);
+            TradingCashTitleLbl.Name = "TradingCashTitleLbl";
+            TradingCashTitleLbl.Size = new Size(351, 31);
+            TradingCashTitleLbl.TabIndex = 40;
+            TradingCashTitleLbl.Text = "GOTÓWKA:";
+            TradingCashTitleLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TradingOfferTextBox
+            // 
+            TradingOfferTextBox.Enabled = false;
+            TradingOfferTextBox.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingOfferTextBox.Location = new Point(367, 104);
+            TradingOfferTextBox.Name = "TradingOfferTextBox";
+            TradingOfferTextBox.Size = new Size(351, 29);
+            TradingOfferTextBox.TabIndex = 43;
+            TradingOfferTextBox.Text = "0";
+            TradingOfferTextBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // TradingOfferTitleLbl
+            // 
+            TradingOfferTitleLbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingOfferTitleLbl.Location = new Point(367, 70);
+            TradingOfferTitleLbl.Name = "TradingOfferTitleLbl";
+            TradingOfferTitleLbl.Size = new Size(351, 31);
+            TradingOfferTitleLbl.TabIndex = 42;
+            TradingOfferTitleLbl.Text = "OFERTA:";
+            TradingOfferTitleLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TradingCashWhenAcceptedTitleLbl
+            // 
+            TradingCashWhenAcceptedTitleLbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingCashWhenAcceptedTitleLbl.Location = new Point(367, 136);
+            TradingCashWhenAcceptedTitleLbl.Name = "TradingCashWhenAcceptedTitleLbl";
+            TradingCashWhenAcceptedTitleLbl.Size = new Size(351, 31);
+            TradingCashWhenAcceptedTitleLbl.TabIndex = 44;
+            TradingCashWhenAcceptedTitleLbl.Text = "GOTÓWKA PO PRZYJĘCIU OFERTY";
+            TradingCashWhenAcceptedTitleLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TradingCashWhenAcceptedLbl
+            // 
+            TradingCashWhenAcceptedLbl.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingCashWhenAcceptedLbl.Location = new Point(367, 171);
+            TradingCashWhenAcceptedLbl.Name = "TradingCashWhenAcceptedLbl";
+            TradingCashWhenAcceptedLbl.Size = new Size(351, 31);
+            TradingCashWhenAcceptedLbl.TabIndex = 45;
+            TradingCashWhenAcceptedLbl.Text = "0";
+            TradingCashWhenAcceptedLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TradingAcceptOfferBtn
+            // 
+            TradingAcceptOfferBtn.Enabled = false;
+            TradingAcceptOfferBtn.Location = new Point(548, 313);
+            TradingAcceptOfferBtn.Name = "TradingAcceptOfferBtn";
+            TradingAcceptOfferBtn.Size = new Size(170, 40);
+            TradingAcceptOfferBtn.TabIndex = 51;
+            TradingAcceptOfferBtn.Text = "Przyjmij ofertę";
+            TradingAcceptOfferBtn.UseVisualStyleBackColor = true;
+            // 
+            // TradingMakeOfferButton
+            // 
+            TradingMakeOfferButton.Enabled = false;
+            TradingMakeOfferButton.Location = new Point(367, 267);
+            TradingMakeOfferButton.Name = "TradingMakeOfferButton";
+            TradingMakeOfferButton.Size = new Size(170, 40);
+            TradingMakeOfferButton.TabIndex = 48;
+            TradingMakeOfferButton.Text = "Zaoferuj";
+            TradingMakeOfferButton.UseVisualStyleBackColor = true;
+            // 
+            // TradingShredderBtn
+            // 
+            TradingShredderBtn.Enabled = false;
+            TradingShredderBtn.Location = new Point(548, 359);
+            TradingShredderBtn.Name = "TradingShredderBtn";
+            TradingShredderBtn.Size = new Size(170, 40);
+            TradingShredderBtn.TabIndex = 53;
+            TradingShredderBtn.Text = "Niszczarka";
+            TradingShredderBtn.UseVisualStyleBackColor = true;
+            // 
+            // TradingClearOfferBtn
+            // 
+            TradingClearOfferBtn.Enabled = false;
+            TradingClearOfferBtn.Location = new Point(367, 313);
+            TradingClearOfferBtn.Name = "TradingClearOfferBtn";
+            TradingClearOfferBtn.Size = new Size(170, 40);
+            TradingClearOfferBtn.TabIndex = 50;
+            TradingClearOfferBtn.Text = "Czyść ofertę";
+            TradingClearOfferBtn.UseVisualStyleBackColor = true;
+            // 
+            // TradingOpenCloseEnvelopeBtn
+            // 
+            TradingOpenCloseEnvelopeBtn.Enabled = false;
+            TradingOpenCloseEnvelopeBtn.Location = new Point(367, 359);
+            TradingOpenCloseEnvelopeBtn.Name = "TradingOpenCloseEnvelopeBtn";
+            TradingOpenCloseEnvelopeBtn.Size = new Size(170, 40);
+            TradingOpenCloseEnvelopeBtn.TabIndex = 52;
+            TradingOpenCloseEnvelopeBtn.Text = "Otwórz/zamknij koperty";
+            TradingOpenCloseEnvelopeBtn.UseVisualStyleBackColor = true;
+            // 
+            // TradingBringMoneyBtn
+            // 
+            TradingBringMoneyBtn.Enabled = false;
+            TradingBringMoneyBtn.Location = new Point(548, 267);
+            TradingBringMoneyBtn.Name = "TradingBringMoneyBtn";
+            TradingBringMoneyBtn.Size = new Size(170, 40);
+            TradingBringMoneyBtn.TabIndex = 49;
+            TradingBringMoneyBtn.Text = "Wniesienie pieniędzy";
+            TradingBringMoneyBtn.UseVisualStyleBackColor = true;
+            // 
+            // TradingEndGameFireworksBtn
+            // 
+            TradingEndGameFireworksBtn.Enabled = false;
+            TradingEndGameFireworksBtn.Location = new Point(548, 405);
+            TradingEndGameFireworksBtn.Name = "TradingEndGameFireworksBtn";
+            TradingEndGameFireworksBtn.Size = new Size(170, 40);
+            TradingEndGameFireworksBtn.TabIndex = 55;
+            TradingEndGameFireworksBtn.Text = "Koniec gry (fajerwerki)";
+            TradingEndGameFireworksBtn.UseVisualStyleBackColor = true;
+            // 
+            // TradingEndGameNormalBtn
+            // 
+            TradingEndGameNormalBtn.Enabled = false;
+            TradingEndGameNormalBtn.Location = new Point(367, 405);
+            TradingEndGameNormalBtn.Name = "TradingEndGameNormalBtn";
+            TradingEndGameNormalBtn.Size = new Size(170, 40);
+            TradingEndGameNormalBtn.TabIndex = 54;
+            TradingEndGameNormalBtn.Text = "Koniec gry (zwykłe)";
+            TradingEndGameNormalBtn.UseVisualStyleBackColor = true;
+            // 
+            // TradingCurrentPrizeLbl
+            // 
+            TradingCurrentPrizeLbl.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingCurrentPrizeLbl.Location = new Point(367, 233);
+            TradingCurrentPrizeLbl.Name = "TradingCurrentPrizeLbl";
+            TradingCurrentPrizeLbl.Size = new Size(351, 31);
+            TradingCurrentPrizeLbl.TabIndex = 47;
+            TradingCurrentPrizeLbl.Text = "0";
+            TradingCurrentPrizeLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TradingCurrentPrizeTitleLbl
+            // 
+            TradingCurrentPrizeTitleLbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingCurrentPrizeTitleLbl.Location = new Point(367, 202);
+            TradingCurrentPrizeTitleLbl.Name = "TradingCurrentPrizeTitleLbl";
+            TradingCurrentPrizeTitleLbl.Size = new Size(351, 31);
+            TradingCurrentPrizeTitleLbl.TabIndex = 46;
+            TradingCurrentPrizeTitleLbl.Text = "OBECNA WYGRANA";
+            TradingCurrentPrizeTitleLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // TradingCashLbl
+            // 
+            TradingCashLbl.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingCashLbl.Location = new Point(367, 34);
+            TradingCashLbl.Name = "TradingCashLbl";
+            TradingCashLbl.Size = new Size(351, 31);
+            TradingCashLbl.TabIndex = 41;
+            TradingCashLbl.Text = "0";
+            TradingCashLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // DirectorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1877,6 +2070,7 @@
             GamePickEnvelopesTab.PerformLayout();
             GameQuestionsTab.ResumeLayout(false);
             GameTradingTab.ResumeLayout(false);
+            GameTradingTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)VolumeTrackBar).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -2029,5 +2223,21 @@
         private CheckBox TradingContestantEnvelope2ChkBox;
         private CheckBox TradingContestantEnvelope1ChkBox;
         private CheckBox TradingContestantEnvelope0ChkBox;
+        private Label TradingCashTitleLbl;
+        private TextBox TradingOfferTextBox;
+        private Label TradingOfferTitleLbl;
+        private Label TradingCashWhenAcceptedTitleLbl;
+        private Button TradingAcceptOfferBtn;
+        private Label TradingCashWhenAcceptedLbl;
+        private Button TradingShredderBtn;
+        private Button TradingClearOfferBtn;
+        private Button TradingMakeOfferButton;
+        private Button TradingEndGameFireworksBtn;
+        private Button TradingEndGameNormalBtn;
+        private Button TradingBringMoneyBtn;
+        private Button TradingOpenCloseEnvelopeBtn;
+        private Label TradingCurrentPrizeLbl;
+        private Label TradingCurrentPrizeTitleLbl;
+        private Label TradingCashLbl;
     }
 }
