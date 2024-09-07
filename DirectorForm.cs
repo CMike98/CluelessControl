@@ -47,8 +47,6 @@ namespace CluelessControl
 
         private readonly CheckBox[] _tradingContestantCheckboxes = new CheckBox[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
         private readonly CheckBox[] _tradingHostCheckboxes = new CheckBox[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
-
-        private bool _tradingUnlocked = false;
         #endregion
 
         private bool EditedBeforeSave => _envelopeSettingsEdited || _questionEditorEdited || EnvelopeSettingsDidChequeChange() || QuestionEditorDidQuestionChange();
@@ -154,7 +152,7 @@ namespace CluelessControl
             {
                 _volumeLevel = VolumeTrackBar.Value;
             }
-
+            
             _soundManager.SetVolume(_volumeLevel / 100.0f);
             VolumeLabel.Text = string.Format("Głośność: {0}%", _volumeLevel);
         }
@@ -1722,22 +1720,22 @@ namespace CluelessControl
         #region Trading
         private void TradingUnlockButtons()
         {
-            _tradingUnlocked = true;
+            var gameStateInstance = GameState.Instance;
+            int contestantEnvelopeCount = gameStateInstance.ContestantEnvelopeSet.EnvelopeCount;
+            int hostEnvelopeCount = gameStateInstance.HostEnvelopeSet.EnvelopeCount;
 
             for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
-                _tradingContestantCheckboxes[i].Enabled = true;
+                _tradingContestantCheckboxes[i].Enabled = i < contestantEnvelopeCount;
                 _tradingContestantCheckboxes[i].Checked = false;
 
-                _tradingHostCheckboxes[i].Enabled = true;
+                _tradingHostCheckboxes[i].Enabled = i < hostEnvelopeCount;
                 _tradingHostCheckboxes[i].Checked = false;
             }
         }
 
         private void TradingLockButtons()
         {
-            _tradingUnlocked = false;
-
             for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 _tradingContestantCheckboxes[i].Enabled = false;
