@@ -1,4 +1,5 @@
 ﻿using CluelessControl.Cheques;
+using System.Text;
 
 namespace CluelessControl.Envelopes
 {
@@ -97,9 +98,18 @@ namespace CluelessControl.Envelopes
         /// Gets the text with envelope number and it's value
         /// </summary>
         /// <returns>Text with envelope number and it's value, separated with a new line</returns>
-        public string GetEnvelopeValueText()
+        public string GetEnvelopeValueForDirector()
         {
-            return $"{EnvelopeNumber}{Environment.NewLine}{Cheque.ToValueString()}";
+            var sb = new StringBuilder();
+
+            if (IsOpen)
+                sb.AppendLine(string.Format("{0} (OTW.)", EnvelopeNumber));
+            else
+                sb.AppendLine(string.Format("{0}", EnvelopeNumber));
+
+            sb.Append(Cheque.ToValueString());
+            
+            return sb.ToString();
         }
     }
 }
