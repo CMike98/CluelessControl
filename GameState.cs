@@ -401,30 +401,7 @@ namespace CluelessControl
 
         #region Game Over
 
-        public decimal CalculateFinalPrize()
-        {
-            decimal cash = ContestantCash;
-            decimal multiplier = 1;
-
-            IEnumerable<BaseCheque> cheques = ContestantEnvelopeSet.GetCheques();
-            foreach (var cheque in cheques)
-            {
-                switch (cheque)
-                {
-                    case CashCheque cashCheque:
-                        cash += cashCheque.CashAmount;
-                        break;
-                    case PercentageCheque percentageCheque:
-                        multiplier *= percentageCheque.CashMultiplier;
-                        break;
-                    default:
-                        throw new NotImplementedException($"Not implemented cheque type!");
-                }
-            }
-
-            decimal prize = cash * multiplier;
-            return Math.Round(prize, GameSettings.DecimalPlaces, MidpointRounding.AwayFromZero);
-        }
+        
 
         #endregion
     }
