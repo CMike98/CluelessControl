@@ -199,6 +199,11 @@ namespace CluelessControl
 
         #region Envelopes
 
+        public void RefreshEnvelopes()
+        {
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
+        }
+
         public void SortEnvelopesByNumber()
         {
             ContestantEnvelopeSet.SortByEnvelopeNumbers();
