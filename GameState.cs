@@ -90,6 +90,12 @@ namespace CluelessControl
             private set;
         }
 
+        public decimal FinalPrize
+        {
+            get;
+            private set;
+        }
+
         #endregion
 
         #region Calculated Properties
@@ -130,6 +136,7 @@ namespace CluelessControl
             QuestionIndex = -1;
             ContestantCash = 0;
             CashOffer = 0;
+            FinalPrize = 0;
         }
         #endregion
 
@@ -146,6 +153,7 @@ namespace CluelessControl
             QuestionIndex = -1;
             ContestantCash = 0;
             CashOffer = 0;
+            FinalPrize = 0;
         }
 
         public void NextQuestion()
@@ -420,6 +428,8 @@ namespace CluelessControl
 
         public void GameOver()
         {
+            FinalPrize = EnvelopeCalculator.CalculateFinalPrize(ContestantEnvelopeSet, ContestantCash);
+
             EventGameOver?.Invoke(this, EventArgs.Empty);
         }
 
