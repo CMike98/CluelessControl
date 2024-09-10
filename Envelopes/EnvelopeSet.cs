@@ -85,7 +85,11 @@ namespace CluelessControl.Envelopes
 
         public void MarkAllAsNeutral()
         {
-            _envelopes.ForEach(envelope => envelope.MarkAsNeutral());
+            var notDestroyed = _envelopes.Where(envelope => envelope.State != EnvelopeState.DESTROYED);
+            foreach (Envelope? envelope in notDestroyed)
+            {
+                envelope?.MarkAsNeutral();
+            }
         }
 
         #endregion
