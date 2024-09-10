@@ -39,12 +39,12 @@ namespace CluelessControl
             gameState.EventStartTrading += GameState_EventStartTrading;
         }
 
+        #region Events
         private void GameState_EventClearQuestion(object? sender, EventArgs e)
         {
             ClearQuestionLabels();
         }
 
-        #region Events
         private void GameState_EventShowQuestion(object? sender, EventArgs e)
         {
             ShowQuestion();
