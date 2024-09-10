@@ -315,6 +315,11 @@ namespace CluelessControl
 
         #region Cash And Offers
 
+        public void RefreshOffer()
+        {
+            EventRefreshOffer?.Invoke(this, EventArgs.Empty);
+        }
+
         public void SetContestantCash(decimal newCash)
         {
             if (newCash < 0)
@@ -408,7 +413,10 @@ namespace CluelessControl
 
         #region Game Over
 
-        
+        public void GameOver()
+        {
+            EventGameOver?.Invoke(this, EventArgs.Empty);
+        }
 
         #endregion
     }
