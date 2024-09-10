@@ -115,6 +115,9 @@ namespace CluelessControl.Envelopes
         #region Mark States
         public void MarkAsNeutral()
         {
+            if (State == EnvelopeState.DESTROYED)
+                throw new InvalidOperationException("Envelope must not be destroyed.");
+
             State = EnvelopeState.NEUTRAL;
         }
 
