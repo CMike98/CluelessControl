@@ -37,6 +37,8 @@ namespace CluelessControl
             gameState.EventCorrectAnswerShown += GameState_EventCorrectAnswerShown;
             gameState.EventRefreshEnvelopes += GameState_EventRefreshEnvelopes;
             gameState.EventStartTrading += GameState_EventStartTrading;
+            gameState.EventRefreshOffer += GameState_EventRefreshOffer;
+            gameState.EventGameOver += GameState_EventGameOver;
         }
 
         #region Events
@@ -73,6 +75,16 @@ namespace CluelessControl
         private void GameState_EventStartTrading(object? sender, EventArgs e)
         {
             PrepareTrading();
+        }
+
+        private void GameState_EventRefreshOffer(object? sender, EventArgs e)
+        {
+            RefreshOffer();
+        }
+
+        private void GameState_EventGameOver(object? sender, EventArgs e)
+        {
+            GameOver();
         }
 
         #endregion
@@ -173,6 +185,15 @@ namespace CluelessControl
             OfferLabel.Text = Utils.AmountToString(gameState.CashOffer);
             
             RedrawEnvelopes();
+        }
+
+        public void GameOver()
+        {
+            var gameStateInstance = GameState.Instance;
+
+            ClearQuestionLabels();
+
+            QuestionLabel.Text = string.Format("Wygrana: {0}", Utils.AmountToString(gameStateInstance.FinalPrize));
         }
 
         #endregion
