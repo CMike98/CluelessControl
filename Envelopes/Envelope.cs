@@ -41,7 +41,7 @@ namespace CluelessControl.Envelopes
         public EnvelopeState State
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
@@ -111,5 +111,45 @@ namespace CluelessControl.Envelopes
             
             return sb.ToString();
         }
+
+        #region Mark States
+        public void MarkAsNeutral()
+        {
+            State = EnvelopeState.NEUTRAL;
+        }
+
+        public void MarkAsPlayedFor()
+        {
+            if (State != EnvelopeState.NEUTRAL)
+                throw new InvalidOperationException("Envelope should be in a neutral state.");
+
+            State = EnvelopeState.PLAYING_FOR;
+        }
+
+        public void MarkForTrade()
+        {
+            if (State != EnvelopeState.NEUTRAL)
+                throw new InvalidOperationException("Envelope should be in a neutral state.");
+
+            State = EnvelopeState.MARKED_FOR_TRADE;
+        }
+
+        public void MarkAsWon()
+        {
+            if (State != EnvelopeState.PLAYING_FOR)
+                throw new InvalidOperationException("Envelope should be in a 'Playing For' state.");
+
+            State = EnvelopeState.WON;
+        }
+
+        public void MarkAsDestroyed()
+        {
+            if (State != EnvelopeState.NEUTRAL && State != EnvelopeState.PLAYING_FOR)
+                throw new InvalidOperationException("Envelope should be in a neutral state or in the 'Playing For' state.");
+
+            State = EnvelopeState.DESTROYED;
+        }
+
+        #endregion
     }
 }
