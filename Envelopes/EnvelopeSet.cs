@@ -78,21 +78,16 @@ namespace CluelessControl.Envelopes
             return _envelopes.Select(env => env.Cheque);
         }
 
-        public void RemovePredicate(Predicate<Envelope> predicate)
+        public void RemoveDestroyedEnvelopes()
         {
-            if (predicate is null)
-                throw new ArgumentNullException(nameof(predicate));
-
-            _envelopes.RemoveAll(predicate);
+            _envelopes.RemoveAll(envelope => envelope.State == EnvelopeState.DESTROYED);
         }
 
-        public void ForEach(Action<Envelope> action)
+        public void MarkAllAsNeutral()
         {
-            foreach (var envelope in _envelopes)
-            {
-                action.Invoke(envelope);
-            }
+            _envelopes.ForEach(envelope => envelope.MarkAsNeutral());
         }
+
         #endregion
 
         #region Transfer

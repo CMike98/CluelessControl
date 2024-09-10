@@ -245,7 +245,7 @@ namespace CluelessControl
                 throw new ArgumentNullException(nameof(envelope));
 
             EnvelopePlayedFor = envelope;
-            EnvelopePlayedFor.State = EnvelopeState.PLAYING_FOR;
+            EnvelopePlayedFor.MarkAsPlayedFor();
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
@@ -297,14 +297,17 @@ namespace CluelessControl
             if (EnvelopePlayedFor is null)
                 throw new InvalidOperationException($"EnvelopePlayedFor is null");
 
-            EnvelopePlayedFor.State = IsAnswerCorrect() ? EnvelopeState.WON : EnvelopeState.DESTROYED;
+            if (IsAnswerCorrect())
+                EnvelopePlayedFor.MarkAsWon();
+            else
+                EnvelopePlayedFor.MarkAsDestroyed();
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
         public void RemoveDestroyedEnvelopes()
         {
-            ContestantEnvelopeSet.RemovePredicate(envelope => envelope.State == EnvelopeState.DESTROYED);
+            ContestantEnvelopeSet.RemoveDestroyedEnvelopes();
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
@@ -349,8 +352,7 @@ namespace CluelessControl
 
         public void CancelQuestion()
         {
-            if (EnvelopePlayedFor is not null)
-                EnvelopePlayedFor.State = EnvelopeState.NEUTRAL;
+            EnvelopePlayedFor?.MarkAsNeutral();
 
             QuestionIndex--;
             ClearAnswer();
@@ -397,7 +399,7 @@ namespace CluelessControl
         public void StartTrading()
         {
             RemoveDestroyedEnvelopes();
-            ContestantEnvelopeSet.ForEach(envelope => envelope.State = EnvelopeState.NEUTRAL);
+            ContestantEnvelopeSet.MarkAllAsNeutral();
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
             EventStartTrading?.Invoke(this, EventArgs.Empty);
         }
