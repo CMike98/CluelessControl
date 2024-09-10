@@ -320,6 +320,11 @@ namespace CluelessControl
             EventRefreshOffer?.Invoke(this, EventArgs.Empty);
         }
 
+        public bool CanSetAmountAsOffer(decimal newOffer)
+        {
+            return ContestantCash + newOffer >= 0;
+        }
+
         public void SetContestantCash(decimal newCash)
         {
             if (newCash < 0)
