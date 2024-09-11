@@ -72,6 +72,63 @@ namespace CluelessControl.Envelopes
         }
         #endregion
 
+
+        #region Transfer
+        public void TransferEnvelopeTo(EnvelopeSet recipient, Envelope envelopeToTransfer)
+        {
+            if (recipient is null)
+                throw new ArgumentNullException(nameof(recipient));
+            if (envelopeToTransfer is null)
+                throw new ArgumentNullException(nameof(envelopeToTransfer));
+            if (!_envelopes.Contains(envelopeToTransfer))
+                throw new ArgumentException($"The envelope selected is not a part of this envelope set.", nameof(envelopeToTransfer));
+            if (!_envelopes.Remove(envelopeToTransfer))
+                throw new ArgumentException($"Removing the envelope to transfer has failed.", nameof(envelopeToTransfer));
+
+            recipient._envelopes.Add(envelopeToTransfer);
+        }
+
+        public void TransferEnvelopesTo(EnvelopeSet recipient, IEnumerable<Envelope> envelopesToTransfer)
+        {
+            if (recipient is null)
+                throw new ArgumentNullException(nameof(recipient));
+            if (envelopesToTransfer is null)
+                throw new ArgumentNullException(nameof(envelopesToTransfer));
+            if (envelopesToTransfer.Any(envelope => envelope is null))
+                throw new ArgumentException($"At least one envelope is null.", nameof(envelopesToTransfer));
+
+            foreach (Envelope envelope in envelopesToTransfer)
+            {
+                TransferEnvelopeTo(recipient, envelope);
+            }
+        }
+
+        public IEnumerable<Envelope> SelectTradedEnvelopes()
+        {
+            return _envelopes.Where(envelope => envelope.State == EnvelopeState.MARKED_FOR_TRADE);
+        }
+
+        #endregion
+
+        #region Sorting
+        public void SortByEnvelopeNumbers()
+        {
+            static int EnvelopeNumberComparer(Envelope env1, Envelope env2)
+            {
+                if (env1 == null && env2 == null)
+                    return 0;
+                if (env1 == null)
+                    return -1;
+                if (env2 == null)
+                    return 1;
+
+                return env1.EnvelopeNumber.CompareTo(env2.EnvelopeNumber);
+            }
+
+            _envelopes.Sort(EnvelopeNumberComparer);
+        }
+        #endregion
+
         #region Other Methods
         public IEnumerable<BaseCheque> GetCheques()
         {
@@ -92,38 +149,6 @@ namespace CluelessControl.Envelopes
             }
         }
 
-        #endregion
-
-        #region Transfer
-        public void TransferEnvelope(EnvelopeSet recipient, Envelope envelopeToTransfer)
-        {
-            if (recipient is null)
-                throw new ArgumentNullException(nameof(recipient));
-            if (envelopeToTransfer is null)
-                throw new ArgumentNullException(nameof(envelopeToTransfer));
-
-            _envelopes.Remove(envelopeToTransfer);
-            recipient._envelopes.Add(envelopeToTransfer);
-        }
-        #endregion
-
-        #region Sorting
-        public void SortByEnvelopeNumbers()
-        {
-            static int EnvelopeNumberComparer(Envelope env1, Envelope env2)
-            {
-                if (env1 == null && env2 == null)
-                    return 0;
-                if (env1 == null)
-                    return -1;
-                if (env2 == null)
-                    return 1;
-
-                return env1.EnvelopeNumber.CompareTo(env2.EnvelopeNumber);
-            }
-
-            _envelopes.Sort(EnvelopeNumberComparer);
-        }
         #endregion
     }
 }
