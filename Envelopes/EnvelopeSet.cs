@@ -105,7 +105,7 @@ namespace CluelessControl.Envelopes
 
         public IEnumerable<Envelope> SelectTradedEnvelopes()
         {
-            return _envelopes.Where(envelope => envelope.State == EnvelopeState.MARKED_FOR_TRADE);
+            return _envelopes.Where(envelope => envelope.State == EnvelopeState.MARKED_FOR_TRADE).ToList();
         }
 
         #endregion
