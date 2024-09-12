@@ -115,6 +115,9 @@ namespace CluelessControl.Envelopes
         #region Mark States
         public void MarkAsNeutral()
         {
+            if (State == EnvelopeState.NEUTRAL)
+                return;
+
             if (State == EnvelopeState.DESTROYED)
                 throw new InvalidOperationException("Envelope must not be destroyed.");
 
@@ -123,6 +126,9 @@ namespace CluelessControl.Envelopes
 
         public void MarkAsPlayedFor()
         {
+            if (State == EnvelopeState.PLAYING_FOR)
+                return;
+
             if (State != EnvelopeState.NEUTRAL)
                 throw new InvalidOperationException("Envelope should be in a neutral state.");
 
@@ -131,14 +137,20 @@ namespace CluelessControl.Envelopes
 
         public void MarkForTrade()
         {
+            if (State == EnvelopeState.MARKED_FOR_TRADE)
+                return;
+
             if (State != EnvelopeState.NEUTRAL)
-                throw new InvalidOperationException("Envelope should be in a neutral state.");
+                throw new InvalidOperationException("Envelope should be in a 'Neutral' state.");
 
             State = EnvelopeState.MARKED_FOR_TRADE;
         }
 
         public void MarkAsWon()
         {
+            if (State == EnvelopeState.WON)
+                return;
+
             if (State != EnvelopeState.PLAYING_FOR)
                 throw new InvalidOperationException("Envelope should be in a 'Playing For' state.");
 
@@ -147,6 +159,9 @@ namespace CluelessControl.Envelopes
 
         public void MarkAsDestroyed()
         {
+            if (State == EnvelopeState.DESTROYED)
+                return;
+
             if (State != EnvelopeState.NEUTRAL && State != EnvelopeState.PLAYING_FOR)
                 throw new InvalidOperationException("Envelope should be in a neutral state or in the 'Playing For' state.");
 
