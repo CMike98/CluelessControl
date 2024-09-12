@@ -220,30 +220,26 @@ namespace CluelessControl
             if (sender is not PictureBox pictureBox)
                 return;
 
-            if (!pictureBox.Visible)
-                return;
-
             string tag = (pictureBox.Tag as string) ?? string.Empty;
             Envelope? envelope = GameState.Instance.GetEnvelopeFromTag(tag);
             if (envelope == null)
             {
-                pictureBox.Visible = false;
+                pictureBox.BackColor = Color.Black;
                 return;
             }
 
-            pictureBox.Visible = true;
             pictureBox.BackColor = envelope.GetBackgroundColor();
 
             Rectangle clientRectangle = pictureBox.ClientRectangle;
             Point size = (Point)clientRectangle.Size;
 
-            Point leftPoint = pictureBox.ClientRectangle.Location;
+            Point leftPoint = clientRectangle.Location;
             Point centerPoint = new(leftPoint.X + size.X / 2, leftPoint.Y + size.Y / 2);
             Point rightPoint = new(leftPoint.X + size.X, leftPoint.Y);
 
             e.Graphics.DrawLine(Pens.Black, leftPoint, centerPoint);
             e.Graphics.DrawLine(Pens.Black, centerPoint, rightPoint);
-            
+
             e.Graphics.DrawString(envelope.EnvelopeNumber.ToString(), Constants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
 
             if (envelope.IsOpen)
