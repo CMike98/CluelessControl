@@ -418,8 +418,39 @@ namespace CluelessControl
         {
             RemoveDestroyedEnvelopes();
             ContestantEnvelopeSet.MarkAllAsNeutral();
+            HostEnvelopeSet.ClearEnvelopeList();
+
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
             EventStartTrading?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void AcceptOffer()
+        {
+            ContestantCash += CashOffer;
+            CashOffer = 0;
+
+            IEnumerable<Envelope> contestantTrades = ContestantEnvelopeSet.SelectTradedEnvelopes();
+            IEnumerable<Envelope> hostTrades = HostEnvelopeSet.SelectTradedEnvelopes();
+
+            ContestantEnvelopeSet.TransferEnvelopesTo(HostEnvelopeSet, contestantTrades);
+            HostEnvelopeSet.TransferEnvelopesTo(ContestantEnvelopeSet, hostTrades);
+
+            ContestantEnvelopeSet.MarkAllAsNeutral();
+            HostEnvelopeSet.MarkAllAsNeutral();
+
+            ContestantEnvelopeSet.SortByEnvelopeNumbers();
+            HostEnvelopeSet.SortByEnvelopeNumbers();
+
+            EventRefreshOffer?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ClearOffer()
+        {
+            ContestantEnvelopeSet.MarkAllAsNeutral();
+            HostEnvelopeSet.MarkAllAsNeutral();
+            CashOffer = 0;
+
+            EventRefreshOffer?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
