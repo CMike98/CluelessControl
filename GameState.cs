@@ -316,6 +316,7 @@ namespace CluelessControl
         public void RemoveDestroyedEnvelopes()
         {
             ContestantEnvelopeSet.RemoveDestroyedEnvelopes();
+            HostEnvelopeSet.RemoveDestroyedEnvelopes();
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
