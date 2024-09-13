@@ -138,7 +138,7 @@ namespace CluelessControl
         public void LockInAnswer()
         {
             var gameStateInstance = GameState.Instance;
-            var currentQuestion = GameState.Instance.GetCurrentQuestion();
+            var currentQuestion = gameStateInstance.GetCurrentQuestion();
             int? answer = gameStateInstance.ContestantAnswer;
 
             if (answer is null)
