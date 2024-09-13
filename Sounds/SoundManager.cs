@@ -3,7 +3,7 @@ namespace CluelessControl.Sounds
 {
     public class SoundManager
     {
-        private List<Sound> _sounds = [];
+        private readonly List<Sound> _sounds = [];
 
         private float _volume = 1;
 
