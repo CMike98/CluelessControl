@@ -49,9 +49,9 @@ namespace CluelessControl.Envelopes
             if (envelopeSet is null)
                 throw new ArgumentNullException(nameof(envelopeSet));
 
-            var cheques = envelopeSet.GetCheques();
-            var cashCheques = cheques.OfType<CashCheque>();
-            var percentageCheques = cheques.OfType<PercentageCheque>();
+            IEnumerable<BaseCheque> cheques = envelopeSet.GetCheques();
+            IEnumerable<CashCheque> cashCheques = cheques.OfType<CashCheque>();
+            IEnumerable<PercentageCheque> percentageCheques = cheques.OfType<PercentageCheque>();
 
             if (cashCheques.Any())
             {
