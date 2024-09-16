@@ -13,26 +13,35 @@ namespace CluelessControl.Envelopes
             if (contestantCash < 0)
                 throw new ArgumentOutOfRangeException(nameof(contestantCash), $"Contestant cash mustn't be negative.");
 
-            decimal cash = contestantCash;
-            decimal multiplier = 1;
+            IEnumerable<BaseCheque> allCheques = envelopeSet.GetCheques();
+            
+            decimal cashTotal = 0;
+            var positivePercentages = new List<decimal>();
+            var negativePercentages = new List<decimal>();
 
-            IEnumerable<BaseCheque> cheques = envelopeSet.GetCheques();
-            foreach (var cheque in cheques)
+            foreach (var cheque in allCheques)
             {
                 switch (cheque)
                 {
                     case CashCheque cashCheque:
-                        cash += cashCheque.CashAmount;
+                        cashTotal += cashCheque.CashAmount;
                         break;
                     case PercentageCheque percentageCheque:
-                        multiplier *= percentageCheque.CashMultiplier;
+                        if (percentageCheque.Percentage < 0)
+                            negativePercentages.Add(percentageCheque.CashMultiplier);
+                        else if (percentageCheque.Percentage > 0)
+                            positivePercentages.Add(percentageCheque.CashMultiplier);
                         break;
                     default:
                         throw new NotImplementedException($"Not implemented cheque type!");
                 }
             }
 
-            return cash * multiplier;
+            decimal positiveMultiplier = settings.OnlyBestPlusCounts   ? positivePercentages.Max() : positivePercentages.Product();
+            decimal negativeMultiplier = settings.OnlyWorstMinusCounts ? negativePercentages.Min() : negativePercentages.Product();
+            decimal multiplier = positiveMultiplier * negativeMultiplier;
+
+            return Math.Round(cashTotal * multiplier, settings.DecimalPlaces, MidpointRounding.AwayFromZero);
         }
 
         public static string CalculateValueInsideEnvelopes(EnvelopeSet envelopeSet)
