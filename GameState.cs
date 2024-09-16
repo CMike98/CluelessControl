@@ -460,7 +460,7 @@ namespace CluelessControl
 
         public void GameOver()
         {
-            FinalPrize = EnvelopeCalculator.CalculateFinalPrize(ContestantEnvelopeSet, ContestantCash);
+            FinalPrize = EnvelopeCalculator.CalculateFinalPrize(GameSettings, ContestantEnvelopeSet, ContestantCash);
 
             EventGameOver?.Invoke(this, EventArgs.Empty);
         }

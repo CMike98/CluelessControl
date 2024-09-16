@@ -4,8 +4,10 @@ namespace CluelessControl.Envelopes
 {
     public static class EnvelopeCalculator
     {
-        public static decimal CalculateFinalPrize(EnvelopeSet envelopeSet, decimal contestantCash = 0)
+        public static decimal CalculateFinalPrize(GameSettings settings, EnvelopeSet envelopeSet, decimal contestantCash = 0)
         {
+            if (settings is null)
+                throw new ArgumentNullException(nameof(settings));
             if (envelopeSet is null)
                 throw new ArgumentNullException(nameof(envelopeSet));
             if (contestantCash < 0)
