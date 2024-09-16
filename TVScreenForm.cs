@@ -15,13 +15,85 @@ namespace CluelessControl
         public TVScreenForm()
         {
             InitializeComponent();
-
-            BackgroundImage = Image.FromFile("img/GwC.jpg");
         }
 
-        public void ChangeBackgroundColor(Color newColor)
+        private void TVScreenForm_Load(object sender, EventArgs e)
         {
-            this.BackColor = newColor;
+            TryToLoadBackgroundImage();
+            AddEvents();
+        }
+
+        private void TryToLoadBackgroundImage()
+        {
+            try
+            {
+                Image backgroundImage = Image.FromFile("img/background.jpg");
+                BackgroundImage = backgroundImage;
+            }
+            catch
+            {
+                // If there's no background image, just exit.
+            }
+        }
+
+        private void AddEvents()
+        {
+            var gameState = GameState.Instance;
+
+            gameState.EventClearQuestion += GameState_EventClearQuestion;
+            gameState.EventShowQuestion += GameState_EventShowQuestion;
+            gameState.EventShowAnswers += GameState_EventShowAnswers;
+            gameState.EventAnswerSelected += GameState_EventAnswerSelected;
+            gameState.EventCorrectAnswerShown += GameState_EventCorrectAnswerShown;
+            gameState.EventRefreshEnvelopes += GameState_EventRefreshEnvelopes;
+            gameState.EventStartTrading += GameState_EventStartTrading;
+            gameState.EventRefreshOffer += GameState_EventRefreshOffer;
+            gameState.EventGameOver += GameState_EventGameOver;
+        }
+
+        private void GameState_EventClearQuestion(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void GameState_EventShowQuestion(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void GameState_EventShowAnswers(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void GameState_EventAnswerSelected(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void GameState_EventCorrectAnswerShown(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void GameState_EventRefreshEnvelopes(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void GameState_EventStartTrading(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void GameState_EventRefreshOffer(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void GameState_EventGameOver(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #region Form Closing

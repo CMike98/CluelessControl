@@ -44,6 +44,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "TV";
             FormClosing += TVScreenForm_FormClosing;
+            Load += TVScreenForm_Load;
             ResumeLayout(false);
         }
 
