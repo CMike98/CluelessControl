@@ -15,10 +15,7 @@ namespace CluelessControl.Converters
             bool onlyWorstMinusCounts = root.GetProperty("onlyWorstMinusCounts").GetBoolean();
             bool onlyBestPlusCounts = root.GetProperty("onlyBestPlusCounts").GetBoolean();
 
-            var tvBackgroundColorProperty = root.GetProperty("tvBackgroundColor");
-            Color tvBackgroundColor = tvBackgroundColorProperty.Deserialize<Color>(options);
-
-            return GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, tvBackgroundColor);
+            return GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts);
         }
 
         public override void Write(Utf8JsonWriter writer, GameSettings value, JsonSerializerOptions options)
@@ -29,9 +26,6 @@ namespace CluelessControl.Converters
             writer.WriteNumber("decimalPlaces", value.DecimalPlaces);
             writer.WriteBoolean("onlyWorstMinusCounts", value.OnlyWorstMinusCounts);
             writer.WriteBoolean("onlyBestPlusCounts", value.OnlyBestPlusCounts);
-
-            writer.WritePropertyName("tvBackgroundColor");
-            JsonSerializer.Serialize(writer, value.TVBackgroundColor, value.TVBackgroundColor.GetType(), options);
 
             writer.WriteEndObject();
         }
