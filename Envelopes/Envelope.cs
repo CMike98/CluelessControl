@@ -18,6 +18,11 @@ namespace CluelessControl.Envelopes
         };
 
         /// <summary>
+        /// String builder used when converting the envelope to string for the director
+        /// </summary>
+        private static readonly StringBuilder sb = new StringBuilder();
+
+        /// <summary>
         /// The envelope number
         /// </summary>
         public int EnvelopeNumber
@@ -100,7 +105,7 @@ namespace CluelessControl.Envelopes
         /// <returns>Text with envelope number and it's value, separated with a new line</returns>
         public string GetEnvelopeValueForDirector()
         {
-            var sb = new StringBuilder();
+            sb.Clear();
 
             if (IsOpen)
                 sb.AppendLine(string.Format("{0} (OTW.)", EnvelopeNumber));
