@@ -247,9 +247,7 @@ namespace CluelessControl
                 else
                     throw new InvalidOperationException("No plus radio checked.");
 
-                Color tvBackgroundColor = SettingsTVBackgroundColorPicture.BackColor;
-
-                result = GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, tvBackgroundColor);
+                result = GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts);
                 return true;
             }
             catch (Exception)
@@ -276,9 +274,6 @@ namespace CluelessControl
                 SettingsPlusPercentBestRadio.Checked = true;
             else
                 SettingsPlusPercentAllRadio.Checked = true;
-
-            SettingsTVBackgroundColorPicture.BackColor = gameSettings.TVBackgroundColor;
-            _tvScreenForm.ChangeBackgroundColor(gameSettings.TVBackgroundColor);
         }
 
         private void SettingsDecimalPlacesTxtBox_TextChanged(object sender, EventArgs e)
@@ -299,14 +294,6 @@ namespace CluelessControl
                 SettingsSaveToMemoryBtn.Enabled = false;
                 SettingsSaveToFileBtn.Enabled = false;
             }
-        }
-
-        private void SettingsTVBackgroundColorPicture_Click(object sender, EventArgs e)
-        {
-            if (SettingsTVBackgroundColorDialog.ShowDialog() != DialogResult.OK)
-                return;
-
-            SettingsTVBackgroundColorPicture.BackColor = SettingsTVBackgroundColorDialog.Color;
         }
 
         private void SettingsLoadFromMemoryBtn_Click(object sender, EventArgs e)
@@ -334,7 +321,6 @@ namespace CluelessControl
             try
             {
                 GameState.Instance.LoadGameSettings(temp);
-                _tvScreenForm.ChangeBackgroundColor(temp.TVBackgroundColor);
 
                 ShowOkMessage("Ustawienia zapisano pomyślnie.");
             }

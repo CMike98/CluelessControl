@@ -38,9 +38,6 @@
             PreShowIntroBtn = new Button();
             PreShowTitleLbl = new Label();
             GameSettingsTab = new TabPage();
-            SettingsTVBackgroundColorGroup = new GroupBox();
-            SettingsTVBackgroundColorPicture = new PictureBox();
-            SettingsTVBackgroundColorLabel = new Label();
             SettingsEnvelopeStartCountGroup = new GroupBox();
             SettingsEnvelopeStartCountNumeric = new NumericUpDown();
             SettingsEnvelopeStartCountLbl = new Label();
@@ -172,7 +169,6 @@
             VolumeLabel = new Label();
             VolumeTrackBar = new TrackBar();
             MuteCheckBox = new CheckBox();
-            SettingsTVBackgroundColorDialog = new ColorDialog();
             TradingCashTitleLbl = new Label();
             TradingOfferTextBox = new TextBox();
             TradingOfferTitleLbl = new Label();
@@ -192,8 +188,6 @@
             DirectorTabControl.SuspendLayout();
             BeforeTheShowTab.SuspendLayout();
             GameSettingsTab.SuspendLayout();
-            SettingsTVBackgroundColorGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)SettingsTVBackgroundColorPicture).BeginInit();
             SettingsEnvelopeStartCountGroup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)SettingsEnvelopeStartCountNumeric).BeginInit();
             SettingsRoundingGroup.SuspendLayout();
@@ -320,7 +314,6 @@
             // GameSettingsTab
             // 
             GameSettingsTab.BackColor = SystemColors.Control;
-            GameSettingsTab.Controls.Add(SettingsTVBackgroundColorGroup);
             GameSettingsTab.Controls.Add(SettingsEnvelopeStartCountGroup);
             GameSettingsTab.Controls.Add(SettingsRoundingGroup);
             GameSettingsTab.Controls.Add(SettingsSaveToFileBtn);
@@ -334,38 +327,6 @@
             GameSettingsTab.Size = new Size(1084, 445);
             GameSettingsTab.TabIndex = 6;
             GameSettingsTab.Text = "Ustawienia";
-            // 
-            // SettingsTVBackgroundColorGroup
-            // 
-            SettingsTVBackgroundColorGroup.Controls.Add(SettingsTVBackgroundColorPicture);
-            SettingsTVBackgroundColorGroup.Controls.Add(SettingsTVBackgroundColorLabel);
-            SettingsTVBackgroundColorGroup.Location = new Point(295, 265);
-            SettingsTVBackgroundColorGroup.Name = "SettingsTVBackgroundColorGroup";
-            SettingsTVBackgroundColorGroup.Size = new Size(491, 83);
-            SettingsTVBackgroundColorGroup.TabIndex = 25;
-            SettingsTVBackgroundColorGroup.TabStop = false;
-            SettingsTVBackgroundColorGroup.Text = "Kolor tła TV";
-            // 
-            // SettingsTVBackgroundColorPicture
-            // 
-            SettingsTVBackgroundColorPicture.BackColor = Color.Black;
-            SettingsTVBackgroundColorPicture.BorderStyle = BorderStyle.FixedSingle;
-            SettingsTVBackgroundColorPicture.Location = new Point(370, 17);
-            SettingsTVBackgroundColorPicture.Name = "SettingsTVBackgroundColorPicture";
-            SettingsTVBackgroundColorPicture.Size = new Size(103, 47);
-            SettingsTVBackgroundColorPicture.TabIndex = 1;
-            SettingsTVBackgroundColorPicture.TabStop = false;
-            SettingsTVBackgroundColorPicture.Click += SettingsTVBackgroundColorPicture_Click;
-            // 
-            // SettingsTVBackgroundColorLabel
-            // 
-            SettingsTVBackgroundColorLabel.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            SettingsTVBackgroundColorLabel.Location = new Point(6, 17);
-            SettingsTVBackgroundColorLabel.Name = "SettingsTVBackgroundColorLabel";
-            SettingsTVBackgroundColorLabel.Size = new Size(358, 47);
-            SettingsTVBackgroundColorLabel.TabIndex = 0;
-            SettingsTVBackgroundColorLabel.Text = "Kolor tła ekranu TV:";
-            SettingsTVBackgroundColorLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // SettingsEnvelopeStartCountGroup
             // 
@@ -1867,12 +1828,6 @@
             MuteCheckBox.UseVisualStyleBackColor = true;
             MuteCheckBox.CheckedChanged += MuteCheckBox_CheckedChanged;
             // 
-            // SettingsTVBackgroundColorDialog
-            // 
-            SettingsTVBackgroundColorDialog.AnyColor = true;
-            SettingsTVBackgroundColorDialog.FullOpen = true;
-            SettingsTVBackgroundColorDialog.SolidColorOnly = true;
-            // 
             // TradingCashTitleLbl
             // 
             TradingCashTitleLbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
@@ -2054,8 +2009,6 @@
             DirectorTabControl.ResumeLayout(false);
             BeforeTheShowTab.ResumeLayout(false);
             GameSettingsTab.ResumeLayout(false);
-            SettingsTVBackgroundColorGroup.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)SettingsTVBackgroundColorPicture).EndInit();
             SettingsEnvelopeStartCountGroup.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)SettingsEnvelopeStartCountNumeric).EndInit();
             SettingsRoundingGroup.ResumeLayout(false);
@@ -2196,10 +2149,6 @@
         private Label VolumeLabel;
         private TrackBar VolumeTrackBar;
         private CheckBox MuteCheckBox;
-        private GroupBox SettingsTVBackgroundColorGroup;
-        private Label SettingsTVBackgroundColorLabel;
-        private ColorDialog SettingsTVBackgroundColorDialog;
-        private PictureBox SettingsTVBackgroundColorPicture;
         private Label QuestionGameEnvelopeLabel;
         private Label TradingContestantEnvelope0Lbl;
         private Label TradingHostTitleLbl;
