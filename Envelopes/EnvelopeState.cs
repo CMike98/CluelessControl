@@ -3,6 +3,7 @@
     public enum EnvelopeState
     {
         NEUTRAL,
+        SELECTED,
         PLAYING_FOR,
         WON,
         DESTROYED,

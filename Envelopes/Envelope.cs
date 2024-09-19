@@ -6,11 +6,25 @@ namespace CluelessControl.Envelopes
     public class Envelope
     {
         /// <summary>
-        /// Dictionary converting states to colors
+        /// Dictionary converting states to colors for host/contestant screen
         /// </summary>
-        private static readonly Dictionary<EnvelopeState, Color> statesToColors = new()
+        private static readonly Dictionary<EnvelopeState, Color> statesToColorsForScreens = new()
         {
             { EnvelopeState.NEUTRAL,          Color.White      },
+            { EnvelopeState.SELECTED,         Color.White      },
+            { EnvelopeState.PLAYING_FOR,      Color.Orange     },
+            { EnvelopeState.WON,              Color.LightGreen },
+            { EnvelopeState.DESTROYED,        Color.Gray       },
+            { EnvelopeState.MARKED_FOR_TRADE, Color.Orange     },
+        };
+
+        /// <summary>
+        /// Dictionary converting states to colors for TV
+        /// </summary>
+        private static readonly Dictionary<EnvelopeState, Color> statesToColorsForTv = new()
+        {
+            { EnvelopeState.NEUTRAL,          Color.White      },
+            { EnvelopeState.SELECTED,         Color.Orange     },
             { EnvelopeState.PLAYING_FOR,      Color.Orange     },
             { EnvelopeState.WON,              Color.LightGreen },
             { EnvelopeState.DESTROYED,        Color.Gray       },
@@ -90,13 +104,17 @@ namespace CluelessControl.Envelopes
         }
 
         /// <summary>
-        /// Get the envelope background color
+        /// Get the envelope background color for screens
         /// </summary>
         /// <returns>The background color</returns>
-        /// <exception cref="InvalidOperationException">Thrown if not recognized envelope state</exception>
-        public Color GetBackgroundColor()
+        public Color GetBackgroundColorForScreens()
         {
-            return statesToColors[State];
+            return statesToColorsForScreens[State];
+        }
+
+        public Color GetBackgroundColorForTv()
+        {
+            return statesToColorsForTv[State];
         }
 
         /// <summary>
@@ -127,6 +145,17 @@ namespace CluelessControl.Envelopes
                 throw new InvalidOperationException("Envelope must not be destroyed.");
 
             State = EnvelopeState.NEUTRAL;
+        }
+
+        public void MarkAsSelected()
+        {
+            if (State == EnvelopeState.SELECTED)
+                return;
+
+            if (State != EnvelopeState.NEUTRAL)
+                throw new InvalidOperationException($"Envelope should be in a neutral state.");
+
+            State = EnvelopeState.SELECTED;
         }
 
         public void MarkAsPlayedFor()
