@@ -1368,6 +1368,9 @@ namespace CluelessControl
 
             // Focus on the first envelope textbox
             EnvelopeSelectionNum0TxtBox.Focus();
+
+            // Show envelopes
+            GameState.Instance.ShowEnvelopesAtStart();
         }
 
         private void EnvelopeSelectionConfirmBtn_Click(object sender, EventArgs e)
