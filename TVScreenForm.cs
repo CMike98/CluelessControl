@@ -5,7 +5,8 @@ namespace CluelessControl
 {
     public partial class TVScreenForm : Form
     {
-        private PictureBox[] _envelopePictureBoxes = new PictureBox[Constants.MAX_ENVELOPES_COUNT];
+        private PictureBox[] _envelopeSelectionPictureBoxes = new PictureBox[Constants.MAX_ENVELOPES_COUNT];
+        private PictureBox _envelopeSelectionTotal = new PictureBox();
 
         public TVScreenForm()
         {
@@ -15,7 +16,7 @@ namespace CluelessControl
         private void TVScreenForm_Load(object sender, EventArgs e)
         {
             TryToLoadBackgroundImage();
-            PrepareEnvelopePictureBoxes();
+            PrepareEnvelopeSelectionPictureBoxes();
             AddEvents();
         }
 
@@ -40,15 +41,8 @@ namespace CluelessControl
                 int columnNumber = i % DrawingConstants.ENVELOPES_IN_ONE_ROW;
 
                 Point calculatedLocation = new Point(
-                        x: DrawingConstants.FIRST_ENVELOPE_LOCATION.X + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * columnNumber,
-                        y: DrawingConstants.FIRST_ENVELOPE_LOCATION.Y + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Height * rowNumber);
-
-                if (rowNumber >= DrawingConstants.MAX_ROWS_OF_ENVELOPES)
-                {
-                    int rowOffset = 20;
-                    calculatedLocation.X += rowOffset;
-                }
-                
+                    x: DrawingConstants.FIRST_ENVELOPE_LOCATION.X + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * columnNumber,
+                    y: DrawingConstants.FIRST_ENVELOPE_LOCATION.Y + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Height * rowNumber);
 
                 var newPictureBox = new PictureBox()
                 {
@@ -60,10 +54,41 @@ namespace CluelessControl
                 };
                 newPictureBox.Paint += AllEnvelopePicture_Paint;
 
-                _envelopePictureBoxes[i] = newPictureBox;
+                _envelopeSelectionPictureBoxes[i] = newPictureBox;
 
                 Controls.Add(newPictureBox);
             }
+        }
+
+        private void PrepareEnvelopeTotalBox()
+        {
+            int envelopesInLastRow = Constants.MAX_ENVELOPES_COUNT - DrawingConstants.MAX_ROWS_OF_ENVELOPES * DrawingConstants.ENVELOPES_IN_ONE_ROW;
+            int envelopesLeft = DrawingConstants.ENVELOPES_IN_ONE_ROW - envelopesInLastRow;
+
+            Point location = new Point(
+                x: DrawingConstants.FIRST_ENVELOPE_LOCATION.X + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * envelopesInLastRow,
+                y: DrawingConstants.FIRST_ENVELOPE_LOCATION.Y + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Height * DrawingConstants.MAX_ROWS_OF_ENVELOPES);
+
+            Size size = new Size(
+                width: DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * envelopesLeft - DrawingConstants.ENVELOPE_PADDING.Width,
+                height: DrawingConstants.ENVELOPE_SIZE.Height);
+
+            _envelopeSelectionTotal = new PictureBox()
+            {
+                Name = "EnvelopeSelectionTotalPictureBox",
+                Visible = false,
+                Size = size,
+                Location = location
+            };
+            _envelopeSelectionTotal.Paint += EnvelopeSelectionTotal_Paint;
+
+            Controls.Add(_envelopeSelectionTotal);
+        }
+
+        private void PrepareEnvelopeSelectionPictureBoxes()
+        {
+            PrepareEnvelopePictureBoxes();
+            PrepareEnvelopeTotalBox();
         }
 
         #region Events
@@ -85,10 +110,12 @@ namespace CluelessControl
 
         private void GameState_EventShowEnvelopesStart(object? sender, EventArgs e)
         {
-            foreach (var pictureBox in _envelopePictureBoxes)
+            foreach (var pictureBox in _envelopeSelectionPictureBoxes)
             {
                 pictureBox.Visible = true;
             }
+
+            _envelopeSelectionTotal.Visible = true;
         }
 
         private void GameState_EventClearQuestion(object? sender, EventArgs e)
@@ -223,6 +250,25 @@ namespace CluelessControl
             }
 
             DrawEnvelopeInPictureBox(envelope, pictureBox, e.Graphics);
+        }
+
+        private void EnvelopeSelectionTotal_Paint(object? sender, PaintEventArgs e)
+        {
+            string rawResult = EnvelopeCalculator.CalculateValueInsideEnvelopes(GameState.Instance.ContestantEnvelopeSet);
+            string toDisplay = string.Format("W KOPERTACH: {0}", rawResult);
+            SizeF textSize = e.Graphics.MeasureString(toDisplay, DrawingConstants.DRAWING_FONT);
+
+            _envelopeSelectionTotal.BackColor = Color.Black;
+
+            Rectangle clientRectangle = _envelopeSelectionTotal.ClientRectangle;
+            Point location = clientRectangle.Location;
+
+            e.Graphics.DrawString(
+                toDisplay,
+                DrawingConstants.DRAWING_FONT,
+                Brushes.White,
+                (location.X + clientRectangle.Width - textSize.Width) / 2,
+                (location.Y + clientRectangle.Height - textSize.Height) / 2);
         }
         #endregion
     }
