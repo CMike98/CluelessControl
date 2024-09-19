@@ -20,7 +20,7 @@
         /// <summary>
         /// The location of the first envelope
         /// </summary>
-        public static readonly Point FIRST_ENVELOPE_LOCATION = new(x: 250, y: 50);
+        public static readonly Point FIRST_ENVELOPE_LOCATION = new(x: 250, y: 80);
 
         /// <summary>
         /// Size of the envelope
