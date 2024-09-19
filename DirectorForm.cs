@@ -1400,7 +1400,8 @@ namespace CluelessControl
             }
 
             var newEnvelope = envelopeTable.GetEnvelope(envelopeNumber);
-            envelopeTable.DeleteEnvelope(newEnvelope);
+            newEnvelope.MarkAsSelected();
+
             gameStateInstance.AddContestantEnvelope(newEnvelope);
 
             // Update button availability
@@ -1482,7 +1483,7 @@ namespace CluelessControl
             if (selectedEnvelope is null)
                 throw new NullReferenceException($"Selected envelope is null.");
 
-            QuestionGameEnvelopeLabel.BackColor = selectedEnvelope.GetBackgroundColor();
+            QuestionGameEnvelopeLabel.BackColor = selectedEnvelope.GetBackgroundColorForScreens();
             QuestionGameEnvelopeLabel.Text = selectedEnvelope.GetEnvelopeValueForDirector();
         }
 
@@ -1797,7 +1798,7 @@ namespace CluelessControl
                 }
                 else
                 {
-                    _tradingContestantEnvelopeLabels[i].BackColor = envelope.GetBackgroundColor();
+                    _tradingContestantEnvelopeLabels[i].BackColor = envelope.GetBackgroundColorForScreens();
                     _tradingContestantEnvelopeLabels[i].Text = envelope.GetEnvelopeValueForDirector();
 
                     _tradingContestantCheckboxes[i].Enabled = true;
@@ -1822,7 +1823,7 @@ namespace CluelessControl
                 }
                 else
                 {
-                    _tradingHostEnvelopeLabels[i].BackColor = envelope.GetBackgroundColor();
+                    _tradingHostEnvelopeLabels[i].BackColor = envelope.GetBackgroundColorForScreens();
                     _tradingHostEnvelopeLabels[i].Text = envelope.GetEnvelopeValueForDirector();
 
                     _tradingHostCheckboxes[i].Enabled = true;
