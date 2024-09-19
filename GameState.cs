@@ -109,6 +109,7 @@ namespace CluelessControl
         #endregion
 
         #region Events
+        public event EventHandler? EventShowEnvelopesStart;
         public event EventHandler? EventClearQuestion;
         public event EventHandler? EventShowQuestion;
         public event EventHandler? EventShowAnswers;
@@ -141,7 +142,7 @@ namespace CluelessControl
         #endregion
 
         #region Moving The Game
-        public void NewGame()
+        public void PrepareNewGame()
         {
             ContestantEnvelopeSet.ClearEnvelopeList();
             HostEnvelopeSet.ClearEnvelopeList();
@@ -206,6 +207,11 @@ namespace CluelessControl
         #endregion
 
         #region Envelopes
+
+        public void ShowEnvelopesAtStart()
+        {
+            EventShowEnvelopesStart?.Invoke(this, EventArgs.Empty);
+        }
 
         public void RefreshEnvelopes()
         {
