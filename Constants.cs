@@ -65,23 +65,6 @@ namespace CluelessControl
         public const int MAX_ANSWER_NUMBER = 4;
         #endregion
 
-        #region Drawing
-        /// <summary>
-        /// Font family used when drawing the envelopes
-        /// </summary>
-        public static readonly FontFamily DRAWING_FONT_FAMILY = new("Arial");
-
-        /// <summary>
-        /// Font size used when drawing the envelopes
-        /// </summary>
-        public const float DRAWING_FONT_SIZE = 24.0f;
-
-        /// <summary>
-        /// Font used when drawing the envelopes
-        /// </summary>
-        public static readonly Font DRAWING_FONT = new(DRAWING_FONT_FAMILY, DRAWING_FONT_SIZE);
-        #endregion
-
         #region Answer Colors
         /// <summary>
         /// Color used to mark the locked in answers

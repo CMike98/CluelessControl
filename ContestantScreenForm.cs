@@ -240,7 +240,7 @@ namespace CluelessControl
             e.Graphics.DrawLine(Pens.Black, leftPoint, centerPoint);
             e.Graphics.DrawLine(Pens.Black, centerPoint, rightPoint);
 
-            e.Graphics.DrawString(envelope.EnvelopeNumber.ToString(), Constants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
+            e.Graphics.DrawString(envelope.EnvelopeNumber.ToString(), DrawingConstants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
 
             if (envelope.IsOpen)
             {
@@ -248,8 +248,8 @@ namespace CluelessControl
                 string chequeString = cheque.ToValueString();
                 using Brush brush = new SolidBrush(cheque.GetTextColor());
 
-                SizeF valueSize = e.Graphics.MeasureString(chequeString, Constants.DRAWING_FONT);
-                e.Graphics.DrawString(chequeString, Constants.DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
+                SizeF valueSize = e.Graphics.MeasureString(chequeString, DrawingConstants.DRAWING_FONT);
+                e.Graphics.DrawString(chequeString, DrawingConstants.DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
             }
         }
     }
