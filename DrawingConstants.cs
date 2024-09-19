@@ -15,7 +15,7 @@
         /// <summary>
         /// Padding between envelopes
         /// </summary>
-        public static readonly Point ENVELOPE_PADDING = new(x: 10, y: 5);
+        public static readonly Size ENVELOPE_PADDING = new(width: 10, height: 5);
 
         /// <summary>
         /// The location of the first envelope
@@ -30,7 +30,7 @@
         /// <summary>
         /// Size of the envelope with the included padding
         /// </summary>
-        public static readonly Size ENVELOPE_SIZE_WITH_PADDING = new(ENVELOPE_SIZE.Width + ENVELOPE_PADDING.X, ENVELOPE_SIZE.Height + ENVELOPE_PADDING.Y);
+        public static readonly Size ENVELOPE_SIZE_WITH_PADDING = new(ENVELOPE_SIZE.Width + ENVELOPE_PADDING.Width, ENVELOPE_SIZE.Height + ENVELOPE_PADDING.Height);
 
         /// <summary>
         /// Font family used when drawing the envelopes
