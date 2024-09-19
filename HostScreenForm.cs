@@ -239,7 +239,7 @@ namespace CluelessControl
                 return;
             }
 
-            pictureBox.BackColor = envelope.GetBackgroundColor();
+            pictureBox.BackColor = envelope.GetBackgroundColorForScreens();
 
             Rectangle clientRectangle = pictureBox.ClientRectangle;
             Point size = (Point)clientRectangle.Size;
