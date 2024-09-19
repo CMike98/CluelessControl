@@ -199,7 +199,7 @@ namespace CluelessControl
                 return;
             }
 
-            gameState.NewGame();
+            gameState.PrepareNewGame();
 
             EnvelopeSelectionUnlockButtons();
             DirectorTabControl.SelectTab("GamePickEnvelopesTab");
