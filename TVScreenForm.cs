@@ -6,7 +6,6 @@ namespace CluelessControl
     public partial class TVScreenForm : Form
     {
         private PictureBox[] _envelopeSelectionPictureBoxes = new PictureBox[Constants.MAX_ENVELOPES_COUNT];
-        private PictureBox _envelopeSelectionTotal = new PictureBox();
 
         public TVScreenForm()
         {
@@ -60,35 +59,9 @@ namespace CluelessControl
             }
         }
 
-        private void PrepareEnvelopeTotalBox()
-        {
-            int envelopesInLastRow = Constants.MAX_ENVELOPES_COUNT - DrawingConstants.MAX_ROWS_OF_ENVELOPES * DrawingConstants.ENVELOPES_IN_ONE_ROW;
-            int envelopesLeft = DrawingConstants.ENVELOPES_IN_ONE_ROW - envelopesInLastRow;
-
-            Point location = new Point(
-                x: DrawingConstants.FIRST_ENVELOPE_LOCATION.X + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * envelopesInLastRow,
-                y: DrawingConstants.FIRST_ENVELOPE_LOCATION.Y + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Height * DrawingConstants.MAX_ROWS_OF_ENVELOPES);
-
-            Size size = new Size(
-                width: DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * envelopesLeft - DrawingConstants.ENVELOPE_PADDING.Width,
-                height: DrawingConstants.ENVELOPE_SIZE.Height);
-
-            _envelopeSelectionTotal = new PictureBox()
-            {
-                Name = "EnvelopeSelectionTotalPictureBox",
-                Visible = false,
-                Size = size,
-                Location = location
-            };
-            _envelopeSelectionTotal.Paint += EnvelopeSelectionTotal_Paint;
-
-            Controls.Add(_envelopeSelectionTotal);
-        }
-
         private void PrepareEnvelopeSelectionPictureBoxes()
         {
             PrepareEnvelopePictureBoxes();
-            PrepareEnvelopeTotalBox();
         }
 
         #region Events
@@ -114,8 +87,6 @@ namespace CluelessControl
             {
                 pictureBox.Visible = true;
             }
-
-            _envelopeSelectionTotal.Visible = true;
         }
 
         private void GameState_EventClearQuestion(object? sender, EventArgs e)
@@ -250,25 +221,6 @@ namespace CluelessControl
             }
 
             DrawEnvelopeInPictureBox(envelope, pictureBox, e.Graphics);
-        }
-
-        private void EnvelopeSelectionTotal_Paint(object? sender, PaintEventArgs e)
-        {
-            string rawResult = EnvelopeCalculator.CalculateValueInsideEnvelopes(GameState.Instance.ContestantEnvelopeSet);
-            string toDisplay = string.Format("W KOPERTACH: {0}", rawResult);
-            SizeF textSize = e.Graphics.MeasureString(toDisplay, DrawingConstants.DRAWING_FONT);
-
-            _envelopeSelectionTotal.BackColor = Color.Black;
-
-            Rectangle clientRectangle = _envelopeSelectionTotal.ClientRectangle;
-            Point location = clientRectangle.Location;
-
-            e.Graphics.DrawString(
-                toDisplay,
-                DrawingConstants.DRAWING_FONT,
-                Brushes.White,
-                (location.X + clientRectangle.Width - textSize.Width) / 2,
-                (location.Y + clientRectangle.Height - textSize.Height) / 2);
         }
         #endregion
     }
