@@ -1,4 +1,4 @@
-﻿namespace CluelessControl
+﻿namespace CluelessControl.Constants
 {
     public class DrawingConstants
     {

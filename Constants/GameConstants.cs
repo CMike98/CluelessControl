@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using CluelessControl.Converters;
 
-namespace CluelessControl
+namespace CluelessControl.Constants
 {
     public static class GameConstants
     {
@@ -46,7 +46,7 @@ namespace CluelessControl
         /// How much maximum envelopes there are?
         /// </summary>
         public const int MAX_ENVELOPES_COUNT = 50;
-        
+
         /// <summary>
         /// Minimum percentage cheque
         /// </summary>
