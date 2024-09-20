@@ -6,7 +6,7 @@ using CluelessControl.Converters;
 
 namespace CluelessControl
 {
-    public static class Constants
+    public static class GameConstants
     {
         #region Strings
         /// <summary>

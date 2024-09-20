@@ -48,7 +48,7 @@ namespace CluelessControl.Cheques
                 throw new FileNotFoundException("File not found.", nameof(fileName));
 
             string json = File.ReadAllText(fileName);
-            return JsonSerializer.Deserialize<ChequeSettings>(json, Constants.JSON_SERIALIZER_OPTIONS) ?? throw new FileFormatException("Envelope settings loading failed.");
+            return JsonSerializer.Deserialize<ChequeSettings>(json, GameConstants.JSON_SERIALIZER_OPTIONS) ?? throw new FileFormatException("Envelope settings loading failed.");
         }
 
         public void SaveToFile(string fileName)
@@ -56,7 +56,7 @@ namespace CluelessControl.Cheques
             if (string.IsNullOrWhiteSpace(fileName))
                 throw new ArgumentNullException(nameof(fileName));
 
-            string json = JsonSerializer.Serialize(this, Constants.JSON_SERIALIZER_OPTIONS);
+            string json = JsonSerializer.Serialize(this, GameConstants.JSON_SERIALIZER_OPTIONS);
             File.WriteAllText(fileName, json);
         }
     }

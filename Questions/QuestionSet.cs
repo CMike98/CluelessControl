@@ -66,7 +66,7 @@ namespace CluelessControl.Questions
                 throw new FileNotFoundException("File not found.", nameof(fileName));
 
             string json = File.ReadAllText(fileName);
-            return JsonSerializer.Deserialize<QuestionSet>(json, Constants.JSON_SERIALIZER_OPTIONS) ?? throw new FileFormatException("Question set loading failed.");
+            return JsonSerializer.Deserialize<QuestionSet>(json, GameConstants.JSON_SERIALIZER_OPTIONS) ?? throw new FileFormatException("Question set loading failed.");
         }
 
         public void SaveToFile(string fileName)
@@ -74,7 +74,7 @@ namespace CluelessControl.Questions
             if (string.IsNullOrWhiteSpace(fileName))
                 throw new ArgumentNullException(nameof(fileName));
 
-            string json = JsonSerializer.Serialize(this, Constants.JSON_SERIALIZER_OPTIONS);
+            string json = JsonSerializer.Serialize(this, GameConstants.JSON_SERIALIZER_OPTIONS);
             File.WriteAllText(fileName, json);
         }
     }

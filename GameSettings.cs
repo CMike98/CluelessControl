@@ -41,7 +41,7 @@ namespace CluelessControl
         internal static GameSettings Create()
         {
             return new GameSettings(
-                startEnvelopeCount: Constants.ENVELOPE_DEFAULT_COUNT,
+                startEnvelopeCount: GameConstants.ENVELOPE_DEFAULT_COUNT,
                 decimalPlaces: 0,
                 onlyWorstMinusCounts: false,
                 onlyBestPlusCounts: false,
@@ -50,8 +50,8 @@ namespace CluelessControl
 
         internal static GameSettings Create(int startEnvelopeCount, int decimalPlaces, bool onlyWorstMinusCounts, bool onlyBestPlusCounts, bool showAmountsOnTv)
         {
-            if (startEnvelopeCount < 1 || startEnvelopeCount > Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
-                throw new ArgumentOutOfRangeException(nameof(startEnvelopeCount), $"Number of envelopes to pick must be between 1 and {Constants.MAX_ENVELOPE_POSSIBLE_COUNT}.");
+            if (startEnvelopeCount < 1 || startEnvelopeCount > GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT)
+                throw new ArgumentOutOfRangeException(nameof(startEnvelopeCount), $"Number of envelopes to pick must be between 1 and {GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT}.");
             if (decimalPlaces < 0)
                 throw new ArgumentOutOfRangeException(nameof(decimalPlaces), $"Number of decimal places in the prize money must be non-negative.");
 
@@ -66,7 +66,7 @@ namespace CluelessControl
                 throw new FileNotFoundException("File not found.", nameof(fileName));
 
             string json = File.ReadAllText(fileName);
-            return JsonSerializer.Deserialize<GameSettings>(json, Constants.JSON_SERIALIZER_OPTIONS) ?? throw new FileFormatException("Game settings loading failed.");
+            return JsonSerializer.Deserialize<GameSettings>(json, GameConstants.JSON_SERIALIZER_OPTIONS) ?? throw new FileFormatException("Game settings loading failed.");
         }
 
         public void SaveToFile(string fileName)
@@ -74,7 +74,7 @@ namespace CluelessControl
             if (string.IsNullOrWhiteSpace(fileName))
                 throw new ArgumentNullException(nameof(fileName));
 
-            string json = JsonSerializer.Serialize<GameSettings>(this, Constants.JSON_SERIALIZER_OPTIONS);
+            string json = JsonSerializer.Serialize<GameSettings>(this, GameConstants.JSON_SERIALIZER_OPTIONS);
             File.WriteAllText(fileName, json);
         }
     }

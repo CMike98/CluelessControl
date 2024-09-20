@@ -22,8 +22,8 @@ namespace CluelessControl.Converters
 
             // Read the correct answer
             int correctAnswerNumber = root.GetProperty("correctAnswerNumber").GetInt32();
-            if (correctAnswerNumber < Constants.MIN_ANSWER_NUMBER || correctAnswerNumber > Constants.MAX_ANSWER_NUMBER)
-                throw new JsonException($"The correct answer number must be in range [{Constants.MIN_ANSWER_NUMBER}...{Constants.MAX_ANSWER_NUMBER}].");
+            if (correctAnswerNumber < GameConstants.MIN_ANSWER_NUMBER || correctAnswerNumber > GameConstants.MAX_ANSWER_NUMBER)
+                throw new JsonException($"The correct answer number must be in range [{GameConstants.MIN_ANSWER_NUMBER}...{GameConstants.MAX_ANSWER_NUMBER}].");
 
             // Read the comment
             string comment = root.GetProperty("comment").GetString() ?? throw new JsonException("Comment is null.");

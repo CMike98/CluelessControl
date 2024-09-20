@@ -42,11 +42,11 @@ namespace CluelessControl
         #endregion
 
         #region Trading Screen
-        private readonly Label[] _tradingContestantEnvelopeLabels = new Label[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
-        private readonly Label[] _tradingHostEnvelopeLabels = new Label[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
+        private readonly Label[] _tradingContestantEnvelopeLabels = new Label[GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT];
+        private readonly Label[] _tradingHostEnvelopeLabels = new Label[GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT];
 
-        private readonly CheckBox[] _tradingContestantCheckboxes = new CheckBox[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
-        private readonly CheckBox[] _tradingHostCheckboxes = new CheckBox[Constants.MAX_ENVELOPE_POSSIBLE_COUNT];
+        private readonly CheckBox[] _tradingContestantCheckboxes = new CheckBox[GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT];
+        private readonly CheckBox[] _tradingHostCheckboxes = new CheckBox[GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT];
         #endregion
 
         private bool EditedBeforeSave => _envelopeSettingsEdited || _questionEditorEdited || EnvelopeSettingsDidChequeChange() || QuestionEditorDidQuestionChange();
@@ -80,7 +80,7 @@ namespace CluelessControl
 
         private void PrepareEnvelopeSelectionBoxes()
         {
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 string numberName = string.Format("EnvelopeSelectionNum{0}TxtBox", i);
                 string valueName = string.Format("EnvelopeSelectionContent{0}Lbl", i);
@@ -94,7 +94,7 @@ namespace CluelessControl
 
         private void PrepareTradingEnvelopeBoxes()
         {
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 string contestantEnvelopeName = string.Format("TradingContestantEnvelope{0}Lbl", i);
                 string hostEnvelopeName = string.Format("TradingHostEnvelope{0}Lbl", i);
@@ -121,7 +121,7 @@ namespace CluelessControl
             {
                 var closingResult = MessageBox.Show(
                     text: "Masz niezapisane zmiany! Jeżeli wyjdziesz, one przepadną! Na pewno chcesz wyjść?",
-                    Constants.PROGRAM_TITLE,
+                    GameConstants.PROGRAM_TITLE,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
 
@@ -165,7 +165,7 @@ namespace CluelessControl
             if (string.IsNullOrWhiteSpace(message))
                 throw new ArgumentNullException(nameof(message));
 
-            MessageBox.Show(message, Constants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(message, GameConstants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public void ShowOkMessage(string message)
@@ -173,7 +173,7 @@ namespace CluelessControl
             if (string.IsNullOrWhiteSpace(message))
                 throw new ArgumentNullException(nameof(message));
 
-            MessageBox.Show(message, Constants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(message, GameConstants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #endregion
@@ -188,11 +188,11 @@ namespace CluelessControl
         private void PreShowStartGameBtn_Click(object sender, EventArgs e)
         {
             var gameState = GameState.Instance;
-            if (gameState.ChequeSettings.ChequeList.Count < Constants.MAX_ENVELOPES_COUNT || gameState.QuestionSet.QuestionList.Count < gameState.GameSettings.StartEnvelopeCount)
+            if (gameState.ChequeSettings.ChequeList.Count < GameConstants.MAX_ENVELOPES_COUNT || gameState.QuestionSet.QuestionList.Count < gameState.GameSettings.StartEnvelopeCount)
             {
                 string message = string.Format(
                     "Musisz najpierw wczytać koperty (min. {0} kopert) i zestaw pytań (min. {1} pytań)!",
-                    Constants.MAX_ENVELOPES_COUNT,
+                    GameConstants.MAX_ENVELOPES_COUNT,
                     gameState.GameSettings.StartEnvelopeCount);
 
                 ShowErrorMessage(message);
@@ -313,7 +313,7 @@ namespace CluelessControl
         {
             var confirmResult = MessageBox.Show(
                 text: "Jesteś pewny? Niezapisane ustawienia przepadną!",
-                Constants.PROGRAM_TITLE,
+                GameConstants.PROGRAM_TITLE,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
@@ -352,7 +352,7 @@ namespace CluelessControl
         {
             var confirmResult = MessageBox.Show(
                 text: "Jesteś pewny? Niezapisane ustawienia przepadną!",
-                Constants.PROGRAM_TITLE,
+                GameConstants.PROGRAM_TITLE,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
@@ -538,7 +538,7 @@ namespace CluelessControl
                 return;
             }
 
-            if (decimal.TryParse(EnvelopeSettingsPercentageTxtBox.Text, out decimal percentage) || percentage < Constants.MIN_PERCENTAGE)
+            if (decimal.TryParse(EnvelopeSettingsPercentageTxtBox.Text, out decimal percentage) || percentage < GameConstants.MIN_PERCENTAGE)
             {
                 EnvelopeSettingsPercentageTxtBox.BackColor = Color.White;
                 EnvelopeSettingsPercentageTxtBox.ForeColor = Color.Black;
@@ -578,7 +578,7 @@ namespace CluelessControl
                 {
                     var answer = MessageBox.Show(
                         text: "Nie można zapisać koperty! Przejście spowoduje utratę danych.",
-                        Constants.PROGRAM_TITLE,
+                        GameConstants.PROGRAM_TITLE,
                         MessageBoxButtons.OKCancel,
                         MessageBoxIcon.Warning);
 
@@ -675,7 +675,7 @@ namespace CluelessControl
         {
             var confirmAnswer = MessageBox.Show(
                 text: "Czy na pewno chcesz usunąć tę kopertę?",
-                Constants.PROGRAM_TITLE,
+                GameConstants.PROGRAM_TITLE,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
@@ -697,7 +697,7 @@ namespace CluelessControl
         {
             var confirmAnswer = MessageBox.Show(
                 text: "Jesteś pewny? Poprzedniej kolejności nie będzie można odzyskać bez wczytania z pliku lub ręcznego odzyskania.",
-                Constants.PROGRAM_TITLE,
+                GameConstants.PROGRAM_TITLE,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
@@ -760,7 +760,7 @@ namespace CluelessControl
             {
                 var confirmResult = MessageBox.Show(
                 text: "Na pewno? Niezapisany zestaw kopert przepadnie!",
-                caption: Constants.PROGRAM_TITLE,
+                caption: GameConstants.PROGRAM_TITLE,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
@@ -1035,7 +1035,7 @@ namespace CluelessControl
                 {
                     var answer = MessageBox.Show(
                         text: "Nie można zapisać pytania! Przejście spowoduje utratę danych.",
-                        Constants.PROGRAM_TITLE,
+                        GameConstants.PROGRAM_TITLE,
                         MessageBoxButtons.OKCancel,
                         MessageBoxIcon.Warning);
 
@@ -1118,7 +1118,7 @@ namespace CluelessControl
         {
             var confirmAnswer = MessageBox.Show(
                 text: "Czy na pewno chcesz usunąć wskazane pytanie?",
-                Constants.PROGRAM_TITLE,
+                GameConstants.PROGRAM_TITLE,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
@@ -1140,7 +1140,7 @@ namespace CluelessControl
         {
             var confirmAnswer = MessageBox.Show(
                 text: "Czy na pewno chcesz usunąć cały zestaw pytań?",
-                Constants.PROGRAM_TITLE,
+                GameConstants.PROGRAM_TITLE,
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
 
@@ -1196,7 +1196,7 @@ namespace CluelessControl
             {
                 var confirmResult = MessageBox.Show(
                     text: "Na pewno? Niezapisany zestaw pytań przepadnie!",
-                    caption: Constants.PROGRAM_TITLE,
+                    caption: GameConstants.PROGRAM_TITLE,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
 
@@ -1343,9 +1343,9 @@ namespace CluelessControl
             {
                 errorMessage = "Podany numer koperty nie jest liczbą!";
             }
-            else if (envelopeNumber < Constants.MIN_ENVELOPE_NUMBER || envelopeNumber > Constants.MAX_ENVELOPE_NUMBER)
+            else if (envelopeNumber < GameConstants.MIN_ENVELOPE_NUMBER || envelopeNumber > GameConstants.MAX_ENVELOPE_NUMBER)
             {
-                errorMessage = string.Format("Numer koperty musi być z przedziału {0}...{1}!", Constants.MIN_ENVELOPE_NUMBER, Constants.MAX_ENVELOPE_NUMBER);
+                errorMessage = string.Format("Numer koperty musi być z przedziału {0}...{1}!", GameConstants.MIN_ENVELOPE_NUMBER, GameConstants.MAX_ENVELOPE_NUMBER);
             }
             else if (!envelopeTable.IsEnvelopePresent(envelopeNumber))
             {
@@ -1397,9 +1397,9 @@ namespace CluelessControl
 
             // Check if the envelope number is valid
             if (!int.TryParse(numberTextBoxes[index].Text, out int envelopeNumber) ||
-                envelopeNumber < Constants.MIN_ENVELOPE_NUMBER || envelopeNumber > Constants.MAX_ENVELOPE_NUMBER)
+                envelopeNumber < GameConstants.MIN_ENVELOPE_NUMBER || envelopeNumber > GameConstants.MAX_ENVELOPE_NUMBER)
             {
-                string message = string.Format("Numer koperty musi być liczbą [{0}...{1}].", Constants.MIN_ENVELOPE_NUMBER, Constants.MAX_ENVELOPE_NUMBER);
+                string message = string.Format("Numer koperty musi być liczbą [{0}...{1}].", GameConstants.MIN_ENVELOPE_NUMBER, GameConstants.MAX_ENVELOPE_NUMBER);
                 ShowErrorMessage(message);
                 return;
             }
@@ -1556,15 +1556,15 @@ namespace CluelessControl
 
         private void QuestionGameLockAnswer(int answerNumber)
         {
-            if (answerNumber < Constants.MIN_ANSWER_NUMBER || answerNumber > Constants.MAX_ANSWER_NUMBER)
-                throw new ArgumentOutOfRangeException(nameof(answerNumber), $"The answer number must be between {Constants.MIN_ANSWER_NUMBER} and {Constants.MAX_ANSWER_NUMBER}.");
+            if (answerNumber < GameConstants.MIN_ANSWER_NUMBER || answerNumber > GameConstants.MAX_ANSWER_NUMBER)
+                throw new ArgumentOutOfRangeException(nameof(answerNumber), $"The answer number must be between {GameConstants.MIN_ANSWER_NUMBER} and {GameConstants.MAX_ANSWER_NUMBER}.");
 
             GameState.Instance.SelectAnswer(answerNumber);
 
             QuestionGameSetAnswerEnabled(enabled: false);
             QuestionGameShowCorrectBtn.Enabled = true;
 
-            _questionGameAnswerLabels[answerNumber].BackColor = Constants.LOCK_IN_ANS_COLOR;
+            _questionGameAnswerLabels[answerNumber].BackColor = GameConstants.LOCK_IN_ANS_COLOR;
         }
 
         private void QuestionGameShowCorrectAnswer()
@@ -1572,7 +1572,7 @@ namespace CluelessControl
             var gameState = GameState.Instance;
             var currentQuestion = gameState.GetCurrentQuestion();
 
-            _questionGameAnswerLabels[currentQuestion.CorrectAnswerNumber].BackColor = Constants.CORRECT_ANS_COLOR;
+            _questionGameAnswerLabels[currentQuestion.CorrectAnswerNumber].BackColor = GameConstants.CORRECT_ANS_COLOR;
 
             gameState.ShowCorrectAnswer();
         }
@@ -1746,7 +1746,7 @@ namespace CluelessControl
             int contestantEnvelopeCount = gameStateInstance.ContestantEnvelopeSet.EnvelopeCount;
             int hostEnvelopeCount = gameStateInstance.HostEnvelopeSet.EnvelopeCount;
 
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 _tradingContestantCheckboxes[i].Enabled = i < contestantEnvelopeCount;
                 _tradingContestantCheckboxes[i].Checked = false;
@@ -1772,7 +1772,7 @@ namespace CluelessControl
 
         private void TradingLockButtons()
         {
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 _tradingContestantCheckboxes[i].Enabled = false;
                 _tradingContestantCheckboxes[i].Checked = false;
@@ -1798,7 +1798,7 @@ namespace CluelessControl
         {
             var gameStateInstance = GameState.Instance;
 
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
                 if (envelope is null || envelope.State == EnvelopeState.DESTROYED)
@@ -1823,7 +1823,7 @@ namespace CluelessControl
         {
             var gameStateInstance = GameState.Instance;
 
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
                 if (envelope is null || envelope.State == EnvelopeState.DESTROYED)
@@ -1852,7 +1852,7 @@ namespace CluelessControl
 
         private void TradingClearContestantCheckboxes()
         {
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 _tradingContestantCheckboxes[i].Checked = false;
             }
@@ -1860,7 +1860,7 @@ namespace CluelessControl
 
         private void TradingClearHostCheckboxes()
         {
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 _tradingHostCheckboxes[i].Checked = false;
             }
@@ -1905,7 +1905,7 @@ namespace CluelessControl
 
             gameStateInstance.SetCashOffer(cashOffer);
 
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
                 bool isChecked = _tradingContestantCheckboxes[i].Checked;
@@ -1918,7 +1918,7 @@ namespace CluelessControl
                 }
             }
 
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
                 bool isChecked = _tradingHostCheckboxes[i].Checked;
@@ -1966,7 +1966,7 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
 
             // Open/Close Contestant Envelopes
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
                 if (envelope is null)
@@ -1980,7 +1980,7 @@ namespace CluelessControl
             }
 
             // Open/Close Host Envelopes
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
                 if (envelope is null)
@@ -2001,7 +2001,7 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
 
             // Destroy Contestant Envelopes
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
                 if (envelope is null)
@@ -2015,7 +2015,7 @@ namespace CluelessControl
             }
 
             // Destroy Host Envelopes
-            for (int i = 0; i < Constants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
                 if (envelope is null)

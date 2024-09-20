@@ -36,8 +36,8 @@ namespace CluelessControl.Cheques
         /// <exception cref="ArgumentOutOfRangeException">Thrown if the percentage is less than -100%.</exception>
         internal static PercentageCheque Create(decimal percentage)
         {
-            if (percentage < Constants.MIN_PERCENTAGE)
-                throw new ArgumentOutOfRangeException(nameof(percentage), $"Minus percentage mustn't be less than {Constants.MIN_PERCENTAGE}%!");
+            if (percentage < GameConstants.MIN_PERCENTAGE)
+                throw new ArgumentOutOfRangeException(nameof(percentage), $"Minus percentage mustn't be less than {GameConstants.MIN_PERCENTAGE}%!");
 
             return new PercentageCheque(percentage);
         }

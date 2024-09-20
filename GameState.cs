@@ -266,8 +266,8 @@ namespace CluelessControl
 
         public Envelope? GetContestantEnvelope(int index)
         {
-            if (index < 0 || index >= Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
-                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {Constants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.");
+            if (index < 0 || index >= GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.");
 
             if (index >= ContestantEnvelopeSet.EnvelopeCount)
                 return null;
@@ -277,8 +277,8 @@ namespace CluelessControl
 
         public Envelope? GetHostEnvelope(int index)
         {
-            if (index < 0 || index >= Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
-                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {Constants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.");
+            if (index < 0 || index >= GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.");
 
             if (index >= HostEnvelopeSet.EnvelopeCount)
                 return null;
@@ -295,8 +295,8 @@ namespace CluelessControl
 
             char playerTag = char.ToUpper(tag[0]);
             int envelopeIndex = (int)char.GetNumericValue(tag[1]);
-            if (envelopeIndex < 0 || envelopeIndex >= Constants.MAX_ENVELOPE_POSSIBLE_COUNT)
-                throw new ArgumentException($"The second character (envelope index) must be a digit between 0 and {Constants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.", nameof(tag));
+            if (envelopeIndex < 0 || envelopeIndex >= GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT)
+                throw new ArgumentException($"The second character (envelope index) must be a digit between 0 and {GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.", nameof(tag));
 
             return playerTag switch
             {
@@ -401,8 +401,8 @@ namespace CluelessControl
 
         public void SelectAnswer(int answer)
         {
-            if (answer < Constants.MIN_ANSWER_NUMBER || answer > Constants.MAX_ANSWER_NUMBER)
-                throw new ArgumentOutOfRangeException(nameof(answer), $"The answer number must be between {Constants.MIN_ANSWER_NUMBER} and {Constants.MAX_ANSWER_NUMBER}!");
+            if (answer < GameConstants.MIN_ANSWER_NUMBER || answer > GameConstants.MAX_ANSWER_NUMBER)
+                throw new ArgumentOutOfRangeException(nameof(answer), $"The answer number must be between {GameConstants.MIN_ANSWER_NUMBER} and {GameConstants.MAX_ANSWER_NUMBER}!");
 
             ContestantAnswer = answer;
 

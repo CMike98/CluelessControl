@@ -32,9 +32,9 @@ namespace CluelessControl.Envelopes
 
             var envelopeList = new HashSet<Envelope>();
 
-            for (int i = Constants.MIN_ENVELOPE_NUMBER; i <= Constants.MAX_ENVELOPE_NUMBER; ++i)
+            for (int i = GameConstants.MIN_ENVELOPE_NUMBER; i <= GameConstants.MAX_ENVELOPE_NUMBER; ++i)
             {
-                int chequeIndex = i - Constants.MIN_ENVELOPE_NUMBER;
+                int chequeIndex = i - GameConstants.MIN_ENVELOPE_NUMBER;
                 BaseCheque originalCheque = settings.ChequeList[chequeIndex];
                 var newEnvelope = Envelope.Create(i, originalCheque.CloneCheque());
                 envelopeList.Add(newEnvelope);
@@ -45,11 +45,11 @@ namespace CluelessControl.Envelopes
 
         public bool IsEnvelopePresent(int envelopeNumber)
         {
-            if (envelopeNumber < Constants.MIN_ENVELOPE_NUMBER || envelopeNumber > Constants.MAX_ENVELOPE_NUMBER)
+            if (envelopeNumber < GameConstants.MIN_ENVELOPE_NUMBER || envelopeNumber > GameConstants.MAX_ENVELOPE_NUMBER)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(envelopeNumber),
-                    $"Envelope number must be in range [{Constants.MIN_ENVELOPE_NUMBER}...{Constants.MAX_ENVELOPE_NUMBER}]!");
+                    $"Envelope number must be in range [{GameConstants.MIN_ENVELOPE_NUMBER}...{GameConstants.MAX_ENVELOPE_NUMBER}]!");
             }
 
             return EnvelopesOnTable.FirstOrDefault(current => current.EnvelopeNumber == envelopeNumber) is not null;
@@ -65,11 +65,11 @@ namespace CluelessControl.Envelopes
 
         public Envelope GetEnvelope(int envelopeNumber)
         {
-            if (envelopeNumber < Constants.MIN_ENVELOPE_NUMBER || envelopeNumber > Constants.MAX_ENVELOPE_NUMBER)
+            if (envelopeNumber < GameConstants.MIN_ENVELOPE_NUMBER || envelopeNumber > GameConstants.MAX_ENVELOPE_NUMBER)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(envelopeNumber),
-                    $"Envelope number must be in range [{Constants.MIN_ENVELOPE_NUMBER}...{Constants.MAX_ENVELOPE_NUMBER}]!");
+                    $"Envelope number must be in range [{GameConstants.MIN_ENVELOPE_NUMBER}...{GameConstants.MAX_ENVELOPE_NUMBER}]!");
             }
 
             return EnvelopesOnTable.Where(envelope => envelope.EnvelopeNumber == envelopeNumber).First();
@@ -85,11 +85,11 @@ namespace CluelessControl.Envelopes
 
         public void DeleteEnvelope(int envelopeNumber)
         {
-            if (envelopeNumber < Constants.MIN_ENVELOPE_NUMBER || envelopeNumber > Constants.MAX_ENVELOPE_NUMBER)
+            if (envelopeNumber < GameConstants.MIN_ENVELOPE_NUMBER || envelopeNumber > GameConstants.MAX_ENVELOPE_NUMBER)
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(envelopeNumber),
-                    $"Envelope number must be in range [{Constants.MIN_ENVELOPE_NUMBER}...{Constants.MAX_ENVELOPE_NUMBER}]!");
+                    $"Envelope number must be in range [{GameConstants.MIN_ENVELOPE_NUMBER}...{GameConstants.MAX_ENVELOPE_NUMBER}]!");
             }
 
             EnvelopesOnTable.RemoveWhere(current => current.EnvelopeNumber == envelopeNumber);

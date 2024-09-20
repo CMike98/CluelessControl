@@ -5,7 +5,7 @@ namespace CluelessControl
 {
     public partial class TVScreenForm : Form
     {
-        private PictureBox[] _envelopeSelectionPictureBoxes = new PictureBox[Constants.MAX_ENVELOPES_COUNT];
+        private PictureBox[] _envelopeSelectionPictureBoxes = new PictureBox[GameConstants.MAX_ENVELOPES_COUNT];
 
         public TVScreenForm()
         {
@@ -34,7 +34,7 @@ namespace CluelessControl
 
         private void PrepareEnvelopePictureBoxes()
         {
-            for (int i = 0; i < Constants.MAX_ENVELOPES_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPES_COUNT; ++i)
             {
                 int rowNumber = i / DrawingConstants.ENVELOPES_IN_ONE_ROW;
                 int columnNumber = i % DrawingConstants.ENVELOPES_IN_ONE_ROW;
@@ -155,7 +155,7 @@ namespace CluelessControl
                 case CloseReason.ApplicationExitCall:
                     break;
                 default:
-                    MessageBox.Show(Constants.CLOSE_ON_DIRECTOR_FORM_MESSAGE, Constants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(GameConstants.CLOSE_ON_DIRECTOR_FORM_MESSAGE, GameConstants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     e.Cancel = true;
                     break;
             }

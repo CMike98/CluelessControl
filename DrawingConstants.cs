@@ -10,7 +10,7 @@
         /// <summary>
         /// How many full rows of envelopes there will be?
         /// </summary>
-        public const int MAX_ROWS_OF_ENVELOPES = Constants.MAX_ENVELOPES_COUNT / ENVELOPES_IN_ONE_ROW;
+        public const int MAX_ROWS_OF_ENVELOPES = GameConstants.MAX_ENVELOPES_COUNT / ENVELOPES_IN_ONE_ROW;
 
         /// <summary>
         /// Padding between envelopes

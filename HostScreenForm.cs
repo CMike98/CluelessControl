@@ -99,7 +99,7 @@ namespace CluelessControl
                 case CloseReason.ApplicationExitCall:
                     break;
                 default:
-                    MessageBox.Show(Constants.CLOSE_ON_DIRECTOR_FORM_MESSAGE, Constants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(GameConstants.CLOSE_ON_DIRECTOR_FORM_MESSAGE, GameConstants.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     e.Cancel = true;
                     break;
             }
@@ -174,8 +174,8 @@ namespace CluelessControl
             ExplanationLabel.Text = currentQuestion.Comment;
 
             int answerValue = answer.Value;
-            _answerLabels[answerValue].BackColor = Constants.LOCK_IN_ANS_COLOR;
-            _answerLabels[answerValue].ForeColor = Constants.LOCK_IN_ANS_FONT_COLOR;
+            _answerLabels[answerValue].BackColor = GameConstants.LOCK_IN_ANS_COLOR;
+            _answerLabels[answerValue].ForeColor = GameConstants.LOCK_IN_ANS_FONT_COLOR;
         }
 
         public void ShowCorrectAnswer()
@@ -183,8 +183,8 @@ namespace CluelessControl
             var currentQuestion = GameState.Instance.GetCurrentQuestion();
             int correctAnswer = currentQuestion.CorrectAnswerNumber;
 
-            _answerLabels[correctAnswer].BackColor = Constants.CORRECT_ANS_COLOR;
-            _answerLabels[correctAnswer].ForeColor = Constants.CORRECT_ANS_FONT_COLOR;
+            _answerLabels[correctAnswer].BackColor = GameConstants.CORRECT_ANS_COLOR;
+            _answerLabels[correctAnswer].ForeColor = GameConstants.CORRECT_ANS_FONT_COLOR;
         }
 
         public void RedrawEnvelopes()
