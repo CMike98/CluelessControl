@@ -5,7 +5,7 @@
         /// <summary>
         /// How many envelopes are there in one row?
         /// </summary>
-        public const int ENVELOPES_IN_ONE_ROW = 6;
+        public const int ENVELOPES_IN_ONE_ROW = 5;
 
         /// <summary>
         /// How many full rows of envelopes there will be?
@@ -20,7 +20,7 @@
         /// <summary>
         /// The location of the first envelope
         /// </summary>
-        public static readonly Point FIRST_ENVELOPE_LOCATION = new(x: 250, y: 80);
+        public static readonly Point FIRST_ENVELOPE_LOCATION = new(x: 390, y: 80);
 
         /// <summary>
         /// Size of the envelope
