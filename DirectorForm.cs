@@ -237,7 +237,7 @@ namespace CluelessControl
                 else if (SettingsMinusPercentAllRadio.Checked)
                     onlyWorstMinusCounts = false;
                 else
-                    throw new InvalidOperationException("No minus radio checked.");
+                    throw new InvalidOperationException("No minus percentage radio checked.");
 
                 bool onlyBestPlusCounts;
                 if (SettingsPlusPercentBestRadio.Checked)
@@ -245,9 +245,17 @@ namespace CluelessControl
                 else if (SettingsPlusPercentAllRadio.Checked)
                     onlyBestPlusCounts = false;
                 else
-                    throw new InvalidOperationException("No plus radio checked.");
+                    throw new InvalidOperationException("No plus percentage radio checked.");
 
-                result = GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts);
+                bool showAmountsOnTv;
+                if (SettingsShowOnTvYesRadio.Checked)
+                    showAmountsOnTv = true;
+                else if (SettingsShowOnTvNoRadio.Checked)
+                    showAmountsOnTv = false;
+                else
+                    throw new InvalidOperationException("No show on TV radio checked.");
+
+                result = GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, showAmountsOnTv);
                 return true;
             }
             catch (Exception)
@@ -274,6 +282,11 @@ namespace CluelessControl
                 SettingsPlusPercentBestRadio.Checked = true;
             else
                 SettingsPlusPercentAllRadio.Checked = true;
+
+            if (gameSettings.ShowAmountsOnTv)
+                SettingsShowOnTvYesRadio.Checked = true;
+            else
+                SettingsShowOnTvNoRadio.Checked = true;
         }
 
         private void SettingsDecimalPlacesTxtBox_TextChanged(object sender, EventArgs e)

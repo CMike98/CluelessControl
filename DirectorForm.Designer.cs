@@ -186,6 +186,10 @@
             VolumeLabel = new Label();
             VolumeTrackBar = new TrackBar();
             MuteCheckBox = new CheckBox();
+            SettingsShowOnTvGroup = new GroupBox();
+            SettingsShowOnTvNoRadio = new RadioButton();
+            SettingsShowOnTvYesRadio = new RadioButton();
+            SettingsShowOnTvLbl = new Label();
             DirectorTabControl.SuspendLayout();
             BeforeTheShowTab.SuspendLayout();
             GameSettingsTab.SuspendLayout();
@@ -200,6 +204,7 @@
             GameQuestionsTab.SuspendLayout();
             GameTradingTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)VolumeTrackBar).BeginInit();
+            SettingsShowOnTvGroup.SuspendLayout();
             SuspendLayout();
             // 
             // DirectorTabControl
@@ -315,6 +320,7 @@
             // GameSettingsTab
             // 
             GameSettingsTab.BackColor = SystemColors.Control;
+            GameSettingsTab.Controls.Add(SettingsShowOnTvGroup);
             GameSettingsTab.Controls.Add(SettingsEnvelopeStartCountGroup);
             GameSettingsTab.Controls.Add(SettingsRoundingGroup);
             GameSettingsTab.Controls.Add(SettingsSaveToFileBtn);
@@ -2011,6 +2017,51 @@
             MuteCheckBox.UseVisualStyleBackColor = true;
             MuteCheckBox.CheckedChanged += MuteCheckBox_CheckedChanged;
             // 
+            // SettingsShowOnTvGroup
+            // 
+            SettingsShowOnTvGroup.Controls.Add(SettingsShowOnTvLbl);
+            SettingsShowOnTvGroup.Controls.Add(SettingsShowOnTvNoRadio);
+            SettingsShowOnTvGroup.Controls.Add(SettingsShowOnTvYesRadio);
+            SettingsShowOnTvGroup.Location = new Point(291, 265);
+            SettingsShowOnTvGroup.Name = "SettingsShowOnTvGroup";
+            SettingsShowOnTvGroup.Size = new Size(491, 83);
+            SettingsShowOnTvGroup.TabIndex = 4;
+            SettingsShowOnTvGroup.TabStop = false;
+            SettingsShowOnTvGroup.Text = "Pokazywanie kwot na ekranie TV?";
+            // 
+            // SettingsShowOnTvNoRadio
+            // 
+            SettingsShowOnTvNoRadio.Font = new Font("Arial", 12F);
+            SettingsShowOnTvNoRadio.Location = new Point(267, 46);
+            SettingsShowOnTvNoRadio.Name = "SettingsShowOnTvNoRadio";
+            SettingsShowOnTvNoRadio.Size = new Size(219, 23);
+            SettingsShowOnTvNoRadio.TabIndex = 9;
+            SettingsShowOnTvNoRadio.TabStop = true;
+            SettingsShowOnTvNoRadio.Text = "Nie";
+            SettingsShowOnTvNoRadio.UseVisualStyleBackColor = true;
+            // 
+            // SettingsShowOnTvYesRadio
+            // 
+            SettingsShowOnTvYesRadio.Checked = true;
+            SettingsShowOnTvYesRadio.Font = new Font("Arial", 12F);
+            SettingsShowOnTvYesRadio.Location = new Point(267, 17);
+            SettingsShowOnTvYesRadio.Name = "SettingsShowOnTvYesRadio";
+            SettingsShowOnTvYesRadio.Size = new Size(219, 23);
+            SettingsShowOnTvYesRadio.TabIndex = 8;
+            SettingsShowOnTvYesRadio.TabStop = true;
+            SettingsShowOnTvYesRadio.Text = "Tak";
+            SettingsShowOnTvYesRadio.UseVisualStyleBackColor = true;
+            // 
+            // SettingsShowOnTvLbl
+            // 
+            SettingsShowOnTvLbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            SettingsShowOnTvLbl.Location = new Point(21, 17);
+            SettingsShowOnTvLbl.Name = "SettingsShowOnTvLbl";
+            SettingsShowOnTvLbl.Size = new Size(227, 52);
+            SettingsShowOnTvLbl.TabIndex = 7;
+            SettingsShowOnTvLbl.Text = "Czy pokazywać kwoty na ekranie TV?";
+            SettingsShowOnTvLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // DirectorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2047,6 +2098,7 @@
             GameTradingTab.ResumeLayout(false);
             GameTradingTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)VolumeTrackBar).EndInit();
+            SettingsShowOnTvGroup.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2211,5 +2263,9 @@
         private Label TradingCurrentPrizeTitleLbl;
         private Label TradingCashLbl;
         private Button EnvelopeSelectionStartGameBtn;
+        private GroupBox SettingsShowOnTvGroup;
+        private RadioButton SettingsShowOnTvNoRadio;
+        private RadioButton SettingsShowOnTvYesRadio;
+        private Label SettingsShowOnTvLbl;
     }
 }

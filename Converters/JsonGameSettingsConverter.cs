@@ -14,8 +14,9 @@ namespace CluelessControl.Converters
             int decimalPlaces = root.GetProperty("decimalPlaces").GetInt32();
             bool onlyWorstMinusCounts = root.GetProperty("onlyWorstMinusCounts").GetBoolean();
             bool onlyBestPlusCounts = root.GetProperty("onlyBestPlusCounts").GetBoolean();
+            bool showAmountsOnTv = root.GetProperty("showAmountsOnTv").GetBoolean();
 
-            return GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts);
+            return GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, showAmountsOnTv);
         }
 
         public override void Write(Utf8JsonWriter writer, GameSettings value, JsonSerializerOptions options)
@@ -26,6 +27,7 @@ namespace CluelessControl.Converters
             writer.WriteNumber("decimalPlaces", value.DecimalPlaces);
             writer.WriteBoolean("onlyWorstMinusCounts", value.OnlyWorstMinusCounts);
             writer.WriteBoolean("onlyBestPlusCounts", value.OnlyBestPlusCounts);
+            writer.WriteBoolean("showAmountsOnTv", value.ShowAmountsOnTv);
 
             writer.WriteEndObject();
         }

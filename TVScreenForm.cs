@@ -187,12 +187,15 @@ namespace CluelessControl
 
             graphics.DrawString(envelope.EnvelopeNumber.ToString(), DrawingConstants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
 
-            BaseCheque cheque = envelope.Cheque;
-            string chequeString = cheque.ToValueString();
-            using Brush brush = new SolidBrush(cheque.GetTextColor());
+            if (GameState.Instance.GameSettings.ShowAmountsOnTv || envelope.IsOpen)
+            {
+                BaseCheque cheque = envelope.Cheque;
+                string chequeString = cheque.ToValueString();
+                using Brush brush = new SolidBrush(cheque.GetTextColor());
 
-            SizeF valueSize = graphics.MeasureString(chequeString, DrawingConstants.DRAWING_FONT);
-            graphics.DrawString(chequeString, DrawingConstants.DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
+                SizeF valueSize = graphics.MeasureString(chequeString, DrawingConstants.DRAWING_FONT);
+                graphics.DrawString(chequeString, DrawingConstants.DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
+            }
         }
 
         private void AllEnvelopePicture_Paint(object? sender, PaintEventArgs e)
