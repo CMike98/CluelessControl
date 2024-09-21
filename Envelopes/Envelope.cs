@@ -13,10 +13,10 @@ namespace CluelessControl.Envelopes
         {
             { EnvelopeState.NEUTRAL,          Color.White      },
             { EnvelopeState.SELECTED,         Color.White      },
-            { EnvelopeState.PLAYING_FOR,      Color.Orange     },
+            { EnvelopeState.PLAYING_FOR,      Color.Yellow     },
             { EnvelopeState.WON,              Color.LightGreen },
             { EnvelopeState.DESTROYED,        Color.Gray       },
-            { EnvelopeState.MARKED_FOR_TRADE, Color.Orange     },
+            { EnvelopeState.MARKED_FOR_TRADE, Color.Yellow     },
         };
 
         /// <summary>
@@ -25,11 +25,11 @@ namespace CluelessControl.Envelopes
         private static readonly Dictionary<EnvelopeState, Color> statesToColorsForTv = new()
         {
             { EnvelopeState.NEUTRAL,          Color.White      },
-            { EnvelopeState.SELECTED,         Color.Orange     },
-            { EnvelopeState.PLAYING_FOR,      Color.Orange     },
+            { EnvelopeState.SELECTED,         Color.Yellow     },
+            { EnvelopeState.PLAYING_FOR,      Color.Yellow     },
             { EnvelopeState.WON,              Color.LightGreen },
             { EnvelopeState.DESTROYED,        Color.Gray       },
-            { EnvelopeState.MARKED_FOR_TRADE, Color.Orange     },
+            { EnvelopeState.MARKED_FOR_TRADE, Color.Yellow     },
         };
 
         /// <summary>
