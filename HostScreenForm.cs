@@ -240,7 +240,8 @@ namespace CluelessControl
                 return;
             }
 
-            pictureBox.BackColor = envelope.GetBackgroundColorForScreens();
+            Color backgroundColor = envelope.GetBackgroundColorForScreens();
+            pictureBox.BackColor = backgroundColor;
 
             Rectangle clientRectangle = pictureBox.ClientRectangle;
             Point size = (Point)clientRectangle.Size;
@@ -252,14 +253,21 @@ namespace CluelessControl
             e.Graphics.DrawLine(Pens.Black, leftPoint, centerPoint);
             e.Graphics.DrawLine(Pens.Black, centerPoint, rightPoint);
 
-            e.Graphics.DrawString(envelope.EnvelopeNumber.ToString(), DrawingConstants.DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
+            string envelopeNumber = string.Format("{0,2}", envelope.EnvelopeNumber);
+            SizeF envelopeNumberSize = e.Graphics.MeasureString(envelopeNumber, DrawingConstants.ENVELOPE_DRAWING_FONT);
+            using (Brush backgroundBrush = new SolidBrush(backgroundColor))
+            {
+                e.Graphics.FillRectangle(backgroundBrush, leftPoint.X, leftPoint.Y, envelopeNumberSize.Width, envelopeNumberSize.Height);
+            }
+
+            e.Graphics.DrawString(envelopeNumber, DrawingConstants.ENVELOPE_DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
 
             BaseCheque cheque = envelope.Cheque;
             string chequeString = cheque.ToValueString();
             using Brush brush = new SolidBrush(cheque.GetTextColor());
 
-            SizeF valueSize = e.Graphics.MeasureString(chequeString, DrawingConstants.DRAWING_FONT);
-            e.Graphics.DrawString(chequeString, DrawingConstants.DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
+            SizeF valueSize = e.Graphics.MeasureString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT);
+            e.Graphics.DrawString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
         }
 
         #endregion
