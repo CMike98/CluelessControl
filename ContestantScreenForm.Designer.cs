@@ -65,9 +65,9 @@
             // 
             HostEnvelope4Picture.BackColor = Color.White;
             HostEnvelope4Picture.BackgroundImageLayout = ImageLayout.Center;
-            HostEnvelope4Picture.Location = new Point(1644, 116);
+            HostEnvelope4Picture.Location = new Point(1692, 99);
             HostEnvelope4Picture.Name = "HostEnvelope4Picture";
-            HostEnvelope4Picture.Size = new Size(268, 87);
+            HostEnvelope4Picture.Size = new Size(220, 75);
             HostEnvelope4Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope4Picture.TabIndex = 55;
             HostEnvelope4Picture.TabStop = false;
@@ -78,9 +78,9 @@
             // 
             HostEnvelope3Picture.BackColor = Color.White;
             HostEnvelope3Picture.BackgroundImageLayout = ImageLayout.Center;
-            HostEnvelope3Picture.Location = new Point(1644, 224);
+            HostEnvelope3Picture.Location = new Point(1692, 213);
             HostEnvelope3Picture.Name = "HostEnvelope3Picture";
-            HostEnvelope3Picture.Size = new Size(268, 87);
+            HostEnvelope3Picture.Size = new Size(220, 75);
             HostEnvelope3Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope3Picture.TabIndex = 54;
             HostEnvelope3Picture.TabStop = false;
@@ -91,9 +91,9 @@
             // 
             HostEnvelope2Picture.BackColor = Color.White;
             HostEnvelope2Picture.BackgroundImageLayout = ImageLayout.Center;
-            HostEnvelope2Picture.Location = new Point(1644, 331);
+            HostEnvelope2Picture.Location = new Point(1692, 327);
             HostEnvelope2Picture.Name = "HostEnvelope2Picture";
-            HostEnvelope2Picture.Size = new Size(268, 87);
+            HostEnvelope2Picture.Size = new Size(220, 75);
             HostEnvelope2Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope2Picture.TabIndex = 53;
             HostEnvelope2Picture.TabStop = false;
@@ -104,9 +104,9 @@
             // 
             HostEnvelope1Picture.BackColor = Color.White;
             HostEnvelope1Picture.BackgroundImageLayout = ImageLayout.Center;
-            HostEnvelope1Picture.Location = new Point(1644, 438);
+            HostEnvelope1Picture.Location = new Point(1692, 441);
             HostEnvelope1Picture.Name = "HostEnvelope1Picture";
-            HostEnvelope1Picture.Size = new Size(268, 87);
+            HostEnvelope1Picture.Size = new Size(220, 75);
             HostEnvelope1Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope1Picture.TabIndex = 52;
             HostEnvelope1Picture.TabStop = false;
@@ -117,9 +117,9 @@
             // 
             HostEnvelope0Picture.BackColor = Color.White;
             HostEnvelope0Picture.BackgroundImageLayout = ImageLayout.Center;
-            HostEnvelope0Picture.Location = new Point(1644, 545);
+            HostEnvelope0Picture.Location = new Point(1692, 555);
             HostEnvelope0Picture.Name = "HostEnvelope0Picture";
-            HostEnvelope0Picture.Size = new Size(268, 87);
+            HostEnvelope0Picture.Size = new Size(220, 75);
             HostEnvelope0Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope0Picture.TabIndex = 51;
             HostEnvelope0Picture.TabStop = false;
@@ -130,9 +130,9 @@
             // 
             ContestantEnvelope0Picture.BackColor = Color.White;
             ContestantEnvelope0Picture.BackgroundImageLayout = ImageLayout.Center;
-            ContestantEnvelope0Picture.Location = new Point(12, 545);
+            ContestantEnvelope0Picture.Location = new Point(12, 555);
             ContestantEnvelope0Picture.Name = "ContestantEnvelope0Picture";
-            ContestantEnvelope0Picture.Size = new Size(268, 87);
+            ContestantEnvelope0Picture.Size = new Size(220, 75);
             ContestantEnvelope0Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope0Picture.TabIndex = 50;
             ContestantEnvelope0Picture.TabStop = false;
@@ -143,9 +143,9 @@
             // 
             ContestantEnvelope3Picture.BackColor = Color.White;
             ContestantEnvelope3Picture.BackgroundImageLayout = ImageLayout.Center;
-            ContestantEnvelope3Picture.Location = new Point(12, 224);
+            ContestantEnvelope3Picture.Location = new Point(12, 213);
             ContestantEnvelope3Picture.Name = "ContestantEnvelope3Picture";
-            ContestantEnvelope3Picture.Size = new Size(268, 87);
+            ContestantEnvelope3Picture.Size = new Size(220, 75);
             ContestantEnvelope3Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope3Picture.TabIndex = 49;
             ContestantEnvelope3Picture.TabStop = false;
@@ -156,9 +156,9 @@
             // 
             ContestantEnvelope2Picture.BackColor = Color.White;
             ContestantEnvelope2Picture.BackgroundImageLayout = ImageLayout.Center;
-            ContestantEnvelope2Picture.Location = new Point(12, 331);
+            ContestantEnvelope2Picture.Location = new Point(12, 327);
             ContestantEnvelope2Picture.Name = "ContestantEnvelope2Picture";
-            ContestantEnvelope2Picture.Size = new Size(268, 87);
+            ContestantEnvelope2Picture.Size = new Size(220, 75);
             ContestantEnvelope2Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope2Picture.TabIndex = 48;
             ContestantEnvelope2Picture.TabStop = false;
@@ -169,9 +169,9 @@
             // 
             ContestantEnvelope1Picture.BackColor = Color.White;
             ContestantEnvelope1Picture.BackgroundImageLayout = ImageLayout.Center;
-            ContestantEnvelope1Picture.Location = new Point(12, 438);
+            ContestantEnvelope1Picture.Location = new Point(12, 441);
             ContestantEnvelope1Picture.Name = "ContestantEnvelope1Picture";
-            ContestantEnvelope1Picture.Size = new Size(268, 87);
+            ContestantEnvelope1Picture.Size = new Size(220, 75);
             ContestantEnvelope1Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope1Picture.TabIndex = 47;
             ContestantEnvelope1Picture.TabStop = false;
@@ -182,9 +182,9 @@
             // 
             ContestantEnvelope4Picture.BackColor = Color.White;
             ContestantEnvelope4Picture.BackgroundImageLayout = ImageLayout.Center;
-            ContestantEnvelope4Picture.Location = new Point(12, 117);
+            ContestantEnvelope4Picture.Location = new Point(12, 99);
             ContestantEnvelope4Picture.Name = "ContestantEnvelope4Picture";
-            ContestantEnvelope4Picture.Size = new Size(268, 87);
+            ContestantEnvelope4Picture.Size = new Size(220, 75);
             ContestantEnvelope4Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope4Picture.TabIndex = 46;
             ContestantEnvelope4Picture.TabStop = false;
@@ -245,11 +245,11 @@
             // 
             // HostTextLabel
             // 
-            HostTextLabel.Font = new Font("Arial", 20.25F);
+            HostTextLabel.Font = new Font("Arial", 18F);
             HostTextLabel.ForeColor = Color.White;
-            HostTextLabel.Location = new Point(1644, 10);
+            HostTextLabel.Location = new Point(1692, 10);
             HostTextLabel.Name = "HostTextLabel";
-            HostTextLabel.Size = new Size(268, 87);
+            HostTextLabel.Size = new Size(220, 87);
             HostTextLabel.TabIndex = 41;
             HostTextLabel.Text = "PROWADZĄCY";
             HostTextLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -257,11 +257,11 @@
             // 
             // ContestantTextLabel
             // 
-            ContestantTextLabel.Font = new Font("Arial", 20.25F);
+            ContestantTextLabel.Font = new Font("Arial", 18F);
             ContestantTextLabel.ForeColor = Color.White;
             ContestantTextLabel.Location = new Point(12, 10);
             ContestantTextLabel.Name = "ContestantTextLabel";
-            ContestantTextLabel.Size = new Size(268, 87);
+            ContestantTextLabel.Size = new Size(220, 87);
             ContestantTextLabel.TabIndex = 40;
             ContestantTextLabel.Text = "ZAWODNIK";
             ContestantTextLabel.TextAlign = ContentAlignment.MiddleCenter;
