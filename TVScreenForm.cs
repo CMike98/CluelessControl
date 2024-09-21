@@ -44,8 +44,8 @@ namespace CluelessControl
                 int columnNumber = i % DrawingConstants.ENVELOPES_IN_ONE_ROW;
 
                 Point calculatedLocation = new Point(
-                    x: DrawingConstants.FIRST_ENVELOPE_LOCATION.X + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * columnNumber,
-                    y: DrawingConstants.FIRST_ENVELOPE_LOCATION.Y + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Height * rowNumber);
+                    x: DrawingConstants.ENVELOPE_SELECT_FIRST_LOCATION.X + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * columnNumber,
+                    y: DrawingConstants.ENVELOPE_SELECT_FIRST_LOCATION.Y + DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Height * rowNumber);
 
                 var newPictureBox = new PictureBox()
                 {
