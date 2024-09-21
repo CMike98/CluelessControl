@@ -8,6 +8,9 @@ namespace CluelessControl
     {
         private PictureBox[] _envelopeSelectionPictureBoxes = new PictureBox[GameConstants.MAX_ENVELOPES_COUNT];
 
+        private PictureBox _questionAndStatistics = new PictureBox();
+        private PictureBox[] _envelopesSelected = new PictureBox[GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT];
+
         public TVScreenForm()
         {
             InitializeComponent();
@@ -16,7 +19,7 @@ namespace CluelessControl
         private void TVScreenForm_Load(object sender, EventArgs e)
         {
             TryToLoadBackgroundImage();
-            PrepareEnvelopeSelectionPictureBoxes();
+            PreparePictureBoxes();
             AddEvents();
         }
 
@@ -60,9 +63,15 @@ namespace CluelessControl
             }
         }
 
-        private void PrepareEnvelopeSelectionPictureBoxes()
+        private void PrepareQuestionStatisticsPictureBox()
+        {
+            ;
+        }
+
+        private void PreparePictureBoxes()
         {
             PrepareEnvelopePictureBoxes();
+            PrepareQuestionStatisticsPictureBox();
         }
 
         #region Events
