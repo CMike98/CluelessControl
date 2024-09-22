@@ -1449,7 +1449,9 @@ namespace CluelessControl
 
         private void EnvelopeSelectionNextPartBtn_Click(object sender, EventArgs e)
         {
-            GameState.Instance.SortEnvelopesByNumber();
+            var gameStateInstance = GameState.Instance;
+            gameStateInstance.SortEnvelopesByNumber();
+            gameStateInstance.HideEnvelopesAfterSelection();
 
             EnvelopeSelectionLockButtons();
             QuestionGameUnlockFirstButtons();
