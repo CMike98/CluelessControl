@@ -1,5 +1,6 @@
 using CluelessControl.Cheques;
 using CluelessControl.Constants;
+using CluelessControl.EnvelopeColorStates;
 using CluelessControl.Envelopes;
 using CluelessControl.Questions;
 using CluelessControl.Sounds;
@@ -1391,6 +1392,7 @@ namespace CluelessControl
         {
             var gameStateInstance = GameState.Instance;
             var contestantEnvelopes = gameStateInstance.ContestantEnvelopeSet;
+            var gameSettings = gameStateInstance.GameSettings;
             int index = contestantEnvelopes.EnvelopeCount;
 
             // Get the correct textbox
@@ -1418,6 +1420,11 @@ namespace CluelessControl
 
             gameStateInstance.AddContestantEnvelope(newEnvelope);
 
+            if (contestantEnvelopes.EnvelopeCount >= gameSettings.StartEnvelopeCount)
+            {
+                gameStateInstance.MarkNotSelectedEnvelopes();
+            }
+
             // Update button availability
             EnvelopeSelectionUpdateAvailability();
         }
@@ -1431,8 +1438,7 @@ namespace CluelessControl
             // Get the last envelope
             var lastEnvelope = contestantEnvelopes.GetEnvelope(lastEnvelopeIndex);
 
-            // Bring the last envelope back to the table
-            gameStateInstance.EnvelopeTable.AddEnvelope(lastEnvelope);
+            lastEnvelope.MarkAsNeutral();
 
             // Remove the last envelope
             gameStateInstance.RemoveContestantEnvelope(lastEnvelope);
@@ -1442,6 +1448,8 @@ namespace CluelessControl
             TextBox currentNumberTxtBox = numberTextBoxes[lastEnvelopeIndex];
 
             currentNumberTxtBox.Clear();
+
+            gameStateInstance.ClearNotSelectedMarkings();
 
             // Update button availability
             EnvelopeSelectionUpdateAvailability();
@@ -1499,7 +1507,9 @@ namespace CluelessControl
             if (selectedEnvelope is null)
                 throw new NullReferenceException($"Selected envelope is null.");
 
-            QuestionGameEnvelopeLabel.BackColor = selectedEnvelope.GetBackgroundColorForScreens();
+            EnvelopeColorCollection colorPairing = selectedEnvelope.GetColorsForScreen();
+            QuestionGameEnvelopeLabel.BackColor = colorPairing.BackgroundColor;
+
             QuestionGameEnvelopeLabel.Text = selectedEnvelope.GetEnvelopeValueForDirector();
         }
 
@@ -1674,6 +1684,8 @@ namespace CluelessControl
             QuestionGameCheckAnswerBtn.Enabled = false;
             QuestionGameKeepDestroyEnvelopeBtn.Enabled = true;
 
+            GameState.Instance.MarkForDestructionIfWrong();
+
             QuestionGameUpdateEnvelopeLabel();
         }
 
@@ -1814,7 +1826,9 @@ namespace CluelessControl
                 }
                 else
                 {
-                    _tradingContestantEnvelopeLabels[i].BackColor = envelope.GetBackgroundColorForScreens();
+                    EnvelopeColorCollection colorPairing = envelope.GetColorsForScreen();
+
+                    _tradingContestantEnvelopeLabels[i].BackColor = colorPairing.BackgroundColor;
                     _tradingContestantEnvelopeLabels[i].Text = envelope.GetEnvelopeValueForDirector();
 
                     _tradingContestantCheckboxes[i].Enabled = true;
@@ -1839,7 +1853,9 @@ namespace CluelessControl
                 }
                 else
                 {
-                    _tradingHostEnvelopeLabels[i].BackColor = envelope.GetBackgroundColorForScreens();
+                    EnvelopeColorCollection colorPairing = envelope.GetColorsForScreen();
+
+                    _tradingHostEnvelopeLabels[i].BackColor = colorPairing.BackgroundColor;
                     _tradingHostEnvelopeLabels[i].Text = envelope.GetEnvelopeValueForDirector();
 
                     _tradingHostCheckboxes[i].Enabled = true;
