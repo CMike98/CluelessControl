@@ -1,5 +1,6 @@
 ﻿using CluelessControl.Cheques;
 using CluelessControl.Constants;
+using CluelessControl.EnvelopeColorStates;
 using System.Text;
 
 namespace CluelessControl.Envelopes
@@ -7,35 +8,11 @@ namespace CluelessControl.Envelopes
     public class Envelope
     {
         /// <summary>
-        /// Dictionary converting states to colors for host/contestant screen
-        /// </summary>
-        private static readonly Dictionary<EnvelopeState, Color> statesToColorsForScreens = new()
-        {
-            { EnvelopeState.NEUTRAL,          Color.White      },
-            { EnvelopeState.SELECTED,         Color.White      },
-            { EnvelopeState.PLAYING_FOR,      Color.Yellow     },
-            { EnvelopeState.WON,              Color.LightGreen },
-            { EnvelopeState.DESTROYED,        Color.Gray       },
-            { EnvelopeState.MARKED_FOR_TRADE, Color.Yellow     },
-        };
-
-        /// <summary>
-        /// Dictionary converting states to colors for TV
-        /// </summary>
-        private static readonly Dictionary<EnvelopeState, Color> statesToColorsForTv = new()
-        {
-            { EnvelopeState.NEUTRAL,          Color.White      },
-            { EnvelopeState.SELECTED,         Color.Yellow     },
-            { EnvelopeState.PLAYING_FOR,      Color.Yellow     },
-            { EnvelopeState.WON,              Color.LightGreen },
-            { EnvelopeState.DESTROYED,        Color.Gray       },
-            { EnvelopeState.MARKED_FOR_TRADE, Color.Yellow     },
-        };
-
-        /// <summary>
         /// String builder used when converting the envelope to string for the director
         /// </summary>
         private static readonly StringBuilder sb = new StringBuilder();
+        
+        private ColorState _envelopeColorState;
 
         /// <summary>
         /// The envelope number
@@ -84,6 +61,8 @@ namespace CluelessControl.Envelopes
             Cheque = cheque;
             State = EnvelopeState.NEUTRAL;
             IsOpen = false;
+
+            _envelopeColorState = new NeutralColorState(Cheque);
         }
 
         /// <summary>
@@ -105,20 +84,6 @@ namespace CluelessControl.Envelopes
         }
 
         /// <summary>
-        /// Get the envelope background color for screens
-        /// </summary>
-        /// <returns>The background color</returns>
-        public Color GetBackgroundColorForScreens()
-        {
-            return statesToColorsForScreens[State];
-        }
-
-        public Color GetBackgroundColorForTv()
-        {
-            return statesToColorsForTv[State];
-        }
-
-        /// <summary>
         /// Gets the text with envelope number and it's value
         /// </summary>
         /// <returns>Text with envelope number and it's value, separated with a new line</returns>
@@ -136,6 +101,16 @@ namespace CluelessControl.Envelopes
             return sb.ToString();
         }
 
+        public EnvelopeColorCollection GetColorsForScreen()
+        {
+            return _envelopeColorState.GetColorPairingForScreen();
+        }
+
+        public EnvelopeColorCollection GetColorsForTv()
+        {
+            return _envelopeColorState.GetColorPairingForTv();
+        }
+
         #region Mark States
         public void MarkAsNeutral()
         {
@@ -146,6 +121,20 @@ namespace CluelessControl.Envelopes
                 throw new InvalidOperationException("Envelope must not be destroyed.");
 
             State = EnvelopeState.NEUTRAL;
+
+            _envelopeColorState = new NeutralColorState(Cheque);
+        }
+
+        public void MarkAsNotSelected()
+        {
+            if (State == EnvelopeState.NOT_SELECTED)
+                return;
+
+            if (State != EnvelopeState.NEUTRAL)
+                throw new InvalidOperationException("Envelope must should be in a neutral state.");
+
+            State = EnvelopeState.NOT_SELECTED;
+            _envelopeColorState = new NotSelectedColorState(Cheque);
         }
 
         public void MarkAsSelected()
@@ -157,9 +146,11 @@ namespace CluelessControl.Envelopes
                 throw new InvalidOperationException($"Envelope should be in a neutral state.");
 
             State = EnvelopeState.SELECTED;
+
+            _envelopeColorState = new SelectedColorState(Cheque);
         }
 
-        public void MarkAsPlayedFor()
+        public void MarkAsPlayingFor()
         {
             if (State == EnvelopeState.PLAYING_FOR)
                 return;
@@ -168,6 +159,8 @@ namespace CluelessControl.Envelopes
                 throw new InvalidOperationException("Envelope should be in a neutral state.");
 
             State = EnvelopeState.PLAYING_FOR;
+
+            _envelopeColorState = new PlayingForColorState(Cheque);
         }
 
         public void MarkForTrade()
@@ -179,6 +172,8 @@ namespace CluelessControl.Envelopes
                 throw new InvalidOperationException("Envelope should be in a 'Neutral' state.");
 
             State = EnvelopeState.MARKED_FOR_TRADE;
+
+            _envelopeColorState = new MarkedForTradeColorState(Cheque);
         }
 
         public void MarkAsWon()
@@ -190,6 +185,21 @@ namespace CluelessControl.Envelopes
                 throw new InvalidOperationException("Envelope should be in a 'Playing For' state.");
 
             State = EnvelopeState.WON;
+
+            _envelopeColorState = new WonColorState(Cheque);
+        }
+
+        public void MarkAsForDestruction()
+        {
+            if (State == EnvelopeState.FOR_DESTRUCTION)
+                return;
+
+            if (State != EnvelopeState.NEUTRAL && State != EnvelopeState.PLAYING_FOR)
+                throw new InvalidOperationException("Envelope should be in a neutral state or in the 'Playing For' state.");
+
+            State = EnvelopeState.FOR_DESTRUCTION;
+
+            _envelopeColorState = new ForDestructionColorState(Cheque);
         }
 
         public void MarkAsDestroyed()
@@ -197,10 +207,12 @@ namespace CluelessControl.Envelopes
             if (State == EnvelopeState.DESTROYED)
                 return;
 
-            if (State != EnvelopeState.NEUTRAL && State != EnvelopeState.PLAYING_FOR)
-                throw new InvalidOperationException("Envelope should be in a neutral state or in the 'Playing For' state.");
+            if (State != EnvelopeState.NEUTRAL && State != EnvelopeState.PLAYING_FOR && State != EnvelopeState.FOR_DESTRUCTION)
+                throw new InvalidOperationException("Envelope should be in a neutral state, in the 'Playing For' state or in the 'For Destruction' state.");
 
             State = EnvelopeState.DESTROYED;
+
+            _envelopeColorState = new DestroyedColorState(Cheque);
         }
 
         #endregion
