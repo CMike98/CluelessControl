@@ -1,5 +1,6 @@
 ﻿using CluelessControl.Cheques;
 using CluelessControl.Constants;
+using CluelessControl.EnvelopeColorStates;
 using CluelessControl.Envelopes;
 
 namespace CluelessControl
@@ -240,8 +241,9 @@ namespace CluelessControl
                 return;
             }
 
-            Color backgroundColor = envelope.GetBackgroundColorForScreens();
-            pictureBox.BackColor = backgroundColor;
+            EnvelopeColorCollection colorPairing = envelope.GetColorsForScreen();
+
+            pictureBox.BackColor = colorPairing.BackgroundColor;
 
             Rectangle clientRectangle = pictureBox.ClientRectangle;
             Size size = clientRectangle.Size;
@@ -255,19 +257,24 @@ namespace CluelessControl
 
             string envelopeNumber = string.Format("{0,2}", envelope.EnvelopeNumber);
             SizeF envelopeNumberSize = e.Graphics.MeasureString(envelopeNumber, DrawingConstants.ENVELOPE_DRAWING_FONT);
-            using (Brush backgroundBrush = new SolidBrush(backgroundColor))
+
+            using (Brush backgroundBrush = new SolidBrush(colorPairing.BackgroundColor))
             {
                 e.Graphics.FillRectangle(backgroundBrush, leftPoint.X, leftPoint.Y, envelopeNumberSize.Width, envelopeNumberSize.Height);
             }
-
-            e.Graphics.DrawString(envelopeNumber, DrawingConstants.ENVELOPE_DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
+            
+            using (Brush numberBrush = new SolidBrush(colorPairing.NumberFontColor))
+            {
+                e.Graphics.DrawString(envelopeNumber, DrawingConstants.ENVELOPE_DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
+            }
 
             BaseCheque cheque = envelope.Cheque;
             string chequeString = cheque.ToValueString();
-            using Brush brush = new SolidBrush(cheque.GetTextColor());
-
             SizeF valueSize = e.Graphics.MeasureString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT);
-            e.Graphics.DrawString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT, brush, leftPoint.X + size.Width - valueSize.Width, leftPoint.Y + size.Height - valueSize.Height);
+            using (Brush chequeBrush = new SolidBrush(colorPairing.ChequeFontColor))
+            {
+                e.Graphics.DrawString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT, chequeBrush, leftPoint.X + size.Width - valueSize.Width, leftPoint.Y + size.Height - valueSize.Height);
+            }
         }
 
         #endregion
