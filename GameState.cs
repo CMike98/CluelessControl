@@ -266,7 +266,7 @@ namespace CluelessControl
                 throw new ArgumentNullException(nameof(envelope));
 
             EnvelopePlayedFor = envelope;
-            EnvelopePlayedFor.MarkAsPlayedFor();
+            EnvelopePlayedFor.MarkAsPlayingFor();
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
@@ -322,6 +322,35 @@ namespace CluelessControl
                 EnvelopePlayedFor.MarkAsWon();
             else
                 EnvelopePlayedFor.MarkAsDestroyed();
+
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void MarkForDestructionIfWrong()
+        {
+            if (EnvelopePlayedFor is null)
+                throw new InvalidOperationException($"EnvelopePlayedFor is null");
+
+            if (!IsAnswerCorrect())
+                EnvelopePlayedFor.MarkAsForDestruction();
+
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ClearNotSelectedMarkings()
+        {
+            EnvelopeTable.ForSelected(
+                action: envelope => envelope.MarkAsNeutral(),
+                predicate: envelope => envelope.State == EnvelopeState.NOT_SELECTED);
+
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void MarkNotSelectedEnvelopes()
+        {
+            EnvelopeTable.ForSelected(
+                action: envelope => envelope.MarkAsNotSelected(),
+                predicate: envelope => envelope.State != EnvelopeState.SELECTED);
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
