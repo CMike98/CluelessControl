@@ -244,11 +244,11 @@ namespace CluelessControl
             pictureBox.BackColor = backgroundColor;
 
             Rectangle clientRectangle = pictureBox.ClientRectangle;
-            Point size = (Point)clientRectangle.Size;
+            Size size = clientRectangle.Size;
 
             Point leftPoint = clientRectangle.Location;
-            Point centerPoint = new(leftPoint.X + size.X / 2, leftPoint.Y + size.Y / 2);
-            Point rightPoint = new(leftPoint.X + size.X, leftPoint.Y);
+            Point centerPoint = new(leftPoint.X + size.Width / 2, leftPoint.Y + size.Height / 2);
+            Point rightPoint = new(leftPoint.X + size.Width, leftPoint.Y);
 
             e.Graphics.DrawLine(Pens.Black, leftPoint, centerPoint);
             e.Graphics.DrawLine(Pens.Black, centerPoint, rightPoint);
@@ -267,7 +267,7 @@ namespace CluelessControl
             using Brush brush = new SolidBrush(cheque.GetTextColor());
 
             SizeF valueSize = e.Graphics.MeasureString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT);
-            e.Graphics.DrawString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT, brush, leftPoint.X + size.X - valueSize.Width, leftPoint.Y + size.Y - valueSize.Height);
+            e.Graphics.DrawString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT, brush, leftPoint.X + size.Width - valueSize.Width, leftPoint.Y + size.Height - valueSize.Height);
         }
 
         #endregion
