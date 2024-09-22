@@ -130,9 +130,9 @@ namespace CluelessControl.Envelopes
             if (predicate == null)
                 throw new ArgumentNullException(nameof(predicate));
 
-            EnvelopesOnTable.Where(envelope => predicate(envelope));
+            var envelopesMatching = EnvelopesOnTable.Where(envelope => predicate(envelope));
 
-            foreach (var envelope in EnvelopesOnTable)
+            foreach (var envelope in envelopesMatching)
             {
                 if (predicate(envelope))
                     action(envelope);
