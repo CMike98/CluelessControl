@@ -103,5 +103,40 @@ namespace CluelessControl.Envelopes
 
             EnvelopesOnTable.Remove(envelope);
         }
+
+        public IList<Envelope> SelectEnvelopesWhere(Predicate<Envelope> predicate)
+        {
+            if (predicate == null)
+                throw new ArgumentNullException(nameof(predicate));
+
+            return EnvelopesOnTable.Where(x => predicate(x)).ToList();
+        }
+
+        public void ForAll(Action<Envelope> action)
+        {
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
+
+            foreach (var envelope in EnvelopesOnTable)
+            {
+                action(envelope);
+            }
+        }
+
+        public void ForSelected(Action<Envelope> action, Predicate<Envelope> predicate)
+        {
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
+            if (predicate == null)
+                throw new ArgumentNullException(nameof(predicate));
+
+            EnvelopesOnTable.Where(envelope => predicate(envelope));
+
+            foreach (var envelope in EnvelopesOnTable)
+            {
+                if (predicate(envelope))
+                    action(envelope);
+            }
+        }
     }
 }
