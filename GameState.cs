@@ -111,6 +111,7 @@ namespace CluelessControl
 
         #region Events
         public event EventHandler? EventShowEnvelopesStart;
+        public event EventHandler? EventHideEnvelopesStart;
         public event EventHandler? EventClearQuestion;
         public event EventHandler? EventShowQuestion;
         public event EventHandler? EventShowAnswers;
@@ -165,6 +166,11 @@ namespace CluelessControl
             QuestionIndex++;
 
             EventClearQuestion?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void HideEnvelopesAfterSelection()
+        {
+            EventHideEnvelopesStart?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
