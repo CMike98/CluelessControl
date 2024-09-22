@@ -63,12 +63,42 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Font size used when drawing the questions
         /// </summary>
-        public const float QUESTION_DRAWING_FONT_SIZE = 18.0f;
+        public const float QUESTION_DRAWING_DEFAULT_FONT_SIZE = 40.0f;
 
         /// <summary>
         /// Font used when drawing the questions
         /// </summary>
-        public static readonly Font QUESTION_DRAWING_FONT = new(QUESTION_DRAWING_FONT_FAMILY, QUESTION_DRAWING_FONT_SIZE);
+        public static readonly Font QUESTION_DRAWING_FONT = new(QUESTION_DRAWING_FONT_FAMILY, QUESTION_DRAWING_DEFAULT_FONT_SIZE);
+
+        /// <summary>
+        /// Size of the question bar with padding
+        /// </summary>
+        public static readonly Size QUESTION_BAR_SIZE_PADDING = new(width: 1400, height: 300);
+
+        /// <summary>
+        /// Size of the question bar padding
+        /// </summary>
+        public static readonly Size QUESTION_BAR_PADDING = new(width: 25, height: 25);
+
+        /// <summary>
+        /// Location of the question bar
+        /// </summary>
+        public static readonly Point QUESTION_BAR_LOCATION = new(x: 250, y: 650);
+
+        /// <summary>
+        /// Location of the inside of the question bar
+        /// </summary>
+        public static readonly Point QUESTION_BAR_INSIDE_LOCATION = new(QUESTION_BAR_LOCATION.X + QUESTION_BAR_PADDING.Width, QUESTION_BAR_LOCATION.Y + QUESTION_BAR_PADDING.Height);
+
+        /// <summary>
+        /// Outside background color of the question bar
+        /// </summary>
+        public static readonly Color QUESTION_BAR_BACKGROUND_OUT = Color.Purple;
+
+        /// <summary>
+        /// Inside background color of the question bar
+        /// </summary>
+        public static readonly Color QUESTION_BAR_BACKGROUND_IN = Color.Black;
 
         #endregion
     }
