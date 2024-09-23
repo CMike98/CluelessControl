@@ -44,11 +44,11 @@ namespace CluelessControl
         #endregion
 
         #region Trading Screen
-        private readonly Label[] _tradingContestantEnvelopeLabels = new Label[GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT];
-        private readonly Label[] _tradingHostEnvelopeLabels = new Label[GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT];
+        private readonly Label[] _tradingContestantEnvelopeLabels = new Label[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
+        private readonly Label[] _tradingHostEnvelopeLabels = new Label[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
 
-        private readonly CheckBox[] _tradingContestantCheckboxes = new CheckBox[GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT];
-        private readonly CheckBox[] _tradingHostCheckboxes = new CheckBox[GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT];
+        private readonly CheckBox[] _tradingContestantCheckboxes = new CheckBox[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
+        private readonly CheckBox[] _tradingHostCheckboxes = new CheckBox[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
         #endregion
 
         private bool EditedBeforeSave => _envelopeSettingsEdited || _questionEditorEdited || EnvelopeSettingsDidChequeChange() || QuestionEditorDidQuestionChange();
@@ -82,7 +82,7 @@ namespace CluelessControl
 
         private void PrepareEnvelopeSelectionBoxes()
         {
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 string numberName = string.Format("EnvelopeSelectionNum{0}TxtBox", i);
                 string valueName = string.Format("EnvelopeSelectionContent{0}Lbl", i);
@@ -96,7 +96,7 @@ namespace CluelessControl
 
         private void PrepareTradingEnvelopeBoxes()
         {
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 string contestantEnvelopeName = string.Format("TradingContestantEnvelope{0}Lbl", i);
                 string hostEnvelopeName = string.Format("TradingHostEnvelope{0}Lbl", i);
@@ -1337,7 +1337,8 @@ namespace CluelessControl
                 return;
             }
 
-            var envelopeTable = GameState.Instance.EnvelopeTable;
+            var gameStateInstance = GameState.Instance;
+            var envelopeTable = gameStateInstance.EnvelopeTable;
 
             // Check for errors
             string errorMessage = string.Empty;
@@ -1349,7 +1350,9 @@ namespace CluelessControl
             {
                 errorMessage = string.Format("Numer koperty musi być z przedziału {0}...{1}!", GameConstants.MIN_ENVELOPE_NUMBER, GameConstants.MAX_ENVELOPE_NUMBER);
             }
-            else if (!envelopeTable.IsEnvelopePresent(envelopeNumber))
+
+            Envelope envelope = envelopeTable.GetEnvelope(envelopeNumber);
+            if (envelope.State == EnvelopeState.SELECTED)
             {
                 errorMessage = "Koperta już wybrana wcześniej!";
             }
@@ -1358,8 +1361,6 @@ namespace CluelessControl
             // If there is an error, display it
             if (string.IsNullOrEmpty(errorMessage))
             {
-                Envelope envelope = envelopeTable.GetEnvelope(envelopeNumber);
-
                 valueLabel.Text = envelope.Cheque.ToValueString();
                 valueLabel.ForeColor = Color.Black;
             }
@@ -1460,6 +1461,7 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
             gameStateInstance.SortEnvelopesByNumber();
             gameStateInstance.HideEnvelopesAfterSelection();
+            gameStateInstance.UnmarkSelection();
 
             EnvelopeSelectionLockButtons();
             QuestionGameUnlockFirstButtons();
@@ -1577,7 +1579,7 @@ namespace CluelessControl
             QuestionGameSetAnswerEnabled(enabled: false);
             QuestionGameShowCorrectBtn.Enabled = true;
 
-            _questionGameAnswerLabels[answerNumber].BackColor = GameConstants.LOCK_IN_ANS_COLOR;
+            _questionGameAnswerLabels[answerNumber].BackColor = DrawingConstants.LOCK_IN_ANS_COLOR;
         }
 
         private void QuestionGameShowCorrectAnswer()
@@ -1585,7 +1587,7 @@ namespace CluelessControl
             var gameState = GameState.Instance;
             var currentQuestion = gameState.GetCurrentQuestion();
 
-            _questionGameAnswerLabels[currentQuestion.CorrectAnswerNumber].BackColor = GameConstants.CORRECT_ANS_COLOR;
+            _questionGameAnswerLabels[currentQuestion.CorrectAnswerNumber].BackColor = DrawingConstants.CORRECT_ANS_COLOR;
 
             gameState.ShowCorrectAnswer();
         }
@@ -1633,6 +1635,8 @@ namespace CluelessControl
         {
             QuestionGameDisplayEnvelopesBtn.Enabled = false;
             QuestionGameConfirmEnvelopeBtn.Enabled = true;
+
+            GameState.Instance.ShowEnvelopesSelectionForQuestion();
 
             _questionGameEnvelopeIndex = 0;
             QuestionGameUpdateEnvelopeLabel();
@@ -1761,7 +1765,7 @@ namespace CluelessControl
             int contestantEnvelopeCount = gameStateInstance.ContestantEnvelopeSet.EnvelopeCount;
             int hostEnvelopeCount = gameStateInstance.HostEnvelopeSet.EnvelopeCount;
 
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 _tradingContestantCheckboxes[i].Enabled = i < contestantEnvelopeCount;
                 _tradingContestantCheckboxes[i].Checked = false;
@@ -1787,7 +1791,7 @@ namespace CluelessControl
 
         private void TradingLockButtons()
         {
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 _tradingContestantCheckboxes[i].Enabled = false;
                 _tradingContestantCheckboxes[i].Checked = false;
@@ -1813,7 +1817,7 @@ namespace CluelessControl
         {
             var gameStateInstance = GameState.Instance;
 
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
                 if (envelope is null || envelope.State == EnvelopeState.DESTROYED)
@@ -1840,7 +1844,7 @@ namespace CluelessControl
         {
             var gameStateInstance = GameState.Instance;
 
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
                 if (envelope is null || envelope.State == EnvelopeState.DESTROYED)
@@ -1871,7 +1875,7 @@ namespace CluelessControl
 
         private void TradingClearContestantCheckboxes()
         {
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 _tradingContestantCheckboxes[i].Checked = false;
             }
@@ -1879,7 +1883,7 @@ namespace CluelessControl
 
         private void TradingClearHostCheckboxes()
         {
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 _tradingHostCheckboxes[i].Checked = false;
             }
@@ -1924,7 +1928,7 @@ namespace CluelessControl
 
             gameStateInstance.SetCashOffer(cashOffer);
 
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
                 bool isChecked = _tradingContestantCheckboxes[i].Checked;
@@ -1937,7 +1941,7 @@ namespace CluelessControl
                 }
             }
 
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
                 bool isChecked = _tradingHostCheckboxes[i].Checked;
@@ -1985,7 +1989,7 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
 
             // Open/Close Contestant Envelopes
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
                 if (envelope is null)
@@ -1999,7 +2003,7 @@ namespace CluelessControl
             }
 
             // Open/Close Host Envelopes
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
                 if (envelope is null)
@@ -2020,7 +2024,7 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
 
             // Destroy Contestant Envelopes
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
                 if (envelope is null)
@@ -2034,7 +2038,7 @@ namespace CluelessControl
             }
 
             // Destroy Host Envelopes
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT; ++i)
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
                 if (envelope is null)
