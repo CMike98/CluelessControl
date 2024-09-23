@@ -30,7 +30,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// How much envelopes can the system handle currently?
         /// </summary>
-        public const int MAX_ENVELOPE_POSSIBLE_COUNT = 5;
+        public const int MAX_ENVELOPE_COUNT_PERSON = 5;
 
         /// <summary>
         /// Minimum number of the envelope

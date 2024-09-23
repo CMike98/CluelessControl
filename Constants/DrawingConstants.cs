@@ -83,7 +83,7 @@ namespace CluelessControl.Constants
         public static readonly FontFamily QUESTION_DRAWING_FONT_FAMILY = new(name: "Arial");
 
         /// <summary>
-        /// Font size used when drawing the questions
+        /// Font size used when drawing the big questions
         /// </summary>
         public const float QUESTION_DRAWING_DEFAULT_FONT_SIZE = 40.0f;
 
@@ -93,7 +93,7 @@ namespace CluelessControl.Constants
         public static readonly Font QUESTION_DRAWING_FONT = new(QUESTION_DRAWING_FONT_FAMILY, QUESTION_DRAWING_DEFAULT_FONT_SIZE);
 
         /// <summary>
-        /// Font size used when drawing the questions
+        /// Font size used when drawing the questions and answers
         /// </summary>
         public const float QUESTION_ANSWER_DRAWING_DEFAULT_FONT_SIZE = 32.0f;
 
@@ -109,12 +109,12 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Size of the question bar with padding
         /// </summary>
-        public static readonly Size QUESTION_BAR_SIZE_PADDING = new(width: 1400, height: 300);
+        public static readonly Size QUESTION_BAR_SIZE_FULL = new(width: 1400, height: 300);
 
         /// <summary>
         /// Size of the question bar padding
         /// </summary>
-        public static readonly Size QUESTION_BAR_PADDING = new(width: 25, height: 25);
+        public static readonly Size QUESTION_BAR_BORDER = new(width: 25, height: 25);
 
         /// <summary>
         /// Location of the question bar
@@ -124,7 +124,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Location of the inside of the question bar
         /// </summary>
-        public static readonly Point QUESTION_BAR_INSIDE_LOCATION = new(QUESTION_BAR_LOCATION.X + QUESTION_BAR_PADDING.Width, QUESTION_BAR_LOCATION.Y + QUESTION_BAR_PADDING.Height);
+        public static readonly Point QUESTION_BAR_INSIDE_LOCATION = new(QUESTION_BAR_LOCATION.X + QUESTION_BAR_BORDER.Width, QUESTION_BAR_LOCATION.Y + QUESTION_BAR_BORDER.Height);
 
         /// <summary>
         /// Outside background color of the question bar
@@ -148,12 +148,12 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Question counter size (with padding)
         /// </summary>
-        public static readonly Size QUESTION_COUNTER_SIZE_PADDING = new(width: 400, height: 75);
+        public static readonly Size QUESTION_COUNTER_SIZE_FULL = new(width: 400, height: 75);
 
         /// <summary>
         /// Question counter size padding
         /// </summary>
-        public static readonly Size QUESTION_COUNTER_PADDING = new(width: 10, height: 10);
+        public static readonly Size QUESTION_COUNTER_BORDER = new(width: 10, height: 10);
 
         /// <summary>
         /// Question counter font family
