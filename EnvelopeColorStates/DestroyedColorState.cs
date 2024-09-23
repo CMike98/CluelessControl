@@ -13,7 +13,7 @@ namespace CluelessControl.EnvelopeColorStates
             return new EnvelopeColorCollection()
             {
                 BackgroundColor = Color.Gray,
-                LineColor       = Color.Red,
+                LineColor       = Color.White,
                 NumberFontColor = Color.White,
                 ChequeFontColor = Color.White
             };
@@ -24,7 +24,7 @@ namespace CluelessControl.EnvelopeColorStates
             return new EnvelopeColorCollection()
             {
                 BackgroundColor = Color.Gray,
-                LineColor       = Color.Red,
+                LineColor       = Color.White,
                 NumberFontColor = Color.White,
                 ChequeFontColor = Color.White
             };
