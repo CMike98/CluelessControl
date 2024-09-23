@@ -194,7 +194,7 @@
             // OfferLabel
             // 
             OfferLabel.BorderStyle = BorderStyle.FixedSingle;
-            OfferLabel.Font = new Font("Arial", 24F);
+            OfferLabel.Font = new Font("Lato", 36F);
             OfferLabel.ForeColor = Color.White;
             OfferLabel.Location = new Point(987, 164);
             OfferLabel.Name = "OfferLabel";
@@ -207,7 +207,7 @@
             // CashLabel
             // 
             CashLabel.BorderStyle = BorderStyle.FixedSingle;
-            CashLabel.Font = new Font("Arial", 24F);
+            CashLabel.Font = new Font("Lato", 36F);
             CashLabel.ForeColor = Color.White;
             CashLabel.Location = new Point(413, 164);
             CashLabel.Name = "CashLabel";
@@ -220,7 +220,7 @@
             // OfferTextLabel
             // 
             OfferTextLabel.BorderStyle = BorderStyle.FixedSingle;
-            OfferTextLabel.Font = new Font("Arial", 20.25F);
+            OfferTextLabel.Font = new Font("Lato", 20.2499981F);
             OfferTextLabel.ForeColor = Color.White;
             OfferTextLabel.Location = new Point(987, 116);
             OfferTextLabel.Name = "OfferTextLabel";
@@ -233,7 +233,7 @@
             // CashTextLabel
             // 
             CashTextLabel.BorderStyle = BorderStyle.FixedSingle;
-            CashTextLabel.Font = new Font("Arial", 20.25F);
+            CashTextLabel.Font = new Font("Lato", 20.2499981F);
             CashTextLabel.ForeColor = Color.White;
             CashTextLabel.Location = new Point(413, 117);
             CashTextLabel.Name = "CashTextLabel";
@@ -245,7 +245,7 @@
             // 
             // HostTextLabel
             // 
-            HostTextLabel.Font = new Font("Arial", 18F);
+            HostTextLabel.Font = new Font("Lato", 18F);
             HostTextLabel.ForeColor = Color.White;
             HostTextLabel.Location = new Point(1692, 10);
             HostTextLabel.Name = "HostTextLabel";
@@ -257,7 +257,7 @@
             // 
             // ContestantTextLabel
             // 
-            ContestantTextLabel.Font = new Font("Arial", 18F);
+            ContestantTextLabel.Font = new Font("Lato", 18F);
             ContestantTextLabel.ForeColor = Color.White;
             ContestantTextLabel.Location = new Point(12, 10);
             ContestantTextLabel.Name = "ContestantTextLabel";
@@ -270,7 +270,7 @@
             // AnswerDLabel
             // 
             AnswerDLabel.BorderStyle = BorderStyle.FixedSingle;
-            AnswerDLabel.Font = new Font("Arial", 24F);
+            AnswerDLabel.Font = new Font("Lato", 23.9999962F);
             AnswerDLabel.ForeColor = Color.White;
             AnswerDLabel.Location = new Point(1012, 905);
             AnswerDLabel.Name = "AnswerDLabel";
@@ -281,7 +281,7 @@
             // AnswerCLabel
             // 
             AnswerCLabel.BorderStyle = BorderStyle.FixedSingle;
-            AnswerCLabel.Font = new Font("Arial", 24F);
+            AnswerCLabel.Font = new Font("Lato", 23.9999962F);
             AnswerCLabel.ForeColor = Color.White;
             AnswerCLabel.Location = new Point(12, 905);
             AnswerCLabel.Name = "AnswerCLabel";
@@ -292,7 +292,7 @@
             // AnswerBLabel
             // 
             AnswerBLabel.BorderStyle = BorderStyle.FixedSingle;
-            AnswerBLabel.Font = new Font("Arial", 24F);
+            AnswerBLabel.Font = new Font("Lato", 23.9999962F);
             AnswerBLabel.ForeColor = Color.White;
             AnswerBLabel.Location = new Point(1012, 802);
             AnswerBLabel.Name = "AnswerBLabel";
@@ -303,7 +303,7 @@
             // AnswerALabel
             // 
             AnswerALabel.BorderStyle = BorderStyle.FixedSingle;
-            AnswerALabel.Font = new Font("Arial", 24F);
+            AnswerALabel.Font = new Font("Lato", 23.9999962F);
             AnswerALabel.ForeColor = Color.White;
             AnswerALabel.Location = new Point(12, 802);
             AnswerALabel.Name = "AnswerALabel";
@@ -314,7 +314,7 @@
             // QuestionLabel
             // 
             QuestionLabel.BorderStyle = BorderStyle.FixedSingle;
-            QuestionLabel.Font = new Font("Arial", 24F);
+            QuestionLabel.Font = new Font("Lato", 23.9999962F);
             QuestionLabel.ForeColor = Color.White;
             QuestionLabel.Location = new Point(12, 657);
             QuestionLabel.Name = "QuestionLabel";
