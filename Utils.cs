@@ -30,5 +30,10 @@
                 return max;
             return val;
         }
+
+        public static float Lerp(float a, float b, float t)
+        {
+            return a * (1 - t) + b * t;
+        }
     }
 }
