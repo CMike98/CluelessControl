@@ -114,7 +114,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Size of the question bar padding
         /// </summary>
-        public static readonly Size QUESTION_BAR_BORDER = new(width: 25, height: 25);
+        public static readonly Size QUESTION_BAR_BORDER = new(width: 10, height: 10);
 
         /// <summary>
         /// Location of the question bar
@@ -129,7 +129,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Outside background color of the question bar
         /// </summary>
-        public static readonly Color QUESTION_BAR_BACKGROUND_OUT = Color.Purple;
+        public static readonly Color QUESTION_BAR_BACKGROUND_OUT = Color.FromArgb(red: 0, green: 191, blue: 255);
 
         /// <summary>
         /// Inside background color of the question bar
@@ -173,7 +173,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Outside background color of the counter
         /// </summary>
-        public static readonly Color QUESTION_COUNTER_BACKGROUND_OUT = Color.Purple;
+        public static readonly Color QUESTION_COUNTER_BACKGROUND_OUT = Color.FromArgb(red: 0, green: 191, blue: 255);
 
         /// <summary>
         /// Inside background color of the counter
