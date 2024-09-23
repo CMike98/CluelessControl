@@ -340,7 +340,7 @@
             SettingsShowOnTvGroup.Controls.Add(SettingsShowOnTvLbl);
             SettingsShowOnTvGroup.Controls.Add(SettingsShowOnTvNoRadio);
             SettingsShowOnTvGroup.Controls.Add(SettingsShowOnTvYesRadio);
-            SettingsShowOnTvGroup.Location = new Point(291, 265);
+            SettingsShowOnTvGroup.Location = new Point(307, 219);
             SettingsShowOnTvGroup.Name = "SettingsShowOnTvGroup";
             SettingsShowOnTvGroup.Size = new Size(491, 83);
             SettingsShowOnTvGroup.TabIndex = 4;
@@ -386,7 +386,7 @@
             SettingsEnvelopeStartCountGroup.Controls.Add(SettingsEnvelopeStartCountLbl);
             SettingsEnvelopeStartCountGroup.Location = new Point(21, 15);
             SettingsEnvelopeStartCountGroup.Name = "SettingsEnvelopeStartCountGroup";
-            SettingsEnvelopeStartCountGroup.Size = new Size(491, 119);
+            SettingsEnvelopeStartCountGroup.Size = new Size(491, 92);
             SettingsEnvelopeStartCountGroup.TabIndex = 25;
             SettingsEnvelopeStartCountGroup.TabStop = false;
             SettingsEnvelopeStartCountGroup.Text = "Ilość kopert";
@@ -394,7 +394,7 @@
             // SettingsEnvelopeStartCountNumeric
             // 
             SettingsEnvelopeStartCountNumeric.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            SettingsEnvelopeStartCountNumeric.Location = new Point(353, 50);
+            SettingsEnvelopeStartCountNumeric.Location = new Point(353, 34);
             SettingsEnvelopeStartCountNumeric.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
             SettingsEnvelopeStartCountNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             SettingsEnvelopeStartCountNumeric.Name = "SettingsEnvelopeStartCountNumeric";
@@ -405,10 +405,10 @@
             // 
             // SettingsEnvelopeStartCountLbl
             // 
-            SettingsEnvelopeStartCountLbl.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            SettingsEnvelopeStartCountLbl.Font = new Font("Arial", 12F);
             SettingsEnvelopeStartCountLbl.Location = new Point(6, 17);
             SettingsEnvelopeStartCountLbl.Name = "SettingsEnvelopeStartCountLbl";
-            SettingsEnvelopeStartCountLbl.Size = new Size(342, 92);
+            SettingsEnvelopeStartCountLbl.Size = new Size(342, 62);
             SettingsEnvelopeStartCountLbl.TabIndex = 0;
             SettingsEnvelopeStartCountLbl.Text = "Ile kopert zawodnik wybiera na początku?";
             SettingsEnvelopeStartCountLbl.TextAlign = ContentAlignment.MiddleCenter;
@@ -419,17 +419,17 @@
             SettingsRoundingGroup.Controls.Add(SettingsDecimalPlacesTxtBox);
             SettingsRoundingGroup.Location = new Point(569, 15);
             SettingsRoundingGroup.Name = "SettingsRoundingGroup";
-            SettingsRoundingGroup.Size = new Size(491, 119);
+            SettingsRoundingGroup.Size = new Size(491, 92);
             SettingsRoundingGroup.TabIndex = 24;
             SettingsRoundingGroup.TabStop = false;
             SettingsRoundingGroup.Text = "Zaokrąglanie";
             // 
             // SettingsDecimalPlacesLbl
             // 
-            SettingsDecimalPlacesLbl.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            SettingsDecimalPlacesLbl.Font = new Font("Arial", 12F);
             SettingsDecimalPlacesLbl.Location = new Point(6, 17);
             SettingsDecimalPlacesLbl.Name = "SettingsDecimalPlacesLbl";
-            SettingsDecimalPlacesLbl.Size = new Size(479, 47);
+            SettingsDecimalPlacesLbl.Size = new Size(254, 65);
             SettingsDecimalPlacesLbl.TabIndex = 0;
             SettingsDecimalPlacesLbl.Text = "Do ilu miejsc po przecinku zaokrąglać nagrody (ujemna liczba = przed przecinkiem) ?";
             SettingsDecimalPlacesLbl.TextAlign = ContentAlignment.MiddleCenter;
@@ -437,9 +437,9 @@
             // SettingsDecimalPlacesTxtBox
             // 
             SettingsDecimalPlacesTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            SettingsDecimalPlacesTxtBox.Location = new Point(6, 78);
+            SettingsDecimalPlacesTxtBox.Location = new Point(266, 28);
             SettingsDecimalPlacesTxtBox.Name = "SettingsDecimalPlacesTxtBox";
-            SettingsDecimalPlacesTxtBox.Size = new Size(479, 35);
+            SettingsDecimalPlacesTxtBox.Size = new Size(219, 35);
             SettingsDecimalPlacesTxtBox.TabIndex = 1;
             SettingsDecimalPlacesTxtBox.Text = "0";
             SettingsDecimalPlacesTxtBox.TextAlign = HorizontalAlignment.Center;
@@ -493,19 +493,19 @@
             // 
             SettingsPlusPercentGroup.Controls.Add(SettingsPlusPercentBestRadio);
             SettingsPlusPercentGroup.Controls.Add(SettingsPlusPercentAllRadio);
-            SettingsPlusPercentGroup.Location = new Point(569, 140);
+            SettingsPlusPercentGroup.Location = new Point(569, 113);
             SettingsPlusPercentGroup.Name = "SettingsPlusPercentGroup";
-            SettingsPlusPercentGroup.Size = new Size(491, 119);
+            SettingsPlusPercentGroup.Size = new Size(491, 100);
             SettingsPlusPercentGroup.TabIndex = 3;
             SettingsPlusPercentGroup.TabStop = false;
             SettingsPlusPercentGroup.Text = "Plusy procentowe";
             // 
             // SettingsPlusPercentBestRadio
             // 
-            SettingsPlusPercentBestRadio.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            SettingsPlusPercentBestRadio.Location = new Point(25, 63);
+            SettingsPlusPercentBestRadio.Font = new Font("Arial", 12F);
+            SettingsPlusPercentBestRadio.Location = new Point(25, 53);
             SettingsPlusPercentBestRadio.Name = "SettingsPlusPercentBestRadio";
-            SettingsPlusPercentBestRadio.Size = new Size(448, 37);
+            SettingsPlusPercentBestRadio.Size = new Size(448, 27);
             SettingsPlusPercentBestRadio.TabIndex = 6;
             SettingsPlusPercentBestRadio.TabStop = true;
             SettingsPlusPercentBestRadio.Text = "Liczy się jeden, najlepszy plus";
@@ -514,10 +514,10 @@
             // SettingsPlusPercentAllRadio
             // 
             SettingsPlusPercentAllRadio.Checked = true;
-            SettingsPlusPercentAllRadio.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            SettingsPlusPercentAllRadio.Font = new Font("Arial", 12F);
             SettingsPlusPercentAllRadio.Location = new Point(25, 20);
             SettingsPlusPercentAllRadio.Name = "SettingsPlusPercentAllRadio";
-            SettingsPlusPercentAllRadio.Size = new Size(448, 37);
+            SettingsPlusPercentAllRadio.Size = new Size(448, 27);
             SettingsPlusPercentAllRadio.TabIndex = 5;
             SettingsPlusPercentAllRadio.TabStop = true;
             SettingsPlusPercentAllRadio.Text = "Liczą się wszystkie plusy";
@@ -527,19 +527,19 @@
             // 
             SettingsMinusPercentGroup.Controls.Add(SettingsMinusPercentWorstRadio);
             SettingsMinusPercentGroup.Controls.Add(SettingsMinusPercentAllRadio);
-            SettingsMinusPercentGroup.Location = new Point(21, 140);
+            SettingsMinusPercentGroup.Location = new Point(21, 113);
             SettingsMinusPercentGroup.Name = "SettingsMinusPercentGroup";
-            SettingsMinusPercentGroup.Size = new Size(491, 119);
+            SettingsMinusPercentGroup.Size = new Size(491, 100);
             SettingsMinusPercentGroup.TabIndex = 2;
             SettingsMinusPercentGroup.TabStop = false;
             SettingsMinusPercentGroup.Text = "Minusy procentowe";
             // 
             // SettingsMinusPercentWorstRadio
             // 
-            SettingsMinusPercentWorstRadio.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            SettingsMinusPercentWorstRadio.Location = new Point(25, 63);
+            SettingsMinusPercentWorstRadio.Font = new Font("Arial", 12F);
+            SettingsMinusPercentWorstRadio.Location = new Point(25, 53);
             SettingsMinusPercentWorstRadio.Name = "SettingsMinusPercentWorstRadio";
-            SettingsMinusPercentWorstRadio.Size = new Size(448, 37);
+            SettingsMinusPercentWorstRadio.Size = new Size(448, 27);
             SettingsMinusPercentWorstRadio.TabIndex = 4;
             SettingsMinusPercentWorstRadio.TabStop = true;
             SettingsMinusPercentWorstRadio.Text = "Liczy się jeden, najgorszy minus";
@@ -548,10 +548,10 @@
             // SettingsMinusPercentAllRadio
             // 
             SettingsMinusPercentAllRadio.Checked = true;
-            SettingsMinusPercentAllRadio.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            SettingsMinusPercentAllRadio.Font = new Font("Arial", 12F);
             SettingsMinusPercentAllRadio.Location = new Point(25, 20);
             SettingsMinusPercentAllRadio.Name = "SettingsMinusPercentAllRadio";
-            SettingsMinusPercentAllRadio.Size = new Size(448, 37);
+            SettingsMinusPercentAllRadio.Size = new Size(448, 27);
             SettingsMinusPercentAllRadio.TabIndex = 3;
             SettingsMinusPercentAllRadio.TabStop = true;
             SettingsMinusPercentAllRadio.Text = "Liczą się wszystkie minusy";
