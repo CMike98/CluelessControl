@@ -140,7 +140,7 @@ namespace CluelessControl.Envelopes
             _envelopes.RemoveAll(envelope => envelope.State == EnvelopeState.DESTROYED);
         }
 
-        public void MarkAllAsNeutral()
+        public void MarkNotDestroyedAsNeutral()
         {
             var notDestroyed = _envelopes.Where(envelope => envelope.State != EnvelopeState.DESTROYED);
             foreach (Envelope? envelope in notDestroyed)
