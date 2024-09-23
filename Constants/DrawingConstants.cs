@@ -4,6 +4,28 @@ namespace CluelessControl.Constants
 {
     public class DrawingConstants
     {
+        #region Answer Colors
+        /// <summary>
+        /// Color used to mark the locked in answers
+        /// </summary>
+        public static readonly Color LOCK_IN_ANS_COLOR = Color.Orange;
+
+        /// <summary>
+        /// Font color used to mark the locked in answers
+        /// </summary>
+        public static readonly Color LOCK_IN_ANS_FONT_COLOR = Color.Black;
+
+        /// <summary>
+        /// Color used to mark the correct answers
+        /// </summary>
+        public static readonly Color CORRECT_ANS_COLOR = Color.LightGreen;
+
+        /// <summary>
+        /// Font color used to mark the correct answers
+        /// </summary>
+        public static readonly Color CORRECT_ANS_FONT_COLOR = Color.Black;
+        #endregion
+
         #region Envelopes
 
         /// <summary>
@@ -71,6 +93,20 @@ namespace CluelessControl.Constants
         public static readonly Font QUESTION_DRAWING_FONT = new(QUESTION_DRAWING_FONT_FAMILY, QUESTION_DRAWING_DEFAULT_FONT_SIZE);
 
         /// <summary>
+        /// Font size used when drawing the questions
+        /// </summary>
+        public const float QUESTION_ANSWER_DRAWING_DEFAULT_FONT_SIZE = 32.0f;
+
+        /// <summary>
+        /// Font used when drawing the questions
+        /// </summary>
+        public static readonly Font QUESTION_ANSWER_DRAWING_FONT = new(QUESTION_DRAWING_FONT_FAMILY, QUESTION_ANSWER_DRAWING_DEFAULT_FONT_SIZE);
+
+        #endregion
+
+        #region Question Bar
+
+        /// <summary>
         /// Size of the question bar with padding
         /// </summary>
         public static readonly Size QUESTION_BAR_SIZE_PADDING = new(width: 1400, height: 300);
@@ -99,6 +135,50 @@ namespace CluelessControl.Constants
         /// Inside background color of the question bar
         /// </summary>
         public static readonly Color QUESTION_BAR_BACKGROUND_IN = Color.Black;
+
+        #endregion
+
+        #region Question Counter
+
+        /// <summary>
+        /// Question counter location
+        /// </summary>
+        public static readonly Point QUESTION_COUNTER_LOCATION = new(x: 250, y: 550);
+
+        /// <summary>
+        /// Question counter size (with padding)
+        /// </summary>
+        public static readonly Size QUESTION_COUNTER_SIZE_PADDING = new(width: 400, height: 75);
+
+        /// <summary>
+        /// Question counter size padding
+        /// </summary>
+        public static readonly Size QUESTION_COUNTER_PADDING = new(width: 10, height: 10);
+
+        /// <summary>
+        /// Question counter font family
+        /// </summary>
+        public static readonly FontFamily QUESTION_COUNTER_FONT_FAMILY = new("Arial");
+
+        /// <summary>
+        /// Question counter font size
+        /// </summary>
+        public const float QUESTION_COUNTER_DEFAULT_FONT_SIZE = 26.0f;
+
+        /// <summary>
+        /// Question counter font
+        /// </summary>
+        public static readonly Font QUESTION_COUNTER_FONT = new(QUESTION_COUNTER_FONT_FAMILY, QUESTION_COUNTER_DEFAULT_FONT_SIZE);
+
+        /// <summary>
+        /// Outside background color of the counter
+        /// </summary>
+        public static readonly Color QUESTION_COUNTER_BACKGROUND_OUT = Color.Purple;
+
+        /// <summary>
+        /// Inside background color of the counter
+        /// </summary>
+        public static readonly Color QUESTION_COUNTER_BACKGROUND_IN = Color.Black;
 
         #endregion
     }
