@@ -80,7 +80,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Font family used when drawing the questions
         /// </summary>
-        public static readonly FontFamily QUESTION_DRAWING_FONT_FAMILY = new(name: "Arial");
+        public static readonly FontFamily QUESTION_DRAWING_FONT_FAMILY = new(name: "Lato");
 
         /// <summary>
         /// Font size used when drawing the big questions
@@ -158,7 +158,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Question counter font family
         /// </summary>
-        public static readonly FontFamily QUESTION_COUNTER_FONT_FAMILY = new("Arial");
+        public static readonly FontFamily QUESTION_COUNTER_FONT_FAMILY = new("Lato");
 
         /// <summary>
         /// Question counter font size
