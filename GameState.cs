@@ -114,6 +114,7 @@ namespace CluelessControl
         public event EventHandler? EventHideEnvelopesStart;
         public event EventHandler? EventClearQuestion;
         public event EventHandler? EventShowQuestion;
+        public event EventHandler? EventShowEnvelopesQuestion;
         public event EventHandler? EventShowAnswers;
         public event EventHandler? EventAnswerSelected;
         public event EventHandler? EventCorrectAnswerShown;
@@ -273,8 +274,8 @@ namespace CluelessControl
 
         public Envelope? GetContestantEnvelope(int index)
         {
-            if (index < 0 || index >= GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT)
-                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.");
+            if (index < 0 || index >= GameConstants.MAX_ENVELOPE_COUNT_PERSON)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {GameConstants.MAX_ENVELOPE_COUNT_PERSON - 1}.");
 
             if (index >= ContestantEnvelopeSet.EnvelopeCount)
                 return null;
@@ -284,8 +285,8 @@ namespace CluelessControl
 
         public Envelope? GetHostEnvelope(int index)
         {
-            if (index < 0 || index >= GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT)
-                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.");
+            if (index < 0 || index >= GameConstants.MAX_ENVELOPE_COUNT_PERSON)
+                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {GameConstants.MAX_ENVELOPE_COUNT_PERSON - 1}.");
 
             if (index >= HostEnvelopeSet.EnvelopeCount)
                 return null;
@@ -302,8 +303,8 @@ namespace CluelessControl
 
             char playerTag = char.ToUpper(tag[0]);
             int envelopeIndex = (int)char.GetNumericValue(tag[1]);
-            if (envelopeIndex < 0 || envelopeIndex >= GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT)
-                throw new ArgumentException($"The second character (envelope index) must be a digit between 0 and {GameConstants.MAX_ENVELOPE_POSSIBLE_COUNT - 1}.", nameof(tag));
+            if (envelopeIndex < 0 || envelopeIndex >= GameConstants.MAX_ENVELOPE_COUNT_PERSON)
+                throw new ArgumentException($"The second character (envelope index) must be a digit between 0 and {GameConstants.MAX_ENVELOPE_COUNT_PERSON - 1}.", nameof(tag));
 
             return playerTag switch
             {
@@ -355,6 +356,16 @@ namespace CluelessControl
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
+        public void UnmarkSelection()
+        {
+            EnvelopeTable.ForSelected(
+                action: envelope => envelope.MarkAsNeutral(),
+                predicate: envelope => envelope.State == EnvelopeState.SELECTED);
+
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
+        }
+
+
         public void RemoveDestroyedEnvelopes()
         {
             ContestantEnvelopeSet.RemoveDestroyedEnvelopes();
@@ -399,6 +410,11 @@ namespace CluelessControl
         public void ShowQuestion()
         {
             EventShowQuestion?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ShowEnvelopesSelectionForQuestion()
+        {
+            EventShowEnvelopesQuestion?.Invoke(this, EventArgs.Empty);
         }
 
         public void ShowPossibleAnswers()
@@ -460,7 +476,7 @@ namespace CluelessControl
         public void StartTrading()
         {
             RemoveDestroyedEnvelopes();
-            ContestantEnvelopeSet.MarkAllAsNeutral();
+            ContestantEnvelopeSet.MarkNotDestroyedAsNeutral();
             HostEnvelopeSet.ClearEnvelopeList();
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
@@ -478,8 +494,8 @@ namespace CluelessControl
             ContestantEnvelopeSet.TransferEnvelopesTo(HostEnvelopeSet, contestantTrades);
             HostEnvelopeSet.TransferEnvelopesTo(ContestantEnvelopeSet, hostTrades);
 
-            ContestantEnvelopeSet.MarkAllAsNeutral();
-            HostEnvelopeSet.MarkAllAsNeutral();
+            ContestantEnvelopeSet.MarkNotDestroyedAsNeutral();
+            HostEnvelopeSet.MarkNotDestroyedAsNeutral();
 
             ContestantEnvelopeSet.SortByEnvelopeNumbers();
             HostEnvelopeSet.SortByEnvelopeNumbers();
@@ -489,8 +505,8 @@ namespace CluelessControl
 
         public void ClearOffer()
         {
-            ContestantEnvelopeSet.MarkAllAsNeutral();
-            HostEnvelopeSet.MarkAllAsNeutral();
+            ContestantEnvelopeSet.MarkNotDestroyedAsNeutral();
+            HostEnvelopeSet.MarkNotDestroyedAsNeutral();
             CashOffer = 0;
 
             EventRefreshOffer?.Invoke(this, EventArgs.Empty);
