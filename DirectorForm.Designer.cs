@@ -441,7 +441,7 @@
             SettingsDecimalPlacesTxtBox.Name = "SettingsDecimalPlacesTxtBox";
             SettingsDecimalPlacesTxtBox.Size = new Size(219, 35);
             SettingsDecimalPlacesTxtBox.TabIndex = 1;
-            SettingsDecimalPlacesTxtBox.Text = "0";
+            SettingsDecimalPlacesTxtBox.Text = "2";
             SettingsDecimalPlacesTxtBox.TextAlign = HorizontalAlignment.Center;
             SettingsDecimalPlacesTxtBox.TextChanged += SettingsDecimalPlacesTxtBox_TextChanged;
             // 
