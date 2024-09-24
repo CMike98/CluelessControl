@@ -328,7 +328,7 @@ namespace CluelessControl
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
-        public void MarkForDestructionIfWrong()
+        public void MarkWinOrLose()
         {
             if (EnvelopePlayedFor is null)
                 throw new InvalidOperationException($"EnvelopePlayedFor is null");

@@ -1636,7 +1636,7 @@ namespace CluelessControl
             QuestionGameDisplayEnvelopesBtn.Enabled = false;
             QuestionGameConfirmEnvelopeBtn.Enabled = true;
 
-            GameState.Instance.ShowEnvelopesSelectionForQuestion();
+            GameState.Instance.ShowEnvelopesBeforeQuestion();
 
             _questionGameEnvelopeIndex = 0;
             QuestionGameUpdateEnvelopeLabel();
@@ -1688,7 +1688,9 @@ namespace CluelessControl
             QuestionGameCheckAnswerBtn.Enabled = false;
             QuestionGameKeepDestroyEnvelopeBtn.Enabled = true;
 
-            GameState.Instance.MarkForDestructionIfWrong();
+            var gameStateInstance = GameState.Instance;
+            gameStateInstance.MarkWinOrLose();
+            gameStateInstance.ShowEnvelopesAfterQuestion();
 
             QuestionGameUpdateEnvelopeLabel();
         }
