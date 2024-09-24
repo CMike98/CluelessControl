@@ -43,7 +43,7 @@ namespace CluelessControl
         {
             return new GameSettings(
                 startEnvelopeCount: GameConstants.ENVELOPE_DEFAULT_COUNT,
-                decimalPlaces: 2,
+                decimalPlaces: GameConstants.DEFAULT_DECIMAL_PLACES,
                 onlyWorstMinusCounts: false,
                 onlyBestPlusCounts: false,
                 showAmountsOnTv: true);
