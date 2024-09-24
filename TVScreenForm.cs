@@ -31,6 +31,14 @@ namespace CluelessControl
         private PictureBox _questionCountPictureBox = new PictureBox();
         private PictureBox _questionPlayingForPictureBox = new PictureBox();
 
+        private PictureBox _contestantWordPictureBox = new PictureBox();
+        private PictureBox[] _contestantEnvelopeTradePictureBoxes = new PictureBox[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
+        private PictureBox _contestantCashPictureBox = new PictureBox();
+
+        private PictureBox _hostWordPictureBox = new PictureBox();
+        private PictureBox[] _hostEnvelopeTradePictureBoxes = new PictureBox[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
+        private PictureBox _hostOfferCashPictureBox = new PictureBox();
+
         public TVScreenForm()
         {
             InitializeComponent();
@@ -69,7 +77,7 @@ namespace CluelessControl
 
                 var newPictureBox = new PictureBox()
                 {
-                    Name = string.Format("StartEnvelope{0}PictureBox", i),
+                    Name = $"StartEnvelope{i}PictureBox",
                     Visible = false,
                     Tag = i + 1,
                     Size = DrawingConstants.ENVELOPE_SIZE,
@@ -78,9 +86,9 @@ namespace CluelessControl
                 newPictureBox.Paint += AllEnvelopePicture_Paint;
 
                 _envelopeSelectionPictureBoxes[i] = newPictureBox;
-
-                Controls.Add(_envelopeSelectionPictureBoxes[i]);
             }
+
+            Controls.AddRange(_envelopeSelectionPictureBoxes);
         }
 
         private void PrepareQuestionStatisticsPictureBox()
@@ -126,12 +134,128 @@ namespace CluelessControl
             Controls.Add(_questionPlayingForPictureBox);
         }
 
+        private void PrepareContestantTradingPictureBoxes()
+        {
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            {
+                Point location = new Point(
+                    x: DrawingConstants.BOTTOM_TRADING_CONTESTANT_LOCATION.X,
+                    y: DrawingConstants.BOTTOM_TRADING_CONTESTANT_LOCATION.Y - i * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Height);
+
+                var newPictureBox = new PictureBox()
+                {
+                    Name = $"ContestantTrading{i}PictureBox",
+                    Visible = false,
+                    Tag = i,
+                    Size = DrawingConstants.ENVELOPE_SIZE,
+                    Location = location,
+                    BackColor = Color.Transparent
+                };
+                newPictureBox.Paint += ContestantTradeEnvelope_Paint;
+
+                _contestantEnvelopeTradePictureBoxes[i] = newPictureBox;
+            }
+
+            Controls.AddRange(_contestantEnvelopeTradePictureBoxes);
+        }
+
+        private void PrepareHostTradingPictureBoxes()
+        {
+            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            {
+                Point location = new Point(
+                    x: DrawingConstants.BOTTOM_TRADING_HOST_LOCATION.X,
+                    y: DrawingConstants.BOTTOM_TRADING_HOST_LOCATION.Y - i * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Height);
+
+                var newPictureBox = new PictureBox()
+                {
+                    Name = $"HostTrading{i}PictureBox",
+                    Visible = false,
+                    Tag = i,
+                    Size = DrawingConstants.ENVELOPE_SIZE,
+                    Location = location,
+                    BackColor = Color.Transparent
+                };
+                newPictureBox.Paint += HostTradeEnvelope_Paint;
+
+                _hostEnvelopeTradePictureBoxes[i] = newPictureBox;
+            }
+
+            Controls.AddRange(_hostEnvelopeTradePictureBoxes);
+        }
+
+        private void PrepareContestantCashPictureBox()
+        {
+            var newPictureBox = new PictureBox()
+            {
+                Name = "ContestantCashPictureBox",
+                Visible = false,
+                Size = DrawingConstants.CONTESTANT_CASH_SIZE,
+                Location = DrawingConstants.CONTESTANT_CASH_LOCATION
+            };
+            newPictureBox.Paint += ContestantCashPictureBox_Paint;
+
+            _contestantCashPictureBox = newPictureBox;
+            Controls.Add(_contestantCashPictureBox);
+        }
+
+        private void PrepareHostOfferPictureBox()
+        {
+            var newPictureBox = new PictureBox()
+            {
+                Name = "HostOfferCashPictureBox",
+                Visible = false,
+                Size = DrawingConstants.HOST_OFFER_SIZE,
+                Location = DrawingConstants.HOST_OFFER_LOCATION
+            };
+            newPictureBox.Paint += HostOfferPictureBox_Paint;
+
+            _hostOfferCashPictureBox = newPictureBox;
+            Controls.Add(_hostOfferCashPictureBox);
+        }
+
+        public void PrepareTradingContestantWord()
+        {
+            var newPictureBox = new PictureBox()
+            {
+                Name = "ContestantWordPictureBox",
+                Visible = false,
+                Size = DrawingConstants.CONTESTANT_WORD_SIZE,
+                Location = DrawingConstants.CONTESTANT_WORD_LOCATION
+            };
+            newPictureBox.Paint += ContestantWordPictureBox_Paint;
+
+            _contestantWordPictureBox = newPictureBox;
+            Controls.Add(_contestantWordPictureBox);
+        }
+
+        public void PrepareTradingHostName()
+        {
+            var newPictureBox = new PictureBox()
+            {
+                Name = "HostWordPictureBox",
+                Visible = false,
+                Size = DrawingConstants.HOST_WORD_SIZE,
+                Location = DrawingConstants.HOST_WORD_LOCATION
+            };
+            newPictureBox.Paint += HostWordPictureBox_Paint;
+
+            _hostWordPictureBox = newPictureBox;
+            Controls.Add(_hostWordPictureBox);
+        }
+
         private void PreparePictureBoxes()
         {
             PrepareEnvelopeSelectionPictureBoxes();
             PrepareQuestionStatisticsPictureBox();
             PrepareQuestionCountPictureBox();
             PrepareQuestionPlayingForPictureBox();
+            PrepareContestantTradingPictureBoxes();
+            PrepareHostTradingPictureBoxes();
+            PrepareContestantCashPictureBox();
+            PrepareHostOfferPictureBox();
+            PrepareTradingContestantWord();
+            PrepareTradingHostName();
         }
 
         #region Events
@@ -219,8 +343,6 @@ namespace CluelessControl
             SetVisibleEnvelopePlayingFor(visible: false);
             _questionBarPictureBox.Refresh();
         }
-
-
         private void GameState_EventRefreshEnvelopes(object? sender, EventArgs e)
         {
             RedrawEnvelopes();
@@ -232,16 +354,33 @@ namespace CluelessControl
             SetVisibleEnvelopePlayingFor(visible: false);
             SetVisibleEnvelopeSelectionPictureBoxes(visible: false);
             SetVisibleQuestionBar(visible: false);
+
+            SetVisibleTradingBoxes(visible: true);
+            SetVisibleTradingEnvelopes(visible: true);
         }
 
         private void GameState_EventRefreshOffer(object? sender, EventArgs e)
         {
-            // TODO: Empty for now
+            foreach (var pictureBox in _contestantEnvelopeTradePictureBoxes)
+            {
+                pictureBox.Invalidate();
+            }
+
+            foreach (var pictureBox in _hostEnvelopeTradePictureBoxes)
+            {
+                pictureBox.Invalidate();
+            }
+
+            _contestantCashPictureBox.Invalidate();
+            _hostOfferCashPictureBox.Invalidate();
+
+            Refresh();
         }
 
         private void GameState_EventGameOver(object? sender, EventArgs e)
         {
-            // TODO: Empty for now
+            SetVisibleTradingBoxes(visible: false);
+            SetVisibleTradingEnvelopes(visible: false);
         }
         #endregion
 
@@ -271,6 +410,38 @@ namespace CluelessControl
         {
             _questionPlayingForPictureBox.Visible = visible;
             _questionPlayingForPictureBox.Refresh();
+        }
+
+        public void SetVisibleTradingBoxes(bool visible)
+        {
+            _contestantWordPictureBox.Visible = visible;
+            _contestantCashPictureBox.Visible = visible;
+            _hostWordPictureBox.Visible = visible;
+            _hostOfferCashPictureBox.Visible = visible;
+
+            _contestantWordPictureBox.Invalidate();
+            _hostWordPictureBox.Invalidate();
+            _contestantCashPictureBox.Invalidate();
+            _hostOfferCashPictureBox.Invalidate();
+
+            Refresh();
+        }
+
+        public void SetVisibleTradingEnvelopes(bool visible)
+        {
+            foreach (var pictureBox in _contestantEnvelopeTradePictureBoxes)
+            {
+                pictureBox.Visible = true;
+                pictureBox.Invalidate();
+            }
+
+            foreach (var pictureBox in _hostEnvelopeTradePictureBoxes)
+            {
+                pictureBox.Visible = true;
+                pictureBox.Invalidate();
+            }
+
+            Refresh();
         }
 
         private void RedrawEnvelopes()
@@ -409,7 +580,7 @@ namespace CluelessControl
             Size size = clientRectangle.Size;
             Point location = clientRectangle.Location;
 
-            using (Brush brush = new SolidBrush(DrawingConstants.QUESTION_BAR_BACKGROUND_OUT))
+            using (Brush brush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_OUT))
             {
                 e.Graphics.FillRectangle(brush, location.X, location.Y, size.Width, size.Height);
             }
@@ -420,7 +591,7 @@ namespace CluelessControl
                 width: size.Width - DrawingConstants.QUESTION_BAR_BORDER.Width * 2,
                 height: size.Height - DrawingConstants.QUESTION_BAR_BORDER.Height * 2);
 
-            using (Brush brush = new SolidBrush(DrawingConstants.QUESTION_BAR_BACKGROUND_IN))
+            using (Brush brush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_IN))
             {
                 e.Graphics.FillRectangle(brush, questionBarRectangle);
             }
@@ -485,7 +656,7 @@ namespace CluelessControl
             {
                 graphics.DrawString(question.Text, font, Brushes.White, questionRectangle, _textCenterDrawingFormat);
             }
-            
+
             // Draw answers
             for (int i = GameConstants.MIN_ANSWER_NUMBER; i <= GameConstants.MAX_ANSWER_NUMBER; ++i)
             {
@@ -620,12 +791,12 @@ namespace CluelessControl
                 width: size.Width - DrawingConstants.QUESTION_COUNTER_BORDER.Width * 2,
                 height: size.Height - DrawingConstants.QUESTION_COUNTER_BORDER.Height * 2);
 
-            using (Brush outsideBrush = new SolidBrush(DrawingConstants.QUESTION_COUNTER_BACKGROUND_OUT))
+            using (Brush outsideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_OUT))
             {
                 e.Graphics.FillRectangle(outsideBrush, allRectangle);
             }
 
-            using (Brush insideBrush = new SolidBrush(DrawingConstants.QUESTION_COUNTER_BACKGROUND_IN))
+            using (Brush insideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_IN))
             {
                 e.Graphics.FillRectangle(insideBrush, questionCounterRectangle);
             }
@@ -647,5 +818,244 @@ namespace CluelessControl
         }
 
         #endregion
+
+        #region Trading Paint
+
+        private void ContestantCashPictureBox_Paint(object? sender, PaintEventArgs e)
+        {
+            Rectangle clientRectangle = _contestantCashPictureBox.ClientRectangle;
+            Size size = clientRectangle.Size;
+            Point location = clientRectangle.Location;
+
+            RectangleF insideRectangle = new RectangleF(
+                x: location.X + DrawingConstants.CONTESTANT_CASH_PADDING.Width,
+                y: location.Y + DrawingConstants.CONTESTANT_CASH_PADDING.Height,
+                width: size.Width - DrawingConstants.CONTESTANT_CASH_PADDING.Width * 2,
+                height: size.Height - DrawingConstants.CONTESTANT_CASH_PADDING.Height * 2);
+
+            using (Brush outsideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_OUT))
+            {
+                e.Graphics.FillRectangle(outsideBrush, clientRectangle);
+            }
+
+            using (Brush insideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_IN))
+            {
+                e.Graphics.FillRectangle(insideBrush, insideRectangle);
+            }
+
+            RectangleF upperPart = new RectangleF(
+                x: insideRectangle.X,
+                y: insideRectangle.Y,
+                width: insideRectangle.Size.Width,
+                height: insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION);
+
+            RectangleF lowerPart = new RectangleF(
+                x: insideRectangle.X,
+                y: insideRectangle.Y + insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION,
+                width: insideRectangle.Size.Width,
+                height: insideRectangle.Size.Height * DrawingConstants.TRADING_REST_PART_FRACTION);
+
+            using (Pen pen = new(DrawingConstants.BOX_BACKGROUND_OUT))
+            {
+                e.Graphics.DrawRectangle(pen, upperPart);
+            }
+
+            using (Font font = FontHelper.GetMaxFont(GameConstants.CASH_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, upperPart.Size))
+            {
+                e.Graphics.DrawString(GameConstants.CASH_STRING, font, Brushes.White, upperPart, _textCenterDrawingFormat);
+            }
+
+            string cash = Utils.AmountToString(GameState.Instance.ContestantCash);
+            using (Font font = FontHelper.GetMaxFont(cash, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size))
+            {
+                e.Graphics.DrawString(cash, font, Brushes.White, lowerPart, _textCenterDrawingFormat);
+            }
+        }
+
+        private void HostOfferPictureBox_Paint(object? sender, PaintEventArgs e)
+        {
+            Rectangle clientRectangle = _hostOfferCashPictureBox.ClientRectangle;
+            Size size = clientRectangle.Size;
+            Point location = clientRectangle.Location;
+
+            RectangleF insideRectangle = new RectangleF(
+                x: location.X + DrawingConstants.HOST_OFFER_PADDING.Width,
+                y: location.Y + DrawingConstants.HOST_OFFER_PADDING.Height,
+                width: size.Width - DrawingConstants.HOST_OFFER_PADDING.Width * 2,
+                height: size.Height - DrawingConstants.HOST_OFFER_PADDING.Height * 2);
+
+            using (Brush outsideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_OUT))
+            {
+                e.Graphics.FillRectangle(outsideBrush, clientRectangle);
+            }
+
+            using (Brush insideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_IN))
+            {
+                e.Graphics.FillRectangle(insideBrush, insideRectangle);
+            }
+
+            RectangleF upperPart = new RectangleF(
+                x: insideRectangle.X,
+                y: insideRectangle.Y,
+                width: insideRectangle.Size.Width,
+                height: insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION);
+
+            RectangleF lowerPart = new RectangleF(
+                x: insideRectangle.X,
+                y: insideRectangle.Y + insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION,
+                width: insideRectangle.Size.Width,
+                height: insideRectangle.Size.Height * DrawingConstants.TRADING_REST_PART_FRACTION);
+
+            using (Pen pen = new(DrawingConstants.BOX_BACKGROUND_OUT))
+            {
+                e.Graphics.DrawRectangle(pen, upperPart);
+            }
+
+            using (Font font = FontHelper.GetMaxFont(GameConstants.OFFER_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, upperPart.Size))
+            {
+                e.Graphics.DrawString(GameConstants.OFFER_STRING, font, Brushes.White, upperPart, _textCenterDrawingFormat);
+            }
+
+            string offer = Utils.AmountToString(GameState.Instance.CashOffer);
+            using (Font font = FontHelper.GetMaxFont(offer, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size))
+            {
+                e.Graphics.DrawString(offer, font, Brushes.White, lowerPart, _textCenterDrawingFormat);
+            }
+            
+        }
+
+        private void ContestantTradeEnvelope_Paint(object? sender, PaintEventArgs e)
+        {
+            if (sender is not PictureBox envelopeBox)
+                return;
+
+            var clientRectangle = envelopeBox.ClientRectangle;
+            var location = clientRectangle.Location;
+            var size = clientRectangle.Size;
+
+            RectangleF rectangle = new RectangleF(
+                x: location.X,
+                y: location.Y,
+                width: size.Width,
+                height: size.Height);
+
+            var gameStateInstance = GameState.Instance;
+
+            int tag = (int)(envelopeBox.Tag ?? throw new InvalidOperationException($"Envelope is missing the tag."));
+            int envelopeCount = gameStateInstance.ContestantEnvelopeSet.EnvelopeCount;
+
+            int index = envelopeCount - tag - 1;
+            Envelope? envelope;
+            if (index < 0 || ((envelope = gameStateInstance.GetContestantEnvelope(index)) is null))
+            {
+                using (Brush transparentBrush = new SolidBrush(Color.Transparent))
+                {
+                    e.Graphics.FillRectangle(transparentBrush, rectangle);
+                }
+            }
+            else
+            {
+                PaintEnvelopeInArea(envelope, e.Graphics, rectangle);
+            }
+        }
+
+        private void HostTradeEnvelope_Paint(object? sender, PaintEventArgs e)
+        {
+            if (sender is not PictureBox envelopeBox)
+                return;
+
+            var clientRectangle = envelopeBox.ClientRectangle;
+            var location = clientRectangle.Location;
+            var size = clientRectangle.Size;
+
+            RectangleF rectangle = new RectangleF(
+                x: location.X,
+                y: location.Y,
+                width: size.Width,
+                height: size.Height);
+
+            var gameStateInstance = GameState.Instance;
+
+            int tag = (int)(envelopeBox.Tag ?? throw new InvalidOperationException($"Envelope is missing the tag."));
+            int envelopeCount = gameStateInstance.HostEnvelopeSet.EnvelopeCount;
+
+            int index = envelopeCount - tag - 1;
+            Envelope? envelope;
+            if (index < 0 || ((envelope = gameStateInstance.GetHostEnvelope(index)) is null))
+            {
+                using (Brush transparentBrush = new SolidBrush(Color.Transparent))
+                {
+                    e.Graphics.FillRectangle(transparentBrush, rectangle);
+                }
+            }
+            else
+            {
+                PaintEnvelopeInArea(envelope, e.Graphics, rectangle);
+            }
+        }
+
+        private void ContestantWordPictureBox_Paint(object? sender, PaintEventArgs e)
+        {
+            var clientRectangle = _contestantWordPictureBox.ClientRectangle;
+            var location = clientRectangle.Location;
+            var size = clientRectangle.Size;
+
+            RectangleF insideRectangle = new RectangleF(
+                x: location.X + DrawingConstants.CONTESTANT_WORD_PADDING.Width,
+                y: location.Y + DrawingConstants.CONTESTANT_WORD_PADDING.Height,
+                width: size.Width - DrawingConstants.CONTESTANT_WORD_PADDING.Width * 2,
+                height: size.Height - DrawingConstants.CONTESTANT_WORD_PADDING.Height * 2);
+
+            using (Brush outsideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_OUT))
+            {
+                e.Graphics.FillRectangle(outsideBrush, clientRectangle);
+            }
+
+            using (Brush insideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_IN))
+            {
+                e.Graphics.FillRectangle(insideBrush, insideRectangle);
+            }
+
+            using (Font font = FontHelper.GetMaxFont(GameConstants.CONTESTANT_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, insideRectangle.Size))
+            {
+                e.Graphics.DrawString(GameConstants.CONTESTANT_STRING, font, Brushes.White, insideRectangle, _textCenterDrawingFormat);
+            }
+        }
+
+        private void HostWordPictureBox_Paint(object? sender, PaintEventArgs e)
+        {
+            var clientRectangle = _contestantWordPictureBox.ClientRectangle;
+            var location = clientRectangle.Location;
+            var size = clientRectangle.Size;
+
+            RectangleF insideRectangle = new RectangleF(
+                x: location.X + DrawingConstants.CONTESTANT_WORD_PADDING.Width,
+                y: location.Y + DrawingConstants.CONTESTANT_WORD_PADDING.Height,
+                width: size.Width - DrawingConstants.CONTESTANT_WORD_PADDING.Width * 2,
+                height: size.Height - DrawingConstants.CONTESTANT_WORD_PADDING.Height * 2);
+
+            using (Brush outsideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_OUT))
+            {
+                e.Graphics.FillRectangle(outsideBrush, clientRectangle);
+            }
+
+            using (Brush insideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_IN))
+            {
+                e.Graphics.FillRectangle(insideBrush, insideRectangle);
+            }
+
+            using (Font font = FontHelper.GetMaxFont(GameConstants.HOST_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, insideRectangle.Size))
+            {
+                e.Graphics.DrawString(GameConstants.HOST_STRING, font, Brushes.White, insideRectangle, _textCenterDrawingFormat);
+            }
+        }
+
+        #endregion
+
+        private void TVScreenForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F12)
+                Refresh();
+        }
     }
 }

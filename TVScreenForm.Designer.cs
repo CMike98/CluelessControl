@@ -45,6 +45,7 @@
             Text = "TV";
             FormClosing += TVScreenForm_FormClosing;
             Load += TVScreenForm_Load;
+            KeyDown += TVScreenForm_KeyDown;
             ResumeLayout(false);
         }
 
