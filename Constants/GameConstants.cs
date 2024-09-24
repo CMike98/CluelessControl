@@ -19,6 +19,23 @@ namespace CluelessControl.Constants
         /// </summary>
         public const string CLOSE_ON_DIRECTOR_FORM_MESSAGE = "Zamknij reżyserkę, by zamknąć program.";
 
+        /// <summary>
+        /// "Cash" in PL language
+        /// </summary>
+        public const string CASH_STRING = "GOTÓWKA";
+
+        /// <summary>
+        /// "Offer" in PL language
+        /// </summary>
+        public const string OFFER_STRING = "OFERTA";
+
+        /// <summary>
+        /// "Prize Money" in PL language
+        /// </summary>
+        public const string PRIZE_STRING = "WYGRANA";
+
+        #endregion
+
         #region Numbers
         /// <summary>
         /// The default number of decimal places
