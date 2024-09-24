@@ -53,7 +53,7 @@ namespace CluelessControl.Cheques
             if (Percentage < 0)
                 return Color.Red;
             else if (Percentage > 0)
-                return Color.Blue;
+                return Color.Green;
             else
                 return Color.Black;
         }
