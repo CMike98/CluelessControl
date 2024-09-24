@@ -228,7 +228,10 @@ namespace CluelessControl
 
         private void GameState_EventStartTrading(object? sender, EventArgs e)
         {
-            // TODO: Empty for now
+            SetVisibleQuestionCounter(visible: false);
+            SetVisibleEnvelopePlayingFor(visible: false);
+            SetVisibleEnvelopeSelectionPictureBoxes(visible: false);
+            SetVisibleQuestionBar(visible: false);
         }
 
         private void GameState_EventRefreshOffer(object? sender, EventArgs e)
