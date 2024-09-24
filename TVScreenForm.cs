@@ -14,7 +14,8 @@ namespace CluelessControl
             QUESTION_AND_ANSWERS,
             QUESTION_AND_ANSWERS_LOCK,
             QUESTION_AND_ANSWERS_CORRECT,
-            SHOW_ENVELOPES
+            SHOW_ENVELOPES_AND_QUESTION,
+            SHOW_ENVELOPES_ONLY
         }
 
         private static readonly StringFormat _textCenterDrawingFormat = new()
@@ -142,10 +143,11 @@ namespace CluelessControl
             gameState.EventHideEnvelopesStart += GameState_EventHideEnvelopesStart;
             gameState.EventClearQuestion += GameState_EventClearQuestion;
             gameState.EventShowQuestion += GameState_EventShowQuestion;
-            gameState.EventShowEnvelopesQuestion += GameState_EventShowEnvelopesSelection;
+            gameState.EventShowEnvelopesBeforeQuestion += GameState_EventShowEnvelopesBeforeQuestion;
             gameState.EventShowAnswers += GameState_EventShowAnswers;
             gameState.EventAnswerSelected += GameState_EventAnswerSelected;
             gameState.EventCorrectAnswerShown += GameState_EventCorrectAnswerShown;
+            gameState.EventShowEnvelopesAfterQuestion += GameState_EventShowEnvelopesAfterQuestion;
             gameState.EventRefreshEnvelopes += GameState_EventRefreshEnvelopes;
             gameState.EventStartTrading += GameState_EventStartTrading;
             gameState.EventRefreshOffer += GameState_EventRefreshOffer;
@@ -181,9 +183,9 @@ namespace CluelessControl
             SetVisibleCounter(visible: true);
         }
 
-        private void GameState_EventShowEnvelopesSelection(object? sender, EventArgs e)
+        private void GameState_EventShowEnvelopesBeforeQuestion(object? sender, EventArgs e)
         {
-            _questionBarState = QuestionBarState.SHOW_ENVELOPES;
+            _questionBarState = QuestionBarState.SHOW_ENVELOPES_AND_QUESTION;
 
             _questionBarPictureBox.Refresh();
         }
@@ -200,15 +202,24 @@ namespace CluelessControl
         {
             _questionBarState = QuestionBarState.QUESTION_AND_ANSWERS_LOCK;
 
-            _questionBarPictureBox.Invalidate();
+            _questionBarPictureBox.Refresh();
         }
 
         private void GameState_EventCorrectAnswerShown(object? sender, EventArgs e)
         {
             _questionBarState = QuestionBarState.QUESTION_AND_ANSWERS_CORRECT;
 
-            _questionBarPictureBox.Invalidate();
+            _questionBarPictureBox.Refresh();
         }
+
+        private void GameState_EventShowEnvelopesAfterQuestion(object? sender, EventArgs e)
+        {
+            _questionBarState = QuestionBarState.SHOW_ENVELOPES_ONLY;
+
+            SetVisibleEnvelopePlayingFor(visible: false);
+            _questionBarPictureBox.Refresh();
+        }
+
 
         private void GameState_EventRefreshEnvelopes(object? sender, EventArgs e)
         {
@@ -428,8 +439,11 @@ namespace CluelessControl
                 case QuestionBarState.QUESTION_AND_ANSWERS_CORRECT:
                     PaintQuestionAndAnswers(currentQuestion, e.Graphics, questionBarRectangle, lockedInAnswer: gameStateInstance.ContestantAnswer, correctAnswer: currentQuestion.CorrectAnswerNumber);
                     break;
-                case QuestionBarState.SHOW_ENVELOPES:
+                case QuestionBarState.SHOW_ENVELOPES_AND_QUESTION:
                     PaintQuestionBarEnvelopesAndQuestion(gameStateInstance.ContestantEnvelopeSet.Envelopes, currentQuestion, e.Graphics, questionBarRectangle);
+                    break;
+                case QuestionBarState.SHOW_ENVELOPES_ONLY:
+                    PaintQuestionBarEnvelopesAndQuestion(gameStateInstance.ContestantEnvelopeSet.Envelopes, question: null, e.Graphics, questionBarRectangle);
                     break;
                 case QuestionBarState.CLEAR:
                     break;
@@ -532,6 +546,7 @@ namespace CluelessControl
             if (areaRectangle.IsEmpty)
                 throw new ArgumentException($"Area rectangle is empty!", nameof(areaRectangle));
 
+            RectangleF envelopeRectangle;
             if (question is not null)
             {
                 RectangleF upperHalf = new RectangleF(
@@ -544,14 +559,23 @@ namespace CluelessControl
                 {
                     graphics.DrawString(question.Text, font, Brushes.White, upperHalf, _textCenterDrawingFormat);
                 }
+
+                envelopeRectangle = new RectangleF(
+                    x: areaRectangle.X,
+                    y: areaRectangle.Y + areaRectangle.Height / 2.0f,
+                    width: areaRectangle.Width,
+                    height: areaRectangle.Height / 2.0f);
+            }
+            else
+            {
+                envelopeRectangle = new RectangleF(
+                    x: areaRectangle.X,
+                    y: areaRectangle.Y,
+                    width: areaRectangle.Width,
+                    height: areaRectangle.Height);
             }
 
             // Draw envelopes
-            RectangleF bottomHalf = new RectangleF(
-                x: areaRectangle.X,
-                y: areaRectangle.Y + areaRectangle.Height / 2.0f,
-                width: areaRectangle.Width,
-                height: areaRectangle.Height / 2.0f);
 
             int maxCount = envelopes.Count;
             float totalWidth = DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * (maxCount - 1) + DrawingConstants.ENVELOPE_SIZE.Width;
@@ -560,8 +584,8 @@ namespace CluelessControl
                 Envelope envelope = envelopes[i];
 
                 RectangleF rectangle = new RectangleF(
-                    x: bottomHalf.X + ((bottomHalf.Width - totalWidth) / 2.0f) + i * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width,
-                    y: bottomHalf.Y + (bottomHalf.Height - DrawingConstants.ENVELOPE_SIZE.Height) / 2.0f,
+                    x: envelopeRectangle.X + ((envelopeRectangle.Width - totalWidth) / 2.0f) + i * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width,
+                    y: envelopeRectangle.Y + (envelopeRectangle.Height - DrawingConstants.ENVELOPE_SIZE.Height) / 2.0f,
                     width: DrawingConstants.ENVELOPE_SIZE.Width,
                     height: DrawingConstants.ENVELOPE_SIZE.Height);
 
