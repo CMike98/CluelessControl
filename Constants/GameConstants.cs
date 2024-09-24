@@ -34,6 +34,16 @@ namespace CluelessControl.Constants
         /// </summary>
         public const string PRIZE_STRING = "WYGRANA";
 
+        /// <summary>
+        /// "Contestant" in PL language
+        /// </summary>
+        public const string CONTESTANT_STRING = "ZAWODNIK";
+
+        /// <summary>
+        /// "Host" in PL language
+        /// </summary>
+        public const string HOST_STRING = "PROWADZĄCY";
+
         #endregion
 
         #region Numbers

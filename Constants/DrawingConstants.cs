@@ -217,17 +217,17 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Location of the bottom contestant envelope (trading)
         /// </summary>
-        public static readonly Point BOTTOM_TRADING_CONTESTANT_LOCATION = new(x: 250, y: 825);
+        public static readonly Point BOTTOM_TRADING_CONTESTANT_LOCATION = new(x: 200, y: 825);
 
         /// <summary>
         /// Location of the bottom host envelope (trading)
         /// </summary>
-        public static readonly Point BOTTOM_TRADING_HOST_LOCATION = new(x: 1430, y: 825);
+        public static readonly Point BOTTOM_TRADING_HOST_LOCATION = new(x: 1380, y: 825);
 
         /// <summary>
         /// Location of the contestant cash box
         /// </summary>
-        public static readonly Point CONTESTANT_CASH_LOCATION = new(x: 500, y: 700);
+        public static readonly Point CONTESTANT_CASH_LOCATION = new(x: 450, y: 700);
 
         /// <summary>
         /// Size of the contestant cash box
@@ -242,7 +242,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Location of the host offer box
         /// </summary>
-        public static readonly Point HOST_OFFER_LOCATION = new(x: 1000, y: 700);
+        public static readonly Point HOST_OFFER_LOCATION = new(x: 950, y: 700);
 
         /// <summary>
         /// Size of the host offer box
@@ -253,6 +253,36 @@ namespace CluelessControl.Constants
         /// Padding of the host offer box
         /// </summary>
         public static readonly Size HOST_OFFER_PADDING = new(width: 10, height: 10);
+
+        /// <summary>
+        /// Location of the word "Contestant"
+        /// </summary>
+        public static readonly Point CONTESTANT_WORD_LOCATION = new(x: 450, y: 575);
+
+        /// <summary>
+        /// Size of the word "Contestant"
+        /// </summary>
+        public static readonly Size CONTESTANT_WORD_SIZE = new(width: 400, height: 100);
+
+        /// <summary>
+        /// Padding of the box with the word "Contestant"
+        /// </summary>
+        public static readonly Size CONTESTANT_WORD_PADDING = new(width: 10, height: 10);
+
+        /// <summary>
+        /// Location of the word "Host"
+        /// </summary>
+        public static readonly Point HOST_WORD_LOCATION = new(x: 950, y: 575);
+
+        /// <summary>
+        /// Size of the word "Host"
+        /// </summary>
+        public static readonly Size HOST_WORD_SIZE = new(width: 400, height: 100);
+
+        /// <summary>
+        /// Padding of the box with the word "Host"
+        /// </summary>
+        public static readonly Size HOST_WORD_PADDING = new(width: 10, height: 10);
 
         #endregion
     }
