@@ -114,10 +114,11 @@ namespace CluelessControl
         public event EventHandler? EventHideEnvelopesStart;
         public event EventHandler? EventClearQuestion;
         public event EventHandler? EventShowQuestion;
-        public event EventHandler? EventShowEnvelopesQuestion;
+        public event EventHandler? EventShowEnvelopesBeforeQuestion;
         public event EventHandler? EventShowAnswers;
         public event EventHandler? EventAnswerSelected;
         public event EventHandler? EventCorrectAnswerShown;
+        public event EventHandler? EventShowEnvelopesAfterQuestion;
         public event EventHandler? EventRefreshEnvelopes;
         public event EventHandler? EventStartTrading;
         public event EventHandler? EventRefreshOffer;
@@ -412,9 +413,14 @@ namespace CluelessControl
             EventShowQuestion?.Invoke(this, EventArgs.Empty);
         }
 
-        public void ShowEnvelopesSelectionForQuestion()
+        public void ShowEnvelopesBeforeQuestion()
         {
-            EventShowEnvelopesQuestion?.Invoke(this, EventArgs.Empty);
+            EventShowEnvelopesBeforeQuestion?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ShowEnvelopesAfterQuestion()
+        {
+            EventShowEnvelopesAfterQuestion?.Invoke(this, EventArgs.Empty);
         }
 
         public void ShowPossibleAnswers()
