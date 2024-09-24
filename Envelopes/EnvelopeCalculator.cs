@@ -15,7 +15,7 @@ namespace CluelessControl.Envelopes
 
             IEnumerable<BaseCheque> allCheques = envelopeSet.GetCheques();
             
-            decimal cashTotal = 0;
+            decimal cashTotal = contestantCash;
             var positivePercentages = new List<decimal>();
             var negativePercentages = new List<decimal>();
 
