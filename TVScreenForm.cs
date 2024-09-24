@@ -172,7 +172,7 @@ namespace CluelessControl
 
             SetVisibleEnvelopePlayingFor(visible: false);
             SetVisibleQuestionBar(visible: false);
-            SetVisibleCounter(visible: false);
+            SetVisibleQuestionCounter(visible: false);
         }
 
         private void GameState_EventShowQuestion(object? sender, EventArgs e)
@@ -180,7 +180,7 @@ namespace CluelessControl
             _questionBarState = QuestionBarState.QUESTION_ONLY;
 
             SetVisibleQuestionBar(visible: true);
-            SetVisibleCounter(visible: true);
+            SetVisibleQuestionCounter(visible: true);
         }
 
         private void GameState_EventShowEnvelopesBeforeQuestion(object? sender, EventArgs e)
@@ -258,7 +258,7 @@ namespace CluelessControl
             _questionBarPictureBox.Refresh();
         }
 
-        private void SetVisibleCounter(bool visible)
+        private void SetVisibleQuestionCounter(bool visible)
         {
             _questionCountPictureBox.Visible = visible;
             _questionCountPictureBox.Refresh();
