@@ -1342,6 +1342,8 @@ namespace CluelessControl
 
             // Check for errors
             string errorMessage = string.Empty;
+            Envelope? envelope = null;
+
             if (!int.TryParse(numberBox.Text, out int envelopeNumber))
             {
                 errorMessage = "Podany numer koperty nie jest liczbą!";
@@ -1350,16 +1352,18 @@ namespace CluelessControl
             {
                 errorMessage = string.Format("Numer koperty musi być z przedziału {0}...{1}!", GameConstants.MIN_ENVELOPE_NUMBER, GameConstants.MAX_ENVELOPE_NUMBER);
             }
-
-            Envelope envelope = envelopeTable.GetEnvelope(envelopeNumber);
-            if (envelope.State == EnvelopeState.SELECTED)
+            else
             {
-                errorMessage = "Koperta już wybrana wcześniej!";
+                envelope = envelopeTable.GetEnvelope(envelopeNumber);
+                if (envelope.State == EnvelopeState.SELECTED)
+                {
+                    errorMessage = "Koperta już wybrana wcześniej!";
+                }
             }
 
             // If there's no error message, display the correct envelope value
             // If there is an error, display it
-            if (string.IsNullOrEmpty(errorMessage))
+            if (string.IsNullOrEmpty(errorMessage) && envelope is not null)
             {
                 valueLabel.Text = envelope.Cheque.ToValueString();
                 valueLabel.ForeColor = Color.Black;
