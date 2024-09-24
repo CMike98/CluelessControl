@@ -4,6 +4,20 @@ namespace CluelessControl.Constants
 {
     public class DrawingConstants
     {
+        #region Box
+
+        /// <summary>
+        /// Outside background color of the boxes
+        /// </summary>
+        public static readonly Color BOX_BACKGROUND_OUT = Color.FromArgb(red: 0, green: 191, blue: 255);
+
+        /// <summary>
+        /// Inside background color of the boxes
+        /// </summary>
+        public static readonly Color BOX_BACKGROUND_IN = Color.Black;
+
+        #endregion
+
         #region Answer Colors
         /// <summary>
         /// Color used to mark the locked in answers
@@ -126,16 +140,6 @@ namespace CluelessControl.Constants
         /// </summary>
         public static readonly Point QUESTION_BAR_INSIDE_LOCATION = new(QUESTION_BAR_LOCATION.X + QUESTION_BAR_BORDER.Width, QUESTION_BAR_LOCATION.Y + QUESTION_BAR_BORDER.Height);
 
-        /// <summary>
-        /// Outside background color of the question bar
-        /// </summary>
-        public static readonly Color QUESTION_BAR_BACKGROUND_OUT = Color.FromArgb(red: 0, green: 191, blue: 255);
-
-        /// <summary>
-        /// Inside background color of the question bar
-        /// </summary>
-        public static readonly Color QUESTION_BAR_BACKGROUND_IN = Color.Black;
-
         #endregion
 
         #region Question Counter
@@ -170,15 +174,85 @@ namespace CluelessControl.Constants
         /// </summary>
         public static readonly Font QUESTION_COUNTER_FONT = new(QUESTION_COUNTER_FONT_FAMILY, QUESTION_COUNTER_DEFAULT_FONT_SIZE);
 
-        /// <summary>
-        /// Outside background color of the counter
-        /// </summary>
-        public static readonly Color QUESTION_COUNTER_BACKGROUND_OUT = Color.FromArgb(red: 0, green: 191, blue: 255);
+        #endregion
+
+        #region Trading
 
         /// <summary>
-        /// Inside background color of the counter
+        /// What part of trading boxes will be the title?
         /// </summary>
-        public static readonly Color QUESTION_COUNTER_BACKGROUND_IN = Color.Black;
+        public const float TRADING_TITLE_PART_FRACTION = 0.4f;
+
+        /// <summary>
+        /// What part of trading boxes will be below the title?
+        /// </summary>
+        public const float TRADING_REST_PART_FRACTION = 1 - TRADING_TITLE_PART_FRACTION;
+
+
+        /// <summary>
+        /// Question counter font family
+        /// </summary>
+        public static readonly FontFamily TRADING_FONT_FAMILY = new("Lato");
+
+        /// <summary>
+        /// Question counter font size (big)
+        /// </summary>
+        public const float TRADING_BIG_FONT_SIZE = 32.0f;
+
+        /// <summary>
+        /// Question counter font (big)
+        /// </summary>
+        public static readonly Font TRADING_BIG_FONT = new(TRADING_FONT_FAMILY, TRADING_BIG_FONT_SIZE);
+
+        /// <summary>
+        /// Question counter font size (small)
+        /// </summary>
+        public const float TRADING_SMALL_FONT_SIZE = 20.0f;
+
+        /// <summary>
+        /// Question counter font
+        /// </summary>
+        public static readonly Font TRADING_SMALL_FONT = new(TRADING_FONT_FAMILY, TRADING_SMALL_FONT_SIZE);
+
+        /// <summary>
+        /// Location of the bottom contestant envelope (trading)
+        /// </summary>
+        public static readonly Point BOTTOM_TRADING_CONTESTANT_LOCATION = new(x: 250, y: 825);
+
+        /// <summary>
+        /// Location of the bottom host envelope (trading)
+        /// </summary>
+        public static readonly Point BOTTOM_TRADING_HOST_LOCATION = new(x: 1430, y: 825);
+
+        /// <summary>
+        /// Location of the contestant cash box
+        /// </summary>
+        public static readonly Point CONTESTANT_CASH_LOCATION = new(x: 500, y: 700);
+
+        /// <summary>
+        /// Size of the contestant cash box
+        /// </summary>
+        public static readonly Size CONTESTANT_CASH_SIZE = new(width: 400, height: 200);
+
+        /// <summary>
+        /// Padding of the contestant cash box
+        /// </summary>
+        public static readonly Size CONTESTANT_CASH_PADDING = new(width: 10, height: 10);
+
+        /// <summary>
+        /// Location of the host offer box
+        /// </summary>
+        public static readonly Point HOST_OFFER_LOCATION = new(x: 1000, y: 700);
+
+        /// <summary>
+        /// Size of the host offer box
+        /// </summary>
+        public static readonly Size HOST_OFFER_SIZE = new(width: 400, height: 200);
+
+        /// <summary>
+        /// Padding of the host offer box
+        /// </summary>
+        public static readonly Size HOST_OFFER_PADDING = new(width: 10, height: 10);
 
         #endregion
     }
