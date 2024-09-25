@@ -221,7 +221,7 @@ namespace CluelessControl
 
             ClearQuestionLabels();
 
-            QuestionLabel.Text = string.Format("Wygrana: {0}", Utils.AmountToString(gameStateInstance.FinalPrize));
+            QuestionLabel.Text = string.Format("Wygrana: {0}", gameStateInstance.FinalPrize);
         }
 
         #endregion

@@ -91,7 +91,7 @@ namespace CluelessControl
             private set;
         }
 
-        public decimal FinalPrize
+        public string FinalPrize
         {
             get;
             private set;
@@ -100,7 +100,6 @@ namespace CluelessControl
         #endregion
 
         #region Calculated Properties
-
         public int QuestionNumber => QuestionIndex + 1;
 
         public int MaxQuestionCount => Math.Min(GameSettings.StartEnvelopeCount, QuestionSet.QuestionCount);
@@ -141,7 +140,7 @@ namespace CluelessControl
             QuestionIndex = -1;
             ContestantCash = 0;
             CashOffer = 0;
-            FinalPrize = 0;
+            FinalPrize = string.Empty;
         }
         #endregion
 
@@ -158,7 +157,7 @@ namespace CluelessControl
             QuestionIndex = -1;
             ContestantCash = 0;
             CashOffer = 0;
-            FinalPrize = 0;
+            FinalPrize = string.Empty;
         }
 
         public void NextQuestion()
@@ -524,7 +523,8 @@ namespace CluelessControl
 
         public void GameOver()
         {
-            FinalPrize = EnvelopeCalculator.CalculateFinalPrize(GameSettings, ContestantEnvelopeSet, ContestantCash);
+            decimal finalPrize = EnvelopeCalculator.CalculateFinalPrize(GameSettings, ContestantEnvelopeSet, ContestantCash);
+            FinalPrize = Utils.AmountToString(finalPrize);
 
             EventGameOver?.Invoke(this, EventArgs.Empty);
         }
