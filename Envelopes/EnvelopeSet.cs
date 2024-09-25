@@ -10,7 +10,7 @@ namespace CluelessControl.Envelopes
 
         public int EnvelopeCount => _envelopes.Count;
 
-        public bool IsEmpty => _envelopes.Count == 0;
+        public bool IsEmpty => _envelopes.Count == 0 || !_envelopes.Any(envelope => envelope.State != EnvelopeState.DESTROYED);
 
         #region Constructors
         private EnvelopeSet()
