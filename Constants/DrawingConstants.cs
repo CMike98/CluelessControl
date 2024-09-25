@@ -285,5 +285,24 @@ namespace CluelessControl.Constants
         public static readonly Size HOST_WORD_PADDING = new(width: 10, height: 10);
 
         #endregion
+
+        #region Game Over
+
+        /// <summary>
+        /// Location of the game over box
+        /// </summary>
+        public static readonly Point GAME_OVER_LOCATION = new(x: 250, y: 650);
+
+        /// <summary>
+        /// Size of the game over box
+        /// </summary>
+        public static readonly Size GAME_OVER_SIZE = new(width: 1400, height: 300);
+
+        /// <summary>
+        /// Padding of the game over box
+        /// </summary>
+        public static readonly Size GAME_OVER_PADDING = new(width: 10, height: 10);
+
+        #endregion
     }
 }
