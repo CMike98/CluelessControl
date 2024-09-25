@@ -39,6 +39,8 @@ namespace CluelessControl
         private PictureBox[] _hostEnvelopeTradePictureBoxes = new PictureBox[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
         private PictureBox _hostOfferCashPictureBox = new PictureBox();
 
+        private PictureBox _gameOverPictureBox = new PictureBox();
+
         public TVScreenForm()
         {
             InitializeComponent();
@@ -214,7 +216,7 @@ namespace CluelessControl
             Controls.Add(_hostOfferCashPictureBox);
         }
 
-        public void PrepareTradingContestantWord()
+        private void PrepareTradingContestantWord()
         {
             var newPictureBox = new PictureBox()
             {
@@ -229,7 +231,7 @@ namespace CluelessControl
             Controls.Add(_contestantWordPictureBox);
         }
 
-        public void PrepareTradingHostName()
+        private void PrepareTradingHostName()
         {
             var newPictureBox = new PictureBox()
             {
@@ -242,6 +244,21 @@ namespace CluelessControl
 
             _hostWordPictureBox = newPictureBox;
             Controls.Add(_hostWordPictureBox);
+        }
+
+        private void PrepareGameOverPictureBox()
+        {
+            var newPictureBox = new PictureBox()
+            {
+                Name = "GameOverPictureBox",
+                Visible = false,
+                Size = DrawingConstants.GAME_OVER_SIZE,
+                Location = DrawingConstants.GAME_OVER_LOCATION
+            };
+            newPictureBox.Paint += GameOverPictureBox_Paint;
+
+            _gameOverPictureBox = newPictureBox;
+            Controls.Add(_gameOverPictureBox);
         }
 
         private void PreparePictureBoxes()
@@ -1048,6 +1065,15 @@ namespace CluelessControl
             {
                 e.Graphics.DrawString(GameConstants.HOST_STRING, font, Brushes.White, insideRectangle, _textCenterDrawingFormat);
             }
+        }
+
+        #endregion
+
+        #region Game Over
+
+        private void GameOverPictureBox_Paint(object? sender, PaintEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

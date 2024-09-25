@@ -181,6 +181,11 @@
             TradingContestantEnvelope1Lbl = new Label();
             TradingContestantEnvelope0Lbl = new Label();
             GameOverTab = new TabPage();
+            button3 = new Button();
+            button2 = new Button();
+            button1 = new Button();
+            GameOverPrizeTxtBox = new TextBox();
+            GameOverPrizeTitleLbl = new Label();
             EnvelopeSettingsOpen = new OpenFileDialog();
             EnvelopeSettingsSave = new SaveFileDialog();
             SettingsOpen = new OpenFileDialog();
@@ -204,6 +209,7 @@
             GamePickEnvelopesTab.SuspendLayout();
             GameQuestionsTab.SuspendLayout();
             GameTradingTab.SuspendLayout();
+            GameOverTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)VolumeTrackBar).BeginInit();
             SuspendLayout();
             // 
@@ -1995,11 +2001,65 @@
             // GameOverTab
             // 
             GameOverTab.BackColor = SystemColors.Control;
+            GameOverTab.Controls.Add(button3);
+            GameOverTab.Controls.Add(button2);
+            GameOverTab.Controls.Add(button1);
+            GameOverTab.Controls.Add(GameOverPrizeTxtBox);
+            GameOverTab.Controls.Add(GameOverPrizeTitleLbl);
             GameOverTab.Location = new Point(4, 24);
             GameOverTab.Name = "GameOverTab";
             GameOverTab.Size = new Size(1084, 445);
             GameOverTab.TabIndex = 4;
             GameOverTab.Text = "Gra - Koniec";
+            // 
+            // button3
+            // 
+            button3.Font = new Font("Arial", 20.25F);
+            button3.Location = new Point(766, 348);
+            button3.Name = "button3";
+            button3.Size = new Size(301, 83);
+            button3.TabIndex = 4;
+            button3.Text = "Nowa gra";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Font = new Font("Arial", 20.25F);
+            button2.Location = new Point(390, 348);
+            button2.Name = "button2";
+            button2.Size = new Size(301, 83);
+            button2.TabIndex = 3;
+            button2.Text = "Muzyka końcowa";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            button1.Font = new Font("Arial", 20.25F);
+            button1.Location = new Point(14, 348);
+            button1.Name = "button1";
+            button1.Size = new Size(301, 83);
+            button1.TabIndex = 2;
+            button1.Text = "Odśwież";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // GameOverPrizeTxtBox
+            // 
+            GameOverPrizeTxtBox.Font = new Font("Arial", 72F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            GameOverPrizeTxtBox.Location = new Point(14, 114);
+            GameOverPrizeTxtBox.Name = "GameOverPrizeTxtBox";
+            GameOverPrizeTxtBox.Size = new Size(1053, 118);
+            GameOverPrizeTxtBox.TabIndex = 1;
+            GameOverPrizeTxtBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // GameOverPrizeTitleLbl
+            // 
+            GameOverPrizeTitleLbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            GameOverPrizeTitleLbl.Location = new Point(14, 43);
+            GameOverPrizeTitleLbl.Name = "GameOverPrizeTitleLbl";
+            GameOverPrizeTitleLbl.Size = new Size(1053, 53);
+            GameOverPrizeTitleLbl.TabIndex = 0;
+            GameOverPrizeTitleLbl.Text = "Wygrana:";
+            GameOverPrizeTitleLbl.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // EnvelopeSettingsOpen
             // 
@@ -2099,6 +2159,8 @@
             GameQuestionsTab.ResumeLayout(false);
             GameTradingTab.ResumeLayout(false);
             GameTradingTab.PerformLayout();
+            GameOverTab.ResumeLayout(false);
+            GameOverTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)VolumeTrackBar).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -2268,5 +2330,10 @@
         private RadioButton SettingsShowOnTvNoRadio;
         private RadioButton SettingsShowOnTvYesRadio;
         private Label SettingsShowOnTvLbl;
+        private TextBox GameOverPrizeTxtBox;
+        private Label GameOverPrizeTitleLbl;
+        private Button button1;
+        private Button button3;
+        private Button button2;
     }
 }

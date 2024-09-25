@@ -1747,15 +1747,15 @@ namespace CluelessControl
             QuestionGameStartTradingBtn.Enabled = false;
 
             var gameStateInstance = GameState.Instance;
-            gameStateInstance.StartTrading();
             if (gameStateInstance.ContestantEnvelopeSet.IsEmpty)
             {
-                // Game Over
-                DirectorTabControl.SelectTab("GameOverTab");
+                TradingGameOver(withFireworks: false);
             }
             else
             {
                 // Start trading
+                gameStateInstance.StartTrading();
+
                 TradingUnlockButtons();
                 TradingUpdateEnvelopes();
                 DirectorTabControl.SelectTab("GameTradingTab");
@@ -1765,6 +1765,16 @@ namespace CluelessControl
         #endregion
 
         #region Game - Trading
+
+        private void TradingGameOver(bool withFireworks = false)
+        {
+            // Game Over
+            GameState.Instance.GameOver();
+
+            GameOverUnlockButtons();
+            DirectorTabControl.SelectTab("GameOverTab");
+        }
+
         private void TradingUnlockButtons()
         {
             var gameStateInstance = GameState.Instance;
@@ -2067,10 +2077,24 @@ namespace CluelessControl
 
         private void TradingEndGameNormalBtn_Click(object sender, EventArgs e)
         {
-            ;
+            TradingGameOver(withFireworks: false);
         }
 
         private void TradingEndGameFireworksBtn_Click(object sender, EventArgs e)
+        {
+            TradingGameOver(withFireworks: true);
+        }
+
+        #endregion
+
+        #region Game Over
+
+        private void GameOverUnlockButtons()
+        {
+            ;
+        }
+
+        private void GameOverLockButtons()
         {
             ;
         }
