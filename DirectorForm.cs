@@ -1729,6 +1729,8 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
             gameStateInstance.CancelQuestion();
 
+            QuestionGameClearQuestionBoxes();
+            QuestionGameUpdateEnvelopeLabel();
             QuestionGameLockAllButtons();
             QuestionGameNextQuestionBtn.Enabled = true;
         }
