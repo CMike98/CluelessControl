@@ -109,6 +109,7 @@ namespace CluelessControl
         #endregion
 
         #region Events
+        public event EventHandler? EventClearEverything;
         public event EventHandler? EventShowEnvelopesStart;
         public event EventHandler? EventHideEnvelopesStart;
         public event EventHandler? EventClearQuestion;
@@ -144,6 +145,15 @@ namespace CluelessControl
         }
         #endregion
 
+        #region Clearing
+
+        public void ClearEverything()
+        {
+            EventClearEverything?.Invoke(this, EventArgs.Empty);
+        }
+
+        #endregion
+
         #region Moving The Game
         public void PrepareNewGame()
         {
@@ -158,6 +168,8 @@ namespace CluelessControl
             ContestantCash = 0;
             CashOffer = 0;
             FinalPrize = string.Empty;
+
+            ClearEverything();
         }
 
         public void NextQuestion()
@@ -433,12 +445,12 @@ namespace CluelessControl
         }
 
         public void CancelQuestion()
-        {
+        {           
             EnvelopePlayedFor?.MarkAsNeutral();
 
-            QuestionIndex--;
-            ClearAnswer();
-            ClearEnvelopeToPlayFor();
+            // 2, because the NextQuestion function will increment it, and the 'Next Question' button, will increment it again
+            QuestionIndex -= 2;
+            NextQuestion();
         }
 
         public Question GetCurrentQuestion()
