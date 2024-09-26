@@ -2120,6 +2120,22 @@ namespace CluelessControl
             GameOverRestartBtn.Enabled = false;
         }
 
+        private void GameOverPrizeTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(GameOverPrizeTxtBox.Text))
+            {
+                GameOverPrizeTxtBox.BackColor = Color.Red;
+                GameOverPrizeTxtBox.ForeColor = Color.White;
+                GameOverRefreshBtn.Enabled = false;
+            }
+            else
+            {
+                GameOverPrizeTxtBox.BackColor = Color.White;
+                GameOverPrizeTxtBox.ForeColor = Color.Black;
+                GameOverRefreshBtn.Enabled = true;
+            }
+        }
+
         private void GameOverRefreshBtn_Click(object sender, EventArgs e)
         {
             GameState.Instance.RefreshGameOver(GameOverPrizeTxtBox.Text.Trim());
