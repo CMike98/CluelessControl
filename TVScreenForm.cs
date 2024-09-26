@@ -281,6 +281,7 @@ namespace CluelessControl
         {
             var gameState = GameState.Instance;
 
+            gameState.EventClearEverything += GameState_EventClearEverything;
             gameState.EventShowEnvelopesStart += GameState_EventShowEnvelopesStart;
             gameState.EventHideEnvelopesStart += GameState_EventHideEnvelopesStart;
             gameState.EventClearQuestion += GameState_EventClearQuestion;
@@ -294,6 +295,19 @@ namespace CluelessControl
             gameState.EventStartTrading += GameState_EventStartTrading;
             gameState.EventRefreshOffer += GameState_EventRefreshOffer;
             gameState.EventGameOver += GameState_EventGameOver;
+        }
+
+        private void GameState_EventClearEverything(object? sender, EventArgs e)
+        {
+            _questionBarState = QuestionBarState.CLEAR;
+
+            SetVisibleEnvelopeSelectionPictureBoxes(visible: false);
+            SetVisibleEnvelopePlayingFor(visible: false);
+            SetVisibleQuestionCounter(visible: false);
+            SetVisibleQuestionBar(visible: false);
+            SetVisibleTradingBoxes(visible: false);
+            SetVisibleTradingEnvelopes(visible: false);
+            SetVisibleGameOverBox(visible: false);
         }
 
         private void GameState_EventShowEnvelopesStart(object? sender, EventArgs e)
@@ -312,6 +326,7 @@ namespace CluelessControl
         {
             _questionBarState = QuestionBarState.CLEAR;
 
+            SetVisibleEnvelopeSelectionPictureBoxes(visible: false);
             SetVisibleEnvelopePlayingFor(visible: false);
             SetVisibleQuestionBar(visible: false);
             SetVisibleQuestionCounter(visible: false);

@@ -32,6 +32,7 @@ namespace CluelessControl
         {
             var gameState = GameState.Instance;
 
+            gameState.EventClearEverything += GameState_EventClearEverything;
             gameState.EventClearQuestion += GameState_EventClearQuestion;
             gameState.EventShowQuestion += GameState_EventShowQuestion;
             gameState.EventShowAnswers += GameState_EventShowAnswers;
@@ -44,9 +45,18 @@ namespace CluelessControl
         }
 
         #region Events
+
+        private void GameState_EventClearEverything(object? sender, EventArgs e)
+        {
+            ClearQuestionLabels();
+            ClearAnswerLockIn();
+            RedrawEnvelopes();
+        }
+
         private void GameState_EventClearQuestion(object? sender, EventArgs e)
         {
             ClearQuestionLabels();
+            RedrawEnvelopes();
         }
 
         private void GameState_EventShowQuestion(object? sender, EventArgs e)
