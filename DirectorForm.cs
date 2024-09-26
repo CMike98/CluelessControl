@@ -1772,6 +1772,7 @@ namespace CluelessControl
             GameState.Instance.GameOver();
 
             GameOverUnlockButtons();
+
             DirectorTabControl.SelectTab("GameOverTab");
         }
 
@@ -2091,12 +2092,44 @@ namespace CluelessControl
 
         private void GameOverUnlockButtons()
         {
-            ;
+            GameOverPrizeTxtBox.Text = GameState.Instance.FinalPrize;
+
+            GameOverPrizeTxtBox.Enabled = true;
+            GameOverRefreshBtn.Enabled = true;
+            GameOverBringBackBtn.Enabled = true;
+            GameOverMusicBtn.Enabled = true;
+            GameOverRestartBtn.Enabled = true;
         }
 
         private void GameOverLockButtons()
         {
+            GameOverPrizeTxtBox.Clear();
+
+            GameOverPrizeTxtBox.Enabled = false;
+            GameOverRefreshBtn.Enabled = false;
+            GameOverBringBackBtn.Enabled = false;
+            GameOverMusicBtn.Enabled = false;
+            GameOverRestartBtn.Enabled = false;
+        }
+
+        private void GameOverRefreshBtn_Click(object sender, EventArgs e)
+        {
+            GameState.Instance.RefreshGameOver(GameOverPrizeTxtBox.Text.Trim());
+        }
+
+        private void GameOverBringBackBtn_Click(object sender, EventArgs e)
+        {
+            GameOverPrizeTxtBox.Text = GameState.Instance.FinalPrize.Trim();
+        }
+
+        private void GameOverMusicBtn_Click(object sender, EventArgs e)
+        {
             ;
+        }
+
+        private void GameOverRestartBtn_Click(object sender, EventArgs e)
+        {
+            GameOverLockButtons();
         }
 
         #endregion
