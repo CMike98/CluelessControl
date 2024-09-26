@@ -1521,7 +1521,9 @@ namespace CluelessControl
 
         private void QuestionGameUpdateEnvelopeButtons()
         {
-            int startEnvelopeCount = GameState.Instance.GameSettings.StartEnvelopeCount;
+            var gameStateInstance = GameState.Instance;
+
+            int startEnvelopeCount = gameStateInstance.GameSettings.StartEnvelopeCount;
 
             if (_questionGameEnvelopeIndex < 0)
             {
@@ -1532,6 +1534,10 @@ namespace CluelessControl
                 _questionGameEnvelopeIndex = startEnvelopeCount - 1;
             }
 
+            var contestantEnvelopeSet = gameStateInstance.ContestantEnvelopeSet;
+            var envelope = contestantEnvelopeSet.GetEnvelope(_questionGameEnvelopeIndex);
+
+            QuestionGameConfirmEnvelopeBtn.Enabled = envelope.State == EnvelopeState.NEUTRAL;
             QuestionGamePreviousEnvelopeBtn.Enabled = _questionGameEnvelopeIndex > 0;
             QuestionGameNextEnvelopeBtn.Enabled = _questionGameEnvelopeIndex < startEnvelopeCount - 1;
         }
