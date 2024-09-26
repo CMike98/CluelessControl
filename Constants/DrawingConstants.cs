@@ -190,27 +190,27 @@ namespace CluelessControl.Constants
 
 
         /// <summary>
-        /// Question counter font family
+        /// Trading font family
         /// </summary>
         public static readonly FontFamily TRADING_FONT_FAMILY = new("Lato");
 
         /// <summary>
-        /// Question counter font size (big)
+        /// Trading font size (big)
         /// </summary>
-        public const float TRADING_BIG_FONT_SIZE = 32.0f;
+        public const float TRADING_BIG_FONT_SIZE = 64.0f;
 
         /// <summary>
-        /// Question counter font (big)
+        /// Trading font (big)
         /// </summary>
         public static readonly Font TRADING_BIG_FONT = new(TRADING_FONT_FAMILY, TRADING_BIG_FONT_SIZE);
 
         /// <summary>
-        /// Question counter font size (small)
+        /// Trading font size (small)
         /// </summary>
-        public const float TRADING_SMALL_FONT_SIZE = 20.0f;
+        public const float TRADING_SMALL_FONT_SIZE = 32.0f;
 
         /// <summary>
-        /// Question counter font
+        /// Trading font (small)
         /// </summary>
         public static readonly Font TRADING_SMALL_FONT = new(TRADING_FONT_FAMILY, TRADING_SMALL_FONT_SIZE);
 
@@ -287,6 +287,41 @@ namespace CluelessControl.Constants
         #endregion
 
         #region Game Over
+
+        /// <summary>
+        /// Game over font family
+        /// </summary>
+        public static readonly FontFamily GAME_OVER_FONT_FAMILY = new("Lato");
+
+        /// <summary>
+        /// Game over font size (big)
+        /// </summary>
+        public const float GAME_OVER_BIG_FONT_SIZE = 64.0f;
+
+        /// <summary>
+        /// Game over font (big)
+        /// </summary>
+        public static readonly Font GAME_OVER_BIG_FONT = new(GAME_OVER_FONT_FAMILY, GAME_OVER_BIG_FONT_SIZE);
+
+        /// <summary>
+        /// Game over font size (small)
+        /// </summary>
+        public const float GAME_OVER_SMALL_FONT_SIZE = 32.0f;
+
+        /// <summary>
+        /// Game over font (small)
+        /// </summary>
+        public static readonly Font GAME_OVER_SMALL_FONT = new(GAME_OVER_FONT_FAMILY, GAME_OVER_SMALL_FONT_SIZE);
+
+        /// <summary>
+        /// What part of game over box will be the title?
+        /// </summary>
+        public const float GAME_OVER_TITLE_PART_FRACTION = 0.4f;
+
+        /// <summary>
+        /// What part of game over will be below the title?
+        /// </summary>
+        public const float GAME_OVER_REST_PART_FRACTION = 1 - GAME_OVER_TITLE_PART_FRACTION;
 
         /// <summary>
         /// Location of the game over box
