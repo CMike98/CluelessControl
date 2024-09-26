@@ -2138,6 +2138,7 @@ namespace CluelessControl
         private void GameOverRestartBtn_Click(object sender, EventArgs e)
         {
             GameOverLockButtons();
+            DirectorTabControl.SelectTab("BeforeTheShowTab");
         }
 
         #endregion
