@@ -326,7 +326,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Location of the game over box
         /// </summary>
-        public static readonly Point GAME_OVER_LOCATION = new(x: 250, y: 650);
+        public static readonly Point GAME_OVER_LOCATION = new(x: 200, y: 650);
 
         /// <summary>
         /// Size of the game over box
