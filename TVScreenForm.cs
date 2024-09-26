@@ -273,6 +273,7 @@ namespace CluelessControl
             PrepareHostOfferPictureBox();
             PrepareTradingContestantWord();
             PrepareTradingHostName();
+            PrepareGameOverPictureBox();
         }
 
         #region Events
@@ -398,7 +399,10 @@ namespace CluelessControl
         {
             SetVisibleTradingBoxes(visible: false);
             SetVisibleTradingEnvelopes(visible: false);
+
+            SetVisibleGameOverBox(visible: true);
         }
+
         #endregion
 
         #region Methods
@@ -408,25 +412,26 @@ namespace CluelessControl
             foreach (var pictureBox in _envelopeSelectionPictureBoxes)
             {
                 pictureBox.Visible = visible;
+                pictureBox.Invalidate();
             }
         }
 
         private void SetVisibleQuestionBar(bool visible)
         {
             _questionBarPictureBox.Visible = visible;
-            _questionBarPictureBox.Refresh();
+            _questionBarPictureBox.Invalidate();
         }
 
         private void SetVisibleQuestionCounter(bool visible)
         {
             _questionCountPictureBox.Visible = visible;
-            _questionCountPictureBox.Refresh();
+            _questionCountPictureBox.Invalidate();
         }
 
         private void SetVisibleEnvelopePlayingFor(bool visible)
         {
             _questionPlayingForPictureBox.Visible = visible;
-            _questionPlayingForPictureBox.Refresh();
+            _questionPlayingForPictureBox.Invalidate();
         }
 
         public void SetVisibleTradingBoxes(bool visible)
@@ -440,25 +445,27 @@ namespace CluelessControl
             _hostWordPictureBox.Invalidate();
             _contestantCashPictureBox.Invalidate();
             _hostOfferCashPictureBox.Invalidate();
-
-            Refresh();
         }
 
         public void SetVisibleTradingEnvelopes(bool visible)
         {
             foreach (var pictureBox in _contestantEnvelopeTradePictureBoxes)
             {
-                pictureBox.Visible = true;
+                pictureBox.Visible = visible;
                 pictureBox.Invalidate();
             }
 
             foreach (var pictureBox in _hostEnvelopeTradePictureBoxes)
             {
-                pictureBox.Visible = true;
+                pictureBox.Visible = visible;
                 pictureBox.Invalidate();
             }
+        }
 
-            Refresh();
+        private void SetVisibleGameOverBox(bool visible)
+        {
+            _gameOverPictureBox.Visible = visible;
+            _gameOverPictureBox.Invalidate();
         }
 
         private void RedrawEnvelopes()
@@ -1073,7 +1080,53 @@ namespace CluelessControl
 
         private void GameOverPictureBox_Paint(object? sender, PaintEventArgs e)
         {
-            throw new NotImplementedException();
+            Rectangle clientRectangle = _gameOverPictureBox.ClientRectangle;
+            Size size = clientRectangle.Size;
+            Point location = clientRectangle.Location;
+
+            RectangleF insideRectangle = new RectangleF(
+                x: location.X + DrawingConstants.GAME_OVER_PADDING.Width,
+                y: location.Y + DrawingConstants.GAME_OVER_PADDING.Height,
+                width: size.Width - DrawingConstants.GAME_OVER_PADDING.Width * 2,
+                height: size.Height - DrawingConstants.GAME_OVER_PADDING.Height * 2);
+
+            using (Brush outsideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_OUT))
+            {
+                e.Graphics.FillRectangle(outsideBrush, clientRectangle);
+            }
+
+            using (Brush insideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_IN))
+            {
+                e.Graphics.FillRectangle(insideBrush, insideRectangle);
+            }
+
+            RectangleF upperPart = new RectangleF(
+                x: insideRectangle.X,
+                y: insideRectangle.Y,
+                width: insideRectangle.Size.Width,
+                height: insideRectangle.Size.Height * DrawingConstants.GAME_OVER_TITLE_PART_FRACTION);
+
+            RectangleF lowerPart = new RectangleF(
+                x: insideRectangle.X,
+                y: insideRectangle.Y + insideRectangle.Size.Height * DrawingConstants.GAME_OVER_TITLE_PART_FRACTION,
+                width: insideRectangle.Size.Width,
+                height: insideRectangle.Size.Height * DrawingConstants.GAME_OVER_REST_PART_FRACTION);
+
+            using (Pen pen = new(DrawingConstants.BOX_BACKGROUND_OUT))
+            {
+                e.Graphics.DrawRectangle(pen, upperPart);
+            }
+
+            using (Font font = FontHelper.GetMaxFont(GameConstants.PRIZE_STRING, e.Graphics, DrawingConstants.GAME_OVER_SMALL_FONT, upperPart.Size))
+            {
+                e.Graphics.DrawString(GameConstants.PRIZE_STRING, font, Brushes.White, upperPart, _textCenterDrawingFormat);
+            }
+
+            string finalPrize = GameState.Instance.FinalPrize.Trim();
+            using (Font font = FontHelper.GetMaxFont(finalPrize, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size))
+            {
+                e.Graphics.DrawString(finalPrize, font, Brushes.White, lowerPart, _textCenterDrawingFormat);
+            }
         }
 
         #endregion
