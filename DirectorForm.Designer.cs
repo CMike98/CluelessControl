@@ -2016,6 +2016,7 @@
             // 
             // GameOverBringBackBtn
             // 
+            GameOverBringBackBtn.Enabled = false;
             GameOverBringBackBtn.Font = new Font("Arial", 20.25F);
             GameOverBringBackBtn.Location = new Point(546, 309);
             GameOverBringBackBtn.Name = "GameOverBringBackBtn";
@@ -2027,6 +2028,7 @@
             // 
             // GameOverRestartBtn
             // 
+            GameOverRestartBtn.Enabled = false;
             GameOverRestartBtn.Font = new Font("Arial", 20.25F);
             GameOverRestartBtn.Location = new Point(546, 373);
             GameOverRestartBtn.Name = "GameOverRestartBtn";
@@ -2038,6 +2040,7 @@
             // 
             // GameOverMusicBtn
             // 
+            GameOverMusicBtn.Enabled = false;
             GameOverMusicBtn.Font = new Font("Arial", 20.25F);
             GameOverMusicBtn.Location = new Point(239, 373);
             GameOverMusicBtn.Name = "GameOverMusicBtn";
@@ -2049,6 +2052,7 @@
             // 
             // GameOverRefreshBtn
             // 
+            GameOverRefreshBtn.Enabled = false;
             GameOverRefreshBtn.Font = new Font("Arial", 20.25F);
             GameOverRefreshBtn.Location = new Point(239, 309);
             GameOverRefreshBtn.Name = "GameOverRefreshBtn";
@@ -2060,15 +2064,18 @@
             // 
             // GameOverPrizeTxtBox
             // 
+            GameOverPrizeTxtBox.Enabled = false;
             GameOverPrizeTxtBox.Font = new Font("Arial", 72F, FontStyle.Regular, GraphicsUnit.Point, 238);
             GameOverPrizeTxtBox.Location = new Point(14, 126);
             GameOverPrizeTxtBox.Name = "GameOverPrizeTxtBox";
             GameOverPrizeTxtBox.Size = new Size(1053, 118);
             GameOverPrizeTxtBox.TabIndex = 1;
             GameOverPrizeTxtBox.TextAlign = HorizontalAlignment.Center;
+            GameOverPrizeTxtBox.TextChanged += GameOverPrizeTxtBox_TextChanged;
             // 
             // GameOverPrizeTitleLbl
             // 
+            GameOverPrizeTitleLbl.Enabled = false;
             GameOverPrizeTitleLbl.Font = new Font("Arial", 27.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
             GameOverPrizeTitleLbl.Location = new Point(14, 27);
             GameOverPrizeTitleLbl.Name = "GameOverPrizeTitleLbl";
