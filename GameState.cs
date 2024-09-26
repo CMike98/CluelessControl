@@ -529,6 +529,16 @@ namespace CluelessControl
             EventGameOver?.Invoke(this, EventArgs.Empty);
         }
 
+        public void RefreshGameOver(string newFinalPrize)
+        {
+            if (string.IsNullOrWhiteSpace(newFinalPrize))
+                throw new ArgumentNullException(nameof(newFinalPrize));
+
+            FinalPrize = newFinalPrize.Trim();
+
+            EventGameOver?.Invoke(this, EventArgs.Empty);
+        }
+
         #endregion
     }
 }
