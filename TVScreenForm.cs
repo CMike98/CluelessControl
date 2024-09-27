@@ -1066,15 +1066,15 @@ namespace CluelessControl
 
         private void HostWordPictureBox_Paint(object? sender, PaintEventArgs e)
         {
-            var clientRectangle = _contestantWordPictureBox.ClientRectangle;
+            var clientRectangle = _hostWordPictureBox.ClientRectangle;
             var location = clientRectangle.Location;
             var size = clientRectangle.Size;
 
             RectangleF insideRectangle = new RectangleF(
-                x: location.X + DrawingConstants.CONTESTANT_WORD_PADDING.Width,
-                y: location.Y + DrawingConstants.CONTESTANT_WORD_PADDING.Height,
-                width: size.Width - DrawingConstants.CONTESTANT_WORD_PADDING.Width * 2,
-                height: size.Height - DrawingConstants.CONTESTANT_WORD_PADDING.Height * 2);
+                x: location.X + DrawingConstants.HOST_WORD_PADDING.Width,
+                y: location.Y + DrawingConstants.HOST_WORD_PADDING.Height,
+                width: size.Width - DrawingConstants.HOST_WORD_PADDING.Width * 2,
+                height: size.Height - DrawingConstants.HOST_WORD_PADDING.Height * 2);
 
             using (Brush outsideBrush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_OUT))
             {
