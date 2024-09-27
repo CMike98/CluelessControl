@@ -535,7 +535,10 @@ namespace CluelessControl
 
         public void GameOver()
         {
-            decimal finalPrize = EnvelopeCalculator.CalculateFinalPrize(GameSettings, ContestantEnvelopeSet, ContestantCash);
+            ContestantEnvelopeSet.RemoveDestroyedEnvelopes();
+            ContestantEnvelopeSet.MarkNotDestroyedAsNeutral();
+
+            decimal finalPrize = EnvelopeCalculator.CalculateFinalPrize(GameSettings, ContestantEnvelopeSet.Envelopes, ContestantCash);
             FinalPrize = Utils.AmountToString(finalPrize);
 
             EventGameOver?.Invoke(this, EventArgs.Empty);
