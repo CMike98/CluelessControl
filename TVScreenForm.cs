@@ -412,6 +412,9 @@ namespace CluelessControl
 
         private void GameState_EventGameOver(object? sender, EventArgs e)
         {
+            SetVisibleQuestionBar(visible: false);
+            SetVisibleQuestionCounter(visible: false);
+            SetVisibleEnvelopePlayingFor(visible: false);
             SetVisibleTradingBoxes(visible: false);
             SetVisibleTradingEnvelopes(visible: false);
 
