@@ -4,16 +4,18 @@ namespace CluelessControl.Envelopes
 {
     public static class EnvelopeCalculator
     {
-        public static decimal CalculateFinalPrize(GameSettings settings, EnvelopeSet envelopeSet, decimal contestantCash = 0)
+        public static decimal CalculateFinalPrize(GameSettings settings, List<Envelope> envelopeSet, decimal contestantCash = 0)
         {
             if (settings is null)
                 throw new ArgumentNullException(nameof(settings));
             if (envelopeSet is null)
                 throw new ArgumentNullException(nameof(envelopeSet));
+            if (envelopeSet.Any(envelope => envelope is null))
+                throw new ArgumentException("The envelope set mustn't contain null!", nameof(envelopeSet));
             if (contestantCash < 0)
                 throw new ArgumentOutOfRangeException(nameof(contestantCash), $"Contestant cash mustn't be negative.");
 
-            IEnumerable<BaseCheque> allCheques = envelopeSet.GetCheques();
+            IEnumerable<BaseCheque> allCheques = envelopeSet.Select(envelope => envelope.Cheque);
             
             decimal cashTotal = contestantCash;
             var positivePercentages = new List<decimal>();
