@@ -549,7 +549,7 @@ namespace CluelessControl
             if (string.IsNullOrWhiteSpace(newFinalPrize))
                 throw new ArgumentNullException(nameof(newFinalPrize));
 
-            FinalPrize = newFinalPrize.Trim();
+            FinalPrize = newFinalPrize.Trim().ToUpper();
 
             EventGameOver?.Invoke(this, EventArgs.Empty);
         }
