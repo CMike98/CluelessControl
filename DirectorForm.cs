@@ -1778,9 +1778,7 @@ namespace CluelessControl
         {
             // Game Over
             GameState.Instance.GameOver();
-
             GameOverUnlockButtons();
-
             DirectorTabControl.SelectTab("GameOverTab");
         }
 
