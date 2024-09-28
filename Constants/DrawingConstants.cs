@@ -217,17 +217,17 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Location of the bottom contestant envelope (trading)
         /// </summary>
-        public static readonly Point BOTTOM_TRADING_CONTESTANT_LOCATION = new(x: 200, y: 825);
+        public static readonly Point BOTTOM_TRADING_CONTESTANT_LOCATION = new(x: 230, y: 825);
 
         /// <summary>
         /// Location of the bottom host envelope (trading)
         /// </summary>
-        public static readonly Point BOTTOM_TRADING_HOST_LOCATION = new(x: 1380, y: 825);
+        public static readonly Point BOTTOM_TRADING_HOST_LOCATION = new(x: 1480, y: 825);
 
         /// <summary>
         /// Location of the contestant cash box
         /// </summary>
-        public static readonly Point CONTESTANT_CASH_LOCATION = new(x: 450, y: 700);
+        public static readonly Point CONTESTANT_CASH_LOCATION = new(x: 500, y: 700);
 
         /// <summary>
         /// Size of the contestant cash box
@@ -242,7 +242,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Location of the host offer box
         /// </summary>
-        public static readonly Point HOST_OFFER_LOCATION = new(x: 950, y: 700);
+        public static readonly Point HOST_OFFER_LOCATION = new(x: 1030, y: 700);
 
         /// <summary>
         /// Size of the host offer box
@@ -257,7 +257,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Location of the word "Contestant"
         /// </summary>
-        public static readonly Point CONTESTANT_WORD_LOCATION = new(x: 450, y: 575);
+        public static readonly Point CONTESTANT_WORD_LOCATION = new(x: 500, y: 575);
 
         /// <summary>
         /// Size of the word "Contestant"
@@ -272,7 +272,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Location of the word "Host"
         /// </summary>
-        public static readonly Point HOST_WORD_LOCATION = new(x: 950, y: 575);
+        public static readonly Point HOST_WORD_LOCATION = new(x: 1030, y: 575);
 
         /// <summary>
         /// Size of the word "Host"
@@ -326,7 +326,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Location of the game over box
         /// </summary>
-        public static readonly Point GAME_OVER_LOCATION = new(x: 200, y: 650);
+        public static readonly Point GAME_OVER_LOCATION = new(x: 250, y: 650);
 
         /// <summary>
         /// Size of the game over box
