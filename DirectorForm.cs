@@ -2040,6 +2040,7 @@ namespace CluelessControl
             }
 
             gameStateInstance.RefreshEnvelopes();
+            TradingUpdateEnvelopes();
         }
 
         private void TradingShredderBtn_Click(object sender, EventArgs e)
