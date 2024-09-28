@@ -1925,7 +1925,7 @@ namespace CluelessControl
             decimal cashWhenAccepted = gameStateInstance.ContestantCash + gameStateInstance.CashOffer;
 
             decimal currentPrize = EnvelopeCalculator.CalculateFinalPrize(gameStateInstance.GameSettings,
-                gameStateInstance.ContestantEnvelopeSet,
+                gameStateInstance.ContestantEnvelopeSet.Envelopes,
                 gameStateInstance.ContestantCash);
 
             TradingCashLbl.Text = Utils.AmountToString(gameStateInstance.ContestantCash);
