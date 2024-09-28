@@ -2137,7 +2137,7 @@ namespace CluelessControl
 
         private void GameOverRefreshBtn_Click(object sender, EventArgs e)
         {
-            GameState.Instance.RefreshGameOver(GameOverPrizeTxtBox.Text.Trim());
+            GameState.Instance.RefreshGameOver(GameOverPrizeTxtBox.Text);
         }
 
         private void GameOverBringBackBtn_Click(object sender, EventArgs e)
