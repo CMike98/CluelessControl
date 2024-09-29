@@ -109,6 +109,9 @@ namespace CluelessControl
         #endregion
 
         #region Events
+        public event EventHandler<string>? EventShowContestantName;
+        public event EventHandler? EventHideContestantName;
+
         public event EventHandler? EventClearEverything;
         public event EventHandler? EventShowEnvelopesStart;
         public event EventHandler? EventHideEnvelopesStart;
@@ -143,6 +146,22 @@ namespace CluelessControl
             CashOffer = 0;
             FinalPrize = string.Empty;
         }
+        #endregion
+
+        #region Name
+        public void ShowContestantName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return;
+
+            EventShowContestantName?.Invoke(this, name.Trim());
+        }
+
+        public void HideContestantName()
+        {
+            EventHideContestantName?.Invoke(this, EventArgs.Empty);
+        }
+
         #endregion
 
         #region Clearing
