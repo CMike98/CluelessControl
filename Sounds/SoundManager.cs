@@ -79,6 +79,8 @@ namespace CluelessControl.Sounds
         {
             var soundQueue = GetQueue(queueName);
             soundQueue?.StopQueue();
+
+            _soundQueues.Remove(queueName);
         }
 
         public void PauseQueue(string queueName)
@@ -91,6 +93,16 @@ namespace CluelessControl.Sounds
         {
             var soundQueue = GetQueue(queueName) ?? throw new KeyNotFoundException($"Queue \"{queueName}\" not found.");
             soundQueue.ResumeCurrentSound();
+        }
+
+        public void StopAllQueues()
+        {
+            List<string> queueKeys = _soundQueues.Select(queue => queue.Key).ToList();
+
+            foreach (string key in queueKeys)
+            {
+                StopQueue(key);
+            }
         }
 
         #endregion
