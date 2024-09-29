@@ -28,7 +28,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Font size used when drawing the big questions
         /// </summary>
-        public const float INTRODUCTION_DRAWING_DEFAULT_FONT_SIZE = 40.0f;
+        public const float INTRODUCTION_DRAWING_DEFAULT_FONT_SIZE = 64.0f;
 
         /// <summary>
         /// Font used when drawing the questions
