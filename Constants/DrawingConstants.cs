@@ -18,6 +18,45 @@ namespace CluelessControl.Constants
 
         #endregion
 
+        #region Introduce
+
+        /// <summary>
+        /// Font family used when drawing the questions
+        /// </summary>
+        public static readonly FontFamily INTRODUCTION_DRAWING_FONT_FAMILY = new(name: "Lato");
+
+        /// <summary>
+        /// Font size used when drawing the big questions
+        /// </summary>
+        public const float INTRODUCTION_DRAWING_DEFAULT_FONT_SIZE = 40.0f;
+
+        /// <summary>
+        /// Font used when drawing the questions
+        /// </summary>
+        public static readonly Font INTRODUCTION_DRAWING_FONT = new(INTRODUCTION_DRAWING_FONT_FAMILY, INTRODUCTION_DRAWING_DEFAULT_FONT_SIZE);
+
+        /// <summary>
+        /// Size of the introduction bar with padding
+        /// </summary>
+        public static readonly Size INTRODUCE_BAR_SIZE_FULL = new(width: 1400, height: 300);
+
+        /// <summary>
+        /// Size of the introduction bar padding
+        /// </summary>
+        public static readonly Size INTRODUCE_BAR_BORDER = new(width: 10, height: 10);
+
+        /// <summary>
+        /// Location of the introduction bar
+        /// </summary>
+        public static readonly Point INTRODUCE_BAR_LOCATION = new(x: 250, y: 650);
+
+        /// <summary>
+        /// Location of the inside of the introduction bar
+        /// </summary>
+        public static readonly Point INTRODUCE_BAR_INSIDE_LOCATION = new(INTRODUCE_BAR_LOCATION.X + INTRODUCE_BAR_BORDER.Width, INTRODUCE_BAR_LOCATION.Y + INTRODUCE_BAR_BORDER.Height);
+
+        #endregion
+
         #region Answer Colors
         /// <summary>
         /// Color used to mark the locked in answers
@@ -60,7 +99,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// The location of the first envelope
         /// </summary>
-        public static readonly Point ENVELOPE_SELECT_FIRST_LOCATION = new(x: 350, y: 80);
+        public static readonly Point ENVELOPE_SELECT_FIRST_LOCATION = new(x: 400, y: 80);
 
         /// <summary>
         /// Size of the envelope
