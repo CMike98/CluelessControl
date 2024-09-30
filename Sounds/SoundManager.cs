@@ -4,6 +4,7 @@ namespace CluelessControl.Sounds
     public class SoundManager
     {
         private readonly Dictionary<string, SoundQueue> _soundQueues = [];
+        private readonly List<Sound> _singleSounds = [];
 
         #region Volume
         private float _volume = 1;
@@ -20,10 +21,52 @@ namespace CluelessControl.Sounds
             {
                 currentQueue.SetVolume(_volume);
             }
+
+            foreach (Sound singleSound in _singleSounds)
+            {
+                singleSound.SetVolume(_volume);
+            }
         }
         #endregion
 
+        #region Single Sound
+
+        public void PlaySingleSound(Sound sound)
+        {
+            if (sound is null)
+                throw new ArgumentNullException(nameof(sound));
+
+            sound.SetVolume(_volume);
+            sound.EventStoppedPlayback += Sound_SoundStopped;
+            sound.SetNoLoop();
+            sound.Play();
+
+            _singleSounds.Add(sound);
+        }
+
+        public void PlaySingleSound(string filePath)
+        {
+            if (string.IsNullOrWhiteSpace(filePath))
+                throw new ArgumentNullException(nameof(filePath));
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException($"Sound file not found.", filePath);
+
+            Sound sound = new(filePath, _volume);
+            sound.EventStoppedPlayback += Sound_SoundStopped;
+            sound.SetNoLoop();
+            sound.Play();
+
+            _singleSounds.Add(sound);
+        }
+
+        #endregion
+
         #region Queue Operations
+
+        public bool DoesQueueExist(string queueName)
+        {
+            return _soundQueues.ContainsKey(queueName);
+        }
 
         public void CreateQueue(string queueName)
         {
@@ -108,6 +151,11 @@ namespace CluelessControl.Sounds
         #endregion
 
         #region Clean Up
+        private void Sound_SoundStopped(object? sender, Sound e)
+        {
+            _singleSounds.Remove(e);
+        }
+
         private void SoundQueue_QueueCompleted(SoundQueue obj)
         {
             _soundQueues.Remove(obj.QueueKey);
