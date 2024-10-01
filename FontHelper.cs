@@ -25,7 +25,8 @@ namespace CluelessControl
             if (scale > 1)
                 scale = 1;
 
-            return new Font(font.FontFamily, (int)(font.Size * scale));
+            int fontSize = (int) Math.Round(font.Size * scale);
+            return new Font(font.FontFamily, fontSize, font.Style);
         }
     }
 }

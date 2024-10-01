@@ -640,7 +640,7 @@ namespace CluelessControl
                     using (Font maxFont = FontHelper.GetMaxFont(chequeString, graphics, DrawingConstants.ENVELOPE_DRAWING_FONT, bottomHalfSize))
                     {
                         SizeF chequeValueSize = graphics.MeasureString(chequeString, maxFont);
-                        graphics.DrawString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT, chequeBrush, leftPoint.X + size.Width - chequeValueSize.Width, leftPoint.Y + size.Height - chequeValueSize.Height);
+                        graphics.DrawString(chequeString, maxFont, chequeBrush, leftPoint.X + size.Width - chequeValueSize.Width, leftPoint.Y + size.Height - chequeValueSize.Height);
                     }
                 }
             }
