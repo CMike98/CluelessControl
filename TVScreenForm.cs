@@ -18,11 +18,20 @@ namespace CluelessControl
             SHOW_ENVELOPES_ONLY
         }
 
-        private static readonly StringFormat _textCenterDrawingFormat = new()
+        private static readonly StringFormat TextCenterDrawingFormat = new()
         {
             LineAlignment = StringAlignment.Center,
             Alignment = StringAlignment.Center,
         };
+
+        private static readonly QuestionBarState[] StatesWithoutQuestion =
+            [
+                QuestionBarState.CLEAR,
+                QuestionBarState.SHOW_ENVELOPES_ONLY
+            ];
+
+        private string _contestantName = string.Empty;
+        private PictureBox _introductionNamePictureBox = new PictureBox();
 
         private PictureBox[] _envelopeSelectionPictureBoxes = new PictureBox[GameConstants.MAX_ENVELOPES_COUNT];
 
@@ -64,6 +73,19 @@ namespace CluelessControl
             {
                 // If there's no background image, just ignore it.
             }
+        }
+
+        private void PrepareIntroductionNamePictureBox()
+        {
+            _introductionNamePictureBox = new PictureBox()
+            {
+                Name = "IntroductionNamePictureBox",
+                Visible = false,
+                Size = DrawingConstants.INTRODUCE_BAR_SIZE_FULL,
+                Location = DrawingConstants.INTRODUCE_BAR_LOCATION
+            };
+            _introductionNamePictureBox.Paint += IntroductionName_Paint;
+            Controls.Add(_introductionNamePictureBox);
         }
 
         private void PrepareEnvelopeSelectionPictureBoxes()
@@ -188,81 +210,77 @@ namespace CluelessControl
 
         private void PrepareContestantCashPictureBox()
         {
-            var newPictureBox = new PictureBox()
+            _contestantCashPictureBox = new PictureBox()
             {
                 Name = "ContestantCashPictureBox",
                 Visible = false,
                 Size = DrawingConstants.CONTESTANT_CASH_SIZE,
                 Location = DrawingConstants.CONTESTANT_CASH_LOCATION
             };
-            newPictureBox.Paint += ContestantCashPictureBox_Paint;
+            _contestantCashPictureBox.Paint += ContestantCashPictureBox_Paint;
 
-            _contestantCashPictureBox = newPictureBox;
             Controls.Add(_contestantCashPictureBox);
         }
 
         private void PrepareHostOfferPictureBox()
         {
-            var newPictureBox = new PictureBox()
+            _hostOfferCashPictureBox = new PictureBox()
             {
                 Name = "HostOfferCashPictureBox",
                 Visible = false,
                 Size = DrawingConstants.HOST_OFFER_SIZE,
                 Location = DrawingConstants.HOST_OFFER_LOCATION
             };
-            newPictureBox.Paint += HostOfferPictureBox_Paint;
+            _hostOfferCashPictureBox.Paint += HostOfferPictureBox_Paint;
 
-            _hostOfferCashPictureBox = newPictureBox;
             Controls.Add(_hostOfferCashPictureBox);
         }
 
         private void PrepareTradingContestantWord()
         {
-            var newPictureBox = new PictureBox()
+            _contestantWordPictureBox = new PictureBox()
             {
                 Name = "ContestantWordPictureBox",
                 Visible = false,
                 Size = DrawingConstants.CONTESTANT_WORD_SIZE,
                 Location = DrawingConstants.CONTESTANT_WORD_LOCATION
             };
-            newPictureBox.Paint += ContestantWordPictureBox_Paint;
+            _contestantWordPictureBox.Paint += ContestantWordPictureBox_Paint;
 
-            _contestantWordPictureBox = newPictureBox;
             Controls.Add(_contestantWordPictureBox);
         }
 
         private void PrepareTradingHostName()
         {
-            var newPictureBox = new PictureBox()
+            _hostWordPictureBox = new PictureBox()
             {
                 Name = "HostWordPictureBox",
                 Visible = false,
                 Size = DrawingConstants.HOST_WORD_SIZE,
                 Location = DrawingConstants.HOST_WORD_LOCATION
             };
-            newPictureBox.Paint += HostWordPictureBox_Paint;
+            _hostWordPictureBox.Paint += HostWordPictureBox_Paint;
 
-            _hostWordPictureBox = newPictureBox;
             Controls.Add(_hostWordPictureBox);
         }
 
         private void PrepareGameOverPictureBox()
         {
-            var newPictureBox = new PictureBox()
+            _gameOverPictureBox = new PictureBox()
             {
                 Name = "GameOverPictureBox",
                 Visible = false,
                 Size = DrawingConstants.GAME_OVER_SIZE,
                 Location = DrawingConstants.GAME_OVER_LOCATION
             };
-            newPictureBox.Paint += GameOverPictureBox_Paint;
+            _gameOverPictureBox.Paint += GameOverPictureBox_Paint;
 
-            _gameOverPictureBox = newPictureBox;
             Controls.Add(_gameOverPictureBox);
         }
 
         private void PreparePictureBoxes()
         {
+            PrepareIntroductionNamePictureBox();
             PrepareEnvelopeSelectionPictureBoxes();
             PrepareQuestionStatisticsPictureBox();
             PrepareQuestionCountPictureBox();
@@ -281,6 +299,8 @@ namespace CluelessControl
         {
             var gameState = GameState.Instance;
 
+            gameState.EventShowContestantName += GameState_EventShowContestantName;
+            gameState.EventHideContestantName += GameState_EventHideContestantName;
             gameState.EventClearEverything += GameState_EventClearEverything;
             gameState.EventShowEnvelopesStart += GameState_EventShowEnvelopesStart;
             gameState.EventHideEnvelopesStart += GameState_EventHideEnvelopesStart;
@@ -297,10 +317,23 @@ namespace CluelessControl
             gameState.EventGameOver += GameState_EventGameOver;
         }
 
+        private void GameState_EventShowContestantName(object? sender, string name)
+        {
+            _contestantName = name;
+
+            SetVisibleIntroductionPictureBox(visible: true);
+        }
+
+        private void GameState_EventHideContestantName(object? sender, EventArgs e)
+        {
+            SetVisibleIntroductionPictureBox(visible: false);
+        }
+
         private void GameState_EventClearEverything(object? sender, EventArgs e)
         {
             _questionBarState = QuestionBarState.CLEAR;
 
+            SetVisibleIntroductionPictureBox(visible: false);
             SetVisibleEnvelopeSelectionPictureBoxes(visible: false);
             SetVisibleEnvelopePlayingFor(visible: false);
             SetVisibleQuestionCounter(visible: false);
@@ -374,7 +407,7 @@ namespace CluelessControl
             _questionBarState = QuestionBarState.SHOW_ENVELOPES_ONLY;
 
             SetVisibleEnvelopePlayingFor(visible: false);
-            _questionBarPictureBox.Refresh();
+            SetVisibleQuestionBar(visible: true);
         }
         private void GameState_EventRefreshEnvelopes(object? sender, EventArgs e)
         {
@@ -424,6 +457,12 @@ namespace CluelessControl
         #endregion
 
         #region Methods
+
+        private void SetVisibleIntroductionPictureBox(bool visible)
+        {
+            _introductionNamePictureBox.Visible = visible;
+            _introductionNamePictureBox.Invalidate();
+        }
 
         private void SetVisibleEnvelopeSelectionPictureBoxes(bool visible)
         {
@@ -508,6 +547,38 @@ namespace CluelessControl
                     break;
             }
         }
+        #endregion
+
+        #region Introduction
+
+        private void IntroductionName_Paint(object? sender, PaintEventArgs e)
+        {
+            var clientRectangle = _introductionNamePictureBox.ClientRectangle;
+            Size size = clientRectangle.Size;
+            Point location = clientRectangle.Location;
+
+            using (Brush brush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_OUT))
+            {
+                e.Graphics.FillRectangle(brush, location.X, location.Y, size.Width, size.Height);
+            }
+
+            RectangleF introductionInsideRectangle = new(
+                x: location.X + DrawingConstants.INTRODUCE_BAR_BORDER.Width,
+                y: location.Y + DrawingConstants.INTRODUCE_BAR_BORDER.Height,
+                width: size.Width - DrawingConstants.INTRODUCE_BAR_BORDER.Width * 2,
+                height: size.Height - DrawingConstants.INTRODUCE_BAR_BORDER.Height * 2);
+
+            using (Brush brush = new SolidBrush(DrawingConstants.BOX_BACKGROUND_IN))
+            {
+                e.Graphics.FillRectangle(brush, introductionInsideRectangle);
+            }
+
+            using (Font font = FontHelper.GetMaxFont(_contestantName, e.Graphics, DrawingConstants.INTRODUCTION_DRAWING_FONT, size))
+            {
+                e.Graphics.DrawString(_contestantName, font, Brushes.White, introductionInsideRectangle, TextCenterDrawingFormat);
+            }
+        }
+
         #endregion
 
         #region Envelope Drawing
@@ -639,21 +710,24 @@ namespace CluelessControl
             }
 
             var gameStateInstance = GameState.Instance;
-            var currentQuestion = gameStateInstance.GetCurrentQuestion();
+            Question? currentQuestion = null;
+
+            if (!StatesWithoutQuestion.Contains(_questionBarState))
+                currentQuestion = gameStateInstance.GetCurrentQuestion();
 
             switch (_questionBarState)
             {
                 case QuestionBarState.QUESTION_ONLY:
-                    PaintQuestion(currentQuestion, e.Graphics, questionBarRectangle);
+                    PaintQuestion(currentQuestion!, e.Graphics, questionBarRectangle);
                     break;
                 case QuestionBarState.QUESTION_AND_ANSWERS:
-                    PaintQuestionAndAnswers(currentQuestion, e.Graphics, questionBarRectangle, lockedInAnswer: null, correctAnswer: null);
+                    PaintQuestionAndAnswers(currentQuestion!, e.Graphics, questionBarRectangle, lockedInAnswer: null, correctAnswer: null);
                     break;
                 case QuestionBarState.QUESTION_AND_ANSWERS_LOCK:
-                    PaintQuestionAndAnswers(currentQuestion, e.Graphics, questionBarRectangle, lockedInAnswer: gameStateInstance.ContestantAnswer, correctAnswer: null);
+                    PaintQuestionAndAnswers(currentQuestion!, e.Graphics, questionBarRectangle, lockedInAnswer: gameStateInstance.ContestantAnswer, correctAnswer: null);
                     break;
                 case QuestionBarState.QUESTION_AND_ANSWERS_CORRECT:
-                    PaintQuestionAndAnswers(currentQuestion, e.Graphics, questionBarRectangle, lockedInAnswer: gameStateInstance.ContestantAnswer, correctAnswer: currentQuestion.CorrectAnswerNumber);
+                    PaintQuestionAndAnswers(currentQuestion!, e.Graphics, questionBarRectangle, lockedInAnswer: gameStateInstance.ContestantAnswer, correctAnswer: currentQuestion!.CorrectAnswerNumber);
                     break;
                 case QuestionBarState.SHOW_ENVELOPES_AND_QUESTION:
                     PaintQuestionBarEnvelopesAndQuestion(gameStateInstance.ContestantEnvelopeSet.Envelopes, currentQuestion, e.Graphics, questionBarRectangle);
@@ -679,7 +753,7 @@ namespace CluelessControl
 
             string questionToDraw = question.Text;
 
-            graphics.DrawString(questionToDraw, DrawingConstants.QUESTION_DRAWING_FONT, Brushes.White, areaRectangle, _textCenterDrawingFormat);
+            graphics.DrawString(questionToDraw, DrawingConstants.QUESTION_DRAWING_FONT, Brushes.White, areaRectangle, TextCenterDrawingFormat);
         }
 
         private void PaintQuestionAndAnswers(Question question, Graphics graphics, RectangleF areaRectangle, int? lockedInAnswer = null, int? correctAnswer = null)
@@ -696,7 +770,7 @@ namespace CluelessControl
             RectangleF questionRectangle = new RectangleF(areaRectangle.X, areaRectangle.Y, areaRectangle.Width, areaRectangle.Height / 2);
             using (Font font = FontHelper.GetMaxFont(question.Text, graphics, DrawingConstants.QUESTION_ANSWER_DRAWING_FONT, questionRectangle.Size))
             {
-                graphics.DrawString(question.Text, font, Brushes.White, questionRectangle, _textCenterDrawingFormat);
+                graphics.DrawString(question.Text, font, Brushes.White, questionRectangle, TextCenterDrawingFormat);
             }
 
             // Draw answers
@@ -748,7 +822,7 @@ namespace CluelessControl
 
             using Font font = FontHelper.GetMaxFont(answerText, graphics, DrawingConstants.QUESTION_ANSWER_DRAWING_FONT, answerRectangle.Size);
             using Brush brush = new SolidBrush(color);
-            graphics.DrawString(answerText, font, brush, answerRectangle, _textCenterDrawingFormat);
+            graphics.DrawString(answerText, font, brush, answerRectangle, TextCenterDrawingFormat);
         }
 
         private void PaintQuestionBarEnvelopesAndQuestion(IList<Envelope> envelopes, Question? question, Graphics graphics, RectangleF areaRectangle)
@@ -773,7 +847,7 @@ namespace CluelessControl
 
                 using (Font font = FontHelper.GetMaxFont(question.Text, graphics, DrawingConstants.QUESTION_ANSWER_DRAWING_FONT, upperHalf.Size))
                 {
-                    graphics.DrawString(question.Text, font, Brushes.White, upperHalf, _textCenterDrawingFormat);
+                    graphics.DrawString(question.Text, font, Brushes.White, upperHalf, TextCenterDrawingFormat);
                 }
 
                 envelopeRectangle = new RectangleF(
@@ -843,7 +917,7 @@ namespace CluelessControl
                 e.Graphics.FillRectangle(insideBrush, questionCounterRectangle);
             }
 
-            e.Graphics.DrawString(questionNumber, DrawingConstants.QUESTION_COUNTER_FONT, Brushes.White, questionCounterRectangle, _textCenterDrawingFormat);
+            e.Graphics.DrawString(questionNumber, DrawingConstants.QUESTION_COUNTER_FONT, Brushes.White, questionCounterRectangle, TextCenterDrawingFormat);
         }
 
         private void QuestionPlayingForPictureBox_Paint(object? sender, PaintEventArgs e)
@@ -904,13 +978,13 @@ namespace CluelessControl
 
             using (Font font = FontHelper.GetMaxFont(GameConstants.CASH_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, upperPart.Size))
             {
-                e.Graphics.DrawString(GameConstants.CASH_STRING, font, Brushes.White, upperPart, _textCenterDrawingFormat);
+                e.Graphics.DrawString(GameConstants.CASH_STRING, font, Brushes.White, upperPart, TextCenterDrawingFormat);
             }
 
             string cash = Utils.AmountToString(GameState.Instance.ContestantCash);
             using (Font font = FontHelper.GetMaxFont(cash, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size))
             {
-                e.Graphics.DrawString(cash, font, Brushes.White, lowerPart, _textCenterDrawingFormat);
+                e.Graphics.DrawString(cash, font, Brushes.White, lowerPart, TextCenterDrawingFormat);
             }
         }
 
@@ -955,13 +1029,13 @@ namespace CluelessControl
 
             using (Font font = FontHelper.GetMaxFont(GameConstants.OFFER_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, upperPart.Size))
             {
-                e.Graphics.DrawString(GameConstants.OFFER_STRING, font, Brushes.White, upperPart, _textCenterDrawingFormat);
+                e.Graphics.DrawString(GameConstants.OFFER_STRING, font, Brushes.White, upperPart, TextCenterDrawingFormat);
             }
 
             string offer = Utils.AmountToString(GameState.Instance.CashOffer);
             using (Font font = FontHelper.GetMaxFont(offer, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size))
             {
-                e.Graphics.DrawString(offer, font, Brushes.White, lowerPart, _textCenterDrawingFormat);
+                e.Graphics.DrawString(offer, font, Brushes.White, lowerPart, TextCenterDrawingFormat);
             }
             
         }
@@ -1060,7 +1134,7 @@ namespace CluelessControl
 
             using (Font font = FontHelper.GetMaxFont(GameConstants.CONTESTANT_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, insideRectangle.Size))
             {
-                e.Graphics.DrawString(GameConstants.CONTESTANT_STRING, font, Brushes.White, insideRectangle, _textCenterDrawingFormat);
+                e.Graphics.DrawString(GameConstants.CONTESTANT_STRING, font, Brushes.White, insideRectangle, TextCenterDrawingFormat);
             }
         }
 
@@ -1088,7 +1162,7 @@ namespace CluelessControl
 
             using (Font font = FontHelper.GetMaxFont(GameConstants.HOST_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, insideRectangle.Size))
             {
-                e.Graphics.DrawString(GameConstants.HOST_STRING, font, Brushes.White, insideRectangle, _textCenterDrawingFormat);
+                e.Graphics.DrawString(GameConstants.HOST_STRING, font, Brushes.White, insideRectangle, TextCenterDrawingFormat);
             }
         }
 
@@ -1137,13 +1211,13 @@ namespace CluelessControl
 
             using (Font font = FontHelper.GetMaxFont(GameConstants.PRIZE_STRING, e.Graphics, DrawingConstants.GAME_OVER_SMALL_FONT, upperPart.Size))
             {
-                e.Graphics.DrawString(GameConstants.PRIZE_STRING, font, Brushes.White, upperPart, _textCenterDrawingFormat);
+                e.Graphics.DrawString(GameConstants.PRIZE_STRING, font, Brushes.White, upperPart, TextCenterDrawingFormat);
             }
 
             string finalPrize = GameState.Instance.FinalPrize.Trim();
             using (Font font = FontHelper.GetMaxFont(finalPrize, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size))
             {
-                e.Graphics.DrawString(finalPrize, font, Brushes.White, lowerPart, _textCenterDrawingFormat);
+                e.Graphics.DrawString(finalPrize, font, Brushes.White, lowerPart, TextCenterDrawingFormat);
             }
         }
 
