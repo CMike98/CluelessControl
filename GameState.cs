@@ -464,7 +464,7 @@ namespace CluelessControl
         }
 
         public void CancelQuestion()
-        {           
+        {
             EnvelopePlayedFor?.MarkAsNeutral();
 
             // 2, because the NextQuestion function will increment it, and the 'Next Question' button, will increment it again
