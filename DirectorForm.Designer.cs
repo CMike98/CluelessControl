@@ -30,6 +30,9 @@
         {
             DirectorTabControl = new TabControl();
             BeforeTheShowTab = new TabPage();
+            PreShowNameTxtBox = new TextBox();
+            PreShowNameLbl = new Label();
+            PreShowWelcomeBtn = new Button();
             PreShowWarningLbl = new Label();
             PreShowQuestionEditorBtn = new Button();
             PreShowEnvelopeSettingsBtn = new Button();
@@ -234,6 +237,9 @@
             // BeforeTheShowTab
             // 
             BeforeTheShowTab.BackColor = SystemColors.Control;
+            BeforeTheShowTab.Controls.Add(PreShowNameTxtBox);
+            BeforeTheShowTab.Controls.Add(PreShowNameLbl);
+            BeforeTheShowTab.Controls.Add(PreShowWelcomeBtn);
             BeforeTheShowTab.Controls.Add(PreShowWarningLbl);
             BeforeTheShowTab.Controls.Add(PreShowQuestionEditorBtn);
             BeforeTheShowTab.Controls.Add(PreShowEnvelopeSettingsBtn);
@@ -248,24 +254,54 @@
             BeforeTheShowTab.TabIndex = 0;
             BeforeTheShowTab.Text = "Przed programem";
             // 
+            // PreShowNameTxtBox
+            // 
+            PreShowNameTxtBox.Font = new Font("Arial", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            PreShowNameTxtBox.Location = new Point(21, 239);
+            PreShowNameTxtBox.Name = "PreShowNameTxtBox";
+            PreShowNameTxtBox.Size = new Size(355, 39);
+            PreShowNameTxtBox.TabIndex = 2;
+            PreShowNameTxtBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // PreShowNameLbl
+            // 
+            PreShowNameLbl.Font = new Font("Arial", 14.25F);
+            PreShowNameLbl.Location = new Point(21, 153);
+            PreShowNameLbl.Name = "PreShowNameLbl";
+            PreShowNameLbl.Size = new Size(355, 68);
+            PreShowNameLbl.TabIndex = 1;
+            PreShowNameLbl.Text = "Imię uczestnika:";
+            PreShowNameLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // PreShowWelcomeBtn
+            // 
+            PreShowWelcomeBtn.Font = new Font("Arial", 14.25F);
+            PreShowWelcomeBtn.Location = new Point(615, 153);
+            PreShowWelcomeBtn.Name = "PreShowWelcomeBtn";
+            PreShowWelcomeBtn.Size = new Size(211, 68);
+            PreShowWelcomeBtn.TabIndex = 4;
+            PreShowWelcomeBtn.Text = "Przywitaj uczestnika";
+            PreShowWelcomeBtn.UseVisualStyleBackColor = true;
+            PreShowWelcomeBtn.Click += PreShowWelcomeBtn_Click;
+            // 
             // PreShowWarningLbl
             // 
             PreShowWarningLbl.Font = new Font("Arial", 18F, FontStyle.Italic, GraphicsUnit.Point, 238);
             PreShowWarningLbl.ForeColor = Color.Red;
-            PreShowWarningLbl.Location = new Point(6, 259);
+            PreShowWarningLbl.Location = new Point(6, 298);
             PreShowWarningLbl.Name = "PreShowWarningLbl";
-            PreShowWarningLbl.Size = new Size(1069, 183);
-            PreShowWarningLbl.TabIndex = 6;
+            PreShowWarningLbl.Size = new Size(1069, 144);
+            PreShowWarningLbl.TabIndex = 9;
             PreShowWarningLbl.Text = "Pamiętaj o załadowaniu ustawień gry, ustawień kopert i zestawu pytań przed grą! Pamiętaj o wylosowaniu kolejności czeków w kopertach!";
             PreShowWarningLbl.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // PreShowQuestionEditorBtn
             // 
             PreShowQuestionEditorBtn.Font = new Font("Arial", 14.25F);
-            PreShowQuestionEditorBtn.Location = new Point(651, 188);
+            PreShowQuestionEditorBtn.Location = new Point(832, 227);
             PreShowQuestionEditorBtn.Name = "PreShowQuestionEditorBtn";
             PreShowQuestionEditorBtn.Size = new Size(211, 68);
-            PreShowQuestionEditorBtn.TabIndex = 5;
+            PreShowQuestionEditorBtn.TabIndex = 8;
             PreShowQuestionEditorBtn.Text = "Edytor pytań";
             PreShowQuestionEditorBtn.UseVisualStyleBackColor = true;
             PreShowQuestionEditorBtn.Click += PreShowQuestionEditorBtn_Click;
@@ -273,10 +309,10 @@
             // PreShowEnvelopeSettingsBtn
             // 
             PreShowEnvelopeSettingsBtn.Font = new Font("Arial", 14.25F);
-            PreShowEnvelopeSettingsBtn.Location = new Point(434, 188);
+            PreShowEnvelopeSettingsBtn.Location = new Point(615, 227);
             PreShowEnvelopeSettingsBtn.Name = "PreShowEnvelopeSettingsBtn";
             PreShowEnvelopeSettingsBtn.Size = new Size(211, 68);
-            PreShowEnvelopeSettingsBtn.TabIndex = 4;
+            PreShowEnvelopeSettingsBtn.TabIndex = 7;
             PreShowEnvelopeSettingsBtn.Text = "Ustawienia kopert";
             PreShowEnvelopeSettingsBtn.UseVisualStyleBackColor = true;
             PreShowEnvelopeSettingsBtn.Click += PreShowEnvelopeSettingsBtn_Click;
@@ -284,10 +320,10 @@
             // PreShowGameSettingsBtn
             // 
             PreShowGameSettingsBtn.Font = new Font("Arial", 14.25F);
-            PreShowGameSettingsBtn.Location = new Point(217, 188);
+            PreShowGameSettingsBtn.Location = new Point(398, 227);
             PreShowGameSettingsBtn.Name = "PreShowGameSettingsBtn";
             PreShowGameSettingsBtn.Size = new Size(211, 68);
-            PreShowGameSettingsBtn.TabIndex = 3;
+            PreShowGameSettingsBtn.TabIndex = 6;
             PreShowGameSettingsBtn.Text = "Ustawienia gry";
             PreShowGameSettingsBtn.UseVisualStyleBackColor = true;
             PreShowGameSettingsBtn.Click += PreShowGameSettingsBtn_Click;
@@ -295,10 +331,10 @@
             // PreShowStartGameBtn
             // 
             PreShowStartGameBtn.Font = new Font("Arial", 14.25F);
-            PreShowStartGameBtn.Location = new Point(553, 114);
+            PreShowStartGameBtn.Location = new Point(832, 153);
             PreShowStartGameBtn.Name = "PreShowStartGameBtn";
             PreShowStartGameBtn.Size = new Size(211, 68);
-            PreShowStartGameBtn.TabIndex = 2;
+            PreShowStartGameBtn.TabIndex = 5;
             PreShowStartGameBtn.Text = "Rozpocznij grę";
             PreShowStartGameBtn.UseVisualStyleBackColor = true;
             PreShowStartGameBtn.Click += PreShowStartGameBtn_Click;
@@ -306,10 +342,10 @@
             // PreShowIntroBtn
             // 
             PreShowIntroBtn.Font = new Font("Arial", 14.25F);
-            PreShowIntroBtn.Location = new Point(336, 114);
+            PreShowIntroBtn.Location = new Point(398, 153);
             PreShowIntroBtn.Name = "PreShowIntroBtn";
             PreShowIntroBtn.Size = new Size(211, 68);
-            PreShowIntroBtn.TabIndex = 1;
+            PreShowIntroBtn.TabIndex = 3;
             PreShowIntroBtn.Text = "Intro";
             PreShowIntroBtn.UseVisualStyleBackColor = true;
             PreShowIntroBtn.Click += PreShowIntroBtn_Click;
@@ -2165,6 +2201,7 @@
             Load += DirectorForm_Load;
             DirectorTabControl.ResumeLayout(false);
             BeforeTheShowTab.ResumeLayout(false);
+            BeforeTheShowTab.PerformLayout();
             GameSettingsTab.ResumeLayout(false);
             SettingsShowOnTvGroup.ResumeLayout(false);
             SettingsEnvelopeStartCountGroup.ResumeLayout(false);
@@ -2359,5 +2396,8 @@
         private Button GameOverRestartBtn;
         private Button GameOverMusicBtn;
         private Button GameOverBringBackBtn;
+        private TextBox PreShowNameTxtBox;
+        private Label PreShowNameLbl;
+        private Button PreShowWelcomeBtn;
     }
 }

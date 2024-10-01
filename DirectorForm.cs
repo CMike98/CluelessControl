@@ -18,6 +18,17 @@ namespace CluelessControl
         private const int NO_ITEM_INDEX = -1;
 
         #region Sound
+        private const string QUEUE_NAME_INTRO_MUSIC = "intro-music";
+        private const string QUEUE_NAME_WELCOME_CONTESTANT = "welcome-contestant";
+        private const string QUEUE_NAME_GAME_START = "game-start";
+        private const string QUEUE_NAME_ENVELOPE_SELECTION = "envelope-selection";
+        private const string QUEUE_NAME_MOVE_TO_QUESTION_GAME = "move-to-question-game-start";
+        private const string QUEUE_NAME_QUESTION_GAME = "question-game";
+        private const string QUEUE_NAME_ANSWER_REACTION = "answer-reaction";
+        private const string QUEUE_NAME_TRADING_BACKGROUND = "trading-background";
+        private const string QUEUE_NAME_GAME_OVER = "game-over";
+        private const string QUEUE_NAME_OUTRO_MUSIC = "outro-music";
+
         private int _volumeLevel = 100;
         private readonly SoundManager _soundManager = new();
         #endregion
@@ -159,6 +170,17 @@ namespace CluelessControl
             VolumeLabel.Text = string.Format("Głośność: {0}%", _volumeLevel);
         }
 
+        private void PlaySingleSound(string filePath)
+        {
+            if (string.IsNullOrWhiteSpace(filePath))
+                throw new ArgumentNullException(nameof(filePath));
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException($"File has not been found.", filePath);
+
+            var sound = new Sound(filePath, _volumeLevel);
+            _soundManager.PlaySingleSound(filePath);
+        }
+
         #endregion
 
         #region Messages
@@ -184,7 +206,42 @@ namespace CluelessControl
 
         private void PreShowIntroBtn_Click(object sender, EventArgs e)
         {
-            ;
+            // Stop music
+            _soundManager.StopAllQueues();
+
+            var introMusic = new Sound("snd/intro.wav", _volumeLevel);
+            var afterIntroLoop = new Sound("snd/after-intro-loop.wav", _volumeLevel);
+            afterIntroLoop.SetInfiniteLoop();
+
+            _soundManager.CreateQueue(queueName: QUEUE_NAME_INTRO_MUSIC);
+            _soundManager.AddSoundToQueue(queueName: QUEUE_NAME_INTRO_MUSIC, sound: introMusic);
+            _soundManager.AddSoundToQueue(queueName: QUEUE_NAME_INTRO_MUSIC, sound: afterIntroLoop);
+            _soundManager.PlayQueue(queueName: QUEUE_NAME_INTRO_MUSIC);
+
+            GameState.Instance.HideContestantName();
+        }
+
+        private void PreShowWelcomeBtn_Click(object sender, EventArgs e)
+        {
+            // Stop music
+            _soundManager.StopAllQueues();
+
+            // Play music
+            var welcomeSound = new Sound("snd/welcome-contestant.wav", _volumeLevel);
+            var loopSound = new Sound("snd/after-intro-loop.wav", _volumeLevel);
+            loopSound.SetInfiniteLoop();
+
+            _soundManager.CreateQueue(queueName: QUEUE_NAME_WELCOME_CONTESTANT);
+            _soundManager.AddSoundToQueue(queueName: QUEUE_NAME_WELCOME_CONTESTANT, welcomeSound);
+            _soundManager.AddSoundToQueue(queueName: QUEUE_NAME_WELCOME_CONTESTANT, loopSound);
+            _soundManager.PlayQueue(queueName: QUEUE_NAME_WELCOME_CONTESTANT);
+
+            // Get name and display
+            string name = PreShowNameTxtBox.Text;
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                GameState.Instance.ShowContestantName(name.Trim());
+            }
         }
 
         private void PreShowStartGameBtn_Click(object sender, EventArgs e)
@@ -205,6 +262,9 @@ namespace CluelessControl
 
             EnvelopeSelectionUnlockButtons();
             DirectorTabControl.SelectTab("GamePickEnvelopesTab");
+
+            // Play sounds
+            EnvelopeSelectionStartMusic();
         }
 
         private void PreShowGameSettingsBtn_Click(object sender, EventArgs e)
@@ -1274,6 +1334,24 @@ namespace CluelessControl
 
         #region Game - Envelope Selection
 
+        private void EnvelopeSelectionStartMusic()
+        {
+            var startSound = new Sound("snd/start-game.wav", _volumeLevel);
+            var startLoop = new Sound("snd/envelope-selection-loop.wav", _volumeLevel);
+            startLoop.SetInfiniteLoop();
+
+            _soundManager.StopAllQueues();
+            _soundManager.CreateQueue(QUEUE_NAME_GAME_START);
+            _soundManager.AddSoundToQueue(QUEUE_NAME_GAME_START, startSound);
+            _soundManager.AddSoundToQueue(QUEUE_NAME_GAME_START, startLoop);
+            _soundManager.PlayQueue(QUEUE_NAME_GAME_START);
+        }
+
+        private void EnvelopeSelectionPlayPing()
+        {
+            PlaySingleSound(filePath: "snd/envelope-selection-ping.wav");
+        }
+
         private void EnvelopeSelectionUnlockButtons()
         {
             // Unlock the start game button
@@ -1432,6 +1510,8 @@ namespace CluelessControl
 
             // Update button availability
             EnvelopeSelectionUpdateAvailability();
+
+            EnvelopeSelectionPlayPing();
         }
 
         private void EnvelopeSelectionRetractBtn_Click(object sender, EventArgs e)
@@ -1466,9 +1546,11 @@ namespace CluelessControl
             gameStateInstance.SortEnvelopesByNumber();
             gameStateInstance.HideEnvelopesAfterSelection();
             gameStateInstance.UnmarkSelection();
+            gameStateInstance.ShowEnvelopesAfterQuestion();
 
             EnvelopeSelectionLockButtons();
             QuestionGameUnlockFirstButtons();
+            QuestionGamePlayStartingMusic();
 
             DirectorTabControl.SelectTab("GameQuestionsTab");
         }
@@ -1476,6 +1558,32 @@ namespace CluelessControl
         #endregion
 
         #region Game - Questions
+
+        private void QuestionGamePlayStartingMusic()
+        {
+            var startGameSound = new Sound("snd/question-game-start.wav", _volumeLevel);
+            var talkLoop = new Sound("snd/question-game-talk.wav", _volumeLevel);
+            talkLoop.SetInfiniteLoop();
+
+            _soundManager.StopAllQueues();
+            _soundManager.CreateQueue(QUEUE_NAME_MOVE_TO_QUESTION_GAME);
+            _soundManager.AddSoundToQueue(QUEUE_NAME_MOVE_TO_QUESTION_GAME, startGameSound);
+            _soundManager.AddSoundToQueue(QUEUE_NAME_MOVE_TO_QUESTION_GAME, talkLoop);
+            _soundManager.PlayQueue(QUEUE_NAME_MOVE_TO_QUESTION_GAME);
+        }
+
+        private void QuestionGamePlayAskingMusic()
+        {
+            var letsPlaySound = new Sound("snd/question-game-ask-question.wav", _volumeLevel);
+            var questionLoop = new Sound("snd/question-game-question-loop.wav", _volumeLevel);
+            questionLoop.SetInfiniteLoop();
+
+            _soundManager.StopAllQueues();
+            _soundManager.CreateQueue(QUEUE_NAME_QUESTION_GAME);
+            _soundManager.AddSoundToQueue(QUEUE_NAME_QUESTION_GAME, letsPlaySound);
+            _soundManager.AddSoundToQueue(QUEUE_NAME_QUESTION_GAME, questionLoop);
+            _soundManager.PlayQueue(QUEUE_NAME_QUESTION_GAME);
+        }
 
         private void QuestionGameUnlockFirstButtons()
         {
@@ -1590,6 +1698,8 @@ namespace CluelessControl
             QuestionGameShowCorrectBtn.Enabled = true;
 
             _questionGameAnswerLabels[answerNumber].BackColor = DrawingConstants.LOCK_IN_ANS_COLOR;
+
+            PlaySingleSound(filePath: "snd/question-game-lock-in-ping.wav");
         }
 
         private void QuestionGameShowCorrectAnswer()
@@ -1631,6 +1741,8 @@ namespace CluelessControl
             QuestionGameCancelQuestionBtn.Enabled = true;
             QuestionGameNextQuestionBtn.Enabled = false;
             QuestionGameShowQuestionBtn.Enabled = true;
+
+            QuestionGamePlayAskingMusic();
         }
 
         private void QuestionGameShowQuestionBtn_Click(object sender, EventArgs e)
@@ -1639,6 +1751,8 @@ namespace CluelessControl
             QuestionGameDisplayEnvelopesBtn.Enabled = true;
 
             GameState.Instance.ShowQuestion();
+
+            PlaySingleSound(filePath: "snd/question-game-show-question.wav");
         }
 
         private void QuestionGameDisplayEnvelopesBtn_Click(object sender, EventArgs e)
@@ -1651,6 +1765,8 @@ namespace CluelessControl
             _questionGameEnvelopeIndex = 0;
             QuestionGameUpdateEnvelopeLabel();
             QuestionGameUpdateEnvelopeButtons();
+
+            PlaySingleSound(filePath: "snd/question-game-show-envelopes.wav");
         }
 
         private void QuestionGameConfirmEnvelopeBtn_Click(object sender, EventArgs e)
@@ -1675,6 +1791,8 @@ namespace CluelessControl
             QuestionGameNextEnvelopeBtn.Enabled = false;
 
             QuestionGameUpdateEnvelopeLabel();
+
+            PlaySingleSound(filePath: "snd/question-game-envelope-picked.wav");
         }
 
         private void QuestionGameShowAnswersBtn_Click(object sender, EventArgs e)
@@ -1683,6 +1801,8 @@ namespace CluelessControl
             QuestionGameShowAnswersBtn.Enabled = false;
 
             GameState.Instance.ShowPossibleAnswers();
+
+            PlaySingleSound(filePath: "snd/question-game-show-answers.wav");
         }
 
         private void QuestionGameShowCorrectBtn_Click(object sender, EventArgs e)
@@ -1691,6 +1811,8 @@ namespace CluelessControl
 
             QuestionGameShowCorrectBtn.Enabled = false;
             QuestionGameCheckAnswerBtn.Enabled = true;
+
+            PlaySingleSound(filePath: "snd/question-game-show-correct-ping.wav");
         }
 
         private void QuestionGameCheckAnswerBtn_Click(object sender, EventArgs e)
@@ -1703,6 +1825,26 @@ namespace CluelessControl
             gameStateInstance.ShowEnvelopesAfterQuestion();
 
             QuestionGameUpdateEnvelopeLabel();
+
+            QuestionGamePlayAnswerSound(gameStateInstance.IsAnswerCorrect());
+        }
+
+        private void QuestionGamePlayAnswerSound(bool isAnswerRight)
+        {
+            Sound answerReactionSound;
+            if (isAnswerRight)
+                answerReactionSound = new Sound("snd/question-game-correct-answer.wav", _volumeLevel);
+            else
+                answerReactionSound = new Sound("snd/question-game-wrong-answer.wav", _volumeLevel);
+
+            Sound backgroundSound = new Sound("snd/question-game-talk.wav", _volumeLevel);
+            backgroundSound.SetInfiniteLoop();
+
+            _soundManager.StopAllQueues();
+            _soundManager.CreateQueue(QUEUE_NAME_ANSWER_REACTION);
+            _soundManager.AddSoundToQueue(QUEUE_NAME_ANSWER_REACTION, answerReactionSound);
+            _soundManager.AddSoundToQueue(QUEUE_NAME_ANSWER_REACTION, backgroundSound);
+            _soundManager.PlayQueue(QUEUE_NAME_ANSWER_REACTION);
         }
 
         private void QuestionGameKeepDestroyEnvelopeBtn_Click(object sender, EventArgs e)
@@ -1710,14 +1852,15 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
             gameStateInstance.KeepOrDestroyBasedOnAnswer();
 
-            if (gameStateInstance.HasQuestionsLeft)
-            {
-                QuestionGameNextQuestionBtn.Enabled = true;
-            }
+            if (gameStateInstance.IsAnswerCorrect())
+                PlaySingleSound(filePath: "snd/statistics-update.wav");
             else
-            {
+                PlaySingleSound(filePath: "snd/envelope-destroyed.wav");
+
+            if (gameStateInstance.HasQuestionsLeft)
+                QuestionGameNextQuestionBtn.Enabled = true;
+            else
                 QuestionGameStartTradingBtn.Enabled = true;
-            }
 
             QuestionGameKeepDestroyEnvelopeBtn.Enabled = false;
 
@@ -1726,6 +1869,15 @@ namespace CluelessControl
 
         private void QuestionGameCancelQuestionBtn_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show(
+                text: "Czy na pewno chcesz wycofać całe pytanie?",
+                caption: GameConstants.PROGRAM_TITLE,
+                buttons: MessageBoxButtons.YesNo,
+                icon: MessageBoxIcon.Warning) != DialogResult.Yes)
+            {
+                return;
+            }
+
             var gameStateInstance = GameState.Instance;
             gameStateInstance.CancelQuestion();
 
@@ -1733,6 +1885,14 @@ namespace CluelessControl
             QuestionGameUpdateEnvelopeLabel();
             QuestionGameLockAllButtons();
             QuestionGameNextQuestionBtn.Enabled = true;
+
+            _soundManager.StopAllQueues();
+
+            MessageBox.Show(
+                text: "Pytanie zostało wycofane. Jeżeli jest taka potrzeba, możesz je wymienić w edytorze pytań.",
+                caption: GameConstants.PROGRAM_TITLE,
+                buttons: MessageBoxButtons.OK,
+                icon: MessageBoxIcon.Information);
         }
 
         private void QuestionGamePreviousEnvelopeBtn_Click(object sender, EventArgs e)
@@ -1757,7 +1917,7 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
             if (gameStateInstance.ContestantEnvelopeSet.IsEmpty)
             {
-                TradingGameOver(withFireworks: false);
+                TradingGameOver(bigWin: false);
             }
             else
             {
@@ -1766,6 +1926,7 @@ namespace CluelessControl
 
                 TradingUnlockButtons();
                 TradingUpdateEnvelopes();
+                TradingStartPlayingMusic();
                 DirectorTabControl.SelectTab("GameTradingTab");
             }
         }
@@ -1774,8 +1935,51 @@ namespace CluelessControl
 
         #region Game - Trading
 
-        private void TradingGameOver(bool withFireworks = false)
+        private void TradingStartPlayingMusic()
         {
+            var backgroundLoop = new Sound("snd/trading-background-loop.wav", _volumeLevel);
+            backgroundLoop.SetInfiniteLoop();
+
+            _soundManager.StopAllQueues();
+            _soundManager.CreateQueue(QUEUE_NAME_TRADING_BACKGROUND);
+            _soundManager.AddSoundToQueue(QUEUE_NAME_TRADING_BACKGROUND, backgroundLoop);
+            _soundManager.PlayQueue(QUEUE_NAME_TRADING_BACKGROUND);
+        }
+
+        private void TradingPlayOfferPing()
+        {
+            PlaySingleSound(filePath: "snd/trading-offer-ping.wav");
+        }
+
+        private void TradingPlayUpdateSound()
+        {
+            PlaySingleSound(filePath: "snd/trading-update.wav");
+        }
+
+        private void TradingPlayShredderSound()
+        {
+            PlaySingleSound(filePath: "snd/envelope-destroyed.wav");
+        }
+
+        private void TradingPlayBringMoneySound()
+        {
+            PlaySingleSound(filePath: "snd/trading-bring-money.wav");
+        }
+
+        private void TradingGameOver(bool bigWin = false)
+        {
+            var bigWinSound = new Sound("snd/big-win.wav", _volumeLevel);
+            var gameOverSound = new Sound("snd/game-over.wav", _volumeLevel);
+
+            _soundManager.StopAllQueues();
+            _soundManager.CreateQueue(QUEUE_NAME_GAME_OVER);
+
+            if (bigWin)
+                _soundManager.AddSoundToQueue(QUEUE_NAME_GAME_OVER, bigWinSound);
+
+            _soundManager.AddSoundToQueue(QUEUE_NAME_GAME_OVER, gameOverSound);
+            _soundManager.PlayQueue(QUEUE_NAME_GAME_OVER);
+
             // Game Over
             GameState.Instance.GameOver();
             GameOverUnlockButtons();
@@ -1980,11 +2184,13 @@ namespace CluelessControl
             TradingUpdateCashLabels();
 
             gameStateInstance.RefreshOffer();
+
+            TradingPlayOfferPing();
         }
 
         private void TradingBringMoneyBtn_Click(object sender, EventArgs e)
         {
-            ;
+            TradingPlayBringMoneySound();
         }
 
         private void TradingClearOfferBtn_Click(object sender, EventArgs e)
@@ -2005,6 +2211,8 @@ namespace CluelessControl
             TradingClearCheckboxes();
 
             TradingUpdateCashLabels();
+
+            TradingPlayUpdateSound();
         }
 
         private void TradingOpenCloseEnvelopeBtn_Click(object sender, EventArgs e)
@@ -2081,16 +2289,18 @@ namespace CluelessControl
             TradingUpdateEnvelopes();
             TradingClearCheckboxes();
             TradingUpdateCashLabels();
+            
+            TradingPlayShredderSound();
         }
 
         private void TradingEndGameNormalBtn_Click(object sender, EventArgs e)
         {
-            TradingGameOver(withFireworks: false);
+            TradingGameOver(bigWin: false);
         }
 
         private void TradingEndGameFireworksBtn_Click(object sender, EventArgs e)
         {
-            TradingGameOver(withFireworks: true);
+            TradingGameOver(bigWin: true);
         }
 
         #endregion
@@ -2147,7 +2357,7 @@ namespace CluelessControl
 
         private void GameOverMusicBtn_Click(object sender, EventArgs e)
         {
-            ;
+            PlaySingleSound(filePath: "snd/outro.wav");
         }
 
         private void GameOverRestartBtn_Click(object sender, EventArgs e)
