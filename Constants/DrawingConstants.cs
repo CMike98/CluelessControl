@@ -71,7 +71,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Color used to mark the correct answers
         /// </summary>
-        public static readonly Color CORRECT_ANS_COLOR = Color.LightGreen;
+        public static readonly Color CORRECT_ANS_COLOR = Color.Green;
 
         /// <summary>
         /// Font color used to mark the correct answers
