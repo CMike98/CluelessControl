@@ -1968,6 +1968,7 @@ namespace CluelessControl
 
         private void TradingGameOver(bool bigWin = false)
         {
+            // Music
             var bigWinSound = new Sound("snd/big-win.wav", _volumeLevel);
             var gameOverSound = new Sound("snd/game-over.wav", _volumeLevel);
 
