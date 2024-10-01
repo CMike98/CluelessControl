@@ -556,6 +556,11 @@ namespace CluelessControl
         {
             ContestantEnvelopeSet.RemoveDestroyedEnvelopes();
             ContestantEnvelopeSet.MarkNotDestroyedAsNeutral();
+            ContestantEnvelopeSet.Envelopes.ForEach(envelope => envelope.IsOpen = true);
+
+            HostEnvelopeSet.RemoveDestroyedEnvelopes();
+            HostEnvelopeSet.MarkNotDestroyedAsNeutral();
+            HostEnvelopeSet.Envelopes.ForEach(envelope => envelope.IsOpen = true);
 
             decimal finalPrize = EnvelopeCalculator.CalculateFinalPrize(GameSettings, ContestantEnvelopeSet.Envelopes, ContestantCash);
             FinalPrize = Utils.AmountToString(finalPrize);
