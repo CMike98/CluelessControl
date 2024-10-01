@@ -633,10 +633,16 @@ namespace CluelessControl
             {
                 BaseCheque cheque = envelope.Cheque;
                 string chequeString = cheque.ToValueString();
-                SizeF chequeValueSize = graphics.MeasureString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT);
+                SizeF bottomHalfSize = new SizeF(width: size.Width, height: size.Height / 2);
 
-                using Brush chequeBrush = new SolidBrush(colorCollection.ChequeFontColor);
-                graphics.DrawString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT, chequeBrush, leftPoint.X + size.Width - chequeValueSize.Width, leftPoint.Y + size.Height - chequeValueSize.Height);
+                using (Brush chequeBrush = new SolidBrush(colorCollection.ChequeFontColor))
+                {
+                    using (Font maxFont = FontHelper.GetMaxFont(chequeString, graphics, DrawingConstants.ENVELOPE_DRAWING_FONT, bottomHalfSize))
+                    {
+                        SizeF chequeValueSize = graphics.MeasureString(chequeString, maxFont);
+                        graphics.DrawString(chequeString, DrawingConstants.ENVELOPE_DRAWING_FONT, chequeBrush, leftPoint.X + size.Width - chequeValueSize.Width, leftPoint.Y + size.Height - chequeValueSize.Height);
+                    }
+                }
             }
         }
 
