@@ -1585,6 +1585,20 @@ namespace CluelessControl
             _soundManager.PlayQueue(QUEUE_NAME_QUESTION_GAME);
         }
 
+        private void PlayStatisticsUpdate()
+        {
+            PlaySingleSound(filePath: "snd/statistics-update.wav");
+        }
+
+        private void PlayShredderSound()
+        {
+            var shredderSound = new Sound(filePath: "snd/envelope-destroyed.wav", _volumeLevel);
+            shredderSound.EventStoppedPlayback += (s, e) => _soundManager.ResumeQueue(QUEUE_NAME_ANSWER_REACTION);
+
+            _soundManager.PauseQueue(QUEUE_NAME_ANSWER_REACTION);
+            _soundManager.PlaySingleSound(shredderSound);
+        }
+
         private void QuestionGameUnlockFirstButtons()
         {
             QuestionGameNextQuestionBtn.Enabled = true;
@@ -1853,9 +1867,9 @@ namespace CluelessControl
             gameStateInstance.KeepOrDestroyBasedOnAnswer();
 
             if (gameStateInstance.IsAnswerCorrect())
-                PlaySingleSound(filePath: "snd/statistics-update.wav");
+                PlayStatisticsUpdate();
             else
-                PlaySingleSound(filePath: "snd/envelope-destroyed.wav");
+                PlayShredderSound();
 
             if (gameStateInstance.HasQuestionsLeft)
                 QuestionGameNextQuestionBtn.Enabled = true;
@@ -1958,7 +1972,11 @@ namespace CluelessControl
 
         private void TradingPlayShredderSound()
         {
-            PlaySingleSound(filePath: "snd/envelope-destroyed.wav");
+            var shredderSound = new Sound(filePath: "snd/envelope-destroyed.wav", _volumeLevel);
+            shredderSound.EventStoppedPlayback += (s, e) => _soundManager.ResumeQueue(QUEUE_NAME_TRADING_BACKGROUND);
+
+            _soundManager.PauseQueue(QUEUE_NAME_TRADING_BACKGROUND);
+            _soundManager.PlaySingleSound(shredderSound);
         }
 
         private void TradingPlayBringMoneySound()
