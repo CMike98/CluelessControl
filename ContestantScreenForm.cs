@@ -20,12 +20,27 @@ namespace CluelessControl
                 { 3, AnswerCLabel },
                 { 4, AnswerDLabel },
             };
+
+            TryToLoadBackgroundImage();
         }
 
         private void ContestantScreenForm_Load(object sender, EventArgs e)
         {
             ClearQuestionLabels();
             AddEvents();
+        }
+
+        private void TryToLoadBackgroundImage()
+        {
+            try
+            {
+                Image backgroundImage = Image.FromFile("img/background.jpg");
+                BackgroundImage = backgroundImage;
+            }
+            catch
+            {
+                // If there's no background image, just ignore it.
+            }
         }
 
         private void AddEvents()
@@ -236,13 +251,11 @@ namespace CluelessControl
             Envelope? envelope = GameState.Instance.GetEnvelopeFromTag(tag);
             if (envelope == null)
             {
-                pictureBox.BackColor = Color.Black;
+                pictureBox.BackColor = Color.Transparent;
                 return;
             }
 
             EnvelopeColorCollection colorCollection = envelope.GetColorsForScreen();
-
-            pictureBox.BackColor = colorCollection.BackgroundColor;
 
             Rectangle clientRectangle = pictureBox.ClientRectangle;
             Size size = clientRectangle.Size;
@@ -250,6 +263,11 @@ namespace CluelessControl
             Point leftPoint = clientRectangle.Location;
             Point centerPoint = new(leftPoint.X + size.Width / 2, leftPoint.Y + size.Height / 2);
             Point rightPoint = new(leftPoint.X + size.Width, leftPoint.Y);
+
+            using (Brush brush = new SolidBrush(colorCollection.BackgroundColor))
+            {
+                e.Graphics.FillRectangle(brush, clientRectangle);
+            }
 
             e.Graphics.DrawLine(Pens.Black, leftPoint, centerPoint);
             e.Graphics.DrawLine(Pens.Black, centerPoint, rightPoint);

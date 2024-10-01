@@ -120,6 +120,8 @@
             // 
             // CorrectAnswerLabel
             // 
+            CorrectAnswerLabel.BackColor = Color.Black;
+            CorrectAnswerLabel.BorderStyle = BorderStyle.FixedSingle;
             CorrectAnswerLabel.Font = new Font("Lato", 23.9999962F);
             CorrectAnswerLabel.ForeColor = Color.White;
             CorrectAnswerLabel.Location = new Point(918, 801);
@@ -131,11 +133,12 @@
             // 
             // ContestantTextLabel
             // 
+            ContestantTextLabel.BorderStyle = BorderStyle.FixedSingle;
             ContestantTextLabel.Font = new Font("Lato", 18F);
             ContestantTextLabel.ForeColor = Color.White;
             ContestantTextLabel.Location = new Point(12, 9);
             ContestantTextLabel.Name = "ContestantTextLabel";
-            ContestantTextLabel.Size = new Size(220, 87);
+            ContestantTextLabel.Size = new Size(220, 77);
             ContestantTextLabel.TabIndex = 12;
             ContestantTextLabel.Text = "ZAWODNIK";
             ContestantTextLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -143,11 +146,12 @@
             // 
             // HostTextLabel
             // 
+            HostTextLabel.BorderStyle = BorderStyle.FixedSingle;
             HostTextLabel.Font = new Font("Lato", 18F);
             HostTextLabel.ForeColor = Color.White;
             HostTextLabel.Location = new Point(1692, 9);
             HostTextLabel.Name = "HostTextLabel";
-            HostTextLabel.Size = new Size(220, 87);
+            HostTextLabel.Size = new Size(220, 77);
             HostTextLabel.TabIndex = 18;
             HostTextLabel.Text = "PROWADZĄCY";
             HostTextLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -155,6 +159,8 @@
             // 
             // ExplanationLabel
             // 
+            ExplanationLabel.BackColor = Color.Black;
+            ExplanationLabel.BorderStyle = BorderStyle.FixedSingle;
             ExplanationLabel.Font = new Font("Lato", 23.9999962F);
             ExplanationLabel.ForeColor = Color.White;
             ExplanationLabel.Location = new Point(560, 459);
@@ -351,7 +357,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            BackgroundImageLayout = ImageLayout.Center;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1924, 1011);
             Controls.Add(HostEnvelope4Picture);
             Controls.Add(HostEnvelope3Picture);

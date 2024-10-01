@@ -2,7 +2,7 @@
 using CluelessControl.Constants;
 using CluelessControl.EnvelopeColorStates;
 using CluelessControl.Envelopes;
-using System.Drawing;
+using CluelessControl.Questions;
 
 namespace CluelessControl
 {
@@ -21,12 +21,27 @@ namespace CluelessControl
                 { 3, AnswerCLabel },
                 { 4, AnswerDLabel },
             };
+
+            TryToLoadBackgroundImage();
         }
 
         private void HostScreenForm_Load(object sender, EventArgs e)
         {
             ClearQuestionLabels();
             AddEvents();
+        }
+
+        private void TryToLoadBackgroundImage()
+        {
+            try
+            {
+                Image backgroundImage = Image.FromFile("img/background.jpg");
+                BackgroundImage = backgroundImage;
+            }
+            catch
+            {
+                // If there's no background image, just ignore it.
+            }
         }
 
         private void AddEvents()
@@ -121,6 +136,21 @@ namespace CluelessControl
 
         #region Refreshing methods
 
+        public void ClearAnswerAndExplanation()
+        {
+            CorrectAnswerLabel.Text = string.Empty;
+            ExplanationLabel.Text = string.Empty;
+        }
+
+        public void ShowAnswerAndExplanation(Question question)
+        {
+            if (question is null)
+                return;
+
+            CorrectAnswerLabel.Text = Utils.AnswerToLetter(question.CorrectAnswerNumber);
+            ExplanationLabel.Text = question.Comment;
+        }
+
         public void ClearAnswerLockIn()
         {
             AnswerALabel.BackColor = Color.Black;
@@ -177,14 +207,12 @@ namespace CluelessControl
             if (answer is null)
             {
                 ClearAnswerLockIn();
-                CorrectAnswerLabel.Text = string.Empty;
-                ExplanationLabel.Text = string.Empty;
+                ClearAnswerAndExplanation();
                 
                 return;
             }
 
-            CorrectAnswerLabel.Text = Utils.AnswerToLetter(currentQuestion.CorrectAnswerNumber);
-            ExplanationLabel.Text = currentQuestion.Comment;
+            ShowAnswerAndExplanation(currentQuestion);
 
             int answerValue = answer.Value;
             _answerLabels[answerValue].BackColor = DrawingConstants.LOCK_IN_ANS_COLOR;
@@ -248,13 +276,11 @@ namespace CluelessControl
             Envelope? envelope = GameState.Instance.GetEnvelopeFromTag(tag);
             if (envelope == null)
             {
-                pictureBox.BackColor = Color.Black;
+                pictureBox.BackColor = Color.Transparent;
                 return;
             }
 
             EnvelopeColorCollection colorCollection = envelope.GetColorsForScreen();
-
-            pictureBox.BackColor = colorCollection.BackgroundColor;
 
             Rectangle clientRectangle = pictureBox.ClientRectangle;
             Size size = clientRectangle.Size;
@@ -263,6 +289,11 @@ namespace CluelessControl
             Point centerPoint = new(leftPoint.X + size.Width / 2, leftPoint.Y + size.Height / 2);
             Point rightPoint = new(leftPoint.X + size.Width, leftPoint.Y);
 
+            using (Brush brush = new SolidBrush(colorCollection.BackgroundColor))
+            {
+                e.Graphics.FillRectangle(brush, clientRectangle);
+            }
+            
             e.Graphics.DrawLine(Pens.Black, leftPoint, centerPoint);
             e.Graphics.DrawLine(Pens.Black, centerPoint, rightPoint);
 

@@ -2385,6 +2385,8 @@ namespace CluelessControl
 
         private void GameOverRestartBtn_Click(object sender, EventArgs e)
         {
+            GameState.Instance.ClearEverything();
+
             GameOverLockButtons();
             DirectorTabControl.SelectTab("BeforeTheShowTab");
         }

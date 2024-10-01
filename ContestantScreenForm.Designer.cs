@@ -245,11 +245,12 @@
             // 
             // HostTextLabel
             // 
+            HostTextLabel.BorderStyle = BorderStyle.FixedSingle;
             HostTextLabel.Font = new Font("Lato", 18F);
             HostTextLabel.ForeColor = Color.White;
             HostTextLabel.Location = new Point(1692, 10);
             HostTextLabel.Name = "HostTextLabel";
-            HostTextLabel.Size = new Size(220, 87);
+            HostTextLabel.Size = new Size(220, 77);
             HostTextLabel.TabIndex = 41;
             HostTextLabel.Text = "PROWADZĄCY";
             HostTextLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -257,11 +258,12 @@
             // 
             // ContestantTextLabel
             // 
+            ContestantTextLabel.BorderStyle = BorderStyle.FixedSingle;
             ContestantTextLabel.Font = new Font("Lato", 18F);
             ContestantTextLabel.ForeColor = Color.White;
             ContestantTextLabel.Location = new Point(12, 10);
             ContestantTextLabel.Name = "ContestantTextLabel";
-            ContestantTextLabel.Size = new Size(220, 87);
+            ContestantTextLabel.Size = new Size(220, 77);
             ContestantTextLabel.TabIndex = 40;
             ContestantTextLabel.Text = "ZAWODNIK";
             ContestantTextLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -327,7 +329,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            BackgroundImageLayout = ImageLayout.Center;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1924, 1011);
             Controls.Add(HostEnvelope4Picture);
             Controls.Add(HostEnvelope3Picture);
