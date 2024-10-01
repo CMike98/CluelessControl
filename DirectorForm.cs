@@ -1963,7 +1963,11 @@ namespace CluelessControl
 
         private void TradingPlayBringMoneySound()
         {
-            PlaySingleSound(filePath: "snd/trading-bring-money.wav");
+            var bringMoneySound = new Sound("snd/trading-bring-money.wav", _volumeLevel);
+            bringMoneySound.EventStoppedPlayback += (s, e) => _soundManager.ResumeQueue(QUEUE_NAME_TRADING_BACKGROUND);
+
+            _soundManager.PauseQueue(QUEUE_NAME_TRADING_BACKGROUND);
+            _soundManager.PlaySingleSound(bringMoneySound);
         }
 
         private void TradingGameOver(bool bigWin = false)
