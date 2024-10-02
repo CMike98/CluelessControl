@@ -1716,7 +1716,7 @@
             TradingOpenCloseEnvelopeBtn.Name = "TradingOpenCloseEnvelopeBtn";
             TradingOpenCloseEnvelopeBtn.Size = new Size(170, 40);
             TradingOpenCloseEnvelopeBtn.TabIndex = 52;
-            TradingOpenCloseEnvelopeBtn.Text = "Otwórz zaznaczone/Zamknij niezaznaczone";
+            TradingOpenCloseEnvelopeBtn.Text = "Otwórz/zamknij zaznaczone";
             TradingOpenCloseEnvelopeBtn.UseVisualStyleBackColor = true;
             TradingOpenCloseEnvelopeBtn.Click += TradingOpenCloseEnvelopeBtn_Click;
             // 
