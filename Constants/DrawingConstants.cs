@@ -236,7 +236,7 @@ namespace CluelessControl.Constants
         /// <summary>
         /// Trading font size (big)
         /// </summary>
-        public const float TRADING_BIG_FONT_SIZE = 64.0f;
+        public const float TRADING_BIG_FONT_SIZE = 40.0f;
 
         /// <summary>
         /// Trading font (big)
