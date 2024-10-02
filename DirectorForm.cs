@@ -29,7 +29,7 @@ namespace CluelessControl
         private const string QUEUE_NAME_GAME_OVER = "game-over";
         private const string QUEUE_NAME_OUTRO_MUSIC = "outro-music";
 
-        private int _volumeLevel = 100;
+        private float _volumeLevel = 1;
         private readonly SoundManager _soundManager = new();
         #endregion
 
@@ -150,9 +150,9 @@ namespace CluelessControl
             if (MuteCheckBox.Checked)
                 return;
 
-            _volumeLevel = VolumeTrackBar.Value;
-            _soundManager.SetVolume(_volumeLevel / 100.0f);
-            VolumeLabel.Text = string.Format("Głośność: {0}%", _volumeLevel);
+            _volumeLevel = VolumeTrackBar.Value / 100.0f;
+            _soundManager.SetVolume(_volumeLevel);
+            VolumeLabel.Text = string.Format("Głośność: {0:##0%}", _volumeLevel);
         }
 
         private void MuteCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -163,11 +163,11 @@ namespace CluelessControl
             }
             else
             {
-                _volumeLevel = VolumeTrackBar.Value;
+                _volumeLevel = VolumeTrackBar.Value / 100.0f;
             }
 
-            _soundManager.SetVolume(_volumeLevel / 100.0f);
-            VolumeLabel.Text = string.Format("Głośność: {0}%", _volumeLevel);
+            _soundManager.SetVolume(_volumeLevel);
+            VolumeLabel.Text = string.Format("Głośność: {0:##0%}", _volumeLevel);
         }
 
         private void PlaySingleSound(string filePath)
@@ -1585,15 +1585,18 @@ namespace CluelessControl
             _soundManager.PlayQueue(QUEUE_NAME_QUESTION_GAME);
         }
 
-        private void PlayStatisticsUpdate()
+        private void QuestionGamePlayStatisticsUpdate()
         {
             PlaySingleSound(filePath: "snd/statistics-update.wav");
         }
 
-        private void PlayShredderSound()
+        private void QuestionGamePlayShredderSound()
         {
             var shredderSound = new Sound(filePath: "snd/envelope-destroyed.wav", _volumeLevel);
-            shredderSound.EventStoppedPlayback += (s, e) => _soundManager.ResumeQueue(QUEUE_NAME_ANSWER_REACTION);
+            shredderSound.EventStoppedPlayback += (s, e) =>
+            {
+                _soundManager.ResumeQueue(QUEUE_NAME_ANSWER_REACTION);
+            };
 
             _soundManager.PauseQueue(QUEUE_NAME_ANSWER_REACTION);
             _soundManager.PlaySingleSound(shredderSound);
@@ -1867,9 +1870,9 @@ namespace CluelessControl
             gameStateInstance.KeepOrDestroyBasedOnAnswer();
 
             if (gameStateInstance.IsAnswerCorrect())
-                PlayStatisticsUpdate();
+                QuestionGamePlayStatisticsUpdate();
             else
-                PlayShredderSound();
+                QuestionGamePlayShredderSound();
 
             if (gameStateInstance.HasQuestionsLeft)
                 QuestionGameNextQuestionBtn.Enabled = true;
@@ -1973,7 +1976,10 @@ namespace CluelessControl
         private void TradingPlayShredderSound()
         {
             var shredderSound = new Sound(filePath: "snd/envelope-destroyed.wav", _volumeLevel);
-            shredderSound.EventStoppedPlayback += (s, e) => _soundManager.ResumeQueue(QUEUE_NAME_TRADING_BACKGROUND);
+            shredderSound.EventStoppedPlayback += (s, e) =>
+            {
+                _soundManager.ResumeQueue(QUEUE_NAME_TRADING_BACKGROUND);
+            };
 
             _soundManager.PauseQueue(QUEUE_NAME_TRADING_BACKGROUND);
             _soundManager.PlaySingleSound(shredderSound);
@@ -1982,7 +1988,10 @@ namespace CluelessControl
         private void TradingPlayBringMoneySound()
         {
             var bringMoneySound = new Sound("snd/trading-bring-money.wav", _volumeLevel);
-            bringMoneySound.EventStoppedPlayback += (s, e) => _soundManager.ResumeQueue(QUEUE_NAME_TRADING_BACKGROUND);
+            bringMoneySound.EventStoppedPlayback += (s, e) =>
+            {
+                _soundManager.ResumeQueue(QUEUE_NAME_TRADING_BACKGROUND);
+            };
 
             _soundManager.PauseQueue(QUEUE_NAME_TRADING_BACKGROUND);
             _soundManager.PlaySingleSound(bringMoneySound);

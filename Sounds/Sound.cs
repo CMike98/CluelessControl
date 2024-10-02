@@ -4,20 +4,18 @@ namespace CluelessControl.Sounds
 {
     public class Sound : IDisposable
     {
-        private Guid _soundGuid;
-
         private string _audioPath;
         private AudioFileReader? _audioFileReader;
-        private WaveOut? _waveOut;
+        private WaveOutEvent? _waveOut;
         private float _volume;
 
+        private bool _isPaused;
         private int _loopCount;
         private SoundLoopType _loopType;
 
         public EventHandler<Sound>? EventStoppedPlayback;
         private bool disposedValue;
 
-        public Guid SoundGuid => _soundGuid;
         public string AudioPath => _audioPath;
         public float Volume => _volume;
         public PlaybackState PlayBackState => _waveOut?.PlaybackState ?? PlaybackState.Stopped;
@@ -33,41 +31,44 @@ namespace CluelessControl.Sounds
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("Sound file not found.", filePath);
 
-            _soundGuid = Guid.NewGuid();
             _audioPath = filePath;
             _volume = Utils.Clamp(volume, min: 0, max: 1);
             _loopType = SoundLoopType.NO_LOOP;
 
             _audioFileReader = new AudioFileReader(filePath);
-            
-            _waveOut = new WaveOut();
+
+            _waveOut = new WaveOutEvent();
             _waveOut.Init(_audioFileReader);
-            _waveOut.Volume = _volume;
+            _waveOut.Volume = volume;
 
-            _waveOut.PlaybackStopped += (s, e) =>
-            {
-                if (_loopType == SoundLoopType.NO_LOOP)
-                {
-                    EventStoppedPlayback?.Invoke(this, this);
-                    return;
-                }
-
-                if (_loopType == SoundLoopType.INFINITE_LOOP || _loopCount > 0)
-                {
-                    _audioFileReader.Position = 0;
-                    _waveOut.Play();
-
-                    if (_loopType == SoundLoopType.FINITE_LOOP && _loopCount > 0)
-                    {
-                        --_loopCount;
-                    }
-                }
-                else
-                {
-                    EventStoppedPlayback?.Invoke(this, this);
-                }
-            };
+            _waveOut.PlaybackStopped += OnPlayBackStopped;
         }
+
+        private void OnPlayBackStopped(object? sender, StoppedEventArgs e)
+        {
+            if (_audioFileReader == null)
+                throw new InvalidOperationException("No audioFileReader found.");
+            if (_waveOut == null)
+                throw new InvalidOperationException("No waveOut found.");
+
+            if (_loopType == SoundLoopType.INFINITE_LOOP)
+            {
+                _audioFileReader.Position = 0;
+                _waveOut.Play();
+            }
+            else if (_loopType == SoundLoopType.FINITE_LOOP && _loopCount > 0)
+            {
+                _audioFileReader.Position = 0;
+                _waveOut.Play();
+
+                _loopCount--;
+            }
+            else
+            {
+                EventStoppedPlayback?.Invoke(this, this);
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -94,25 +95,20 @@ namespace CluelessControl.Sounds
         public void Play()
         {
             _waveOut?.Play();
+            _isPaused = false;
         }
 
         public void Stop()
         {
-            SetNoLoop();
-
             _waveOut?.Stop();
+            _isPaused = false;
         }
 
         public void Pause()
         {
             _waveOut?.Pause();
+            _isPaused = true;
         }
-
-        public void Resume()
-        {
-            _waveOut?.Resume();
-        }
-
         #endregion
 
         public void SetVolume(float newVolume)

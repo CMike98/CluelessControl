@@ -91,7 +91,10 @@ namespace CluelessControl.Sounds
 
         public void ClearQueue(string queueName)
         {
-            var soundQueue = GetQueue(queueName) ?? throw new KeyNotFoundException($"Queue \"{queueName}\" not found.");
+            var soundQueue = GetQueue(queueName);
+            if (soundQueue is null)
+                return;
+
             soundQueue.ClearQueue();
         }
 
@@ -100,7 +103,10 @@ namespace CluelessControl.Sounds
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("Sound file not found.");
 
-            var soundQueue = GetQueue(queueName) ?? throw new KeyNotFoundException($"Queue \"{queueName}\" not found.");
+            var soundQueue = GetQueue(queueName);
+            if (soundQueue is null)
+                return;
+
 
             var sound = new Sound(filePath, _volume);
             soundQueue.EnqueueSound(sound);
@@ -108,13 +114,19 @@ namespace CluelessControl.Sounds
 
         public void AddSoundToQueue(string queueName, Sound sound)
         {
-            var soundQueue = GetQueue(queueName) ?? throw new KeyNotFoundException($"Queue \"{queueName}\" not found.");
+            var soundQueue = GetQueue(queueName);
+            if (soundQueue is null)
+                return;
+
             soundQueue.EnqueueSound(sound);
         }
 
         public void PlayQueue(string queueName)
         {
-            var soundQueue = GetQueue(queueName) ?? throw new KeyNotFoundException($"Queue \"{queueName}\" not found.");
+            var soundQueue = GetQueue(queueName);
+            if (soundQueue is null)
+                return;
+
             soundQueue.PlayQueue();
         }
 
@@ -128,13 +140,19 @@ namespace CluelessControl.Sounds
 
         public void PauseQueue(string queueName)
         {
-            var soundQueue = GetQueue(queueName) ?? throw new KeyNotFoundException($"Queue \"{queueName}\" not found.");
+            var soundQueue = GetQueue(queueName);
+            if (soundQueue is null)
+                return;
+
             soundQueue.PauseCurrentSound();
         }
 
         public void ResumeQueue(string queueName)
         {
-            var soundQueue = GetQueue(queueName) ?? throw new KeyNotFoundException($"Queue \"{queueName}\" not found.");
+            var soundQueue = GetQueue(queueName);
+            if (soundQueue is null)
+                return;
+
             soundQueue.ResumeCurrentSound();
         }
 

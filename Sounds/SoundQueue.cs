@@ -4,9 +4,10 @@
     {
         private readonly Queue<Sound> _soundQueue;
         private Sound? _currentSound; // Przechowuje aktualnie odtwarzany dźwięk
+
         private bool _isPlaying;
         private bool _isLooping; // Flaga wskazująca, czy pętla jest odtwarzana w tle
-
+        private bool _isPaused;
 
         public event Action<SoundQueue>? QueueCompleted; // Zdarzenie z kluczem kolejki
 
@@ -16,8 +17,10 @@
         {
             QueueKey = queueKey; // Przechowujemy klucz kolejki
             _soundQueue = new Queue<Sound>();
+
             _isPlaying = false;
             _isLooping = false;
+            _isPaused = false;
             _currentSound = null;
         }
 
@@ -48,7 +51,7 @@
                 return;
             }
 
-            if (_soundQueue.Count > 0) // Odtwarzamy kolejny dźwięk, jeśli jest coś w kolejce
+            if (_soundQueue.Count > 0 && !_isPaused) // Odtwarzamy kolejny dźwięk, jeśli jest coś w kolejce
             {
                 _currentSound = _soundQueue.Dequeue();
                 _currentSound.Play();
@@ -57,7 +60,8 @@
                 _currentSound.EventStoppedPlayback += OnCurrentSoundPlaybackStopped;
 
                 // Jeśli dźwięk jest w nieskończonej pętli, odtwarzamy go w tle
-                if (_currentSound.LoopType == SoundLoopType.INFINITE_LOOP)
+                if (_currentSound.LoopType == SoundLoopType.INFINITE_LOOP ||
+                    (_currentSound.LoopType == SoundLoopType.FINITE_LOOP && _currentSound.LoopCount > 0))
                 {
                     _isLooping = true;
                     PlayNextSound(); // Przechodzimy do kolejnego dźwięku w tle
@@ -71,7 +75,8 @@
             sound.EventStoppedPlayback -= OnCurrentSoundPlaybackStopped; // Odpinamy zdarzenie
 
             // Jeśli dźwięk nie jest w nieskończonej pętli, przechodzimy do kolejnego
-            if (sound.LoopType != SoundLoopType.INFINITE_LOOP)
+            if (sound.LoopType != SoundLoopType.INFINITE_LOOP &&
+                (sound.LoopType != SoundLoopType.FINITE_LOOP && sound.LoopCount <= 0))
             {
                 PlayNextSound(); // Odtwórz następny dźwięk w kolejce
             }
@@ -83,6 +88,8 @@
             if (_isLooping)
             {
                 _isLooping = false;    // Flaga wskazuje, że nie ma już pętli
+
+                _currentSound?.SetNoLoop();
                 _currentSound?.Stop(); // Zatrzymujemy dźwięk w nieskończonej pętli
                 
                 PlayNextSound();       // Sprawdzamy, czy są kolejne dźwięki w kolejce
@@ -92,13 +99,23 @@
         // Pauzuj aktualnie odtwarzany dźwięk
         public void PauseCurrentSound()
         {
-            _currentSound?.Pause(); // Pauzujemy bieżący dźwięk, jeśli istnieje
+            if (_currentSound != null && !_isPaused)
+            {
+                _currentSound?.Pause(); // Pauzujemy bieżący dźwięk, jeśli istnieje
+                _isPaused = true;
+            }
         }
 
         // Wznów aktualnie odtwarzany dźwięk
         public void ResumeCurrentSound()
         {
-            _currentSound?.Play(); // Wznawiamy bieżący dźwięk
+            if (_currentSound != null && _isPaused)
+            {
+                _isPaused = false;
+                _currentSound?.Play();
+
+                PlayNextSound();
+            }
         }
 
         // Zatrzymaj kolejkę
@@ -106,8 +123,10 @@
         {
             _isPlaying = false;
             _isLooping = false;
+            _isPaused = false;
             _soundQueue.Clear();
 
+            _currentSound?.SetNoLoop();
             _currentSound?.Stop();
             _currentSound = null;
         }
