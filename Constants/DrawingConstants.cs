@@ -4,6 +4,12 @@ namespace CluelessControl.Constants
 {
     public class DrawingConstants
     {
+        #region Center Text
+
+        public const TextFormatFlags TEXT_CENTER_DRAWING_FORMAT_FLAGS = TextFormatFlags.NoPrefix | TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.NoPadding | TextFormatFlags.WordBreak;
+
+        #endregion
+
         #region Box
 
         /// <summary>
