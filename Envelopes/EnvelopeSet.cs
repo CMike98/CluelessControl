@@ -111,20 +111,21 @@ namespace CluelessControl.Envelopes
         #endregion
 
         #region Sorting
+
+        private static int EnvelopeNumberComparer(Envelope? env1, Envelope? env2)
+        {
+            if (env1 == null && env2 == null)
+                return 0;
+            if (env1 == null)
+                return -1;
+            if (env2 == null)
+                return 1;
+
+            return env1.EnvelopeNumber.CompareTo(env2.EnvelopeNumber);
+        }
+
         public void SortByEnvelopeNumbers()
         {
-            static int EnvelopeNumberComparer(Envelope env1, Envelope env2)
-            {
-                if (env1 == null && env2 == null)
-                    return 0;
-                if (env1 == null)
-                    return -1;
-                if (env2 == null)
-                    return 1;
-
-                return env1.EnvelopeNumber.CompareTo(env2.EnvelopeNumber);
-            }
-
             _envelopes.Sort(EnvelopeNumberComparer);
         }
         #endregion
