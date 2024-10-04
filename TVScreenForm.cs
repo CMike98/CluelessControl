@@ -18,12 +18,6 @@ namespace CluelessControl
             SHOW_ENVELOPES_ONLY
         }
 
-        private static readonly StringFormat TextCenterDrawingFormat = new()
-        {
-            LineAlignment = StringAlignment.Center,
-            Alignment = StringAlignment.Center,
-        };
-
         private static readonly QuestionBarState[] StatesWithoutQuestion =
             [
                 QuestionBarState.CLEAR,
@@ -562,7 +556,7 @@ namespace CluelessControl
                 e.Graphics.FillRectangle(brush, location.X, location.Y, size.Width, size.Height);
             }
 
-            RectangleF introductionInsideRectangle = new(
+            Rectangle introductionInsideRectangle = new(
                 x: location.X + DrawingConstants.INTRODUCE_BAR_BORDER.Width,
                 y: location.Y + DrawingConstants.INTRODUCE_BAR_BORDER.Height,
                 width: size.Width - DrawingConstants.INTRODUCE_BAR_BORDER.Width * 2,
@@ -573,9 +567,9 @@ namespace CluelessControl
                 e.Graphics.FillRectangle(brush, introductionInsideRectangle);
             }
 
-            using (Font font = FontHelper.GetMaxFont(_contestantName, e.Graphics, DrawingConstants.INTRODUCTION_DRAWING_FONT, size))
+            using (Font font = FontHelper.GetMaxFont(_contestantName, e.Graphics, DrawingConstants.INTRODUCTION_DRAWING_FONT, size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
             {
-                e.Graphics.DrawString(_contestantName, font, Brushes.White, introductionInsideRectangle, TextCenterDrawingFormat);
+                TextRenderer.DrawText(e.Graphics, _contestantName, font, introductionInsideRectangle, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
             }
         }
 
@@ -583,7 +577,7 @@ namespace CluelessControl
 
         #region Envelope Drawing
 
-        private void PaintEnvelopeInArea(Envelope envelope, Graphics graphics, RectangleF areaRectangle, Color? requestedBackgroundColor = null)
+        private void PaintEnvelopeInArea(Envelope envelope, Graphics graphics, Rectangle areaRectangle, Color? requestedBackgroundColor = null)
         {
             if (envelope is null)
                 throw new ArgumentNullException(nameof(envelope));
@@ -592,11 +586,11 @@ namespace CluelessControl
             if (areaRectangle.IsEmpty)
                 throw new ArgumentException($"Area rectangle is empty!", nameof(areaRectangle));
 
-            SizeF size = areaRectangle.Size;
+            Size size = areaRectangle.Size;
 
-            PointF leftPoint = areaRectangle.Location;
-            PointF centerPoint = new(leftPoint.X + size.Width / 2, leftPoint.Y + size.Height / 2);
-            PointF rightPoint = new(leftPoint.X + size.Width, leftPoint.Y);
+            Point leftPoint = areaRectangle.Location;
+            Point centerPoint = new(leftPoint.X + size.Width / 2, leftPoint.Y + size.Height / 2);
+            Point rightPoint = new(leftPoint.X + size.Width, leftPoint.Y);
 
             var colorCollection = envelope.GetColorsForTv();
 
@@ -607,14 +601,14 @@ namespace CluelessControl
                 graphics.FillRectangle(backgroundBrush, areaRectangle);
             }
 
-            using (Pen linePen = new Pen(colorCollection.LineColor))
+            using (Pen linePen = new(colorCollection.LineColor))
             {
                 graphics.DrawLine(linePen, leftPoint, centerPoint);
                 graphics.DrawLine(linePen, centerPoint, rightPoint);
             }
 
             string envelopeNumberString = string.Format("{0,2}", envelope.EnvelopeNumber);
-            SizeF envelopeNumberSize = graphics.MeasureString(envelopeNumberString, DrawingConstants.ENVELOPE_DRAWING_FONT);
+            Size envelopeNumberSize = TextRenderer.MeasureText(graphics, envelopeNumberString, DrawingConstants.ENVELOPE_DRAWING_FONT);
 
             graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.GammaCorrected;
             graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
@@ -624,24 +618,25 @@ namespace CluelessControl
                 graphics.FillRectangle(backgroundBrush, leftPoint.X, leftPoint.Y, envelopeNumberSize.Width, envelopeNumberSize.Height);
             }
 
-            using (Brush numberBrush = new SolidBrush(colorCollection.NumberFontColor))
-            {
-                graphics.DrawString(envelopeNumberString, DrawingConstants.ENVELOPE_DRAWING_FONT, numberBrush, leftPoint.X, leftPoint.Y);
-            }
+            TextRenderer.DrawText(graphics, envelopeNumberString, DrawingConstants.ENVELOPE_DRAWING_FONT, leftPoint, colorCollection.NumberFontColor);
 
             if (GameState.Instance.GameSettings.ShowAmountsOnTv || envelope.IsOpen)
             {
                 BaseCheque cheque = envelope.Cheque;
                 string chequeString = cheque.ToValueString();
-                SizeF bottomHalfSize = new SizeF(width: size.Width, height: size.Height / 2);
+                Size bottomHalfSize = new(width: size.Width, height: size.Height / 2);
 
-                using (Brush chequeBrush = new SolidBrush(colorCollection.ChequeFontColor))
+                using (Font maxFont = FontHelper.GetMaxFont(chequeString, graphics, DrawingConstants.ENVELOPE_DRAWING_FONT, bottomHalfSize, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
                 {
-                    using (Font maxFont = FontHelper.GetMaxFont(chequeString, graphics, DrawingConstants.ENVELOPE_DRAWING_FONT, bottomHalfSize))
-                    {
-                        SizeF chequeValueSize = graphics.MeasureString(chequeString, maxFont);
-                        graphics.DrawString(chequeString, maxFont, chequeBrush, leftPoint.X + size.Width - chequeValueSize.Width, leftPoint.Y + size.Height - chequeValueSize.Height);
-                    }
+                    Size chequeValueSize = TextRenderer.MeasureText(chequeString, maxFont); 
+
+                    Rectangle bottomRight = new Rectangle(
+                        x: leftPoint.X + size.Width - chequeValueSize.Width,
+                        y: leftPoint.Y + size.Height - chequeValueSize.Height,
+                        width: chequeValueSize.Width,
+                        height: chequeValueSize.Height);
+
+                    TextRenderer.DrawText(graphics, chequeString, maxFont, bottomRight, colorCollection.ChequeFontColor, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
                 }
             }
         }
@@ -704,7 +699,7 @@ namespace CluelessControl
                 e.Graphics.FillRectangle(brush, location.X, location.Y, size.Width, size.Height);
             }
 
-            RectangleF questionBarRectangle = new(
+            Rectangle questionBarRectangle = new(
                 x: location.X + DrawingConstants.QUESTION_BAR_BORDER.Width,
                 y: location.Y + DrawingConstants.QUESTION_BAR_BORDER.Height,
                 width: size.Width - DrawingConstants.QUESTION_BAR_BORDER.Width * 2,
@@ -748,7 +743,7 @@ namespace CluelessControl
             }
         }
 
-        private void PaintQuestion(Question question, Graphics graphics, RectangleF areaRectangle)
+        private void PaintQuestion(Question question, Graphics graphics, Rectangle areaRectangle)
         {
             if (question is null)
                 throw new ArgumentNullException(nameof(question));
@@ -759,10 +754,13 @@ namespace CluelessControl
 
             string questionToDraw = question.Text;
 
-            graphics.DrawString(questionToDraw, DrawingConstants.QUESTION_DRAWING_FONT, Brushes.White, areaRectangle, TextCenterDrawingFormat);
+            using (Font font = FontHelper.GetMaxFont(questionToDraw, graphics, DrawingConstants.QUESTION_DRAWING_FONT, areaRectangle.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
+            {
+                TextRenderer.DrawText(graphics, questionToDraw, DrawingConstants.QUESTION_DRAWING_FONT, areaRectangle, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
+            }
         }
 
-        private void PaintQuestionAndAnswers(Question question, Graphics graphics, RectangleF areaRectangle, int? lockedInAnswer = null, int? correctAnswer = null)
+        private void PaintQuestionAndAnswers(Question question, Graphics graphics, Rectangle areaRectangle, int? lockedInAnswer = null, int? correctAnswer = null)
         {
             if (question is null)
                 throw new ArgumentNullException(nameof(question));
@@ -773,10 +771,10 @@ namespace CluelessControl
 
             // Draw question
 
-            RectangleF questionRectangle = new RectangleF(areaRectangle.X, areaRectangle.Y, areaRectangle.Width, areaRectangle.Height / 2);
-            using (Font font = FontHelper.GetMaxFont(question.Text, graphics, DrawingConstants.QUESTION_ANSWER_DRAWING_FONT, questionRectangle.Size))
+            Rectangle questionRectangle = new Rectangle(areaRectangle.X, areaRectangle.Y, areaRectangle.Width, areaRectangle.Height / 2);
+            using (Font font = FontHelper.GetMaxFont(question.Text, graphics, DrawingConstants.QUESTION_ANSWER_DRAWING_FONT, questionRectangle.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
             {
-                graphics.DrawString(question.Text, font, Brushes.White, questionRectangle, TextCenterDrawingFormat);
+                TextRenderer.DrawText(graphics, question.Text, font, questionRectangle, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
             }
 
             // Draw answers
@@ -792,7 +790,7 @@ namespace CluelessControl
             }
         }
 
-        private void PaintAnswer(Question question, Graphics graphics, RectangleF areaRectangle, int answerNumber, Color color)
+        private void PaintAnswer(Question question, Graphics graphics, Rectangle areaRectangle, int answerNumber, Color color)
         {
             if (question is null)
                 throw new ArgumentNullException(nameof(question));
@@ -809,9 +807,9 @@ namespace CluelessControl
             bool rightSide = answerNumber % 2 == 0;
             bool downSide = answerNumber > midwayNumber;
 
-            RectangleF answerRectangle = new RectangleF(
+            Rectangle answerRectangle = new Rectangle(
                 x: areaRectangle.X + (rightSide ? areaRectangle.Width / 2 : 0),
-                y: areaRectangle.Y + (areaRectangle.Height * (downSide ? 0.75f : 0.5f)),
+                y: areaRectangle.Y + (areaRectangle.Height * (downSide ? 3 : 2) / 4),
                 width: areaRectangle.Width / 2,
                 height: areaRectangle.Height / 4);
 
@@ -826,12 +824,11 @@ namespace CluelessControl
 
             string answerText = string.Format("{0}: {1}", Utils.AnswerToLetter(answerNumber), answer);
 
-            using Font font = FontHelper.GetMaxFont(answerText, graphics, DrawingConstants.QUESTION_ANSWER_DRAWING_FONT, answerRectangle.Size);
-            using Brush brush = new SolidBrush(color);
-            graphics.DrawString(answerText, font, brush, answerRectangle, TextCenterDrawingFormat);
+            using Font font = FontHelper.GetMaxFont(answerText, graphics, DrawingConstants.QUESTION_ANSWER_DRAWING_FONT, answerRectangle.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
+            TextRenderer.DrawText(graphics, answerText, font, answerRectangle, color, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
         }
 
-        private void PaintQuestionBarEnvelopesAndQuestion(IList<Envelope> envelopes, Question? question, Graphics graphics, RectangleF areaRectangle)
+        private void PaintQuestionBarEnvelopesAndQuestion(IList<Envelope> envelopes, Question? question, Graphics graphics, Rectangle areaRectangle)
         {
             if (envelopes is null)
                 throw new ArgumentNullException(nameof(envelopes));
@@ -842,29 +839,29 @@ namespace CluelessControl
             if (areaRectangle.IsEmpty)
                 throw new ArgumentException($"Area rectangle is empty!", nameof(areaRectangle));
 
-            RectangleF envelopeRectangle;
+            Rectangle envelopeRectangle;
             if (question is not null)
             {
-                RectangleF upperHalf = new RectangleF(
+                Rectangle upperHalf = new Rectangle(
                     x: areaRectangle.X,
                     y: areaRectangle.Y,
                     width: areaRectangle.Width,
-                    height: areaRectangle.Height / 2.0f);
+                    height: areaRectangle.Height / 2);
 
-                using (Font font = FontHelper.GetMaxFont(question.Text, graphics, DrawingConstants.QUESTION_ANSWER_DRAWING_FONT, upperHalf.Size))
+                using (Font font = FontHelper.GetMaxFont(question.Text, graphics, DrawingConstants.QUESTION_ANSWER_DRAWING_FONT, upperHalf.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
                 {
-                    graphics.DrawString(question.Text, font, Brushes.White, upperHalf, TextCenterDrawingFormat);
+                    TextRenderer.DrawText(graphics, question.Text, font, upperHalf, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
                 }
 
-                envelopeRectangle = new RectangleF(
+                envelopeRectangle = new Rectangle(
                     x: areaRectangle.X,
-                    y: areaRectangle.Y + areaRectangle.Height / 2.0f,
+                    y: areaRectangle.Y + areaRectangle.Height / 2,
                     width: areaRectangle.Width,
-                    height: areaRectangle.Height / 2.0f);
+                    height: areaRectangle.Height / 2);
             }
             else
             {
-                envelopeRectangle = new RectangleF(
+                envelopeRectangle = new Rectangle(
                     x: areaRectangle.X,
                     y: areaRectangle.Y,
                     width: areaRectangle.Width,
@@ -874,14 +871,14 @@ namespace CluelessControl
             // Draw envelopes
 
             int maxCount = envelopes.Count;
-            float totalWidth = DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * (maxCount - 1) + DrawingConstants.ENVELOPE_SIZE.Width;
+            int totalWidth = DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * (maxCount - 1) + DrawingConstants.ENVELOPE_SIZE.Width;
             for (int i = 0; i < maxCount; i++)
             {
                 Envelope envelope = envelopes[i];
 
-                RectangleF rectangle = new RectangleF(
-                    x: envelopeRectangle.X + ((envelopeRectangle.Width - totalWidth) / 2.0f) + i * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width,
-                    y: envelopeRectangle.Y + (envelopeRectangle.Height - DrawingConstants.ENVELOPE_SIZE.Height) / 2.0f,
+                Rectangle rectangle = new Rectangle(
+                    x: envelopeRectangle.X + (envelopeRectangle.Width - totalWidth) / 2 + i * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width,
+                    y: envelopeRectangle.Y + (envelopeRectangle.Height - DrawingConstants.ENVELOPE_SIZE.Height) / 2,
                     width: DrawingConstants.ENVELOPE_SIZE.Width,
                     height: DrawingConstants.ENVELOPE_SIZE.Height);
 
@@ -899,15 +896,15 @@ namespace CluelessControl
             Size size = clientRectangle.Size;
             Point location = clientRectangle.Location;
             var gameStateInstance = GameState.Instance;
-            string questionNumber = string.Format("PYTANIE {0}/{1}", gameStateInstance.QuestionNumber, gameStateInstance.MaxQuestionCount);
+            
 
-            RectangleF allRectangle = new RectangleF(
+            Rectangle allRectangle = new Rectangle(
                 x: location.X,
                 y: location.Y,
                 width: size.Width,
                 height: size.Height);
 
-            RectangleF questionCounterRectangle = new RectangleF(
+            Rectangle questionCounterRectangle = new Rectangle(
                 x: location.X + DrawingConstants.QUESTION_COUNTER_BORDER.Width,
                 y: location.Y + DrawingConstants.QUESTION_COUNTER_BORDER.Height,
                 width: size.Width - DrawingConstants.QUESTION_COUNTER_BORDER.Width * 2,
@@ -923,7 +920,12 @@ namespace CluelessControl
                 e.Graphics.FillRectangle(insideBrush, questionCounterRectangle);
             }
 
-            e.Graphics.DrawString(questionNumber, DrawingConstants.QUESTION_COUNTER_FONT, Brushes.White, questionCounterRectangle, TextCenterDrawingFormat);
+            string questionNumber = string.Format("PYTANIE {0}/{1}", gameStateInstance.QuestionNumber, gameStateInstance.MaxQuestionCount);
+
+            using (Font font = FontHelper.GetMaxFont(questionNumber, e.Graphics, DrawingConstants.QUESTION_COUNTER_FONT, questionCounterRectangle.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
+            {
+                TextRenderer.DrawText(e.Graphics, questionNumber, font, questionCounterRectangle, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
+            }
         }
 
         private void QuestionPlayingForPictureBox_Paint(object? sender, PaintEventArgs e)
@@ -949,7 +951,7 @@ namespace CluelessControl
             Size size = clientRectangle.Size;
             Point location = clientRectangle.Location;
 
-            RectangleF insideRectangle = new RectangleF(
+            Rectangle insideRectangle = new Rectangle(
                 x: location.X + DrawingConstants.CONTESTANT_CASH_PADDING.Width,
                 y: location.Y + DrawingConstants.CONTESTANT_CASH_PADDING.Height,
                 width: size.Width - DrawingConstants.CONTESTANT_CASH_PADDING.Width * 2,
@@ -965,32 +967,32 @@ namespace CluelessControl
                 e.Graphics.FillRectangle(insideBrush, insideRectangle);
             }
 
-            RectangleF upperPart = new RectangleF(
+            Rectangle upperPart = new Rectangle(
                 x: insideRectangle.X,
                 y: insideRectangle.Y,
                 width: insideRectangle.Size.Width,
-                height: insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION);
+                height: (int) (insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION));
 
-            RectangleF lowerPart = new RectangleF(
+            Rectangle lowerPart = new Rectangle(
                 x: insideRectangle.X,
-                y: insideRectangle.Y + insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION,
+                y: insideRectangle.Y + (int)(insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION),
                 width: insideRectangle.Size.Width,
-                height: insideRectangle.Size.Height * DrawingConstants.TRADING_REST_PART_FRACTION);
+                height: (int)(insideRectangle.Size.Height * DrawingConstants.TRADING_REST_PART_FRACTION));
 
             using (Pen pen = new(DrawingConstants.BOX_BACKGROUND_OUT))
             {
                 e.Graphics.DrawRectangle(pen, upperPart);
             }
 
-            using (Font font = FontHelper.GetMaxFont(GameConstants.CASH_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, upperPart.Size))
+            using (Font font = FontHelper.GetMaxFont(GameConstants.CASH_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, upperPart.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
             {
-                e.Graphics.DrawString(GameConstants.CASH_STRING, font, Brushes.White, upperPart, TextCenterDrawingFormat);
+                TextRenderer.DrawText(e.Graphics, GameConstants.CASH_STRING, font, upperPart, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
             }
 
             string cash = Utils.AmountToString(GameState.Instance.ContestantCash);
-            using (Font font = FontHelper.GetMaxFont(cash, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size))
+            using (Font font = FontHelper.GetMaxFont(cash, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
             {
-                e.Graphics.DrawString(cash, font, Brushes.White, lowerPart, TextCenterDrawingFormat);
+                TextRenderer.DrawText(e.Graphics, cash, font, lowerPart, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
             }
         }
 
@@ -1000,7 +1002,7 @@ namespace CluelessControl
             Size size = clientRectangle.Size;
             Point location = clientRectangle.Location;
 
-            RectangleF insideRectangle = new RectangleF(
+            Rectangle insideRectangle = new Rectangle(
                 x: location.X + DrawingConstants.HOST_OFFER_PADDING.Width,
                 y: location.Y + DrawingConstants.HOST_OFFER_PADDING.Height,
                 width: size.Width - DrawingConstants.HOST_OFFER_PADDING.Width * 2,
@@ -1016,32 +1018,32 @@ namespace CluelessControl
                 e.Graphics.FillRectangle(insideBrush, insideRectangle);
             }
 
-            RectangleF upperPart = new RectangleF(
+            Rectangle upperPart = new Rectangle(
                 x: insideRectangle.X,
                 y: insideRectangle.Y,
                 width: insideRectangle.Size.Width,
-                height: insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION);
+                height: (int)(insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION));
 
-            RectangleF lowerPart = new RectangleF(
+            Rectangle lowerPart = new Rectangle(
                 x: insideRectangle.X,
-                y: insideRectangle.Y + insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION,
+                y: insideRectangle.Y + (int)(insideRectangle.Size.Height * DrawingConstants.TRADING_TITLE_PART_FRACTION),
                 width: insideRectangle.Size.Width,
-                height: insideRectangle.Size.Height * DrawingConstants.TRADING_REST_PART_FRACTION);
+                height: (int)(insideRectangle.Size.Height * DrawingConstants.TRADING_REST_PART_FRACTION));
 
             using (Pen pen = new(DrawingConstants.BOX_BACKGROUND_OUT))
             {
                 e.Graphics.DrawRectangle(pen, upperPart);
             }
 
-            using (Font font = FontHelper.GetMaxFont(GameConstants.OFFER_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, upperPart.Size))
+            using (Font font = FontHelper.GetMaxFont(GameConstants.OFFER_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, upperPart.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
             {
-                e.Graphics.DrawString(GameConstants.OFFER_STRING, font, Brushes.White, upperPart, TextCenterDrawingFormat);
+                TextRenderer.DrawText(e.Graphics, GameConstants.OFFER_STRING, font, upperPart, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
             }
 
             string offer = Utils.AmountToString(GameState.Instance.CashOffer);
-            using (Font font = FontHelper.GetMaxFont(offer, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size))
+            using (Font font = FontHelper.GetMaxFont(offer, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
             {
-                e.Graphics.DrawString(offer, font, Brushes.White, lowerPart, TextCenterDrawingFormat);
+                TextRenderer.DrawText(e.Graphics, offer, font, lowerPart, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
             }
             
         }
@@ -1051,11 +1053,11 @@ namespace CluelessControl
             if (sender is not PictureBox envelopeBox)
                 return;
 
-            var clientRectangle = envelopeBox.ClientRectangle;
-            var location = clientRectangle.Location;
-            var size = clientRectangle.Size;
+            Rectangle clientRectangle = envelopeBox.ClientRectangle;
+            Point location = clientRectangle.Location;
+            Size size = clientRectangle.Size;
 
-            RectangleF rectangle = new RectangleF(
+            Rectangle rectangle = new Rectangle(
                 x: location.X,
                 y: location.Y,
                 width: size.Width,
@@ -1090,7 +1092,7 @@ namespace CluelessControl
             var location = clientRectangle.Location;
             var size = clientRectangle.Size;
 
-            RectangleF rectangle = new RectangleF(
+            Rectangle rectangle = new Rectangle(
                 x: location.X,
                 y: location.Y,
                 width: size.Width,
@@ -1122,7 +1124,7 @@ namespace CluelessControl
             var location = clientRectangle.Location;
             var size = clientRectangle.Size;
 
-            RectangleF insideRectangle = new RectangleF(
+            Rectangle insideRectangle = new Rectangle(
                 x: location.X + DrawingConstants.CONTESTANT_WORD_PADDING.Width,
                 y: location.Y + DrawingConstants.CONTESTANT_WORD_PADDING.Height,
                 width: size.Width - DrawingConstants.CONTESTANT_WORD_PADDING.Width * 2,
@@ -1138,9 +1140,9 @@ namespace CluelessControl
                 e.Graphics.FillRectangle(insideBrush, insideRectangle);
             }
 
-            using (Font font = FontHelper.GetMaxFont(GameConstants.CONTESTANT_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, insideRectangle.Size))
+            using (Font font = FontHelper.GetMaxFont(GameConstants.CONTESTANT_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, insideRectangle.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
             {
-                e.Graphics.DrawString(GameConstants.CONTESTANT_STRING, font, Brushes.White, insideRectangle, TextCenterDrawingFormat);
+                TextRenderer.DrawText(e.Graphics, GameConstants.CONTESTANT_STRING, font, insideRectangle, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
             }
         }
 
@@ -1150,7 +1152,7 @@ namespace CluelessControl
             var location = clientRectangle.Location;
             var size = clientRectangle.Size;
 
-            RectangleF insideRectangle = new RectangleF(
+            Rectangle insideRectangle = new Rectangle(
                 x: location.X + DrawingConstants.HOST_WORD_PADDING.Width,
                 y: location.Y + DrawingConstants.HOST_WORD_PADDING.Height,
                 width: size.Width - DrawingConstants.HOST_WORD_PADDING.Width * 2,
@@ -1166,9 +1168,9 @@ namespace CluelessControl
                 e.Graphics.FillRectangle(insideBrush, insideRectangle);
             }
 
-            using (Font font = FontHelper.GetMaxFont(GameConstants.HOST_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, insideRectangle.Size))
+            using (Font font = FontHelper.GetMaxFont(GameConstants.HOST_STRING, e.Graphics, DrawingConstants.TRADING_SMALL_FONT, insideRectangle.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
             {
-                e.Graphics.DrawString(GameConstants.HOST_STRING, font, Brushes.White, insideRectangle, TextCenterDrawingFormat);
+                TextRenderer.DrawText(e.Graphics, GameConstants.HOST_STRING, font, insideRectangle, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
             }
         }
 
@@ -1182,7 +1184,7 @@ namespace CluelessControl
             Size size = clientRectangle.Size;
             Point location = clientRectangle.Location;
 
-            RectangleF insideRectangle = new RectangleF(
+            Rectangle insideRectangle = new Rectangle(
                 x: location.X + DrawingConstants.GAME_OVER_PADDING.Width,
                 y: location.Y + DrawingConstants.GAME_OVER_PADDING.Height,
                 width: size.Width - DrawingConstants.GAME_OVER_PADDING.Width * 2,
@@ -1198,32 +1200,32 @@ namespace CluelessControl
                 e.Graphics.FillRectangle(insideBrush, insideRectangle);
             }
 
-            RectangleF upperPart = new RectangleF(
+            Rectangle upperPart = new Rectangle(
                 x: insideRectangle.X,
                 y: insideRectangle.Y,
                 width: insideRectangle.Size.Width,
-                height: insideRectangle.Size.Height * DrawingConstants.GAME_OVER_TITLE_PART_FRACTION);
+                height: (int)(insideRectangle.Size.Height * DrawingConstants.GAME_OVER_TITLE_PART_FRACTION));
 
-            RectangleF lowerPart = new RectangleF(
+            Rectangle lowerPart = new Rectangle(
                 x: insideRectangle.X,
-                y: insideRectangle.Y + insideRectangle.Size.Height * DrawingConstants.GAME_OVER_TITLE_PART_FRACTION,
+                y: insideRectangle.Y + (int)(insideRectangle.Size.Height * DrawingConstants.GAME_OVER_TITLE_PART_FRACTION),
                 width: insideRectangle.Size.Width,
-                height: insideRectangle.Size.Height * DrawingConstants.GAME_OVER_REST_PART_FRACTION);
+                height: (int)(insideRectangle.Size.Height * DrawingConstants.GAME_OVER_REST_PART_FRACTION));
 
             using (Pen pen = new(DrawingConstants.BOX_BACKGROUND_OUT))
             {
                 e.Graphics.DrawRectangle(pen, upperPart);
             }
 
-            using (Font font = FontHelper.GetMaxFont(GameConstants.PRIZE_STRING, e.Graphics, DrawingConstants.GAME_OVER_SMALL_FONT, upperPart.Size))
+            using (Font font = FontHelper.GetMaxFont(GameConstants.PRIZE_STRING, e.Graphics, DrawingConstants.GAME_OVER_SMALL_FONT, upperPart.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
             {
-                e.Graphics.DrawString(GameConstants.PRIZE_STRING, font, Brushes.White, upperPart, TextCenterDrawingFormat);
+                TextRenderer.DrawText(e.Graphics, GameConstants.PRIZE_STRING, font, upperPart, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
             }
 
             string finalPrize = GameState.Instance.FinalPrize.Trim();
-            using (Font font = FontHelper.GetMaxFont(finalPrize, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size))
+            using (Font font = FontHelper.GetMaxFont(finalPrize, e.Graphics, DrawingConstants.TRADING_BIG_FONT, lowerPart.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS, limitScale: false))
             {
-                e.Graphics.DrawString(finalPrize, font, Brushes.White, lowerPart, TextCenterDrawingFormat);
+                TextRenderer.DrawText(e.Graphics, finalPrize, font, lowerPart, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
             }
         }
 
