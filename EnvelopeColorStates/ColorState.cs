@@ -4,7 +4,7 @@ namespace CluelessControl.EnvelopeColorStates
 {
     public abstract class ColorState
     {
-        protected BaseCheque Cheque { get; init; }
+        protected BaseCheque Cheque { get; }
 
         public ColorState(BaseCheque cheque)
         {
