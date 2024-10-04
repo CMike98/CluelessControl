@@ -1941,6 +1941,8 @@ namespace CluelessControl
                 // Start trading
                 gameStateInstance.StartTrading();
 
+                TradingOfferTextBox.Text = Utils.AmountToString(amount: 0);
+
                 TradingUnlockButtons();
                 TradingUpdateEnvelopes();
                 TradingStartPlayingMusic();
@@ -1978,6 +1980,12 @@ namespace CluelessControl
             var shredderSound = new Sound(filePath: "snd/envelope-destroyed.wav", _volumeLevel);
             shredderSound.EventStoppedPlayback += (s, e) =>
             {
+                var gameStateInstance = GameState.Instance;
+                gameStateInstance.RemoveDestroyedEnvelopes();
+                gameStateInstance.RefreshEnvelopes();
+
+                TradingUnlockButtons();
+
                 _soundManager.ResumeQueue(QUEUE_NAME_TRADING_BACKGROUND);
             };
 
@@ -2034,7 +2042,6 @@ namespace CluelessControl
             }
 
             TradingOfferTextBox.Enabled = true;
-            TradingOfferTextBox.Text = "0";
 
             TradingPresentOfferBtn.Enabled = true;
             TradingBringMoneyBtn.Enabled = true;
@@ -2060,7 +2067,6 @@ namespace CluelessControl
             }
 
             TradingOfferTextBox.Enabled = false;
-            TradingOfferTextBox.Text = "0";
 
             TradingPresentOfferBtn.Enabled = false;
             TradingBringMoneyBtn.Enabled = false;
@@ -2228,7 +2234,8 @@ namespace CluelessControl
         private void TradingClearOfferBtn_Click(object sender, EventArgs e)
         {
             GameState.Instance.ClearOffer();
-            TradingOfferTextBox.Text = "0";
+            TradingOfferTextBox.Text = Utils.AmountToString(amount: 0);
+
             TradingClearCheckboxes();
 
             TradingUpdateCashLabels();
@@ -2237,11 +2244,10 @@ namespace CluelessControl
         private void TradingAcceptOfferBtn_Click(object sender, EventArgs e)
         {
             GameState.Instance.AcceptOffer();
+            TradingOfferTextBox.Text = Utils.AmountToString(amount: 0);
 
-            TradingOfferTextBox.Text = "0";
             TradingUpdateEnvelopes();
             TradingClearCheckboxes();
-
             TradingUpdateCashLabels();
 
             TradingPlayUpdateSound();
@@ -2315,12 +2321,12 @@ namespace CluelessControl
                 }
             }
 
-            gameStateInstance.RemoveDestroyedEnvelopes();
-            gameStateInstance.RefreshEnvelopes();
-
+            TradingLockButtons();
             TradingUpdateEnvelopes();
-            TradingClearCheckboxes();
             TradingUpdateCashLabels();
+            TradingClearCheckboxes();
+
+            gameStateInstance.RefreshEnvelopes();
             
             TradingPlayShredderSound();
         }
@@ -2389,6 +2395,7 @@ namespace CluelessControl
 
         private void GameOverMusicBtn_Click(object sender, EventArgs e)
         {
+            _soundManager.StopAllQueues();
             PlaySingleSound(filePath: "snd/outro.wav");
         }
 
