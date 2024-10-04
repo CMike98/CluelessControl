@@ -294,33 +294,37 @@ namespace CluelessControl
                 e.Graphics.FillRectangle(brush, clientRectangle);
             }
             
-            e.Graphics.DrawLine(Pens.Black, leftPoint, centerPoint);
-            e.Graphics.DrawLine(Pens.Black, centerPoint, rightPoint);
+            using (Pen linePen = new Pen(colorCollection.LineColor))
+            {
+                e.Graphics.DrawLine(Pens.Black, leftPoint, centerPoint);
+                e.Graphics.DrawLine(Pens.Black, centerPoint, rightPoint);
+            }
 
             string envelopeNumber = string.Format("{0,2}", envelope.EnvelopeNumber);
-            SizeF envelopeNumberSize = e.Graphics.MeasureString(envelopeNumber, DrawingConstants.ENVELOPE_DRAWING_FONT);
+            Size envelopeNumberSize = TextRenderer.MeasureText(e.Graphics, envelopeNumber, DrawingConstants.ENVELOPE_DRAWING_FONT);
 
             using (Brush backgroundBrush = new SolidBrush(colorCollection.BackgroundColor))
             {
                 e.Graphics.FillRectangle(backgroundBrush, leftPoint.X, leftPoint.Y, envelopeNumberSize.Width, envelopeNumberSize.Height);
             }
-            
-            using (Brush numberBrush = new SolidBrush(colorCollection.NumberFontColor))
-            {
-                e.Graphics.DrawString(envelopeNumber, DrawingConstants.ENVELOPE_DRAWING_FONT, Brushes.Black, leftPoint.X, leftPoint.Y);
-            }
+
+            TextRenderer.DrawText(e.Graphics, envelopeNumber, DrawingConstants.ENVELOPE_DRAWING_FONT, leftPoint, colorCollection.NumberFontColor);
 
             BaseCheque cheque = envelope.Cheque;
             string chequeString = cheque.ToValueString();
-            SizeF bottomHalfSize = new SizeF(width: size.Width, height: size.Height / 2);
+            Size bottomHalfSize = new(width: size.Width, height: size.Height / 2);
 
-            using (Brush chequeBrush = new SolidBrush(colorCollection.ChequeFontColor))
+            using (Font maxFont = FontHelper.GetMaxFont(chequeString, e.Graphics, DrawingConstants.ENVELOPE_DRAWING_FONT, bottomHalfSize, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
             {
-                using (Font maxFont = FontHelper.GetMaxFont(chequeString, e.Graphics, DrawingConstants.ENVELOPE_DRAWING_FONT, bottomHalfSize))
-                {
-                    SizeF chequeValueSize = e.Graphics.MeasureString(chequeString, maxFont);
-                    e.Graphics.DrawString(chequeString, maxFont, chequeBrush, leftPoint.X + size.Width - chequeValueSize.Width, leftPoint.Y + size.Height - chequeValueSize.Height);
-                }
+                Size chequeValueSize = TextRenderer.MeasureText(chequeString, maxFont);
+
+                Rectangle bottomRight = new(
+                    x: leftPoint.X + size.Width - chequeValueSize.Width,
+                    y: leftPoint.Y + size.Height - chequeValueSize.Height,
+                    width: chequeValueSize.Width,
+                    height: chequeValueSize.Height);
+
+                TextRenderer.DrawText(e.Graphics, chequeString, maxFont, bottomRight, colorCollection.ChequeFontColor, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
             }
         }
 
