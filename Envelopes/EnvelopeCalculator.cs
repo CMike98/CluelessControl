@@ -15,7 +15,9 @@ namespace CluelessControl.Envelopes
             if (contestantCash < 0)
                 throw new ArgumentOutOfRangeException(nameof(contestantCash), $"Contestant cash mustn't be negative.");
 
-            IEnumerable<BaseCheque> allCheques = envelopeSet.Select(envelope => envelope.Cheque);
+            IEnumerable<BaseCheque> allCheques = envelopeSet
+                .Where(envelope => envelope.State != EnvelopeState.FOR_DESTRUCTION && envelope.State != EnvelopeState.DESTROYED)
+                .Select(envelope => envelope.Cheque);
             
             decimal cashTotal = contestantCash;
             var positivePercentages = new List<decimal>();
