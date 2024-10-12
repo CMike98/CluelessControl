@@ -1984,6 +1984,10 @@ namespace CluelessControl
                 gameStateInstance.RemoveDestroyedEnvelopes();
                 gameStateInstance.RefreshEnvelopes();
 
+                TradingUpdateEnvelopes();
+                TradingUpdateCashLabels();
+                TradingClearCheckboxes();
+
                 TradingUnlockButtons();
 
                 _soundManager.ResumeQueue(QUEUE_NAME_TRADING_BACKGROUND);
@@ -2322,9 +2326,6 @@ namespace CluelessControl
             }
 
             TradingLockButtons();
-            TradingUpdateEnvelopes();
-            TradingUpdateCashLabels();
-            TradingClearCheckboxes();
 
             gameStateInstance.RefreshEnvelopes();
             
