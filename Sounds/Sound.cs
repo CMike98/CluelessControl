@@ -9,7 +9,6 @@ namespace CluelessControl.Sounds
         private WaveOutEvent? _waveOut;
         private float _volume;
 
-        private bool _isPaused;
         private int _loopCount;
         private SoundLoopType _loopType;
 
@@ -95,19 +94,16 @@ namespace CluelessControl.Sounds
         public void Play()
         {
             _waveOut?.Play();
-            _isPaused = false;
         }
 
         public void Stop()
         {
             _waveOut?.Stop();
-            _isPaused = false;
         }
 
         public void Pause()
         {
             _waveOut?.Pause();
-            _isPaused = true;
         }
         #endregion
 
