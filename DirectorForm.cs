@@ -81,6 +81,7 @@ namespace CluelessControl
         {
             PrepareEnvelopeSelectionBoxes();
             PrepareTradingEnvelopeBoxes();
+            PreShowPrepare();
             ShowAllForms();
         }
 
@@ -204,6 +205,32 @@ namespace CluelessControl
 
         #region PreShow
 
+        private void PreShowPrepare()
+        {
+            var gameStateInstance = GameState.Instance;
+            
+            // Clear player name
+            PreShowNameTxtBox.Clear();
+
+            // Clear cheque list
+            gameStateInstance.ChequeSettings.ClearChequeList();
+            EnvelopeSettingsUpdateAll();
+
+            // Clear the envelope settings list box editor
+            // We have to call SelectedIndexChanged manually after setting it to -1
+            EnvelopeSettingsListBox.SelectedIndex = -1;
+            EnvelopeSettingsListBox_SelectedIndexChanged(this, EventArgs.Empty);
+
+            // Clear question set
+            gameStateInstance.QuestionSet.ClearQuestionSet();
+            QuestionEditorUpdateAll();
+
+            // Clear the question editor list box
+            // We have to call SelectedIndexChanged manually after setting it to -1
+            QuestionEditorListBox.SelectedIndex = -1;
+            QuestionEditorListBox_SelectedIndexChanged(this, EventArgs.Empty);
+        }
+
         private void PreShowIntroBtn_Click(object sender, EventArgs e)
         {
             // Stop music
@@ -315,7 +342,7 @@ namespace CluelessControl
                 else if (SettingsShowOnTvNoRadio.Checked)
                     showAmountsOnTv = false;
                 else
-                    throw new InvalidOperationException("No show on TV radio checked.");
+                    throw new InvalidOperationException("No \"Show on TV\" radio checked.");
 
                 result = GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, showAmountsOnTv);
                 return true;
@@ -2396,6 +2423,8 @@ namespace CluelessControl
 
         private void GameOverMusicBtn_Click(object sender, EventArgs e)
         {
+            GameState.Instance.ClearEverything();
+
             _soundManager.StopAllQueues();
             PlaySingleSound(filePath: "snd/outro.wav");
         }
@@ -2404,6 +2433,7 @@ namespace CluelessControl
         {
             GameState.Instance.ClearEverything();
 
+            PreShowPrepare();
             GameOverLockButtons();
             DirectorTabControl.SelectTab("BeforeTheShowTab");
         }
