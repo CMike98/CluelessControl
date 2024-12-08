@@ -30,6 +30,11 @@ namespace CluelessControl.Cheques
             return new ChequeSettings(chequeList);
         }
 
+        public void ClearChequeList()
+        {
+            ChequeList.Clear();
+        }
+
         public void Randomise(Random? rand = null)
         {
             rand ??= new Random();
