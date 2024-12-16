@@ -216,18 +216,24 @@ namespace CluelessControl
             gameStateInstance.ChequeSettings.ClearChequeList();
             EnvelopeSettingsUpdateAll();
 
+            // Clear the last selected envelope index
+            _envelopeSettingsLastSelectedIndex = NO_ITEM_INDEX;
+
             // Clear the envelope settings list box editor
             // We have to call SelectedIndexChanged manually after setting it to -1
-            EnvelopeSettingsListBox.SelectedIndex = -1;
+            EnvelopeSettingsListBox.SelectedIndex = NO_ITEM_INDEX;
             EnvelopeSettingsListBox_SelectedIndexChanged(this, EventArgs.Empty);
 
             // Clear question set
             gameStateInstance.QuestionSet.ClearQuestionSet();
             QuestionEditorUpdateAll();
 
+            // Clear the last selected question index
+            _questionEditorLastSelectedIndex = NO_ITEM_INDEX;
+
             // Clear the question editor list box
             // We have to call SelectedIndexChanged manually after setting it to -1
-            QuestionEditorListBox.SelectedIndex = -1;
+            QuestionEditorListBox.SelectedIndex = NO_ITEM_INDEX;
             QuestionEditorListBox_SelectedIndexChanged(this, EventArgs.Empty);
         }
 
@@ -520,7 +526,7 @@ namespace CluelessControl
         {
             int selectedIndex = EnvelopeSettingsListBox.SelectedIndex;
             int itemCount = GameState.Instance.ChequeSettings.ChequeList.Count;
-            bool isItemSelected = selectedIndex > -1;
+            bool isItemSelected = selectedIndex != NO_ITEM_INDEX;
 
             EnvelopeSettingsMoveUpBtn.Enabled = selectedIndex > 0;
             EnvelopeSettingsMoveDownBtn.Enabled = isItemSelected && selectedIndex < itemCount - 1;
@@ -945,15 +951,18 @@ namespace CluelessControl
             List<Question> questionList = GameState.Instance.QuestionSet.QuestionList;
             int questionCount = GameState.Instance.QuestionSet.QuestionCount;
             int selectedIndex = QuestionEditorListBox.SelectedIndex;
+            
+            bool itemSelected = selectedIndex != NO_ITEM_INDEX;
+            bool questionsPresent = questionCount > 0;
 
             QuestionEditorMoveUpBtn.Enabled = selectedIndex > 0 && selectedIndex < questionCount;
-            QuestionEditorMoveDownBtn.Enabled = selectedIndex > -1 && selectedIndex < questionCount - 1;
+            QuestionEditorMoveDownBtn.Enabled = itemSelected && selectedIndex < questionCount - 1;
             QuestionEditorNewBtn.Enabled = true;
-            QuestionEditorDeleteBtn.Enabled = selectedIndex > -1;
-            QuestionEditorClearBtn.Enabled = questionCount > 0;
-            QuestionEditorSaveBtn.Enabled = selectedIndex > -1;
+            QuestionEditorDeleteBtn.Enabled = itemSelected;
+            QuestionEditorClearBtn.Enabled = questionsPresent;
+            QuestionEditorSaveBtn.Enabled = itemSelected;
             QuestionEditorLoadFromFileBtn.Enabled = true;
-            QuestionEditorSaveToFileBtn.Enabled = questionCount > 0;
+            QuestionEditorSaveToFileBtn.Enabled = questionsPresent;
         }
 
         private void QuestionEditorUpdateAll()
