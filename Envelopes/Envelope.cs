@@ -84,6 +84,30 @@ namespace CluelessControl.Envelopes
         }
 
         /// <summary>
+        /// Open the envelope
+        /// </summary>
+        public void Open()
+        {
+            IsOpen = true;
+        }
+
+        /// <summary>
+        /// Close the envelope
+        /// </summary>
+        public void Close()
+        {
+            IsOpen = false;
+        }
+
+        /// <summary>
+        /// Toggle Open/Close Envelope
+        /// </summary>
+        public void ToggleOpenClose()
+        {
+            IsOpen = !IsOpen;
+        }
+
+        /// <summary>
         /// Gets the text with envelope number and it's value
         /// </summary>
         /// <returns>Text with envelope number and it's value, separated with a new line</returns>

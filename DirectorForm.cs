@@ -1827,7 +1827,7 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
             var selectedEnvelope = gameStateInstance.GetContestantEnvelope(_questionGameEnvelopeIndex);
             if (selectedEnvelope is null)
-                throw new NullReferenceException($"Envelope confirmed is null.");
+                throw new InvalidOperationException($"Envelope confirmed is null.");
 
             if (selectedEnvelope.State != EnvelopeState.NEUTRAL)
             {
@@ -2307,7 +2307,7 @@ namespace CluelessControl
                 bool shouldToggle = _tradingContestantCheckboxes[i].Checked;
                 if (shouldToggle)
                 {
-                    envelope.IsOpen = !envelope.IsOpen;
+                    envelope.ToggleOpenClose();
                 }
             }
 
@@ -2321,7 +2321,7 @@ namespace CluelessControl
                 bool shouldToggle = _tradingHostCheckboxes[i].Checked;
                 if (shouldToggle)
                 {
-                    envelope.IsOpen = !envelope.IsOpen;
+                    envelope.ToggleOpenClose();
                 }
             }
 

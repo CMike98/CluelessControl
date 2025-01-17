@@ -150,6 +150,21 @@ namespace CluelessControl.Envelopes
             }
         }
 
+        public void OpenAll()
+        {
+            _envelopes.ForEach(env => env.Open());
+        }
+
+        public void CloseAll()
+        {
+            _envelopes.ForEach(env => env.Close());
+        }
+
+        public void ToggleOpenCloseAll()
+        {
+            _envelopes.ForEach(env => env.ToggleOpenClose());
+        }
+
         #endregion
     }
 }
