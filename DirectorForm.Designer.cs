@@ -118,6 +118,7 @@
             EnvelopeSelectionContent0Lbl = new Label();
             EnvelopeSelectionNum0TxtBox = new TextBox();
             GameQuestionsTab = new TabPage();
+            QuestionGameOpenEnvelopeButton = new Button();
             QuestionGameEnvelopeLabel = new Label();
             QuestionGameNextQuestionBtn = new Button();
             QuestionGameSelectEnvelopeLbl = new Label();
@@ -1281,6 +1282,7 @@
             // GameQuestionsTab
             // 
             GameQuestionsTab.BackColor = SystemColors.Control;
+            GameQuestionsTab.Controls.Add(QuestionGameOpenEnvelopeButton);
             GameQuestionsTab.Controls.Add(QuestionGameEnvelopeLabel);
             GameQuestionsTab.Controls.Add(QuestionGameNextQuestionBtn);
             GameQuestionsTab.Controls.Add(QuestionGameSelectEnvelopeLbl);
@@ -1313,6 +1315,18 @@
             GameQuestionsTab.TabIndex = 2;
             GameQuestionsTab.Text = "Gra - Pytania";
             // 
+            // QuestionGameOpenEnvelopeButton
+            // 
+            QuestionGameOpenEnvelopeButton.Enabled = false;
+            QuestionGameOpenEnvelopeButton.Font = new Font("Arial", 12F);
+            QuestionGameOpenEnvelopeButton.Location = new Point(570, 276);
+            QuestionGameOpenEnvelopeButton.Name = "QuestionGameOpenEnvelopeButton";
+            QuestionGameOpenEnvelopeButton.Size = new Size(157, 50);
+            QuestionGameOpenEnvelopeButton.TabIndex = 20;
+            QuestionGameOpenEnvelopeButton.Text = "Otwórz kopertę";
+            QuestionGameOpenEnvelopeButton.UseVisualStyleBackColor = true;
+            QuestionGameOpenEnvelopeButton.Click += QuestionGameOpenEnvelopeButton_Click;
+            // 
             // QuestionGameEnvelopeLabel
             // 
             QuestionGameEnvelopeLabel.BorderStyle = BorderStyle.FixedSingle;
@@ -1320,7 +1334,7 @@
             QuestionGameEnvelopeLabel.Location = new Point(797, 276);
             QuestionGameEnvelopeLabel.Name = "QuestionGameEnvelopeLabel";
             QuestionGameEnvelopeLabel.Size = new Size(268, 87);
-            QuestionGameEnvelopeLabel.TabIndex = 23;
+            QuestionGameEnvelopeLabel.TabIndex = 24;
             QuestionGameEnvelopeLabel.TextAlign = ContentAlignment.TopCenter;
             // 
             // QuestionGameNextQuestionBtn
@@ -1341,7 +1355,7 @@
             QuestionGameSelectEnvelopeLbl.Location = new Point(797, 221);
             QuestionGameSelectEnvelopeLbl.Name = "QuestionGameSelectEnvelopeLbl";
             QuestionGameSelectEnvelopeLbl.Size = new Size(268, 46);
-            QuestionGameSelectEnvelopeLbl.TabIndex = 22;
+            QuestionGameSelectEnvelopeLbl.TabIndex = 23;
             QuestionGameSelectEnvelopeLbl.Text = "Wybrana koperta:";
             QuestionGameSelectEnvelopeLbl.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -1352,7 +1366,7 @@
             QuestionGameNextEnvelopeBtn.Location = new Point(935, 385);
             QuestionGameNextEnvelopeBtn.Name = "QuestionGameNextEnvelopeBtn";
             QuestionGameNextEnvelopeBtn.Size = new Size(130, 50);
-            QuestionGameNextEnvelopeBtn.TabIndex = 25;
+            QuestionGameNextEnvelopeBtn.TabIndex = 26;
             QuestionGameNextEnvelopeBtn.Text = "Następna";
             QuestionGameNextEnvelopeBtn.UseVisualStyleBackColor = true;
             QuestionGameNextEnvelopeBtn.Click += QuestionGameNextEnvelopeBtn_Click;
@@ -1364,14 +1378,15 @@
             QuestionGamePreviousEnvelopeBtn.Location = new Point(797, 385);
             QuestionGamePreviousEnvelopeBtn.Name = "QuestionGamePreviousEnvelopeBtn";
             QuestionGamePreviousEnvelopeBtn.Size = new Size(130, 50);
-            QuestionGamePreviousEnvelopeBtn.TabIndex = 24;
+            QuestionGamePreviousEnvelopeBtn.TabIndex = 25;
             QuestionGamePreviousEnvelopeBtn.Text = "Poprzednia";
             QuestionGamePreviousEnvelopeBtn.UseVisualStyleBackColor = true;
             QuestionGamePreviousEnvelopeBtn.Click += QuestionGamePreviousEnvelopeBtn_Click;
             // 
             // QuestionGameCorrectAnswerLabel
             // 
-            QuestionGameCorrectAnswerLabel.Font = new Font("Arial", 12F);
+            QuestionGameCorrectAnswerLabel.Font = new Font("Arial", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameCorrectAnswerLabel.ForeColor = Color.Green;
             QuestionGameCorrectAnswerLabel.Location = new Point(570, 222);
             QuestionGameCorrectAnswerLabel.Name = "QuestionGameCorrectAnswerLabel";
             QuestionGameCorrectAnswerLabel.Size = new Size(157, 50);
@@ -1405,7 +1420,7 @@
             QuestionGameCancelQuestionBtn.Location = new Point(570, 331);
             QuestionGameCancelQuestionBtn.Name = "QuestionGameCancelQuestionBtn";
             QuestionGameCancelQuestionBtn.Size = new Size(157, 50);
-            QuestionGameCancelQuestionBtn.TabIndex = 20;
+            QuestionGameCancelQuestionBtn.TabIndex = 21;
             QuestionGameCancelQuestionBtn.Text = "Wycofaj pytanie";
             QuestionGameCancelQuestionBtn.UseVisualStyleBackColor = true;
             QuestionGameCancelQuestionBtn.Click += QuestionGameCancelQuestionBtn_Click;
@@ -1429,7 +1444,7 @@
             QuestionGameStartTradingBtn.Location = new Point(570, 386);
             QuestionGameStartTradingBtn.Name = "QuestionGameStartTradingBtn";
             QuestionGameStartTradingBtn.Size = new Size(157, 50);
-            QuestionGameStartTradingBtn.TabIndex = 21;
+            QuestionGameStartTradingBtn.TabIndex = 22;
             QuestionGameStartTradingBtn.Text = "Licytacja";
             QuestionGameStartTradingBtn.UseVisualStyleBackColor = true;
             QuestionGameStartTradingBtn.Click += QuestionGameStartTradingBtn_Click;
@@ -2399,5 +2414,6 @@
         private TextBox PreShowNameTxtBox;
         private Label PreShowNameLbl;
         private Button PreShowWelcomeBtn;
+        private Button QuestionGameOpenEnvelopeButton;
     }
 }

@@ -208,7 +208,7 @@ namespace CluelessControl
         private void PreShowPrepare()
         {
             var gameStateInstance = GameState.Instance;
-            
+
             // Clear player name
             PreShowNameTxtBox.Clear();
 
@@ -951,7 +951,7 @@ namespace CluelessControl
             List<Question> questionList = GameState.Instance.QuestionSet.QuestionList;
             int questionCount = GameState.Instance.QuestionSet.QuestionCount;
             int selectedIndex = QuestionEditorListBox.SelectedIndex;
-            
+
             bool itemSelected = selectedIndex != NO_ITEM_INDEX;
             bool questionsPresent = questionCount > 0;
 
@@ -1655,6 +1655,7 @@ namespace CluelessControl
         {
             QuestionGameSetAnswerEnabled(enabled: false);
 
+            QuestionGameOpenEnvelopeButton.Enabled = false;
             QuestionGameNextQuestionBtn.Enabled = false;
             QuestionGameShowQuestionBtn.Enabled = false;
             QuestionGameDisplayEnvelopesBtn.Enabled = false;
@@ -1870,14 +1871,15 @@ namespace CluelessControl
 
         private void QuestionGameCheckAnswerBtn_Click(object sender, EventArgs e)
         {
-            QuestionGameCheckAnswerBtn.Enabled = false;
-            QuestionGameKeepDestroyEnvelopeBtn.Enabled = true;
-
             var gameStateInstance = GameState.Instance;
             gameStateInstance.MarkWinOrLose();
             gameStateInstance.ShowEnvelopesAfterQuestion();
 
             QuestionGameUpdateEnvelopeLabel();
+
+            QuestionGameCheckAnswerBtn.Enabled = false;
+            QuestionGameKeepDestroyEnvelopeBtn.Enabled = true;
+            QuestionGameOpenEnvelopeButton.Enabled = !gameStateInstance.IsAnswerCorrect();
 
             QuestionGamePlayAnswerSound(gameStateInstance.IsAnswerCorrect());
         }
@@ -1915,6 +1917,7 @@ namespace CluelessControl
             else
                 QuestionGameStartTradingBtn.Enabled = true;
 
+            QuestionGameOpenEnvelopeButton.Enabled = false;
             QuestionGameKeepDestroyEnvelopeBtn.Enabled = false;
 
             QuestionGameUpdateEnvelopeLabel();
@@ -1946,6 +1949,17 @@ namespace CluelessControl
                 caption: GameConstants.PROGRAM_TITLE,
                 buttons: MessageBoxButtons.OK,
                 icon: MessageBoxIcon.Information);
+        }
+
+        private void QuestionGameOpenEnvelopeButton_Click(object sender, EventArgs e)
+        {
+            var gameStateInstance = GameState.Instance;
+            Envelope? envelope = gameStateInstance.EnvelopePlayedFor ?? throw new InvalidOperationException("No envelope selected!");
+            envelope.Open();
+
+            gameStateInstance.RefreshEnvelopes();
+
+            QuestionGameOpenEnvelopeButton.Enabled = false;
         }
 
         private void QuestionGamePreviousEnvelopeBtn_Click(object sender, EventArgs e)
@@ -2364,7 +2378,7 @@ namespace CluelessControl
             TradingLockButtons();
 
             gameStateInstance.RefreshEnvelopes();
-            
+
             TradingPlayShredderSound();
         }
 
