@@ -47,7 +47,7 @@ namespace CluelessControl.Envelopes
         public bool IsOpen
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
