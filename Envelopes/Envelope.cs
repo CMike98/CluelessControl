@@ -51,6 +51,15 @@ namespace CluelessControl.Envelopes
         }
 
         /// <summary>
+        /// Is this envelope's trading checkbox checked?
+        /// </summary>
+        public bool TradingCheckbox
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Constructor - creates a closed, neutral envelope.
         /// </summary>
         /// <param name="envelopeNumber">The envelope number</param>
