@@ -31,6 +31,15 @@
             return val;
         }
 
+        public static int Clamp(int val, int min, int max)
+        {
+            if (val < min)
+                return min;
+            if (val > max)
+                return max;
+            return val;
+        }
+
         public static float Lerp(float a, float b, float t)
         {
             return a * (1 - t) + b * t;
