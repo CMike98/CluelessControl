@@ -132,6 +132,11 @@ namespace CluelessControl.Constants
         /// </summary>
         public static readonly Font ENVELOPE_DRAWING_FONT = new(ENVELOPE_DRAWING_FONT_FAMILY, ENVELOPE_DRAWING_FONT_SIZE, style: FontStyle.Bold);
 
+        /// <summary>
+        /// Maximum number of envelopes in one row when drawing the question
+        /// </summary>
+        public const int ENVELOPE_MAX_IN_ROW_QUESTION = 5;
+
         #endregion
 
         #region Questions
@@ -184,6 +189,26 @@ namespace CluelessControl.Constants
         /// Location of the inside of the question bar
         /// </summary>
         public static readonly Point QUESTION_BAR_INSIDE_LOCATION = new(QUESTION_BAR_LOCATION.X + QUESTION_BAR_BORDER.Width, QUESTION_BAR_LOCATION.Y + QUESTION_BAR_BORDER.Height);
+
+        /// <summary>
+        /// By what fraction of the envelope height should top envelopes be moved down, where there's no question? (More than 5 envelopes)
+        /// </summary>
+        public const float QUESTION_BAR_MOVE_TOP_PART_NO_QUESTION = 0.3f;
+
+        /// <summary>
+        /// By what fraction of the envelope height should bottom envelopes be moved up, where there's no question? (More than 5 envelopes)
+        /// </summary>
+        public const float QUESTION_BAR_MOVE_BOTTOM_PART_NO_QUESTION = 1.0f - QUESTION_BAR_MOVE_TOP_PART_NO_QUESTION;
+
+        /// <summary>
+        /// By what fraction of the envelope height should top envelopes be moved down, where there's a question? (More than 5 envelopes)
+        /// </summary>
+        public const float QUESTION_BAR_MOVE_TOP_PART_WITH_QUESTION = 0.25f;
+
+        /// <summary>
+        /// By what fraction of the envelope height should bottom envelopes be moved up, where there's a question? (More than 5 envelopes)
+        /// </summary>
+        public const float QUESTION_BAR_MOVE_BOTTOM_PART_WITH_QUESTION = 1.0f - QUESTION_BAR_MOVE_TOP_PART_WITH_QUESTION;
 
         #endregion
 
