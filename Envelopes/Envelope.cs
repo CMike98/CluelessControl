@@ -125,9 +125,9 @@ namespace CluelessControl.Envelopes
             sb.Clear();
 
             if (IsOpen)
-                sb.AppendLine(string.Format("{0} (OTW.)", EnvelopeNumber));
+                sb.AppendLine(string.Format("#{0} (OTW.)", EnvelopeNumber));
             else
-                sb.AppendLine(string.Format("{0}", EnvelopeNumber));
+                sb.AppendLine(string.Format("#{0}", EnvelopeNumber));
 
             sb.Append(Cheque.ToValueString());
             
