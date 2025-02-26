@@ -44,9 +44,23 @@ namespace CluelessControl
 
         private PictureBox _gameOverPictureBox = new PictureBox();
 
+        private static readonly Dictionary<int, int> MaxWidthsForEnvelopes = new Dictionary<int, int>();
+
+        private static int CalculateMaxWidthForEnvelopeCount(int envelopeCount)
+        {
+            return DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * (envelopeCount - 1) + DrawingConstants.ENVELOPE_SIZE.Width;
+        }
+
         public TVScreenForm()
         {
             InitializeComponent();
+
+            MaxWidthsForEnvelopes.Add(0, 0);
+
+            for (int i = 1; i <= Constants.GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            {
+                MaxWidthsForEnvelopes.Add(i, CalculateMaxWidthForEnvelopeCount(i));
+            }
         }
 
         private void TVScreenForm_Load(object sender, EventArgs e)
@@ -731,10 +745,10 @@ namespace CluelessControl
                     PaintQuestionAndAnswers(currentQuestion!, e.Graphics, questionBarRectangle, lockedInAnswer: gameStateInstance.ContestantAnswer, correctAnswer: currentQuestion!.CorrectAnswerNumber);
                     break;
                 case QuestionBarState.SHOW_ENVELOPES_AND_QUESTION:
-                    PaintQuestionBarEnvelopesAndQuestion(gameStateInstance.ContestantEnvelopeSet.Envelopes, currentQuestion, e.Graphics, questionBarRectangle);
+                    PaintQuestionBarEnvelopesAndQuestion(gameStateInstance.ContestantEnvelopeSet.Envelopes, currentQuestion!, e.Graphics, questionBarRectangle);
                     break;
                 case QuestionBarState.SHOW_ENVELOPES_ONLY:
-                    PaintQuestionBarEnvelopesAndQuestion(gameStateInstance.ContestantEnvelopeSet.Envelopes, question: null, e.Graphics, questionBarRectangle);
+                    PaintQuestionBarEnvelopes(gameStateInstance.ContestantEnvelopeSet.Envelopes, e.Graphics, questionBarRectangle);
                     break;
                 case QuestionBarState.CLEAR:
                     break;
@@ -828,7 +842,96 @@ namespace CluelessControl
             TextRenderer.DrawText(graphics, answerText, font, answerRectangle, color, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
         }
 
-        private void PaintQuestionBarEnvelopesAndQuestion(IList<Envelope> envelopes, Question? question, Graphics graphics, Rectangle areaRectangle)
+        private void PaintQuestionBarEnvelopesAndQuestion(IList<Envelope> envelopes, Question question, Graphics graphics, Rectangle areaRectangle)
+        {
+            if (envelopes is null)
+                throw new ArgumentNullException(nameof(envelopes));
+            if (envelopes.Any(envelope => envelope is null))
+                throw new ArgumentException($"At least one envelope is null.", nameof(envelopes));
+            if (graphics is null)
+                throw new ArgumentNullException(nameof(graphics));
+            if (areaRectangle.IsEmpty)
+                throw new ArgumentException($"Area rectangle is empty!", nameof(areaRectangle));
+            if (question is null)
+                throw new ArgumentNullException(nameof(question));
+
+            int envelopeCount = envelopes.Count;
+            bool allEnvelopesInOneRow = envelopeCount <= DrawingConstants.ENVELOPE_MAX_IN_ROW_QUESTION;
+
+            int questionHeight = allEnvelopesInOneRow ? areaRectangle.Height / 2 : areaRectangle.Height / 3;
+
+            Rectangle upperHalf = new Rectangle(
+                x: areaRectangle.X,
+                y: areaRectangle.Y,
+                width: areaRectangle.Width,
+                height: questionHeight);
+
+            using (Font font = FontHelper.GetMaxFont(question.Text, graphics, DrawingConstants.QUESTION_ANSWER_DRAWING_FONT, upperHalf.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
+            {
+                TextRenderer.DrawText(graphics, question.Text, font, upperHalf, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
+            }
+
+            Rectangle envelopeRectangle = new Rectangle(
+                x: areaRectangle.X,
+                y: areaRectangle.Y + questionHeight,
+                width: areaRectangle.Width,
+                height: areaRectangle.Height - questionHeight);
+
+            // Draw envelopes
+
+            if (allEnvelopesInOneRow)
+            {
+                int totalWidth = MaxWidthsForEnvelopes[envelopeCount];
+                for (int i = 0; i < envelopeCount; i++)
+                {
+                    Envelope envelope = envelopes[i];
+
+                    Rectangle rectangle = new Rectangle(
+                        x: envelopeRectangle.X + (envelopeRectangle.Width - totalWidth) / 2 + i * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width,
+                        y: envelopeRectangle.Y + (envelopeRectangle.Height - DrawingConstants.ENVELOPE_SIZE.Height) / 2,
+                        width: DrawingConstants.ENVELOPE_SIZE.Width,
+                        height: DrawingConstants.ENVELOPE_SIZE.Height);
+
+                    PaintEnvelopeInArea(envelope, graphics, rectangle);
+                }
+            }
+            else
+            {
+                int envelopesInSecondRow = envelopeCount / 2;
+                int maxWidthSecondRow = MaxWidthsForEnvelopes[envelopesInSecondRow];
+
+                int envelopesInFirstRow = envelopeCount - envelopesInSecondRow;
+                int maxWidthFirstRow = MaxWidthsForEnvelopes[envelopesInFirstRow];
+
+                for (int i = 0; i < envelopesInFirstRow; ++i)
+                {
+                    Envelope envelope = envelopes[i];
+
+                    Rectangle rectangle = new Rectangle(
+                        x: envelopeRectangle.X + (envelopeRectangle.Width - maxWidthFirstRow) / 2 + i * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width,
+                        y: envelopeRectangle.Y + (int) (envelopeRectangle.Height * DrawingConstants.QUESTION_BAR_MOVE_TOP_PART_WITH_QUESTION) - DrawingConstants.ENVELOPE_SIZE.Height / 2,
+                        width: DrawingConstants.ENVELOPE_SIZE.Width,
+                        height: DrawingConstants.ENVELOPE_SIZE.Height);
+
+                    PaintEnvelopeInArea(envelope, graphics, rectangle);
+                }
+
+                for (int i = envelopesInFirstRow; i < envelopeCount; ++i)
+                {
+                    Envelope envelope = envelopes[i];
+
+                    Rectangle rectangle = new Rectangle(
+                        x: envelopeRectangle.X + (envelopeRectangle.Width - maxWidthSecondRow) / 2 + (i - envelopesInFirstRow) * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width,
+                        y: envelopeRectangle.Y + (int) (envelopeRectangle.Height * DrawingConstants.QUESTION_BAR_MOVE_BOTTOM_PART_WITH_QUESTION) - DrawingConstants.ENVELOPE_SIZE.Height / 2,
+                        width: DrawingConstants.ENVELOPE_SIZE.Width,
+                        height: DrawingConstants.ENVELOPE_SIZE.Height);
+
+                    PaintEnvelopeInArea(envelope, graphics, rectangle);
+                }
+            }
+        }
+
+        private void PaintQuestionBarEnvelopes(IList<Envelope> envelopes, Graphics graphics, Rectangle areaRectangle)
         {
             if (envelopes is null)
                 throw new ArgumentNullException(nameof(envelopes));
@@ -839,50 +942,66 @@ namespace CluelessControl
             if (areaRectangle.IsEmpty)
                 throw new ArgumentException($"Area rectangle is empty!", nameof(areaRectangle));
 
-            Rectangle envelopeRectangle;
-            if (question is not null)
-            {
-                Rectangle upperHalf = new Rectangle(
-                    x: areaRectangle.X,
-                    y: areaRectangle.Y,
-                    width: areaRectangle.Width,
-                    height: areaRectangle.Height / 2);
+            int envelopeCount = envelopes.Count;
+            bool allEnvelopesInOneRow = envelopeCount <= DrawingConstants.ENVELOPE_MAX_IN_ROW_QUESTION;
 
-                using (Font font = FontHelper.GetMaxFont(question.Text, graphics, DrawingConstants.QUESTION_ANSWER_DRAWING_FONT, upperHalf.Size, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))
-                {
-                    TextRenderer.DrawText(graphics, question.Text, font, upperHalf, Color.White, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS);
-                }
-
-                envelopeRectangle = new Rectangle(
-                    x: areaRectangle.X,
-                    y: areaRectangle.Y + areaRectangle.Height / 2,
-                    width: areaRectangle.Width,
-                    height: areaRectangle.Height / 2);
-            }
-            else
-            {
-                envelopeRectangle = new Rectangle(
+            Rectangle envelopeRectangle = new Rectangle(
                     x: areaRectangle.X,
                     y: areaRectangle.Y,
                     width: areaRectangle.Width,
                     height: areaRectangle.Height);
-            }
 
             // Draw envelopes
 
-            int maxCount = envelopes.Count;
-            int totalWidth = DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * (maxCount - 1) + DrawingConstants.ENVELOPE_SIZE.Width;
-            for (int i = 0; i < maxCount; i++)
+            if (allEnvelopesInOneRow)
             {
-                Envelope envelope = envelopes[i];
+                int totalWidth = MaxWidthsForEnvelopes[envelopeCount];
+                for (int i = 0; i < envelopeCount; i++)
+                {
+                    Envelope envelope = envelopes[i];
 
-                Rectangle rectangle = new Rectangle(
-                    x: envelopeRectangle.X + (envelopeRectangle.Width - totalWidth) / 2 + i * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width,
-                    y: envelopeRectangle.Y + (envelopeRectangle.Height - DrawingConstants.ENVELOPE_SIZE.Height) / 2,
-                    width: DrawingConstants.ENVELOPE_SIZE.Width,
-                    height: DrawingConstants.ENVELOPE_SIZE.Height);
+                    Rectangle rectangle = new Rectangle(
+                        x: envelopeRectangle.X + (envelopeRectangle.Width - totalWidth) / 2 + i * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width,
+                        y: envelopeRectangle.Y + (envelopeRectangle.Height - DrawingConstants.ENVELOPE_SIZE.Height) / 2,
+                        width: DrawingConstants.ENVELOPE_SIZE.Width,
+                        height: DrawingConstants.ENVELOPE_SIZE.Height);
 
-                PaintEnvelopeInArea(envelope, graphics, rectangle);
+                    PaintEnvelopeInArea(envelope, graphics, rectangle);
+                }
+            }
+            else
+            {
+                int envelopesInSecondRow = envelopeCount / 2;
+                int maxWidthSecondRow = MaxWidthsForEnvelopes[envelopesInSecondRow];
+
+                int envelopesInFirstRow = envelopeCount - envelopesInSecondRow;
+                int maxWidthFirstRow = MaxWidthsForEnvelopes[envelopesInFirstRow];
+
+                for (int i = 0; i < envelopesInFirstRow; ++i)
+                {
+                    Envelope envelope = envelopes[i];
+
+                    Rectangle rectangle = new Rectangle(
+                        x: envelopeRectangle.X + (envelopeRectangle.Width - maxWidthFirstRow) / 2 + i * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width,
+                        y: envelopeRectangle.Y + (int) (envelopeRectangle.Height * DrawingConstants.QUESTION_BAR_MOVE_TOP_PART_NO_QUESTION) - DrawingConstants.ENVELOPE_SIZE.Height / 2,
+                        width: DrawingConstants.ENVELOPE_SIZE.Width,
+                        height: DrawingConstants.ENVELOPE_SIZE.Height);
+
+                    PaintEnvelopeInArea(envelope, graphics, rectangle);
+                }
+
+                for (int i = envelopesInFirstRow; i < envelopeCount; ++i)
+                {
+                    Envelope envelope = envelopes[i];
+
+                    Rectangle rectangle = new Rectangle(
+                        x: envelopeRectangle.X + (envelopeRectangle.Width - maxWidthSecondRow) / 2 + (i - envelopesInFirstRow) * DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width,
+                        y: envelopeRectangle.Y + (int) (envelopeRectangle.Height * DrawingConstants.QUESTION_BAR_MOVE_BOTTOM_PART_NO_QUESTION) - DrawingConstants.ENVELOPE_SIZE.Height / 2,
+                        width: DrawingConstants.ENVELOPE_SIZE.Width,
+                        height: DrawingConstants.ENVELOPE_SIZE.Height);
+
+                    PaintEnvelopeInArea(envelope, graphics, rectangle);
+                }
             }
         }
 
