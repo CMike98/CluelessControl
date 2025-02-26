@@ -49,6 +49,16 @@
             AnswerBLabel = new Label();
             AnswerALabel = new Label();
             QuestionLabel = new Label();
+            ContestantEnvelope5Picture = new PictureBox();
+            ContestantEnvelope8Picture = new PictureBox();
+            ContestantEnvelope7Picture = new PictureBox();
+            ContestantEnvelope6Picture = new PictureBox();
+            ContestantEnvelope9Picture = new PictureBox();
+            HostEnvelope9Picture = new PictureBox();
+            HostEnvelope8Picture = new PictureBox();
+            HostEnvelope7Picture = new PictureBox();
+            HostEnvelope6Picture = new PictureBox();
+            HostEnvelope5Picture = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)HostEnvelope4Picture).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HostEnvelope3Picture).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HostEnvelope2Picture).BeginInit();
@@ -59,6 +69,16 @@
             ((System.ComponentModel.ISupportInitialize)ContestantEnvelope2Picture).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ContestantEnvelope1Picture).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ContestantEnvelope4Picture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ContestantEnvelope5Picture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ContestantEnvelope8Picture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ContestantEnvelope7Picture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ContestantEnvelope6Picture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ContestantEnvelope9Picture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HostEnvelope9Picture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HostEnvelope8Picture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HostEnvelope7Picture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HostEnvelope6Picture).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HostEnvelope5Picture).BeginInit();
             SuspendLayout();
             // 
             // HostEnvelope4Picture
@@ -71,7 +91,7 @@
             HostEnvelope4Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope4Picture.TabIndex = 55;
             HostEnvelope4Picture.TabStop = false;
-            HostEnvelope4Picture.Tag = "H4";
+            HostEnvelope4Picture.Tag = "H-4";
             HostEnvelope4Picture.Paint += EnvelopePicture_Paint;
             // 
             // HostEnvelope3Picture
@@ -84,7 +104,7 @@
             HostEnvelope3Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope3Picture.TabIndex = 54;
             HostEnvelope3Picture.TabStop = false;
-            HostEnvelope3Picture.Tag = "H3";
+            HostEnvelope3Picture.Tag = "H-3";
             HostEnvelope3Picture.Paint += EnvelopePicture_Paint;
             // 
             // HostEnvelope2Picture
@@ -97,7 +117,7 @@
             HostEnvelope2Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope2Picture.TabIndex = 53;
             HostEnvelope2Picture.TabStop = false;
-            HostEnvelope2Picture.Tag = "H2";
+            HostEnvelope2Picture.Tag = "H-2";
             HostEnvelope2Picture.Paint += EnvelopePicture_Paint;
             // 
             // HostEnvelope1Picture
@@ -110,7 +130,7 @@
             HostEnvelope1Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope1Picture.TabIndex = 52;
             HostEnvelope1Picture.TabStop = false;
-            HostEnvelope1Picture.Tag = "H1";
+            HostEnvelope1Picture.Tag = "H-1";
             HostEnvelope1Picture.Paint += EnvelopePicture_Paint;
             // 
             // HostEnvelope0Picture
@@ -123,7 +143,7 @@
             HostEnvelope0Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             HostEnvelope0Picture.TabIndex = 51;
             HostEnvelope0Picture.TabStop = false;
-            HostEnvelope0Picture.Tag = "H0";
+            HostEnvelope0Picture.Tag = "H-0";
             HostEnvelope0Picture.Paint += EnvelopePicture_Paint;
             // 
             // ContestantEnvelope0Picture
@@ -136,7 +156,7 @@
             ContestantEnvelope0Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope0Picture.TabIndex = 50;
             ContestantEnvelope0Picture.TabStop = false;
-            ContestantEnvelope0Picture.Tag = "C0";
+            ContestantEnvelope0Picture.Tag = "C-0";
             ContestantEnvelope0Picture.Paint += EnvelopePicture_Paint;
             // 
             // ContestantEnvelope3Picture
@@ -149,7 +169,7 @@
             ContestantEnvelope3Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope3Picture.TabIndex = 49;
             ContestantEnvelope3Picture.TabStop = false;
-            ContestantEnvelope3Picture.Tag = "C3";
+            ContestantEnvelope3Picture.Tag = "C-3";
             ContestantEnvelope3Picture.Paint += EnvelopePicture_Paint;
             // 
             // ContestantEnvelope2Picture
@@ -162,7 +182,7 @@
             ContestantEnvelope2Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope2Picture.TabIndex = 48;
             ContestantEnvelope2Picture.TabStop = false;
-            ContestantEnvelope2Picture.Tag = "C2";
+            ContestantEnvelope2Picture.Tag = "C-2";
             ContestantEnvelope2Picture.Paint += EnvelopePicture_Paint;
             // 
             // ContestantEnvelope1Picture
@@ -175,7 +195,7 @@
             ContestantEnvelope1Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope1Picture.TabIndex = 47;
             ContestantEnvelope1Picture.TabStop = false;
-            ContestantEnvelope1Picture.Tag = "C1";
+            ContestantEnvelope1Picture.Tag = "C-1";
             ContestantEnvelope1Picture.Paint += EnvelopePicture_Paint;
             // 
             // ContestantEnvelope4Picture
@@ -188,7 +208,7 @@
             ContestantEnvelope4Picture.SizeMode = PictureBoxSizeMode.CenterImage;
             ContestantEnvelope4Picture.TabIndex = 46;
             ContestantEnvelope4Picture.TabStop = false;
-            ContestantEnvelope4Picture.Tag = "C4";
+            ContestantEnvelope4Picture.Tag = "C-4";
             ContestantEnvelope4Picture.Paint += EnvelopePicture_Paint;
             // 
             // OfferLabel
@@ -196,7 +216,7 @@
             OfferLabel.BorderStyle = BorderStyle.FixedSingle;
             OfferLabel.Font = new Font("Lato", 36F);
             OfferLabel.ForeColor = Color.White;
-            OfferLabel.Location = new Point(987, 164);
+            OfferLabel.Location = new Point(700, 288);
             OfferLabel.Name = "OfferLabel";
             OfferLabel.Size = new Size(524, 104);
             OfferLabel.TabIndex = 45;
@@ -209,7 +229,7 @@
             CashLabel.BorderStyle = BorderStyle.FixedSingle;
             CashLabel.Font = new Font("Lato", 36F);
             CashLabel.ForeColor = Color.White;
-            CashLabel.Location = new Point(413, 164);
+            CashLabel.Location = new Point(700, 99);
             CashLabel.Name = "CashLabel";
             CashLabel.Size = new Size(524, 104);
             CashLabel.TabIndex = 44;
@@ -222,7 +242,7 @@
             OfferTextLabel.BorderStyle = BorderStyle.FixedSingle;
             OfferTextLabel.Font = new Font("Lato", 20.2499981F);
             OfferTextLabel.ForeColor = Color.White;
-            OfferTextLabel.Location = new Point(987, 116);
+            OfferTextLabel.Location = new Point(700, 240);
             OfferTextLabel.Name = "OfferTextLabel";
             OfferTextLabel.Size = new Size(524, 48);
             OfferTextLabel.TabIndex = 43;
@@ -235,7 +255,7 @@
             CashTextLabel.BorderStyle = BorderStyle.FixedSingle;
             CashTextLabel.Font = new Font("Lato", 20.2499981F);
             CashTextLabel.ForeColor = Color.White;
-            CashTextLabel.Location = new Point(413, 117);
+            CashTextLabel.Location = new Point(700, 51);
             CashTextLabel.Name = "CashTextLabel";
             CashTextLabel.Size = new Size(524, 48);
             CashTextLabel.TabIndex = 42;
@@ -248,9 +268,9 @@
             HostTextLabel.BorderStyle = BorderStyle.FixedSingle;
             HostTextLabel.Font = new Font("Lato", 18F);
             HostTextLabel.ForeColor = Color.White;
-            HostTextLabel.Location = new Point(1692, 10);
+            HostTextLabel.Location = new Point(1466, 10);
             HostTextLabel.Name = "HostTextLabel";
-            HostTextLabel.Size = new Size(220, 77);
+            HostTextLabel.Size = new Size(446, 77);
             HostTextLabel.TabIndex = 41;
             HostTextLabel.Text = "PROWADZĄCY";
             HostTextLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -263,7 +283,7 @@
             ContestantTextLabel.ForeColor = Color.White;
             ContestantTextLabel.Location = new Point(12, 10);
             ContestantTextLabel.Name = "ContestantTextLabel";
-            ContestantTextLabel.Size = new Size(220, 77);
+            ContestantTextLabel.Size = new Size(446, 77);
             ContestantTextLabel.TabIndex = 40;
             ContestantTextLabel.Text = "ZAWODNIK";
             ContestantTextLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -324,6 +344,136 @@
             QuestionLabel.TabIndex = 33;
             QuestionLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // ContestantEnvelope5Picture
+            // 
+            ContestantEnvelope5Picture.BackColor = Color.White;
+            ContestantEnvelope5Picture.BackgroundImageLayout = ImageLayout.Center;
+            ContestantEnvelope5Picture.Location = new Point(238, 555);
+            ContestantEnvelope5Picture.Name = "ContestantEnvelope5Picture";
+            ContestantEnvelope5Picture.Size = new Size(220, 75);
+            ContestantEnvelope5Picture.SizeMode = PictureBoxSizeMode.CenterImage;
+            ContestantEnvelope5Picture.TabIndex = 60;
+            ContestantEnvelope5Picture.TabStop = false;
+            ContestantEnvelope5Picture.Tag = "C-5";
+            ContestantEnvelope5Picture.Paint += EnvelopePicture_Paint;
+            // 
+            // ContestantEnvelope8Picture
+            // 
+            ContestantEnvelope8Picture.BackColor = Color.White;
+            ContestantEnvelope8Picture.BackgroundImageLayout = ImageLayout.Center;
+            ContestantEnvelope8Picture.Location = new Point(238, 213);
+            ContestantEnvelope8Picture.Name = "ContestantEnvelope8Picture";
+            ContestantEnvelope8Picture.Size = new Size(220, 75);
+            ContestantEnvelope8Picture.SizeMode = PictureBoxSizeMode.CenterImage;
+            ContestantEnvelope8Picture.TabIndex = 59;
+            ContestantEnvelope8Picture.TabStop = false;
+            ContestantEnvelope8Picture.Tag = "C-8";
+            ContestantEnvelope8Picture.Paint += EnvelopePicture_Paint;
+            // 
+            // ContestantEnvelope7Picture
+            // 
+            ContestantEnvelope7Picture.BackColor = Color.White;
+            ContestantEnvelope7Picture.BackgroundImageLayout = ImageLayout.Center;
+            ContestantEnvelope7Picture.Location = new Point(238, 327);
+            ContestantEnvelope7Picture.Name = "ContestantEnvelope7Picture";
+            ContestantEnvelope7Picture.Size = new Size(220, 75);
+            ContestantEnvelope7Picture.SizeMode = PictureBoxSizeMode.CenterImage;
+            ContestantEnvelope7Picture.TabIndex = 58;
+            ContestantEnvelope7Picture.TabStop = false;
+            ContestantEnvelope7Picture.Tag = "C-7";
+            ContestantEnvelope7Picture.Paint += EnvelopePicture_Paint;
+            // 
+            // ContestantEnvelope6Picture
+            // 
+            ContestantEnvelope6Picture.BackColor = Color.White;
+            ContestantEnvelope6Picture.BackgroundImageLayout = ImageLayout.Center;
+            ContestantEnvelope6Picture.Location = new Point(238, 441);
+            ContestantEnvelope6Picture.Name = "ContestantEnvelope6Picture";
+            ContestantEnvelope6Picture.Size = new Size(220, 75);
+            ContestantEnvelope6Picture.SizeMode = PictureBoxSizeMode.CenterImage;
+            ContestantEnvelope6Picture.TabIndex = 57;
+            ContestantEnvelope6Picture.TabStop = false;
+            ContestantEnvelope6Picture.Tag = "C-6";
+            ContestantEnvelope6Picture.Paint += EnvelopePicture_Paint;
+            // 
+            // ContestantEnvelope9Picture
+            // 
+            ContestantEnvelope9Picture.BackColor = Color.White;
+            ContestantEnvelope9Picture.BackgroundImageLayout = ImageLayout.Center;
+            ContestantEnvelope9Picture.Location = new Point(238, 99);
+            ContestantEnvelope9Picture.Name = "ContestantEnvelope9Picture";
+            ContestantEnvelope9Picture.Size = new Size(220, 75);
+            ContestantEnvelope9Picture.SizeMode = PictureBoxSizeMode.CenterImage;
+            ContestantEnvelope9Picture.TabIndex = 56;
+            ContestantEnvelope9Picture.TabStop = false;
+            ContestantEnvelope9Picture.Tag = "C-9";
+            ContestantEnvelope9Picture.Paint += EnvelopePicture_Paint;
+            // 
+            // HostEnvelope9Picture
+            // 
+            HostEnvelope9Picture.BackColor = Color.White;
+            HostEnvelope9Picture.BackgroundImageLayout = ImageLayout.Center;
+            HostEnvelope9Picture.Location = new Point(1466, 99);
+            HostEnvelope9Picture.Name = "HostEnvelope9Picture";
+            HostEnvelope9Picture.Size = new Size(220, 75);
+            HostEnvelope9Picture.SizeMode = PictureBoxSizeMode.CenterImage;
+            HostEnvelope9Picture.TabIndex = 65;
+            HostEnvelope9Picture.TabStop = false;
+            HostEnvelope9Picture.Tag = "H-9";
+            HostEnvelope9Picture.Paint += EnvelopePicture_Paint;
+            // 
+            // HostEnvelope8Picture
+            // 
+            HostEnvelope8Picture.BackColor = Color.White;
+            HostEnvelope8Picture.BackgroundImageLayout = ImageLayout.Center;
+            HostEnvelope8Picture.Location = new Point(1466, 213);
+            HostEnvelope8Picture.Name = "HostEnvelope8Picture";
+            HostEnvelope8Picture.Size = new Size(220, 75);
+            HostEnvelope8Picture.SizeMode = PictureBoxSizeMode.CenterImage;
+            HostEnvelope8Picture.TabIndex = 64;
+            HostEnvelope8Picture.TabStop = false;
+            HostEnvelope8Picture.Tag = "H-8";
+            HostEnvelope8Picture.Paint += EnvelopePicture_Paint;
+            // 
+            // HostEnvelope7Picture
+            // 
+            HostEnvelope7Picture.BackColor = Color.White;
+            HostEnvelope7Picture.BackgroundImageLayout = ImageLayout.Center;
+            HostEnvelope7Picture.Location = new Point(1466, 327);
+            HostEnvelope7Picture.Name = "HostEnvelope7Picture";
+            HostEnvelope7Picture.Size = new Size(220, 75);
+            HostEnvelope7Picture.SizeMode = PictureBoxSizeMode.CenterImage;
+            HostEnvelope7Picture.TabIndex = 63;
+            HostEnvelope7Picture.TabStop = false;
+            HostEnvelope7Picture.Tag = "H-7";
+            HostEnvelope7Picture.Paint += EnvelopePicture_Paint;
+            // 
+            // HostEnvelope6Picture
+            // 
+            HostEnvelope6Picture.BackColor = Color.White;
+            HostEnvelope6Picture.BackgroundImageLayout = ImageLayout.Center;
+            HostEnvelope6Picture.Location = new Point(1466, 441);
+            HostEnvelope6Picture.Name = "HostEnvelope6Picture";
+            HostEnvelope6Picture.Size = new Size(220, 75);
+            HostEnvelope6Picture.SizeMode = PictureBoxSizeMode.CenterImage;
+            HostEnvelope6Picture.TabIndex = 62;
+            HostEnvelope6Picture.TabStop = false;
+            HostEnvelope6Picture.Tag = "H-6";
+            HostEnvelope6Picture.Paint += EnvelopePicture_Paint;
+            // 
+            // HostEnvelope5Picture
+            // 
+            HostEnvelope5Picture.BackColor = Color.White;
+            HostEnvelope5Picture.BackgroundImageLayout = ImageLayout.Center;
+            HostEnvelope5Picture.Location = new Point(1466, 555);
+            HostEnvelope5Picture.Name = "HostEnvelope5Picture";
+            HostEnvelope5Picture.Size = new Size(220, 75);
+            HostEnvelope5Picture.SizeMode = PictureBoxSizeMode.CenterImage;
+            HostEnvelope5Picture.TabIndex = 61;
+            HostEnvelope5Picture.TabStop = false;
+            HostEnvelope5Picture.Tag = "H-5";
+            HostEnvelope5Picture.Paint += EnvelopePicture_Paint;
+            // 
             // ContestantScreenForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -331,6 +481,16 @@
             BackColor = Color.Black;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1924, 1011);
+            Controls.Add(HostEnvelope9Picture);
+            Controls.Add(HostEnvelope8Picture);
+            Controls.Add(HostEnvelope7Picture);
+            Controls.Add(HostEnvelope6Picture);
+            Controls.Add(HostEnvelope5Picture);
+            Controls.Add(ContestantEnvelope5Picture);
+            Controls.Add(ContestantEnvelope8Picture);
+            Controls.Add(ContestantEnvelope7Picture);
+            Controls.Add(ContestantEnvelope6Picture);
+            Controls.Add(ContestantEnvelope9Picture);
             Controls.Add(HostEnvelope4Picture);
             Controls.Add(HostEnvelope3Picture);
             Controls.Add(HostEnvelope2Picture);
@@ -371,6 +531,16 @@
             ((System.ComponentModel.ISupportInitialize)ContestantEnvelope2Picture).EndInit();
             ((System.ComponentModel.ISupportInitialize)ContestantEnvelope1Picture).EndInit();
             ((System.ComponentModel.ISupportInitialize)ContestantEnvelope4Picture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ContestantEnvelope5Picture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ContestantEnvelope8Picture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ContestantEnvelope7Picture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ContestantEnvelope6Picture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ContestantEnvelope9Picture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HostEnvelope9Picture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HostEnvelope8Picture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HostEnvelope7Picture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HostEnvelope6Picture).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HostEnvelope5Picture).EndInit();
             ResumeLayout(false);
         }
 
@@ -397,5 +567,15 @@
         private Label AnswerBLabel;
         private Label AnswerALabel;
         private Label QuestionLabel;
+        private PictureBox ContestantEnvelope5Picture;
+        private PictureBox ContestantEnvelope8Picture;
+        private PictureBox ContestantEnvelope7Picture;
+        private PictureBox ContestantEnvelope6Picture;
+        private PictureBox ContestantEnvelope9Picture;
+        private PictureBox HostEnvelope9Picture;
+        private PictureBox HostEnvelope8Picture;
+        private PictureBox HostEnvelope7Picture;
+        private PictureBox HostEnvelope6Picture;
+        private PictureBox HostEnvelope5Picture;
     }
 }
