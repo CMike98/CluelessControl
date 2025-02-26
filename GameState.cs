@@ -305,8 +305,8 @@ namespace CluelessControl
 
         public Envelope? GetContestantEnvelope(int index)
         {
-            if (index < 0 || index >= GameConstants.MAX_ENVELOPE_COUNT_PERSON)
-                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {GameConstants.MAX_ENVELOPE_COUNT_PERSON - 1}.");
+            if (index < 0)
+                throw new ArgumentOutOfRangeException(nameof(index), "The envelope index must be positive!");
 
             if (index >= ContestantEnvelopeSet.EnvelopeCount)
                 return null;
@@ -316,8 +316,8 @@ namespace CluelessControl
 
         public Envelope? GetHostEnvelope(int index)
         {
-            if (index < 0 || index >= GameConstants.MAX_ENVELOPE_COUNT_PERSON)
-                throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {GameConstants.MAX_ENVELOPE_COUNT_PERSON - 1}.");
+            if (index < 0)
+                throw new ArgumentOutOfRangeException(nameof(index), "The envelope index must be positive!");
 
             if (index >= HostEnvelopeSet.EnvelopeCount)
                 return null;
