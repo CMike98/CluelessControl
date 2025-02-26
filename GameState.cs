@@ -329,19 +329,21 @@ namespace CluelessControl
         {
             if (tag == null)
                 throw new ArgumentNullException(nameof(tag));
-            if (tag.Length != 2)
-                throw new ArgumentException($"The tag must be 2 characters. First 'C' or 'H' (contestant/host) and the other: the envelope index.", nameof(tag));
 
-            char playerTag = char.ToUpper(tag[0]);
-            int envelopeIndex = (int)char.GetNumericValue(tag[1]);
+            string[] tagParts = tag.ToUpper().Split('-');
+            if (tagParts.Length != 2)
+                throw new ArgumentException("The tag must be 2 parts. First 'C' or 'H' (contestant/host), a dash, and the envelope index. Example: \"C-0\".", nameof(tag));
+
+            string playerTag = tagParts[0];
+            int envelopeIndex = int.Parse(tagParts[1]);
             if (envelopeIndex < 0 || envelopeIndex >= GameConstants.MAX_ENVELOPE_COUNT_PERSON)
                 throw new ArgumentException($"The second character (envelope index) must be a digit between 0 and {GameConstants.MAX_ENVELOPE_COUNT_PERSON - 1}.", nameof(tag));
 
             return playerTag switch
             {
-                'C' => GetContestantEnvelope(envelopeIndex),
-                'H' => GetHostEnvelope(envelopeIndex),
-                _ => null
+                "C" => GetContestantEnvelope(envelopeIndex),
+                "H" => GetHostEnvelope(envelopeIndex),
+                _ => throw new ArgumentException("Player tag is neither 'C' nor 'H'!")
             };
         }
 
