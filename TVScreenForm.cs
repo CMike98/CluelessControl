@@ -46,25 +46,25 @@ namespace CluelessControl
 
         private static readonly Dictionary<int, int> MaxWidthsForEnvelopes = new Dictionary<int, int>();
 
+        public TVScreenForm()
+        {
+            InitializeComponent();
+        }
+
         private static int CalculateMaxWidthForEnvelopeCount(int envelopeCount)
         {
             return DrawingConstants.ENVELOPE_SIZE_WITH_PADDING.Width * (envelopeCount - 1) + DrawingConstants.ENVELOPE_SIZE.Width;
         }
 
-        public TVScreenForm()
+        private void TVScreenForm_Load(object sender, EventArgs e)
         {
-            InitializeComponent();
-
             MaxWidthsForEnvelopes.Add(0, 0);
 
             for (int i = 1; i <= Constants.GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
             {
                 MaxWidthsForEnvelopes.Add(i, CalculateMaxWidthForEnvelopeCount(i));
             }
-        }
 
-        private void TVScreenForm_Load(object sender, EventArgs e)
-        {
             TryToLoadBackgroundImage();
             PreparePictureBoxes();
             AddEvents();

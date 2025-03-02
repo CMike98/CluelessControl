@@ -20,12 +20,11 @@ namespace CluelessControl
                 { 3, AnswerCLabel },
                 { 4, AnswerDLabel },
             };
-
-            TryToLoadBackgroundImage();
         }
 
         private void ContestantScreenForm_Load(object sender, EventArgs e)
         {
+            TryToLoadBackgroundImage();
             ClearQuestionLabels();
             AddEvents();
         }
