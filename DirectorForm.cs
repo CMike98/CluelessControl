@@ -2269,6 +2269,8 @@ namespace CluelessControl
 
         public void TradingClearContestantCheckboxes()
         {
+            _tradingAreContestantCheckboxesChanging = true;
+
             for (int i = 0; i < TRADING_SCREEN_MAX_ON_PAGE; ++i)
             {
                 _tradingContestantCheckboxes[i].Checked = false;
@@ -2278,10 +2280,14 @@ namespace CluelessControl
             {
                 envelope.TradingCheckbox = false;
             }
+
+            _tradingAreContestantCheckboxesChanging = false;
         }
 
         public void TradingClearHostCheckboxes()
         {
+            _tradingAreHostCheckboxesChanging = true;
+
             for (int i = 0; i < TRADING_SCREEN_MAX_ON_PAGE; ++i)
             {
                 _tradingHostCheckboxes[i].Checked = false;
@@ -2291,6 +2297,8 @@ namespace CluelessControl
             {
                 envelope.TradingCheckbox = false;
             }
+
+            _tradingAreHostCheckboxesChanging = false;
         }
 
         public void TradingClearCheckboxes()
