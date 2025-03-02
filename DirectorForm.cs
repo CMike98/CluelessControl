@@ -1,4 +1,4 @@
-using CluelessControl.Cheques;
+﻿using CluelessControl.Cheques;
 using CluelessControl.Constants;
 using CluelessControl.EnvelopeColorStates;
 using CluelessControl.Envelopes;
@@ -49,11 +49,37 @@ namespace CluelessControl
         #endregion
 
         #region Trading Screen
-        private readonly Label[] _tradingContestantEnvelopeLabels = new Label[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
-        private readonly Label[] _tradingHostEnvelopeLabels = new Label[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
+        private const int TRADING_SCREEN_MAX_ON_PAGE = 5;
 
-        private readonly CheckBox[] _tradingContestantCheckboxes = new CheckBox[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
-        private readonly CheckBox[] _tradingHostCheckboxes = new CheckBox[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
+        // Contestant
+        private int _tradingContestantPage = 0;
+        private bool _tradingAreContestantCheckboxesChanging = false;
+        private readonly Label[] _tradingContestantEnvelopeLabels = new Label[TRADING_SCREEN_MAX_ON_PAGE];
+        private readonly CheckBox[] _tradingContestantCheckboxes = new CheckBox[TRADING_SCREEN_MAX_ON_PAGE];
+        private int TradingContestantMaxPages
+        {
+            get
+            {
+                int envelopeCount = GameState.Instance.ContestantEnvelopeSet.EnvelopeCount;
+                return (envelopeCount / TRADING_SCREEN_MAX_ON_PAGE) + (envelopeCount % TRADING_SCREEN_MAX_ON_PAGE == 0 ? 0 : 1);
+            }
+        }
+        private int TradingContestantMaxPageIndex => Math.Max(TradingContestantMaxPages - 1, 0);
+
+        // Host
+        private int _tradingHostPage = 0;
+        private bool _tradingAreHostCheckboxesChanging = false;
+        private readonly Label[] _tradingHostEnvelopeLabels = new Label[TRADING_SCREEN_MAX_ON_PAGE];
+        private readonly CheckBox[] _tradingHostCheckboxes = new CheckBox[TRADING_SCREEN_MAX_ON_PAGE];
+        private int TradingHostMaxPages
+        {
+            get
+            {
+                int envelopeCount = GameState.Instance.HostEnvelopeSet.EnvelopeCount;
+                return (envelopeCount / TRADING_SCREEN_MAX_ON_PAGE) + (envelopeCount % TRADING_SCREEN_MAX_ON_PAGE == 0 ? 0 : 1);
+            }
+        }
+        private int TradingHostMaxPageIndex => Math.Max(TradingHostMaxPages - 1, 0);
         #endregion
 
         private bool EditedBeforeSave => _envelopeSettingsEdited || _questionEditorEdited || EnvelopeSettingsDidChequeChange() || QuestionEditorDidQuestionChange();
@@ -102,7 +128,7 @@ namespace CluelessControl
 
         private void PrepareTradingEnvelopeBoxes()
         {
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            for (int i = 0; i < TRADING_SCREEN_MAX_ON_PAGE; ++i)
             {
                 string contestantEnvelopeName = string.Format("TradingContestantEnvelope{0}Lbl", i);
                 string hostEnvelopeName = string.Format("TradingHostEnvelope{0}Lbl", i);
@@ -114,6 +140,8 @@ namespace CluelessControl
 
                 CheckBox contestantCheckBox = (CheckBox)Controls.Find(contestantCheckBoxName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, contestantCheckBoxName);
                 CheckBox hostCheckBox = (CheckBox)Controls.Find(hostCheckBoxName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, hostCheckBoxName);
+                contestantCheckBox.Tag = i;
+                hostCheckBox.Tag = i;
 
                 _tradingContestantEnvelopeLabels[i] = contestantControl;
                 _tradingHostEnvelopeLabels[i] = hostControl;
@@ -173,7 +201,7 @@ namespace CluelessControl
                 throw new FileNotFoundException($"File has not been found.", filePath);
 
             var sound = new Sound(filePath, _volumeLevel);
-            _soundManager.PlaySingleSound(filePath);
+            _soundManager.PlaySingleSound(sound);
         }
 
         #endregion
@@ -1405,14 +1433,21 @@ namespace CluelessControl
 
             TextBox[] numberTextBoxes = _envelopeSelectTxtBoxesAndLabels.Keys.ToArray();
 
-            for (int i = 0; i < numberTextBoxes.Length; ++i)
-            {
-                numberTextBoxes[i].Enabled = (i == envelopeCount);
-            }
-
             if (envelopeCount < startEnvelopeCount)
             {
+                for (int i = 0; i < numberTextBoxes.Length; ++i)
+                {
+                    numberTextBoxes[i].Enabled = (i == envelopeCount);
+                }
+
                 numberTextBoxes[envelopeCount].Focus();
+            }
+            else
+            {
+                foreach (TextBox current in numberTextBoxes)
+                {
+                    current.Enabled = false;
+                }
             }
 
             EnvelopeSelectionConfirmBtn.Enabled = envelopeCount < startEnvelopeCount;
@@ -1454,11 +1489,11 @@ namespace CluelessControl
 
             if (!int.TryParse(numberBox.Text, out int envelopeNumber))
             {
-                errorMessage = "Podany numer koperty nie jest liczbą!";
+                errorMessage = "To nie jest liczba!";
             }
             else if (envelopeNumber < GameConstants.MIN_ENVELOPE_NUMBER || envelopeNumber > GameConstants.MAX_ENVELOPE_NUMBER)
             {
-                errorMessage = string.Format("Numer koperty musi być z przedziału {0}...{1}!", GameConstants.MIN_ENVELOPE_NUMBER, GameConstants.MAX_ENVELOPE_NUMBER);
+                errorMessage = string.Format("W przedziale {0}...{1}!", GameConstants.MIN_ENVELOPE_NUMBER, GameConstants.MAX_ENVELOPE_NUMBER);
             }
             else
             {
@@ -1515,7 +1550,7 @@ namespace CluelessControl
             if (!int.TryParse(numberTextBoxes[index].Text, out int envelopeNumber) ||
                 envelopeNumber < GameConstants.MIN_ENVELOPE_NUMBER || envelopeNumber > GameConstants.MAX_ENVELOPE_NUMBER)
             {
-                string message = string.Format("Numer koperty musi być liczbą [{0}...{1}].", GameConstants.MIN_ENVELOPE_NUMBER, GameConstants.MAX_ENVELOPE_NUMBER);
+                string message = string.Format("Numer koperty musi być w przedziale [{0}...{1}]!", GameConstants.MIN_ENVELOPE_NUMBER, GameConstants.MAX_ENVELOPE_NUMBER);
                 ShowErrorMessage(message);
                 return;
             }
@@ -1552,7 +1587,6 @@ namespace CluelessControl
 
             // Get the last envelope
             var lastEnvelope = contestantEnvelopes.GetEnvelope(lastEnvelopeIndex);
-
             lastEnvelope.MarkAsNeutral();
 
             // Remove the last envelope
@@ -1573,9 +1607,16 @@ namespace CluelessControl
         private void EnvelopeSelectionNextPartBtn_Click(object sender, EventArgs e)
         {
             var gameStateInstance = GameState.Instance;
-            gameStateInstance.SortEnvelopesByNumber();
+
             gameStateInstance.HideEnvelopesAfterSelection();
             gameStateInstance.UnmarkSelection();
+
+            foreach (Envelope envelope in gameStateInstance.ContestantEnvelopeSet.Envelopes)
+            {
+                gameStateInstance.EnvelopeTable.DeleteEnvelope(envelope);
+            }
+            
+            gameStateInstance.SortEnvelopesByNumber();
             gameStateInstance.ShowEnvelopesAfterQuestion();
 
             EnvelopeSelectionLockButtons();
@@ -1951,6 +1992,7 @@ namespace CluelessControl
             Envelope? envelope = gameStateInstance.EnvelopePlayedFor ?? throw new InvalidOperationException("No envelope selected!");
             envelope.Open();
 
+            QuestionGameUpdateEnvelopeLabel();
             gameStateInstance.RefreshEnvelopes();
 
             QuestionGameOpenEnvelopeButton.Enabled = false;
@@ -1984,12 +2026,7 @@ namespace CluelessControl
             {
                 // Start trading
                 gameStateInstance.StartTrading();
-
-                TradingOfferTextBox.Text = Utils.AmountToString(amount: 0);
-
-                TradingUnlockButtons();
-                TradingUpdateEnvelopes();
-                TradingStartPlayingMusic();
+                TradingStartScreen();
                 DirectorTabControl.SelectTab("GameTradingTab");
             }
         }
@@ -1997,6 +2034,23 @@ namespace CluelessControl
         #endregion
 
         #region Game - Trading
+
+        private void TradingStartScreen()
+        {
+            _tradingContestantPage = 0;
+            _tradingHostPage = 0;
+
+            _tradingAreContestantCheckboxesChanging = false;
+            _tradingAreHostCheckboxesChanging = false;
+
+            TradingOfferTextBox.Text = Utils.AmountToString(amount: 0);
+            TradingUnlockButtons();
+            TradingUpdateEnvelopes();
+            TradingStartPlayingMusic();
+
+            TradingUpdateContestantPages();
+            TradingUpdateHostPages();
+        }
 
         private void TradingStartPlayingMusic()
         {
@@ -2028,9 +2082,10 @@ namespace CluelessControl
                 gameStateInstance.RemoveDestroyedEnvelopes();
                 gameStateInstance.RefreshEnvelopes();
 
+                TradingClearCheckboxes();
                 TradingUpdateEnvelopes();
                 TradingUpdateCashLabels();
-                TradingClearCheckboxes();
+                TradingUpdatePages();
 
                 TradingUnlockButtons();
 
@@ -2039,18 +2094,6 @@ namespace CluelessControl
 
             _soundManager.PauseQueue(QUEUE_NAME_TRADING_BACKGROUND);
             _soundManager.PlaySingleSound(shredderSound);
-        }
-
-        private void TradingPlayBringMoneySound()
-        {
-            var bringMoneySound = new Sound("snd/trading-bring-money.wav", _volumeLevel);
-            bringMoneySound.EventStoppedPlayback += (s, e) =>
-            {
-                _soundManager.ResumeQueue(QUEUE_NAME_TRADING_BACKGROUND);
-            };
-
-            _soundManager.PauseQueue(QUEUE_NAME_TRADING_BACKGROUND);
-            _soundManager.PlaySingleSound(bringMoneySound);
         }
 
         private void TradingGameOver(bool bigWin = false)
@@ -2080,12 +2123,14 @@ namespace CluelessControl
             int contestantEnvelopeCount = gameStateInstance.ContestantEnvelopeSet.EnvelopeCount;
             int hostEnvelopeCount = gameStateInstance.HostEnvelopeSet.EnvelopeCount;
 
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            int contestantOffset = _tradingContestantPage * TRADING_SCREEN_MAX_ON_PAGE;
+            int hostOffset = _tradingHostPage * TRADING_SCREEN_MAX_ON_PAGE;
+            for (int i = 0; i < TRADING_SCREEN_MAX_ON_PAGE; ++i)
             {
-                _tradingContestantCheckboxes[i].Enabled = i < contestantEnvelopeCount;
+                _tradingContestantCheckboxes[i].Enabled = (i + contestantOffset) < contestantEnvelopeCount;
                 _tradingContestantCheckboxes[i].Checked = false;
 
-                _tradingHostCheckboxes[i].Enabled = i < hostEnvelopeCount;
+                _tradingHostCheckboxes[i].Enabled = (i + hostOffset) < hostEnvelopeCount;
                 _tradingHostCheckboxes[i].Checked = false;
             }
 
@@ -2105,7 +2150,7 @@ namespace CluelessControl
 
         private void TradingLockButtons()
         {
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            for (int i = 0; i < TRADING_SCREEN_MAX_ON_PAGE; ++i)
             {
                 _tradingContestantCheckboxes[i].Enabled = false;
                 _tradingContestantCheckboxes[i].Checked = false;
@@ -2124,15 +2169,30 @@ namespace CluelessControl
             TradingShredderBtn.Enabled = false;
             TradingEndGameNormalBtn.Enabled = false;
             TradingEndGameFireworksBtn.Enabled = false;
+
+            TradingContestantPreviousPageButton.Enabled = false;
+            TradingContestantNextPageButton.Enabled = false;
+            TradingContestantAddEnvelopeButton.Enabled = false;
+
+            TradingHostPreviousPageButton.Enabled = false;
+            TradingHostNextPageButton.Enabled = false;
+            TradingHostAddEnvelopeButton.Enabled = false;
         }
 
         private void TradingUpdateContestantEnvelopes()
         {
             var gameStateInstance = GameState.Instance;
 
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            int envelopeCount = gameStateInstance.ContestantEnvelopeSet.EnvelopeCount;
+            TradingContestantEnvelopeCountLbl.Text = string.Format("Kopert: {0}", envelopeCount);
+            TradingContestantEnvelopePageNumberLbl.Text = string.Format("Strona {0}/{1}", _tradingContestantPage + 1, TradingContestantMaxPages);
+
+            int offset = _tradingContestantPage * TRADING_SCREEN_MAX_ON_PAGE;
+
+            _tradingAreContestantCheckboxesChanging = true;
+            for (int i = 0; i < TRADING_SCREEN_MAX_ON_PAGE; ++i)
             {
-                Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
+                Envelope? envelope = gameStateInstance.GetContestantEnvelope(i + offset);
                 if (envelope is null || envelope.State == EnvelopeState.DESTROYED)
                 {
                     _tradingContestantEnvelopeLabels[i].BackColor = Color.White;
@@ -2148,18 +2208,27 @@ namespace CluelessControl
                     _tradingContestantEnvelopeLabels[i].BackColor = colorPairing.BackgroundColor;
                     _tradingContestantEnvelopeLabels[i].Text = envelope.GetEnvelopeValueForDirector();
 
+                    _tradingContestantCheckboxes[i].Checked = envelope.TradingCheckbox;
                     _tradingContestantCheckboxes[i].Enabled = true;
                 }
             }
+            _tradingAreContestantCheckboxesChanging = false;
         }
 
         private void TradingUpdateHostEnvelopes()
         {
             var gameStateInstance = GameState.Instance;
 
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            int envelopeCount = gameStateInstance.HostEnvelopeSet.EnvelopeCount;
+            TradingHostEnvelopeCountLbl.Text = string.Format("Kopert: {0}", envelopeCount);
+            TradingHostEnvelopePageNumberLbl.Text = string.Format("Strona {0}/{1}", _tradingHostPage + 1, TradingHostMaxPages);
+
+            int offset = _tradingHostPage * TRADING_SCREEN_MAX_ON_PAGE;
+
+            _tradingAreHostCheckboxesChanging = true;
+            for (int i = 0; i < TRADING_SCREEN_MAX_ON_PAGE; ++i)
             {
-                Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
+                Envelope? envelope = gameStateInstance.GetHostEnvelope(i + offset);
                 if (envelope is null || envelope.State == EnvelopeState.DESTROYED)
                 {
                     _tradingHostEnvelopeLabels[i].BackColor = Color.White;
@@ -2175,40 +2244,92 @@ namespace CluelessControl
                     _tradingHostEnvelopeLabels[i].BackColor = colorPairing.BackgroundColor;
                     _tradingHostEnvelopeLabels[i].Text = envelope.GetEnvelopeValueForDirector();
 
+                    _tradingHostCheckboxes[i].Checked = envelope.TradingCheckbox;
                     _tradingHostCheckboxes[i].Enabled = true;
                 }
             }
+
+            _tradingAreHostCheckboxesChanging = false;
         }
 
-        private void TradingUpdateEnvelopes()
+        public void TradingUpdateEnvelopes()
         {
+            TradingUpdateContestantPages();
             TradingUpdateContestantEnvelopes();
+
+            TradingUpdateHostPages();
             TradingUpdateHostEnvelopes();
         }
 
-        private void TradingClearContestantCheckboxes()
+        public void TradingClearContestantCheckboxes()
         {
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            for (int i = 0; i < TRADING_SCREEN_MAX_ON_PAGE; ++i)
             {
                 _tradingContestantCheckboxes[i].Checked = false;
             }
-        }
 
-        private void TradingClearHostCheckboxes()
-        {
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            foreach (Envelope envelope in GameState.Instance.ContestantEnvelopeSet.Envelopes)
             {
-                _tradingHostCheckboxes[i].Checked = false;
+                envelope.TradingCheckbox = false;
             }
         }
 
-        private void TradingClearCheckboxes()
+        public void TradingClearHostCheckboxes()
+        {
+            for (int i = 0; i < TRADING_SCREEN_MAX_ON_PAGE; ++i)
+            {
+                _tradingHostCheckboxes[i].Checked = false;
+            }
+
+            foreach (Envelope envelope in GameState.Instance.HostEnvelopeSet.Envelopes)
+            {
+                envelope.TradingCheckbox = false;
+            }
+        }
+
+        public void TradingClearCheckboxes()
         {
             TradingClearContestantCheckboxes();
             TradingClearHostCheckboxes();
         }
 
-        private void TradingUpdateCashLabels()
+        private void TradingContestantEnvelopeChkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is not CheckBox checkBox)
+                throw new ArgumentException("Sender is not a checkbox.", nameof(sender));
+
+            if (_tradingAreContestantCheckboxesChanging)
+                return;
+
+            int pageOffset = _tradingContestantPage * TRADING_SCREEN_MAX_ON_PAGE;
+            int tag = (int)(checkBox.Tag ?? throw new InvalidOperationException("This checkbox's tag is missing or incorrect."));
+
+            Envelope? envelope = GameState.Instance.GetContestantEnvelope(pageOffset + tag);
+            if (envelope is null)
+                throw new InvalidOperationException("This envelope should not be available.");
+
+            envelope.TradingCheckbox = checkBox.Checked;
+        }
+
+        private void TradingHostEnvelopeChkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is not CheckBox checkBox)
+                throw new ArgumentException("Sender is not a checkbox.", nameof(sender));
+
+            if (_tradingAreHostCheckboxesChanging)
+                return;
+
+            int pageOffset = _tradingHostPage * TRADING_SCREEN_MAX_ON_PAGE;
+            int tag = (int)(checkBox.Tag ?? throw new InvalidOperationException("This checkbox's tag is missing or incorrect."));
+
+            Envelope? envelope = GameState.Instance.GetHostEnvelope(pageOffset + tag);
+            if (envelope is null)
+                throw new InvalidOperationException("This envelope should not be available.");
+
+            envelope.TradingCheckbox = checkBox.Checked;
+        }
+
+        public void TradingUpdateCashLabels()
         {
             var gameStateInstance = GameState.Instance;
 
@@ -2221,6 +2342,86 @@ namespace CluelessControl
             TradingCashLbl.Text = Utils.AmountToString(gameStateInstance.ContestantCash);
             TradingCashWhenAcceptedLbl.Text = Utils.AmountToString(cashWhenAccepted);
             TradingCurrentPrizeLbl.Text = Utils.AmountToString(currentPrize);
+        }
+
+        public void TradingUpdateContestantPages()
+        {
+            _tradingContestantPage = Utils.Clamp(_tradingContestantPage, min: 0, max: TradingContestantMaxPageIndex);
+
+            TradingContestantPreviousPageButton.Enabled = _tradingContestantPage > 0;
+            TradingContestantNextPageButton.Enabled = _tradingContestantPage < TradingContestantMaxPageIndex;
+            TradingContestantAddEnvelopeButton.Enabled = GameState.Instance.ContestantEnvelopeSet.EnvelopeCount < GameConstants.MAX_ENVELOPE_COUNT_PERSON;
+        }
+
+        public void TradingUpdateHostPages()
+        {
+            _tradingHostPage = Utils.Clamp(_tradingHostPage, min: 0, max: TradingHostMaxPageIndex);
+
+            TradingHostPreviousPageButton.Enabled = _tradingHostPage > 0;
+            TradingHostNextPageButton.Enabled = _tradingHostPage < TradingHostMaxPageIndex;
+            TradingHostAddEnvelopeButton.Enabled = GameState.Instance.HostEnvelopeSet.EnvelopeCount < GameConstants.MAX_ENVELOPE_COUNT_PERSON;
+        }
+
+        public void TradingUpdatePages()
+        {
+            TradingUpdateContestantPages();
+            TradingUpdateHostPages();
+        }
+
+        private void TradingContestantPreviousPageButton_Click(object sender, EventArgs e)
+        {
+            --_tradingContestantPage;
+
+            TradingUpdateContestantEnvelopes();
+            TradingUpdateContestantPages();
+        }
+
+        private void TradingContestantNextPageButton_Click(object sender, EventArgs e)
+        {
+            ++_tradingContestantPage;
+
+            TradingUpdateContestantEnvelopes();
+            TradingUpdateContestantPages();
+        }
+
+        private void TradingContestantAddEnvelopeButton_Click(object sender, EventArgs e)
+        {
+            if (Program.AddEnvelopeForm.IsShowing)
+            {
+                ShowErrorMessage("Okno dodawania koperty jest już pokazane.");
+                return;
+            }
+
+            Program.AddEnvelopeForm.Reset(TradingSide.Contestant);
+            Program.AddEnvelopeForm.Show();
+        }
+
+        private void TradingHostPreviousPageButton_Click(object sender, EventArgs e)
+        {
+            --_tradingHostPage;
+
+            TradingUpdateHostEnvelopes();
+            TradingUpdateHostPages();
+        }
+
+        private void TradingHostNextPageButton_Click(object sender, EventArgs e)
+        {
+            ++_tradingHostPage;
+
+            TradingUpdateHostEnvelopes();
+            TradingUpdateHostPages();
+        }
+
+        private void TradingHostAddEnvelopeButton_Click(object sender, EventArgs e)
+        {
+            if (Program.AddEnvelopeForm.IsShowing)
+            {
+                ShowErrorMessage("Okno dodawania koperty jest już pokazane.");
+                return;
+            }
+
+            Program.AddEnvelopeForm.Reset(TradingSide.Host);
+            Program.AddEnvelopeForm.Show();
         }
 
         private void TradingPresentOfferBtn_Click(object sender, EventArgs e)
@@ -2239,39 +2440,55 @@ namespace CluelessControl
                 return;
             }
 
+            foreach (Envelope envelope in gameStateInstance.ContestantEnvelopeSet.Envelopes)
+            {
+                if (envelope.TradingCheckbox)
+                    envelope.MarkForTrade();
+                else
+                    envelope.MarkAsNeutral();
+            }
+
+            foreach (Envelope envelope in gameStateInstance.HostEnvelopeSet.Envelopes)
+            {
+                if (envelope.TradingCheckbox)
+                    envelope.MarkForTrade();
+                else
+                    envelope.MarkAsNeutral();
+            }
+
+            if (!gameStateInstance.CanSetEnvelopesAsOffer())
+            {
+                ShowErrorMessage(
+                    string.Format(
+                        "Każda strona może mieć nie więcej niż {0} kopert. Po przyjęciu tej oferty jedna ze stron miałaby więcej, więc takiej oferty nie można złożyć.",
+                        Constants.GameConstants.MAX_ENVELOPE_COUNT_PERSON));
+
+                gameStateInstance.ClearOffer();
+                TradingClearCheckboxes();
+                TradingUpdateEnvelopes();
+                return;
+            }
+
             gameStateInstance.SetCashOffer(cashOffer);
 
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
-            {
-                Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
-                bool isChecked = _tradingContestantCheckboxes[i].Checked;
-                if (envelope is not null)
-                {
-                    if (isChecked)
-                        envelope.MarkForTrade();
-                    else
-                        envelope.MarkAsNeutral();
-                }
-            }
-
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
-            {
-                Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
-                bool isChecked = _tradingHostCheckboxes[i].Checked;
-                if (envelope is not null)
-                {
-                    if (isChecked)
-                        envelope.MarkForTrade();
-                    else
-                        envelope.MarkAsNeutral();
-                }
-            }
-
+            TradingUpdateEnvelopes();
             TradingUpdateCashLabels();
 
             gameStateInstance.RefreshOffer();
 
             TradingPlayOfferPing();
+        }
+
+        private void TradingPlayBringMoneySound()
+        {
+            var bringMoneySound = new Sound("snd/trading-bring-money.wav", _volumeLevel);
+            bringMoneySound.EventStoppedPlayback += (s, e) =>
+            {
+                _soundManager.ResumeQueue(QUEUE_NAME_TRADING_BACKGROUND);
+            };
+
+            _soundManager.PauseQueue(QUEUE_NAME_TRADING_BACKGROUND);
+            _soundManager.PlaySingleSound(bringMoneySound);
         }
 
         private void TradingBringMoneyBtn_Click(object sender, EventArgs e)
@@ -2285,7 +2502,7 @@ namespace CluelessControl
             TradingOfferTextBox.Text = Utils.AmountToString(amount: 0);
 
             TradingClearCheckboxes();
-
+            TradingUpdateEnvelopes();
             TradingUpdateCashLabels();
         }
 
@@ -2294,8 +2511,8 @@ namespace CluelessControl
             GameState.Instance.AcceptOffer();
             TradingOfferTextBox.Text = Utils.AmountToString(amount: 0);
 
-            TradingUpdateEnvelopes();
             TradingClearCheckboxes();
+            TradingUpdateEnvelopes();
             TradingUpdateCashLabels();
 
             TradingPlayUpdateSound();
@@ -2306,31 +2523,17 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
 
             // Open/Close Contestant Envelopes
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            foreach (Envelope envelope in gameStateInstance.ContestantEnvelopeSet.Envelopes)
             {
-                Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
-                if (envelope is null)
-                    continue;
-
-                bool shouldToggle = _tradingContestantCheckboxes[i].Checked;
-                if (shouldToggle)
-                {
+                if (envelope.TradingCheckbox)
                     envelope.ToggleOpenClose();
-                }
             }
 
             // Open/Close Host Envelopes
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            foreach (Envelope envelope in gameStateInstance.HostEnvelopeSet.Envelopes)
             {
-                Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
-                if (envelope is null)
-                    continue;
-
-                bool shouldToggle = _tradingHostCheckboxes[i].Checked;
-                if (shouldToggle)
-                {
+                if (envelope.TradingCheckbox)
                     envelope.ToggleOpenClose();
-                }
             }
 
             gameStateInstance.RefreshEnvelopes();
@@ -2342,38 +2545,24 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
 
             // Destroy Contestant Envelopes
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            foreach (Envelope envelope in gameStateInstance.ContestantEnvelopeSet.Envelopes)
             {
-                Envelope? envelope = gameStateInstance.GetContestantEnvelope(i);
-                if (envelope is null)
-                    continue;
-
-                bool toDestroy = _tradingContestantCheckboxes[i].Checked;
-                if (toDestroy)
-                {
+                if (envelope.TradingCheckbox)
                     envelope.MarkAsDestroyed();
-                }
             }
 
             // Destroy Host Envelopes
-            for (int i = 0; i < GameConstants.MAX_ENVELOPE_COUNT_PERSON; ++i)
+            foreach (Envelope envelope in gameStateInstance.HostEnvelopeSet.Envelopes)
             {
-                Envelope? envelope = gameStateInstance.GetHostEnvelope(i);
-                if (envelope is null)
-                    continue;
-
-                bool toDestroy = _tradingHostCheckboxes[i].Checked;
-                if (toDestroy)
-                {
+                if (envelope.TradingCheckbox)
                     envelope.MarkAsDestroyed();
-                }
             }
 
             TradingLockButtons();
+            TradingPlayShredderSound();
+            TradingUpdateEnvelopes();
 
             gameStateInstance.RefreshEnvelopes();
-
-            TradingPlayShredderSound();
         }
 
         private void TradingEndGameNormalBtn_Click(object sender, EventArgs e)
