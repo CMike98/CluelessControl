@@ -436,6 +436,17 @@ namespace CluelessControl
             CashOffer = newOffer;
         }
 
+        public bool CanSetEnvelopesAsOffer()
+        {
+            int tradedContestantEnvCount = ContestantEnvelopeSet.CountEnvelopes(env => env.State == EnvelopeState.MARKED_FOR_TRADE);
+            int tradedHostEnvCount = HostEnvelopeSet.CountEnvelopes(env => env.State == EnvelopeState.MARKED_FOR_TRADE);
+            
+            int contestantEnvelopeCount = ContestantEnvelopeSet.EnvelopeCount - tradedContestantEnvCount + tradedHostEnvCount;
+            int hostEnvelopeCount = HostEnvelopeSet.EnvelopeCount - tradedHostEnvCount + tradedContestantEnvCount;
+
+            return Math.Max(contestantEnvelopeCount, hostEnvelopeCount) <= Constants.GameConstants.MAX_ENVELOPE_COUNT_PERSON;
+        }
+
         #endregion
 
         #region Questions
