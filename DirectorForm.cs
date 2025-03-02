@@ -9,12 +9,6 @@ namespace CluelessControl
 {
     public partial class DirectorForm : Form
     {
-        #region Other Forms
-        private static readonly HostScreenForm _hostScreenForm = new();
-        private static readonly ContestantScreenForm _contestantScreenForm = new();
-        private static readonly TVScreenForm _tvScreenForm = new();
-        #endregion
-
         private const int NO_ITEM_INDEX = -1;
 
         #region Sound
@@ -87,9 +81,9 @@ namespace CluelessControl
 
         private static void ShowAllForms()
         {
-            _hostScreenForm.Show();
-            _contestantScreenForm.Show();
-            _tvScreenForm.Show();
+            Program.HostScreenForm.Show();
+            Program.ContestantScreenForm.Show();
+            Program.TVScreenForm.Show();
         }
 
         private void PrepareEnvelopeSelectionBoxes()
