@@ -68,6 +68,9 @@ namespace CluelessControl
             EnvelopeSet set = _side == TradingSide.Contestant ? gameStateInstance.ContestantEnvelopeSet : gameStateInstance.HostEnvelopeSet;
             set.AddEnvelope(newEnvelope);
 
+            gameStateInstance.ContestantEnvelopeSet.SortByEnvelopeNumbers();
+            gameStateInstance.HostEnvelopeSet.SortByEnvelopeNumbers();
+
             Program.DirectorForm.TradingUpdateEnvelopes();
             Program.DirectorForm.TradingUpdateCashLabels();
             Program.DirectorForm.TradingClearCheckboxes();
