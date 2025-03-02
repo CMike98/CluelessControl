@@ -165,6 +165,14 @@ namespace CluelessControl.Envelopes
             _envelopes.ForEach(env => env.ToggleOpenClose());
         }
 
+        public int CountEnvelopes(Predicate<Envelope> predicate)
+        {
+            if (predicate is null)
+                throw new ArgumentNullException(nameof(predicate));
+
+            return _envelopes.Count(env => predicate(env));
+        }
+
         #endregion
     }
 }
