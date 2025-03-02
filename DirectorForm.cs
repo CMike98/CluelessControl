@@ -103,6 +103,8 @@ namespace CluelessControl
             PrepareTradingEnvelopeBoxes();
             PreShowPrepare();
             ShowAllForms();
+
+            SettingsRoundingMethodComboBox.SelectedIndex = 0;
         }
 
         private static void ShowAllForms()
@@ -372,7 +374,9 @@ namespace CluelessControl
                 else
                     throw new InvalidOperationException("No \"Show on TV\" radio checked.");
 
-                result = GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, showAmountsOnTv);
+                RoundingMethod roundingMethod = (RoundingMethod) SettingsRoundingMethodComboBox.SelectedIndex;
+
+                result = GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, showAmountsOnTv, roundingMethod);
                 return true;
             }
             catch (Exception)
@@ -404,6 +408,8 @@ namespace CluelessControl
                 SettingsShowOnTvYesRadio.Checked = true;
             else
                 SettingsShowOnTvNoRadio.Checked = true;
+
+            SettingsRoundingMethodComboBox.SelectedIndex = (int)gameSettings.Rounding;
         }
 
         private void SettingsDecimalPlacesTxtBox_TextChanged(object sender, EventArgs e)

@@ -49,6 +49,8 @@
             SettingsEnvelopeStartCountNumeric = new NumericUpDown();
             SettingsEnvelopeStartCountLbl = new Label();
             SettingsRoundingGroup = new GroupBox();
+            SettingsRoundingMethodComboBox = new ComboBox();
+            SettingsRoundingMethodLbl = new Label();
             SettingsDecimalPlacesLbl = new Label();
             SettingsDecimalPlacesTxtBox = new TextBox();
             SettingsSaveToFileBtn = new Button();
@@ -406,7 +408,7 @@
             SettingsShowOnTvGroup.Controls.Add(SettingsShowOnTvLbl);
             SettingsShowOnTvGroup.Controls.Add(SettingsShowOnTvNoRadio);
             SettingsShowOnTvGroup.Controls.Add(SettingsShowOnTvYesRadio);
-            SettingsShowOnTvGroup.Location = new Point(21, 219);
+            SettingsShowOnTvGroup.Location = new Point(569, 219);
             SettingsShowOnTvGroup.Name = "SettingsShowOnTvGroup";
             SettingsShowOnTvGroup.Size = new Size(491, 100);
             SettingsShowOnTvGroup.TabIndex = 4;
@@ -481,14 +483,36 @@
             // 
             // SettingsRoundingGroup
             // 
+            SettingsRoundingGroup.Controls.Add(SettingsRoundingMethodComboBox);
+            SettingsRoundingGroup.Controls.Add(SettingsRoundingMethodLbl);
             SettingsRoundingGroup.Controls.Add(SettingsDecimalPlacesLbl);
             SettingsRoundingGroup.Controls.Add(SettingsDecimalPlacesTxtBox);
             SettingsRoundingGroup.Location = new Point(569, 15);
             SettingsRoundingGroup.Name = "SettingsRoundingGroup";
-            SettingsRoundingGroup.Size = new Size(491, 92);
+            SettingsRoundingGroup.Size = new Size(491, 198);
             SettingsRoundingGroup.TabIndex = 24;
             SettingsRoundingGroup.TabStop = false;
             SettingsRoundingGroup.Text = "Zaokrąglanie";
+            // 
+            // SettingsRoundingMethodComboBox
+            // 
+            SettingsRoundingMethodComboBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            SettingsRoundingMethodComboBox.FormattingEnabled = true;
+            SettingsRoundingMethodComboBox.Items.AddRange(new object[] { "Matematycznie", "W dół", "W górę" });
+            SettingsRoundingMethodComboBox.Location = new Point(266, 127);
+            SettingsRoundingMethodComboBox.Name = "SettingsRoundingMethodComboBox";
+            SettingsRoundingMethodComboBox.Size = new Size(219, 35);
+            SettingsRoundingMethodComboBox.TabIndex = 3;
+            // 
+            // SettingsRoundingMethodLbl
+            // 
+            SettingsRoundingMethodLbl.Font = new Font("Arial", 12F);
+            SettingsRoundingMethodLbl.Location = new Point(6, 113);
+            SettingsRoundingMethodLbl.Name = "SettingsRoundingMethodLbl";
+            SettingsRoundingMethodLbl.Size = new Size(254, 65);
+            SettingsRoundingMethodLbl.TabIndex = 2;
+            SettingsRoundingMethodLbl.Text = "Jak zaokrąglać?";
+            SettingsRoundingMethodLbl.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // SettingsDecimalPlacesLbl
             // 
@@ -559,7 +583,7 @@
             // 
             SettingsPlusPercentGroup.Controls.Add(SettingsPlusPercentBestRadio);
             SettingsPlusPercentGroup.Controls.Add(SettingsPlusPercentAllRadio);
-            SettingsPlusPercentGroup.Location = new Point(569, 113);
+            SettingsPlusPercentGroup.Location = new Point(21, 219);
             SettingsPlusPercentGroup.Name = "SettingsPlusPercentGroup";
             SettingsPlusPercentGroup.Size = new Size(491, 100);
             SettingsPlusPercentGroup.TabIndex = 3;
@@ -2738,5 +2762,7 @@
         private TextBox EnvelopeSelectionNum6TxtBox;
         private Label EnvelopeSelectionContent5Lbl;
         private TextBox EnvelopeSelectionNum5TxtBox;
+        private ComboBox SettingsRoundingMethodComboBox;
+        private Label SettingsRoundingMethodLbl;
     }
 }
