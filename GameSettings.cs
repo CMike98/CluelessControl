@@ -60,8 +60,6 @@ namespace CluelessControl
         {
             if (startEnvelopeCount < 1 || startEnvelopeCount > GameConstants.MAX_ENVELOPE_COUNT_PERSON)
                 throw new ArgumentOutOfRangeException(nameof(startEnvelopeCount), $"Number of envelopes to pick must be between 1 and {GameConstants.MAX_ENVELOPE_COUNT_PERSON}.");
-            if (decimalPlaces < 0)
-                throw new ArgumentOutOfRangeException(nameof(decimalPlaces), $"Number of decimal places in the prize money must be non-negative.");
 
             return new GameSettings(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, showAmountsOnTv, roundingMethod);
         }
