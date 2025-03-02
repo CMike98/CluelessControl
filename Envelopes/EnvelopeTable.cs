@@ -5,12 +5,13 @@ namespace CluelessControl.Envelopes
 {
     public class EnvelopeTable
     {
-        private HashSet<Envelope> EnvelopesOnTable
+        public HashSet<Envelope> EnvelopesOnTable
         {
             get;
-            set;
+            private set;
         }
 
+        #region Constructors
         private EnvelopeTable()
         {
             EnvelopesOnTable = new HashSet<Envelope>();
@@ -20,6 +21,9 @@ namespace CluelessControl.Envelopes
         {
             EnvelopesOnTable = envelopesOnTable;
         }
+        #endregion
+
+        #region Create
 
         public static EnvelopeTable Create()
         {
@@ -43,7 +47,9 @@ namespace CluelessControl.Envelopes
 
             return new(envelopeList);
         }
+        #endregion
 
+        #region Methods
         public bool IsEnvelopePresent(int envelopeNumber)
         {
             if (envelopeNumber < GameConstants.MIN_ENVELOPE_NUMBER || envelopeNumber > GameConstants.MAX_ENVELOPE_NUMBER)
@@ -73,7 +79,7 @@ namespace CluelessControl.Envelopes
                     $"Envelope number must be in range [{GameConstants.MIN_ENVELOPE_NUMBER}...{GameConstants.MAX_ENVELOPE_NUMBER}]!");
             }
 
-            return EnvelopesOnTable.Where(envelope => envelope.EnvelopeNumber == envelopeNumber).First();
+            return EnvelopesOnTable.First(envelope => envelope.EnvelopeNumber == envelopeNumber);
         }
 
         public void AddEnvelope(Envelope envelope)
@@ -134,9 +140,9 @@ namespace CluelessControl.Envelopes
 
             foreach (var envelope in envelopesMatching)
             {
-                if (predicate(envelope))
-                    action(envelope);
+                action(envelope);
             }
         }
+        #endregion
     }
 }
