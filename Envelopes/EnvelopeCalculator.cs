@@ -43,34 +43,39 @@ namespace CluelessControl.Envelopes
 
             decimal positiveMultiplier = settings.OnlyBestPlusCounts   ? positivePercentages.Max() : positivePercentages.Product();
             decimal negativeMultiplier = settings.OnlyWorstMinusCounts ? negativePercentages.Min() : negativePercentages.Product();
-            decimal multiplier = positiveMultiplier * negativeMultiplier;
+            decimal multiplier = negativeMultiplier * positiveMultiplier;
 
-            return Math.Round(cashTotal * multiplier, settings.DecimalPlaces, MidpointRounding.AwayFromZero);
+            decimal prize = multiplier * cashTotal;
+            decimal pow10 = Pow10(settings.DecimalPlaces);
+
+            switch (settings.Rounding)
+            {
+                case RoundingMethod.MATHEMATICAL:
+                    return Math.Round(prize, settings.DecimalPlaces, MidpointRounding.AwayFromZero);
+                case RoundingMethod.ROUND_DOWN:
+                    return Math.Floor(prize * pow10) / pow10;
+                case RoundingMethod.ROUND_UP:
+                    return Math.Ceiling(prize * pow10) / pow10;
+                default:
+                    throw new ArgumentException($"Undefined rounding method: {settings.Rounding}.", nameof(settings));
+            }
         }
 
-        public static string CalculateValueInsideEnvelopes(EnvelopeSet envelopeSet)
+        private static decimal Pow10(int exponent)
         {
-            if (envelopeSet is null)
-                throw new ArgumentNullException(nameof(envelopeSet));
+            if (exponent < 0)
+                return 1.0m / Pow10(-exponent);
+            else if (exponent == 0)
+                return 1;
 
-            IEnumerable<BaseCheque> cheques = envelopeSet.GetCheques();
-            IEnumerable<CashCheque> cashCheques = cheques.OfType<CashCheque>();
-            IEnumerable<PercentageCheque> percentageCheques = cheques.OfType<PercentageCheque>();
+            decimal result = 1;
 
-            if (cashCheques.Any())
+            for (int i = 0; i < exponent; ++i)
             {
-                decimal sum = cashCheques.Sum(cheque => cheque.CashAmount);
-                return Utils.AmountToString(sum);
+                result *= 10;
             }
-            else if (percentageCheques.Any())
-            {
-                decimal minPercentage = percentageCheques.Min(cheque => cheque.Percentage);
-                return Utils.PercentageToString(minPercentage);
-            }
-            else
-            {
-                return Utils.AmountToString(amount: 0);
-            }
+
+            return result;
         }
     }
 }
