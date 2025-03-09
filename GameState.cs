@@ -578,6 +578,7 @@ namespace CluelessControl
             decimal finalPrize = EnvelopeCalculator.CalculateFinalPrize(GameSettings, ContestantEnvelopeSet.Envelopes, ContestantCash);
             FinalPrize = Utils.AmountToString(finalPrize);
 
+            EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
             EventGameOver?.Invoke(this, EventArgs.Empty);
         }
 
