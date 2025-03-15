@@ -2666,6 +2666,8 @@ namespace CluelessControl
 
         private void GameOverRestartBtn_Click(object sender, EventArgs e)
         {
+            GameState.Instance.ContestantEnvelopeSet.ClearEnvelopeList();
+            GameState.Instance.HostEnvelopeSet.ClearEnvelopeList();
             GameState.Instance.ClearEverything();
 
             PreShowPrepare();
