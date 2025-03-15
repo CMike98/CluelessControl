@@ -65,6 +65,8 @@ namespace CluelessControl
             ClearQuestionLabels();
             ClearAnswerLockIn();
             RedrawEnvelopes();
+
+            SetTradingBoxesVisibility(visible: false);
         }
 
         private void GameState_EventClearQuestion(object? sender, EventArgs e)
@@ -116,6 +118,16 @@ namespace CluelessControl
         #endregion
 
         #region Methods
+
+        public void SetTradingBoxesVisibility(bool visible)
+        {
+            ContestantTextLabel.Visible = visible;
+            HostTextLabel.Visible = visible;
+            CashTextLabel.Visible = visible;
+            CashLabel.Visible = visible;
+            OfferTextLabel.Visible = visible;
+            OfferLabel.Visible = visible;
+        }
 
         public void ClearAnswerLockIn()
         {
@@ -196,12 +208,7 @@ namespace CluelessControl
         {
             ClearQuestionLabels();
 
-            ContestantTextLabel.Visible = true;
-            HostTextLabel.Visible = true;
-            CashTextLabel.Visible = true;
-            CashLabel.Visible = true;
-            OfferTextLabel.Visible = true;
-            OfferLabel.Visible = true;
+            SetTradingBoxesVisibility(visible: true);
         }
 
         public void RefreshOffer()
