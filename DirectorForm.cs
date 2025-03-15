@@ -40,7 +40,23 @@ namespace CluelessControl
         #endregion
 
         #region Envelope Selection Screen
-        private readonly Dictionary<TextBox, Label> _envelopeSelectTxtBoxesAndLabels = [];
+
+        private record EnvelopeControlsPair
+        {
+            public required TextBox EnvelopeTextBox
+            {
+                get;
+                init;
+            }
+
+            public required Label EnvelopeLabel
+            {
+                get;
+                init;
+            }
+        }
+
+        private readonly EnvelopeControlsPair[] _envelopeControlPairs = new EnvelopeControlsPair[GameConstants.MAX_ENVELOPE_COUNT_PERSON];
         #endregion
 
         #region Question Game Screen
@@ -124,7 +140,11 @@ namespace CluelessControl
                 TextBox numberControl = (TextBox?)Controls.Find(numberName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, numberName);
                 Label valueControl = (Label?)Controls.Find(valueName, searchAllChildren: true).First() ?? throw new MissingMemberException(this.Name, valueName);
 
-                _envelopeSelectTxtBoxesAndLabels.Add(numberControl, valueControl);
+                _envelopeControlPairs[i] = new EnvelopeControlsPair()
+                {
+                    EnvelopeTextBox = numberControl,
+                    EnvelopeLabel = valueControl
+                };
             }
         }
 
@@ -1437,22 +1457,22 @@ namespace CluelessControl
             int envelopeCount = gameStateInstance.ContestantEnvelopeSet.EnvelopeCount;
             int startEnvelopeCount = gameStateInstance.GameSettings.StartEnvelopeCount;
 
-            TextBox[] numberTextBoxes = _envelopeSelectTxtBoxesAndLabels.Keys.ToArray();
-
             if (envelopeCount < startEnvelopeCount)
             {
-                for (int i = 0; i < numberTextBoxes.Length; ++i)
+                int i = 0;
+                foreach (var envelopeLabelPair in _envelopeControlPairs)
                 {
-                    numberTextBoxes[i].Enabled = (i == envelopeCount);
+                    envelopeLabelPair.EnvelopeTextBox.Enabled = (i == envelopeCount);
+                    ++i;
                 }
 
-                numberTextBoxes[envelopeCount].Focus();
+                _envelopeControlPairs[envelopeCount].EnvelopeTextBox.Focus();
             }
             else
             {
-                foreach (TextBox current in numberTextBoxes)
+                foreach (var envelopeLabelPair in _envelopeControlPairs)
                 {
-                    current.Enabled = false;
+                    envelopeLabelPair.EnvelopeTextBox.Enabled = false;
                 }
             }
 
@@ -1477,7 +1497,8 @@ namespace CluelessControl
                 throw new ArgumentException("The sender is not a textbox.");
 
             // Get the appropriate value label
-            Label valueLabel = _envelopeSelectTxtBoxesAndLabels[numberBox];
+            var pair = _envelopeControlPairs.First(envelopePair => envelopePair.EnvelopeTextBox == numberBox);
+            Label valueLabel = pair.EnvelopeLabel;
 
             // If the textbox is empty, then clear the value label
             if (string.IsNullOrEmpty(numberBox.Text))
@@ -1549,11 +1570,8 @@ namespace CluelessControl
             var gameSettings = gameStateInstance.GameSettings;
             int index = contestantEnvelopes.EnvelopeCount;
 
-            // Get the correct textbox
-            TextBox[] numberTextBoxes = _envelopeSelectTxtBoxesAndLabels.Keys.ToArray();
-
             // Check if the envelope number is valid
-            if (!int.TryParse(numberTextBoxes[index].Text, out int envelopeNumber) ||
+            if (!int.TryParse(_envelopeControlPairs[index].EnvelopeTextBox.Text.Trim(), out int envelopeNumber) ||
                 envelopeNumber < GameConstants.MIN_ENVELOPE_NUMBER || envelopeNumber > GameConstants.MAX_ENVELOPE_NUMBER)
             {
                 string message = string.Format("Numer koperty musi być w przedziale [{0}...{1}]!", GameConstants.MIN_ENVELOPE_NUMBER, GameConstants.MAX_ENVELOPE_NUMBER);
@@ -1599,10 +1617,7 @@ namespace CluelessControl
             gameStateInstance.RemoveContestantEnvelope(lastEnvelope);
 
             // Get the last textbox and clear it
-            TextBox[] numberTextBoxes = _envelopeSelectTxtBoxesAndLabels.Keys.ToArray();
-            TextBox currentNumberTxtBox = numberTextBoxes[lastEnvelopeIndex];
-
-            currentNumberTxtBox.Clear();
+            _envelopeControlPairs[lastEnvelopeIndex].EnvelopeTextBox.Clear();
 
             gameStateInstance.ClearNotSelectedMarkings();
 
