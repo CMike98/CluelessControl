@@ -283,7 +283,7 @@ namespace CluelessControl
 
         private void PreShowIntroBtn_Click(object sender, EventArgs e)
         {
-            // Stop music
+            // Stop all music
             _soundManager.StopAllQueues();
 
             var introMusic = new Sound("snd/intro.wav", _volumeLevel);
@@ -314,10 +314,10 @@ namespace CluelessControl
             _soundManager.PlayQueue(queueName: QUEUE_NAME_WELCOME_CONTESTANT);
 
             // Get name and display
-            string name = PreShowNameTxtBox.Text;
+            string name = PreShowNameTxtBox.Text.Trim();
             if (!string.IsNullOrWhiteSpace(name))
             {
-                GameState.Instance.ShowContestantName(name.Trim());
+                GameState.Instance.ShowContestantName(name);
             }
         }
 
