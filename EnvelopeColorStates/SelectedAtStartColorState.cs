@@ -2,9 +2,9 @@
 
 namespace CluelessControl.EnvelopeColorStates
 {
-    public class SelectedColorState : ColorState
+    public class SelectedAtStartColorState : ColorState
     {
-        public SelectedColorState(BaseCheque cheque) : base(cheque)
+        public SelectedAtStartColorState(BaseCheque cheque) : base(cheque)
         {
         }
 
@@ -23,7 +23,7 @@ namespace CluelessControl.EnvelopeColorStates
         {
             return new EnvelopeColorCollection()
             {
-                BackgroundColor = Color.Yellow,
+                BackgroundColor = Color.Orange,
                 LineColor       = Color.Black,
                 NumberFontColor = Color.Black,
                 ChequeFontColor = Cheque.GetTextColor()

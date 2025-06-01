@@ -170,17 +170,17 @@ namespace CluelessControl.Envelopes
             _envelopeColorState = new NotSelectedColorState(Cheque);
         }
 
-        public void MarkAsSelected()
+        public void MarkAsSelectedAtStart()
         {
-            if (State == EnvelopeState.SELECTED)
+            if (State == EnvelopeState.SELECTED_AT_START)
                 return;
 
             if (State != EnvelopeState.NEUTRAL)
                 throw new InvalidOperationException($"Envelope should be in a neutral state.");
 
-            State = EnvelopeState.SELECTED;
+            State = EnvelopeState.SELECTED_AT_START;
 
-            _envelopeColorState = new SelectedColorState(Cheque);
+            _envelopeColorState = new SelectedAtStartColorState(Cheque);
         }
 
         public void MarkAsPlayingFor()

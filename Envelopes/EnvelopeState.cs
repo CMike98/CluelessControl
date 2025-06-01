@@ -4,7 +4,7 @@
     {
         NEUTRAL,
         NOT_SELECTED,
-        SELECTED,
+        SELECTED_AT_START,
         PLAYING_FOR,
         WON,
         FOR_DESTRUCTION,
