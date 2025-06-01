@@ -380,20 +380,20 @@ namespace CluelessControl
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
-        public void MarkNotSelectedEnvelopes()
+        public void MarkNotSelectedEnvelopesAtStart()
         {
             EnvelopeTable.ForSelected(
                 action: envelope => envelope.MarkAsNotSelected(),
-                predicate: envelope => envelope.State != EnvelopeState.SELECTED);
+                predicate: envelope => envelope.State != EnvelopeState.SELECTED_AT_START);
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
-        public void UnmarkSelection()
+        public void UnmarkSelectionAtStart()
         {
             EnvelopeTable.ForSelected(
                 action: envelope => envelope.MarkAsNeutral(),
-                predicate: envelope => envelope.State == EnvelopeState.SELECTED);
+                predicate: envelope => envelope.State == EnvelopeState.SELECTED_AT_START);
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
