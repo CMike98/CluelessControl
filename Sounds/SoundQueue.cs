@@ -43,7 +43,7 @@
         // Odtwórz następny dźwięk w kolejce
         private void PlayNextSound()
         {
-            // Sprawdzamy, czy jest coś do odtworzenia i czy pętla nie gra
+            // Sprawdzamy, czy jest coś do odtworzenia
             if (_soundQueue.Count == 0 && !_isLooping)
             {
                 _isPlaying = false;
@@ -64,7 +64,6 @@
                     (_currentSound.LoopType == SoundLoopType.FINITE_LOOP && _currentSound.LoopCount > 0))
                 {
                     _isLooping = true;
-                    PlayNextSound(); // Przechodzimy do kolejnego dźwięku w tle
                 }
             }
         }
@@ -124,11 +123,19 @@
             _isPlaying = false;
             _isLooping = false;
             _isPaused = false;
+
+            foreach (Sound sound in _soundQueue)
+            {
+                sound.SetNoLoop();
+                sound.Stop();
+            }
             _soundQueue.Clear();
 
             _currentSound?.SetNoLoop();
             _currentSound?.Stop();
             _currentSound = null;
+
+            PlayNextSound();
         }
 
         public void ClearQueue()

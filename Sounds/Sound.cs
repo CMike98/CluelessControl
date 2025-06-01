@@ -98,7 +98,11 @@ namespace CluelessControl.Sounds
 
         public void Stop()
         {
+            SetNoLoop();
+
             _waveOut?.Stop();
+
+            OnPlayBackStopped(null, new StoppedEventArgs());
         }
 
         public void Pause()
