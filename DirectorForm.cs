@@ -1431,11 +1431,6 @@ namespace CluelessControl
             _soundManager.PlayQueue(QUEUE_NAME_GAME_START);
         }
 
-        private void EnvelopeSelectionPlayPing()
-        {
-            PlaySingleSound(filePath: "snd/envelope-selection-ping.wav");
-        }
-
         private void EnvelopeSelectionUnlockButtons()
         {
             // Unlock the start game button
@@ -1600,7 +1595,7 @@ namespace CluelessControl
             // Update button availability
             EnvelopeSelectionUpdateAvailability();
 
-            EnvelopeSelectionPlayPing();
+            PlaySingleSound(filePath: "snd/envelope-selection-ping.wav");
         }
 
         private void EnvelopeSelectionRetractBtn_Click(object sender, EventArgs e)
