@@ -104,7 +104,7 @@
             Name = "AddEnvelopeForm";
             Text = "Dodaj kopertę";
             TopMost = true;
-            FormClosing += AddEnvelopeForm_FormClosing;
+            Load += AddEnvelopeForm_Load;
             ResumeLayout(false);
         }
 

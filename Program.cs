@@ -8,7 +8,6 @@ namespace CluelessControl
         public static readonly HostScreenForm HostScreenForm = new HostScreenForm();
         public static readonly ContestantScreenForm ContestantScreenForm = new ContestantScreenForm();
         public static readonly TVScreenForm TVScreenForm = new TVScreenForm();
-        public static readonly AddEnvelopeForm AddEnvelopeForm = new AddEnvelopeForm();
 
         [STAThread]
         static void Main()

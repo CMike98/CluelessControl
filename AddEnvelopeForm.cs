@@ -4,16 +4,40 @@ namespace CluelessControl
 {
     public partial class AddEnvelopeForm : Form
     {
-        private TradingSide _side;
-        private bool _isShowing;
-        private List<int> _envelopeNumbers;
+        public TradingSide Side
+        {
+            get;
+            private set;
+        }
 
-        public bool IsShowing => _isShowing;
+        private List<int> EnvelopeNumbers
+        {
+            get;
+            set;
+        }
+
+        public Envelope? SelectedEnvelope
+        {
+            get;
+            private set;
+        }
+
+        private bool ItWasReset
+        {
+            get;
+            set;
+        }
 
         public AddEnvelopeForm()
         {
             InitializeComponent();
-            _envelopeNumbers = new List<int>(capacity: Constants.GameConstants.MAX_ENVELOPES_COUNT);
+            EnvelopeNumbers = new List<int>(capacity: Constants.GameConstants.MAX_ENVELOPES_COUNT);
+        }
+
+        private void AddEnvelopeForm_Load(object sender, EventArgs e)
+        {
+            if (!ItWasReset)
+                throw new InvalidOperationException();
         }
 
         public void Reset(TradingSide side)
@@ -25,19 +49,23 @@ namespace CluelessControl
             AddEnvelopeSelectedEnvelopeLbl.Text = string.Empty;
 
             // Add the envelopes to AddEnvelopeSelectListBox
-            _envelopeNumbers.Clear();
+            EnvelopeNumbers.Clear();
 
             AddEnvelopeSelectListBox.Items.Clear();
             foreach (Envelope envelope in GameState.Instance.EnvelopeTable.EnvelopesOnTable)
             {
                 AddEnvelopeSelectListBox.Items.Add($"{envelope.EnvelopeNumber}. {envelope.Cheque.ToValueString()}");
-                _envelopeNumbers.Add(envelope.EnvelopeNumber);
+                EnvelopeNumbers.Add(envelope.EnvelopeNumber);
             }
 
             // And save the current side for future reference
-            _side = side;
+            Side = side;
 
-            _isShowing = true;
+            // Mark that no envelope has been selected
+            SelectedEnvelope = null;
+
+            // Mark that is was reset
+            ItWasReset = true;
         }
 
         private void AddEnvelopeSelectListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -50,7 +78,7 @@ namespace CluelessControl
                 return;
             }
 
-            int envelopeNumber = _envelopeNumbers[index];
+            int envelopeNumber = EnvelopeNumbers[index];
             Envelope envelope = GameState.Instance.EnvelopeTable.GetEnvelope(envelopeNumber);
             AddEnvelopeSelectedEnvelopeLbl.Text = envelope.GetEnvelopeValueForDirector();
             AddEnvelopeConfirmBtn.Enabled = true;
@@ -61,35 +89,13 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
 
             int index = AddEnvelopeSelectListBox.SelectedIndex;
-            int envelopeNumber = _envelopeNumbers[index];
+            int envelopeNumber = EnvelopeNumbers[index];
             Envelope newEnvelope = gameStateInstance.EnvelopeTable.GetEnvelope(envelopeNumber);
             newEnvelope.MarkAsNeutral();
 
-            EnvelopeSet set = _side == TradingSide.Contestant ? gameStateInstance.ContestantEnvelopeSet : gameStateInstance.HostEnvelopeSet;
-            set.AddEnvelope(newEnvelope);
+            SelectedEnvelope = newEnvelope;
 
-            gameStateInstance.ContestantEnvelopeSet.SortByEnvelopeNumbers();
-            gameStateInstance.HostEnvelopeSet.SortByEnvelopeNumbers();
-
-            Program.DirectorForm.TradingUpdateEnvelopes();
-            Program.DirectorForm.TradingUpdateCashLabels();
-            Program.DirectorForm.TradingClearCheckboxes();
-            Program.DirectorForm.TradingUpdatePages();
-
-            gameStateInstance.EnvelopeTable.DeleteEnvelope(newEnvelope);
-            gameStateInstance.RefreshEnvelopes();
-            
-            _isShowing = false;
-
-            this.OnFormClosing(new FormClosingEventArgs(closeReason: CloseReason.UserClosing, cancel: true));
-        }
-
-        private void AddEnvelopeForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            _isShowing = false;
-
-            Hide();
-            e.Cancel = true;
+            this.Close();
         }
     }
 }

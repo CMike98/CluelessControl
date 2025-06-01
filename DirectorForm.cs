@@ -1520,7 +1520,7 @@ namespace CluelessControl
             else
             {
                 envelope = envelopeTable.GetEnvelope(envelopeNumber);
-                if (envelope.State == EnvelopeState.SELECTED)
+                if (envelope.State == EnvelopeState.SELECTED_AT_START)
                 {
                     errorMessage = "Koperta już wybrana wcześniej!";
                 }
@@ -1583,13 +1583,13 @@ namespace CluelessControl
             }
 
             var newEnvelope = envelopeTable.GetEnvelope(envelopeNumber);
-            newEnvelope.MarkAsSelected();
+            newEnvelope.MarkAsSelectedAtStart();
 
             gameStateInstance.AddContestantEnvelope(newEnvelope);
 
             if (contestantEnvelopes.EnvelopeCount >= gameSettings.StartEnvelopeCount)
             {
-                gameStateInstance.MarkNotSelectedEnvelopes();
+                gameStateInstance.MarkNotSelectedEnvelopesAtStart();
             }
 
             // Update button availability
@@ -1625,7 +1625,7 @@ namespace CluelessControl
             var gameStateInstance = GameState.Instance;
 
             gameStateInstance.HideEnvelopesAfterSelection();
-            gameStateInstance.UnmarkSelection();
+            gameStateInstance.UnmarkSelectionAtStart();
 
             foreach (Envelope envelope in gameStateInstance.ContestantEnvelopeSet.Envelopes)
             {
@@ -2089,7 +2089,7 @@ namespace CluelessControl
             PlaySingleSound(filePath: "snd/trading-update.wav");
         }
 
-        private void TradingPlayShredderSound()
+        private void TradingPlayShredderSoundAndUnlockButtons()
         {
             var shredderSound = new Sound(filePath: "snd/envelope-destroyed.wav", _volumeLevel);
             shredderSound.EventStoppedPlayback += (s, e) =>
@@ -2410,14 +2410,27 @@ namespace CluelessControl
 
         private void TradingContestantAddEnvelopeButton_Click(object sender, EventArgs e)
         {
-            if (Program.AddEnvelopeForm.IsShowing)
-            {
-                ShowErrorMessage("Okno dodawania koperty jest już pokazane.");
-                return;
-            }
+            var envelopeForm = new AddEnvelopeForm();
+            envelopeForm.Reset(TradingSide.Contestant);
+            envelopeForm.ShowDialog();
 
-            Program.AddEnvelopeForm.Reset(TradingSide.Contestant);
-            Program.AddEnvelopeForm.Show();
+            if (envelopeForm.SelectedEnvelope is not null)
+            {
+                var gameStateInstance = GameState.Instance;
+
+                gameStateInstance.ContestantEnvelopeSet.AddEnvelope(envelopeForm.SelectedEnvelope);
+                gameStateInstance.ContestantEnvelopeSet.SortByEnvelopeNumbers();
+
+                gameStateInstance.EnvelopeTable.DeleteEnvelope(envelopeForm.SelectedEnvelope);
+                gameStateInstance.RefreshEnvelopes();
+
+                Program.DirectorForm.TradingUpdateContestantEnvelopes();
+                Program.DirectorForm.TradingUpdateCashLabels();
+                Program.DirectorForm.TradingClearContestantCheckboxes();
+                Program.DirectorForm.TradingUpdateContestantPages();
+
+                PlaySingleSound(filePath: "snd/envelope-selection-ping.wav");
+            }
         }
 
         private void TradingHostPreviousPageButton_Click(object sender, EventArgs e)
@@ -2438,14 +2451,27 @@ namespace CluelessControl
 
         private void TradingHostAddEnvelopeButton_Click(object sender, EventArgs e)
         {
-            if (Program.AddEnvelopeForm.IsShowing)
-            {
-                ShowErrorMessage("Okno dodawania koperty jest już pokazane.");
-                return;
-            }
+            var envelopeForm = new AddEnvelopeForm();
+            envelopeForm.Reset(TradingSide.Host);
+            envelopeForm.ShowDialog();
 
-            Program.AddEnvelopeForm.Reset(TradingSide.Host);
-            Program.AddEnvelopeForm.Show();
+            if (envelopeForm.SelectedEnvelope is not null)
+            {
+                var gameStateInstance = GameState.Instance;
+
+                gameStateInstance.HostEnvelopeSet.AddEnvelope(envelopeForm.SelectedEnvelope);
+                gameStateInstance.HostEnvelopeSet.SortByEnvelopeNumbers();
+
+                gameStateInstance.EnvelopeTable.DeleteEnvelope(envelopeForm.SelectedEnvelope);
+                gameStateInstance.RefreshEnvelopes();
+
+                Program.DirectorForm.TradingUpdateHostEnvelopes();
+                Program.DirectorForm.TradingUpdateCashLabels();
+                Program.DirectorForm.TradingClearHostCheckboxes();
+                Program.DirectorForm.TradingUpdateHostPages();
+
+                PlaySingleSound(filePath: "snd/envelope-selection-ping.wav");
+            }
         }
 
         private void TradingPresentOfferBtn_Click(object sender, EventArgs e)
@@ -2583,8 +2609,7 @@ namespace CluelessControl
             }
 
             TradingLockButtons();
-            TradingPlayShredderSound();
-            TradingUpdateEnvelopes();
+            TradingPlayShredderSoundAndUnlockButtons();
 
             gameStateInstance.RefreshEnvelopes();
         }
