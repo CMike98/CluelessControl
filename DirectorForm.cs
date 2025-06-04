@@ -2590,8 +2590,71 @@ namespace CluelessControl
             TradingUpdateEnvelopes();
         }
 
+        private bool TradingIsShredderWarningNecessary()
+        {
+            var gameStateInstance = GameState.Instance;
+
+            bool isAnyContestantEnvelopeChecked =
+                gameStateInstance.ContestantEnvelopeSet.Envelopes.Any(envelope => envelope.TradingCheckbox);
+            bool isAnyHostEnvelopeChecked =
+                gameStateInstance.HostEnvelopeSet.Envelopes.Any(envelope => envelope.TradingCheckbox);
+
+            if (isAnyContestantEnvelopeChecked && isAnyHostEnvelopeChecked)
+                return true;
+
+            for (int i = 0; i < TradingContestantMaxPageIndex; ++i)
+            {
+                if (i == _tradingContestantPage)
+                    continue;
+
+                int pageOffset = i * TRADING_SCREEN_MAX_ON_PAGE;
+
+                for (int j = 0; j < TRADING_SCREEN_MAX_ON_PAGE; ++j)
+                {
+                    Envelope? envelope = gameStateInstance.GetContestantEnvelope(i + pageOffset);
+                    if (envelope is not null)
+                    {
+                        if (envelope.TradingCheckbox && envelope.State != EnvelopeState.DESTROYED)
+                            return true;
+                    }
+                }
+            }
+
+            for (int i = 0; i < TradingHostMaxPageIndex; ++i)
+            {
+                if (i == _tradingHostPage)
+                    continue;
+
+                int pageOffset = i * TRADING_SCREEN_MAX_ON_PAGE;
+
+                for (int j = 0; j < TRADING_SCREEN_MAX_ON_PAGE; ++j)
+                {
+                    Envelope? envelope = gameStateInstance.GetHostEnvelope(i + pageOffset);
+                    if (envelope is not null)
+                    {
+                        if (envelope.TradingCheckbox && envelope.State != EnvelopeState.DESTROYED)
+                            return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         private void TradingShredderBtn_Click(object sender, EventArgs e)
         {
+            if (TradingIsShredderWarningNecessary())
+            {
+                DialogResult destructionResult = MessageBox.Show(
+                    text: "Masz zaznaczone koperty po obu stronach lub koperty, których obecnie nie widzisz! Na pewno chcesz usuwać?",
+                    GameConstants.PROGRAM_TITLE,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (destructionResult == DialogResult.No)
+                    return;
+            }
+
             var gameStateInstance = GameState.Instance;
 
             // Destroy Contestant Envelopes
