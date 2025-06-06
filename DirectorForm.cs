@@ -2602,6 +2602,9 @@ namespace CluelessControl
             if (isAnyContestantEnvelopeChecked && isAnyHostEnvelopeChecked)
                 return true;
 
+            if (gameStateInstance.ContestantEnvelopeSet.Envelopes.Any(envelope => envelope.TradingCheckbox && envelope.IsOpen))
+                return true;
+
             for (int i = 0; i < TradingContestantMaxPageIndex; ++i)
             {
                 if (i == _tradingContestantPage)
@@ -2646,7 +2649,7 @@ namespace CluelessControl
             if (TradingIsShredderWarningNecessary())
             {
                 DialogResult destructionResult = MessageBox.Show(
-                    text: "Masz zaznaczone koperty po obu stronach lub koperty, których obecnie nie widzisz! Na pewno chcesz usuwać?",
+                    text: "Masz zaznaczone koperty po obu stronach, koperty, których obecnie nie widzisz lub próbujesz zniszczyć otwartą kopertę zawodnika! Na pewno chcesz zniszczyć wybrane koperty?",
                     GameConstants.PROGRAM_TITLE,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
