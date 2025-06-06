@@ -2660,23 +2660,24 @@ namespace CluelessControl
 
             var gameStateInstance = GameState.Instance;
 
-            // Destroy Contestant Envelopes
+            // Mark Contestant Envelopes for destruction
             foreach (Envelope envelope in gameStateInstance.ContestantEnvelopeSet.Envelopes)
             {
                 if (envelope.TradingCheckbox)
-                    envelope.MarkAsDestroyed();
+                    envelope.MarkAsForDestruction();
             }
 
-            // Destroy Host Envelopes
+            // Mark Host Envelopes for destruction
             foreach (Envelope envelope in gameStateInstance.HostEnvelopeSet.Envelopes)
             {
                 if (envelope.TradingCheckbox)
-                    envelope.MarkAsDestroyed();
+                    envelope.MarkAsForDestruction();
             }
 
             TradingLockButtons();
             TradingPlayShredderSoundAndUnlockButtons();
 
+            gameStateInstance.RemoveEnvelopesMarkedForDestruction();
             gameStateInstance.RefreshEnvelopes();
         }
 
