@@ -398,6 +398,21 @@ namespace CluelessControl
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
         }
 
+        public void RemoveEnvelopesMarkedForDestruction()
+        {
+            List<Envelope> contestantEnvelopes = ContestantEnvelopeSet.Envelopes
+                .Where(envelope => envelope.State == EnvelopeState.FOR_DESTRUCTION)
+                .ToList();
+
+            List<Envelope> hostEnvelopes = HostEnvelopeSet.Envelopes
+                .Where(envelope => envelope.State == EnvelopeState.FOR_DESTRUCTION)
+                .ToList();
+
+            contestantEnvelopes.ForEach(envelope => envelope.MarkAsDestroyed());
+            hostEnvelopes.ForEach(envelope => envelope.MarkAsDestroyed());
+
+            RemoveDestroyedEnvelopes();
+        }
 
         public void RemoveDestroyedEnvelopes()
         {
