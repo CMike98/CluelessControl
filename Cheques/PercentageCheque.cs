@@ -60,7 +60,7 @@ namespace CluelessControl.Cheques
 
         public override BaseCheque CloneCheque()
         {
-            return MemberwiseClone() as PercentageCheque ?? throw new NullReferenceException($"Cheque cloning failed.");
+            return new PercentageCheque(Percentage);
         }
     }
 }

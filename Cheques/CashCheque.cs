@@ -45,7 +45,7 @@
 
         public override BaseCheque CloneCheque()
         {
-            return MemberwiseClone() as CashCheque ?? throw new NullReferenceException($"Cheque cloning failed.");
+            return new CashCheque(CashAmount);
         }
     }
 }
