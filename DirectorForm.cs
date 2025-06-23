@@ -2141,6 +2141,10 @@ namespace CluelessControl
 
             int contestantOffset = _tradingContestantPage * TRADING_SCREEN_MAX_ON_PAGE;
             int hostOffset = _tradingHostPage * TRADING_SCREEN_MAX_ON_PAGE;
+
+            _tradingAreContestantCheckboxesChanging = true;
+            _tradingAreHostCheckboxesChanging = true;
+
             for (int i = 0; i < TRADING_SCREEN_MAX_ON_PAGE; ++i)
             {
                 _tradingContestantCheckboxes[i].Enabled = (i + contestantOffset) < contestantEnvelopeCount;
@@ -2149,6 +2153,9 @@ namespace CluelessControl
                 _tradingHostCheckboxes[i].Enabled = (i + hostOffset) < hostEnvelopeCount;
                 _tradingHostCheckboxes[i].Checked = false;
             }
+
+            _tradingAreContestantCheckboxesChanging = false;
+            _tradingAreHostCheckboxesChanging = false;
 
             TradingOfferTextBox.Enabled = true;
 
@@ -2166,6 +2173,9 @@ namespace CluelessControl
 
         private void TradingLockButtons()
         {
+            _tradingAreContestantCheckboxesChanging = true;
+            _tradingAreHostCheckboxesChanging = true;
+
             for (int i = 0; i < TRADING_SCREEN_MAX_ON_PAGE; ++i)
             {
                 _tradingContestantCheckboxes[i].Enabled = false;
@@ -2174,6 +2184,9 @@ namespace CluelessControl
                 _tradingHostCheckboxes[i].Enabled = false;
                 _tradingHostCheckboxes[i].Checked = false;
             }
+
+            _tradingAreContestantCheckboxesChanging = false;
+            _tradingAreHostCheckboxesChanging = false;
 
             TradingOfferTextBox.Enabled = false;
 
