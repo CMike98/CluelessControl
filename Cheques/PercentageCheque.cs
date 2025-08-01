@@ -48,7 +48,7 @@ namespace CluelessControl.Cheques
             return Utils.PercentageToString(Percentage);
         }
 
-        public override Color GetTextColor()
+        public override Color GetDefaultTextColor()
         {
             if (Percentage < 0)
                 return Color.Red;

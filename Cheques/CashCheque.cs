@@ -35,7 +35,7 @@
             return Utils.AmountToString(CashAmount);
         }
 
-        public override Color GetTextColor()
+        public override Color GetDefaultTextColor()
         {
             if (CashAmount < 0)
                 return Color.Red;

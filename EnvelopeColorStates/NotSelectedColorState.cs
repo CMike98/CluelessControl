@@ -18,7 +18,7 @@ namespace CluelessControl.EnvelopeColorStates
                 BackgroundColor = Color.FromArgb(0x73, 0x73, 0x73),
                 LineColor       = Color.Transparent,
                 NumberFontColor = Color.FromArgb(NEW_ALPHA, Color.Black),
-                ChequeFontColor = Color.FromArgb(NEW_ALPHA, Cheque.GetTextColor()),
+                ChequeFontColor = Color.FromArgb(NEW_ALPHA, Cheque.GetDefaultTextColor()),
             };
         }
 
@@ -29,7 +29,7 @@ namespace CluelessControl.EnvelopeColorStates
                 BackgroundColor = Color.FromArgb(0x73, 0x73, 0x73),
                 LineColor       = Color.Transparent,
                 NumberFontColor = Color.FromArgb(NEW_ALPHA, Color.Black),
-                ChequeFontColor = Color.FromArgb(NEW_ALPHA, Cheque.GetTextColor()),
+                ChequeFontColor = Color.FromArgb(NEW_ALPHA, Cheque.GetDefaultTextColor()),
             };
         }
     }

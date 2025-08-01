@@ -6,7 +6,7 @@
         /// Get the color of the amount text
         /// </summary>
         /// <returns>The color of the cheque</returns>
-        public abstract Color GetTextColor();
+        public abstract Color GetDefaultTextColor();
 
         /// <summary>
         /// Get the string representing the amount
