@@ -7,7 +7,7 @@ namespace CluelessControl.Cheques
         /// <summary>
         /// Prize inside the envelope
         /// </summary>
-        public Prize PrizeInside
+        public PrizeData PrizeInside
         {
             get;
         }
@@ -23,7 +23,7 @@ namespace CluelessControl.Cheques
         /// <summary>
         /// Constructor
         /// </summary>
-        private PrizeCheque(Prize prize, decimal prizeQuantity)
+        private PrizeCheque(PrizeData prize, decimal prizeQuantity)
             : base()
         {
             PrizeInside = prize;
@@ -41,7 +41,7 @@ namespace CluelessControl.Cheques
             if (prizeQuantity <= 0)
                 throw new ArgumentOutOfRangeException(nameof(prizeQuantity), "Prize quantity must be greater than zero!");
 
-            Prize? prize = GameState.Instance.PrizeList.GetPrizeByKey(prizeCode);
+            PrizeData? prize = GameState.Instance.PrizeList.GetPrizeByKey(prizeCode);
 
             if (prize is null)
                 throw new ArgumentException("Prize doesn't correspond to any prize on the list.", nameof(prizeCode));

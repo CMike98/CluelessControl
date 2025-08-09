@@ -1,6 +1,6 @@
 ﻿namespace CluelessControl.Prizes
 {
-    public class Prize
+    public class PrizeData
     {
         public string PrizeName
         {
@@ -17,14 +17,14 @@
             get;
         }
 
-        private Prize(string prizeName, decimal roundingUnit, RoundingMethod roundingMethod)
+        private PrizeData(string prizeName, decimal roundingUnit, RoundingMethod roundingMethod)
         {
             PrizeName = prizeName.Trim();
             RoundingUnit = roundingUnit;
             RoundingMethod = roundingMethod;
         }
 
-        public static Prize CreatePrize(string name, decimal roundingUnit, RoundingMethod roundingMethod)
+        public static PrizeData CreatePrize(string name, decimal roundingUnit, RoundingMethod roundingMethod)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentNullException(nameof(name));
@@ -33,7 +33,7 @@
             {
                 < 0 => throw new ArgumentOutOfRangeException(nameof(roundingUnit), "Rounding unit must not be negative!"),
                 0 => throw new ArgumentException("Rounding unit must not be zero! (rounding to nearest zero?)", nameof(roundingUnit)),
-                _ => new Prize(name, roundingUnit, roundingMethod),
+                _ => new PrizeData(name, roundingUnit, roundingMethod),
             };
         }
     }

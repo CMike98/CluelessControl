@@ -2,7 +2,7 @@
 {
     public class PrizeList
     {
-        public Dictionary<string, Prize> PrizeDictionary
+        public Dictionary<string, PrizeData> PrizeDictionary
         {
             get;
             private set;
@@ -10,15 +10,15 @@
 
         private PrizeList()
         {
-            PrizeDictionary = new Dictionary<string, Prize>();
+            PrizeDictionary = new Dictionary<string, PrizeData>();
         }
 
-        private PrizeList(Dictionary<string, Prize> prizes)
+        private PrizeList(Dictionary<string, PrizeData> prizes)
         {
             if (prizes is null)
                 throw new ArgumentNullException(nameof(prizes));
             if (prizes.Count == 0)
-                throw new ArgumentException("Prize dictionary is empty.", nameof(prizes));
+                throw new ArgumentException("PrizeData dictionary is empty.", nameof(prizes));
             if (prizes.Keys.Any(string.IsNullOrWhiteSpace))
                 throw new ArgumentException("At least one prize key is null or empty.", nameof(prizes));
             if (prizes.Values.Any(val => val is null))
@@ -40,7 +40,7 @@
             return new PrizeList(prizeList.PrizeDictionary);
         }
 
-        public static PrizeList Create(Dictionary<string, Prize> prizeDictionary)
+        public static PrizeList Create(Dictionary<string, PrizeData> prizeDictionary)
         {
             if (prizeDictionary is null)
                 throw new ArgumentNullException(nameof(prizeDictionary));
@@ -57,7 +57,7 @@
             PrizeDictionary.Clear();
         }
 
-        public bool AddPrize(string key, Prize prize)
+        public bool AddPrize(string key, PrizeData prize)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
@@ -82,7 +82,7 @@
             return PrizeDictionary.Remove(key);
         }
 
-        public bool ChangePrize(string key, Prize newPrize)
+        public bool ChangePrize(string key, PrizeData newPrize)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
@@ -95,11 +95,11 @@
             return true;
         }
 
-        public Prize? GetPrizeByKey(string key)
+        public PrizeData? GetPrizeByKey(string key)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
-            if (!PrizeDictionary.TryGetValue(key, out Prize? value))
+            if (!PrizeDictionary.TryGetValue(key, out PrizeData? value))
                 return null;
 
             return value;
