@@ -1019,6 +1019,13 @@ namespace CluelessControl
                 EnvelopeSettingsListBox.SelectedIndex = NO_ITEM_INDEX;
                 EnvelopeSettingsListBox_SelectedIndexChanged(this, e);
 
+                EnvelopeSettingsPrizeComboBox.SelectedIndex = -1;
+                EnvelopeSettingsPrizeComboBox.Items.Clear();
+                if (GameState.Instance.PrizeList is not null)
+                {
+                    EnvelopeSettingsPrizeComboBox.Items.AddRange(GameState.Instance.PrizeList.PrizeDictionary.Keys.ToArray());
+                }
+
                 ShowOkMessage("Wczytywanie zakończono pomyślnie!");
             }
             catch (Exception ex)
