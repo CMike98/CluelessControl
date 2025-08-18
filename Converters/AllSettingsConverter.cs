@@ -24,6 +24,12 @@ namespace CluelessControl.Converters
                 }
             }
 
+            // HACK - but that might get solved in the future
+            if (prizeList is not null)
+            {
+                GameState.Instance.LoadPrizeList(prizeList);
+            }
+
             if (root.TryGetProperty("ChequeSettings", out JsonElement chequeSettingsElement))
             {
                 chequeSettings = chequeSettingsElement.Deserialize<ChequeSettings>(options) ?? throw new JsonException($"Invalid cheque settings JSON.");
