@@ -26,8 +26,8 @@ namespace CluelessControl.Cheques
             });
             Register(nameof(PrizeCheque).ToLowerInvariant(), element =>
             {
-                string code = element.GetProperty("Code").GetString() ?? throw new JsonException("Prize code is not present.");
-                decimal quantity = element.GetProperty("Quantity").GetDecimal();
+                string code = element.GetProperty("PrizeCode").GetString() ?? throw new JsonException("Prize code is not present.");
+                decimal quantity = element.GetProperty("PrizeQuantity").GetDecimal();
                 return CreatePrizeCheque(code, quantity);
             });
         }
