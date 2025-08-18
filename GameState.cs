@@ -1,6 +1,7 @@
 ﻿using CluelessControl.Cheques;
 using CluelessControl.Constants;
 using CluelessControl.Envelopes;
+using CluelessControl.Prizes;
 using CluelessControl.Questions;
 
 namespace CluelessControl
@@ -26,6 +27,12 @@ namespace CluelessControl
 
         #region Fields/Variables
         public GameSettings GameSettings
+        {
+            get;
+            private set;
+        }
+
+        public PrizeList? PrizeList
         {
             get;
             private set;
@@ -135,6 +142,7 @@ namespace CluelessControl
             QuestionSet = QuestionSet.Create();
             ChequeSettings = ChequeSettings.Create();
             EnvelopeTable = EnvelopeTable.Create();
+            PrizeList = PrizeList.Create();
 
             ContestantEnvelopeSet = EnvelopeSet.Create();
             HostEnvelopeSet = EnvelopeSet.Create();
@@ -214,6 +222,12 @@ namespace CluelessControl
             GameSettings = settings;
         }
 
+        public void LoadPrizeList(PrizeList prizeList)
+        {
+            ArgumentNullException.ThrowIfNull(prizeList, nameof(prizeList));
+            PrizeList = prizeList;
+        }
+
         public void LoadGameSettingsFromFile(string fileName)
         {
             ArgumentNullException.ThrowIfNull(fileName, nameof(fileName));
@@ -242,6 +256,23 @@ namespace CluelessControl
         {
             ArgumentNullException.ThrowIfNullOrWhiteSpace(fileName, nameof(fileName));
             ChequeSettings = ChequeSettings.LoadFromFile(fileName);
+        }
+
+        public void LoadAllSettings(AllSettings allSettings)
+        {
+            ArgumentNullException.ThrowIfNull(allSettings, nameof(allSettings));
+
+            PrizeList = allSettings.PrizeList;
+            ChequeSettings = allSettings.ChequeSettings!;
+        }
+
+        public void LoadAllSettingsFromFile(string fileName)
+        {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(fileName, nameof(fileName));
+            var allSettings = AllSettings.LoadFromFile(fileName);
+            
+            PrizeList = allSettings.PrizeList;
+            ChequeSettings = allSettings.ChequeSettings!;
         }
         #endregion
 
@@ -590,8 +621,7 @@ namespace CluelessControl
             HostEnvelopeSet.MarkNotDestroyedAsNeutral();
             HostEnvelopeSet.OpenAll();
 
-            decimal finalPrize = EnvelopeCalculator.CalculateFinalPrize(GameSettings, ContestantEnvelopeSet.Envelopes, ContestantCash);
-            FinalPrize = Utils.AmountToString(finalPrize);
+            FinalPrize = EnvelopeCalculator.DetermineTotalPrize(ContestantEnvelopeSet.Envelopes, ContestantCash);
 
             EventRefreshEnvelopes?.Invoke(this, EventArgs.Empty);
             EventGameOver?.Invoke(this, EventArgs.Empty);

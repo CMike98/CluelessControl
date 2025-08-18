@@ -64,6 +64,11 @@
             SettingsMinusPercentWorstRadio = new RadioButton();
             SettingsMinusPercentAllRadio = new RadioButton();
             GameSettingsEnvelopesTab = new TabPage();
+            EnvelopeSettingsPrizesBtn = new Button();
+            EnvelopeSettingsPrizeComboBox = new ComboBox();
+            EnvelopeSettingsPrizeTimesLbl = new Label();
+            EnvelopeSettingsPrizeCountTxtBox = new TextBox();
+            EnvelopeSettingsPrizeRadio = new RadioButton();
             EnvelopeSettingsPercentageTxtBox = new TextBox();
             EnvelopeSettingsPercentageRadio = new RadioButton();
             EnvelopeSettingsCashTxtBox = new TextBox();
@@ -650,6 +655,11 @@
             // GameSettingsEnvelopesTab
             // 
             GameSettingsEnvelopesTab.BackColor = SystemColors.Control;
+            GameSettingsEnvelopesTab.Controls.Add(EnvelopeSettingsPrizesBtn);
+            GameSettingsEnvelopesTab.Controls.Add(EnvelopeSettingsPrizeComboBox);
+            GameSettingsEnvelopesTab.Controls.Add(EnvelopeSettingsPrizeTimesLbl);
+            GameSettingsEnvelopesTab.Controls.Add(EnvelopeSettingsPrizeCountTxtBox);
+            GameSettingsEnvelopesTab.Controls.Add(EnvelopeSettingsPrizeRadio);
             GameSettingsEnvelopesTab.Controls.Add(EnvelopeSettingsPercentageTxtBox);
             GameSettingsEnvelopesTab.Controls.Add(EnvelopeSettingsPercentageRadio);
             GameSettingsEnvelopesTab.Controls.Add(EnvelopeSettingsCashTxtBox);
@@ -671,11 +681,68 @@
             GameSettingsEnvelopesTab.TabIndex = 5;
             GameSettingsEnvelopesTab.Text = "Ustawienia - Koperty";
             // 
+            // EnvelopeSettingsPrizesBtn
+            // 
+            EnvelopeSettingsPrizesBtn.Enabled = false;
+            EnvelopeSettingsPrizesBtn.Font = new Font("Arial", 12F);
+            EnvelopeSettingsPrizesBtn.Location = new Point(924, 240);
+            EnvelopeSettingsPrizesBtn.Name = "EnvelopeSettingsPrizesBtn";
+            EnvelopeSettingsPrizesBtn.Size = new Size(128, 35);
+            EnvelopeSettingsPrizesBtn.TabIndex = 69;
+            EnvelopeSettingsPrizesBtn.Text = "Nagrody";
+            EnvelopeSettingsPrizesBtn.UseVisualStyleBackColor = true;
+            EnvelopeSettingsPrizesBtn.Click += EnvelopeSettingsPrizesBtn_Click;
+            // 
+            // EnvelopeSettingsPrizeComboBox
+            // 
+            EnvelopeSettingsPrizeComboBox.Enabled = false;
+            EnvelopeSettingsPrizeComboBox.Font = new Font("Arial", 18F);
+            EnvelopeSettingsPrizeComboBox.FormattingEnabled = true;
+            EnvelopeSettingsPrizeComboBox.Location = new Point(576, 240);
+            EnvelopeSettingsPrizeComboBox.Name = "EnvelopeSettingsPrizeComboBox";
+            EnvelopeSettingsPrizeComboBox.Size = new Size(342, 35);
+            EnvelopeSettingsPrizeComboBox.Sorted = true;
+            EnvelopeSettingsPrizeComboBox.TabIndex = 68;
+            // 
+            // EnvelopeSettingsPrizeTimesLbl
+            // 
+            EnvelopeSettingsPrizeTimesLbl.Font = new Font("Arial", 14.25F);
+            EnvelopeSettingsPrizeTimesLbl.Location = new Point(523, 240);
+            EnvelopeSettingsPrizeTimesLbl.Name = "EnvelopeSettingsPrizeTimesLbl";
+            EnvelopeSettingsPrizeTimesLbl.Size = new Size(47, 35);
+            EnvelopeSettingsPrizeTimesLbl.TabIndex = 67;
+            EnvelopeSettingsPrizeTimesLbl.Text = "x";
+            EnvelopeSettingsPrizeTimesLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // EnvelopeSettingsPrizeCountTxtBox
+            // 
+            EnvelopeSettingsPrizeCountTxtBox.Enabled = false;
+            EnvelopeSettingsPrizeCountTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSettingsPrizeCountTxtBox.Location = new Point(309, 240);
+            EnvelopeSettingsPrizeCountTxtBox.Name = "EnvelopeSettingsPrizeCountTxtBox";
+            EnvelopeSettingsPrizeCountTxtBox.Size = new Size(208, 35);
+            EnvelopeSettingsPrizeCountTxtBox.TabIndex = 66;
+            EnvelopeSettingsPrizeCountTxtBox.Text = "0";
+            EnvelopeSettingsPrizeCountTxtBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // EnvelopeSettingsPrizeRadio
+            // 
+            EnvelopeSettingsPrizeRadio.Enabled = false;
+            EnvelopeSettingsPrizeRadio.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            EnvelopeSettingsPrizeRadio.Location = new Point(309, 203);
+            EnvelopeSettingsPrizeRadio.Name = "EnvelopeSettingsPrizeRadio";
+            EnvelopeSettingsPrizeRadio.Size = new Size(743, 31);
+            EnvelopeSettingsPrizeRadio.TabIndex = 65;
+            EnvelopeSettingsPrizeRadio.TabStop = true;
+            EnvelopeSettingsPrizeRadio.Text = "Nagroda rzeczowa";
+            EnvelopeSettingsPrizeRadio.UseVisualStyleBackColor = true;
+            EnvelopeSettingsPrizeRadio.CheckedChanged += EnvelopeSettingsPrizeRadio_CheckedChanged;
+            // 
             // EnvelopeSettingsPercentageTxtBox
             // 
             EnvelopeSettingsPercentageTxtBox.Enabled = false;
             EnvelopeSettingsPercentageTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            EnvelopeSettingsPercentageTxtBox.Location = new Point(309, 190);
+            EnvelopeSettingsPercentageTxtBox.Location = new Point(309, 153);
             EnvelopeSettingsPercentageTxtBox.Name = "EnvelopeSettingsPercentageTxtBox";
             EnvelopeSettingsPercentageTxtBox.Size = new Size(743, 35);
             EnvelopeSettingsPercentageTxtBox.TabIndex = 64;
@@ -687,7 +754,7 @@
             // 
             EnvelopeSettingsPercentageRadio.Enabled = false;
             EnvelopeSettingsPercentageRadio.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            EnvelopeSettingsPercentageRadio.Location = new Point(309, 146);
+            EnvelopeSettingsPercentageRadio.Location = new Point(309, 109);
             EnvelopeSettingsPercentageRadio.Name = "EnvelopeSettingsPercentageRadio";
             EnvelopeSettingsPercentageRadio.Size = new Size(743, 31);
             EnvelopeSettingsPercentageRadio.TabIndex = 63;
@@ -700,7 +767,7 @@
             // 
             EnvelopeSettingsCashTxtBox.Enabled = false;
             EnvelopeSettingsCashTxtBox.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            EnvelopeSettingsCashTxtBox.Location = new Point(309, 96);
+            EnvelopeSettingsCashTxtBox.Location = new Point(309, 59);
             EnvelopeSettingsCashTxtBox.Name = "EnvelopeSettingsCashTxtBox";
             EnvelopeSettingsCashTxtBox.Size = new Size(743, 35);
             EnvelopeSettingsCashTxtBox.TabIndex = 62;
@@ -712,7 +779,7 @@
             // 
             EnvelopeSettingsCashRadio.Enabled = false;
             EnvelopeSettingsCashRadio.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            EnvelopeSettingsCashRadio.Location = new Point(309, 52);
+            EnvelopeSettingsCashRadio.Location = new Point(309, 15);
             EnvelopeSettingsCashRadio.Name = "EnvelopeSettingsCashRadio";
             EnvelopeSettingsCashRadio.Size = new Size(743, 31);
             EnvelopeSettingsCashRadio.TabIndex = 61;
@@ -2764,5 +2831,10 @@
         private TextBox EnvelopeSelectionNum5TxtBox;
         private ComboBox SettingsRoundingMethodComboBox;
         private Label SettingsRoundingMethodLbl;
+        private RadioButton EnvelopeSettingsPrizeRadio;
+        private ComboBox EnvelopeSettingsPrizeComboBox;
+        private Label EnvelopeSettingsPrizeTimesLbl;
+        private TextBox EnvelopeSettingsPrizeCountTxtBox;
+        private Button EnvelopeSettingsPrizesBtn;
     }
 }

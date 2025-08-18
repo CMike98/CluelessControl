@@ -54,7 +54,7 @@ namespace CluelessControl
             AddEnvelopeSelectListBox.Items.Clear();
             foreach (Envelope envelope in GameState.Instance.EnvelopeTable.EnvelopesOnTable)
             {
-                AddEnvelopeSelectListBox.Items.Add($"{envelope.EnvelopeNumber}. {envelope.Cheque.ToValueString()}");
+                AddEnvelopeSelectListBox.Items.Add($"{envelope.EnvelopeNumber}. {envelope.Cheque.ValueString}");
                 EnvelopeNumbers.Add(envelope.EnvelopeNumber);
             }
 

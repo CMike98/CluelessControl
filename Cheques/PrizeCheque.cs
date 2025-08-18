@@ -1,12 +1,23 @@
 ﻿using CluelessControl.Prizes;
+using System.Text.Json.Serialization;
 
 namespace CluelessControl.Cheques
 {
     public class PrizeCheque : BaseCheque
     {
         /// <summary>
+        /// Code of the prize inside
+        /// </summary>
+        public string PrizeCode
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// Prize inside the envelope
         /// </summary>
+        [JsonIgnore]
         public PrizeData PrizeInside
         {
             get;
@@ -20,51 +31,59 @@ namespace CluelessControl.Cheques
             get;
         }
 
+        public override Color DefaultTextColor
+        {
+            get;
+            init;
+        }
+
+        public override string ValueString
+        {
+            get;
+            init;
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
-        private PrizeCheque(PrizeData prize, decimal prizeQuantity)
+        private PrizeCheque(string prizeCode, PrizeData prize, decimal prizeQuantity)
             : base()
         {
+            PrizeCode = prizeCode;
             PrizeInside = prize;
             PrizeQuantity = prizeQuantity;
+
+            if (PrizeQuantity == 1)
+                ValueString = PrizeInside.PrizeName;
+            else
+                ValueString = string.Format("{0} x {1}", PrizeQuantity, PrizeInside.PrizeName);
+
+            DefaultTextColor = Color.Black;
         }
 
         /// <summary>
         /// Creates a new prize cheque
         /// </summary>
         /// <returns>The created cheque</returns>
-        internal static PrizeCheque Create(string prizeCode, decimal prizeQuantity)
+        internal static PrizeCheque Create(string prizeCode, decimal prizeQuantity, PrizeList? prizeList = null)
         {
             if (string.IsNullOrWhiteSpace(prizeCode))
                 throw new ArgumentNullException(nameof(prizeCode));
             if (prizeQuantity <= 0)
                 throw new ArgumentOutOfRangeException(nameof(prizeQuantity), "Prize quantity must be greater than zero!");
 
-            PrizeData? prize = GameState.Instance.PrizeList.GetPrizeByKey(prizeCode);
+            prizeList ??= GameState.Instance.PrizeList;
+            PrizeData? prize = prizeList?.GetPrizeByKey(prizeCode);
 
             if (prize is null)
                 throw new ArgumentException("Prize doesn't correspond to any prize on the list.", nameof(prizeCode));
 
-            return new PrizeCheque(prize, prizeQuantity);
-        }
-
-        public override string ToValueString()
-        {
-            if (PrizeQuantity == 1)
-                return PrizeInside.PrizeName;
-            else
-                return string.Format("{0} x {1}", PrizeQuantity, PrizeInside.PrizeName);
-        }
-
-        public override Color GetDefaultTextColor()
-        {
-            return Color.Black;
+            return new PrizeCheque(prizeCode, prize, prizeQuantity);
         }
 
         public override BaseCheque CloneCheque()
         {
-            return new PrizeCheque(PrizeInside, PrizeQuantity);
+            return new PrizeCheque(PrizeCode, PrizeInside, PrizeQuantity);
         }
     }
 }
