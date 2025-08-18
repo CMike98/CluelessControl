@@ -2035,7 +2035,7 @@
             // 
             // TradingCashLbl
             // 
-            TradingCashLbl.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingCashLbl.Font = new Font("Arial", 12F);
             TradingCashLbl.Location = new Point(367, 34);
             TradingCashLbl.Name = "TradingCashLbl";
             TradingCashLbl.Size = new Size(351, 31);
@@ -2045,7 +2045,7 @@
             // 
             // TradingCurrentPrizeLbl
             // 
-            TradingCurrentPrizeLbl.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingCurrentPrizeLbl.Font = new Font("Arial", 12F);
             TradingCurrentPrizeLbl.Location = new Point(367, 233);
             TradingCurrentPrizeLbl.Name = "TradingCurrentPrizeLbl";
             TradingCurrentPrizeLbl.Size = new Size(351, 31);
@@ -2153,7 +2153,7 @@
             // 
             // TradingCashWhenAcceptedLbl
             // 
-            TradingCashWhenAcceptedLbl.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingCashWhenAcceptedLbl.Font = new Font("Arial", 12F);
             TradingCashWhenAcceptedLbl.Location = new Point(367, 171);
             TradingCashWhenAcceptedLbl.Name = "TradingCashWhenAcceptedLbl";
             TradingCashWhenAcceptedLbl.Size = new Size(351, 31);
@@ -2174,10 +2174,10 @@
             // TradingOfferTextBox
             // 
             TradingOfferTextBox.Enabled = false;
-            TradingOfferTextBox.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            TradingOfferTextBox.Font = new Font("Arial", 12F);
             TradingOfferTextBox.Location = new Point(367, 104);
             TradingOfferTextBox.Name = "TradingOfferTextBox";
-            TradingOfferTextBox.Size = new Size(351, 29);
+            TradingOfferTextBox.Size = new Size(351, 26);
             TradingOfferTextBox.TabIndex = 43;
             TradingOfferTextBox.Text = "0";
             TradingOfferTextBox.TextAlign = HorizontalAlignment.Center;
