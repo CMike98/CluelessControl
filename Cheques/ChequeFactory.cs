@@ -24,6 +24,12 @@ namespace CluelessControl.Cheques
                 decimal percentage = element.GetProperty("Percentage").GetDecimal();
                 return CreatePercentageCheque(percentage);
             });
+            Register(nameof(PrizeCheque).ToLowerInvariant(), element =>
+            {
+                string code = element.GetProperty("PrizeCode").GetString() ?? throw new JsonException("Prize code is not present.");
+                decimal quantity = element.GetProperty("PrizeQuantity").GetDecimal();
+                return CreatePrizeCheque(code, quantity);
+            });
         }
 
         /// <summary>
@@ -78,6 +84,17 @@ namespace CluelessControl.Cheques
         public static PercentageCheque CreatePercentageCheque(decimal percentage)
         {
             return PercentageCheque.Create(percentage);
+        }
+
+        /// <summary>
+        /// Creates a prize cheque
+        /// </summary>
+        /// <param name="code">Prize code</param>
+        /// <param name="quantity">Quantity of the prize</param>
+        /// <returns>A created cheque</returns>
+        public static PrizeCheque CreatePrizeCheque(string code, decimal quantity)
+        {
+            return PrizeCheque.Create(code, quantity);
         }
     }
 }

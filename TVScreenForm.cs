@@ -637,7 +637,7 @@ namespace CluelessControl
             if (GameState.Instance.GameSettings.ShowAmountsOnTv || envelope.IsOpen)
             {
                 BaseCheque cheque = envelope.Cheque;
-                string chequeString = cheque.ToValueString();
+                string chequeString = cheque.ValueString;
                 Size bottomHalfSize = new(width: size.Width, height: size.Height / 2);
 
                 using (Font maxFont = FontHelper.GetMaxFont(chequeString, graphics, DrawingConstants.ENVELOPE_DRAWING_FONT, bottomHalfSize, DrawingConstants.TEXT_CENTER_DRAWING_FORMAT_FLAGS))

@@ -19,6 +19,18 @@ namespace CluelessControl.Cheques
         [JsonIgnore]
         public decimal CashMultiplier => 1 + Percentage / 100;
 
+        public override Color DefaultTextColor
+        {
+            get;
+            init;
+        }
+
+        public override string ValueString
+        {
+            get;
+            init;
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -27,6 +39,15 @@ namespace CluelessControl.Cheques
             : base()
         {
             Percentage = percentage;
+
+            ValueString = Utils.PercentageToString(Percentage);
+
+            if (Percentage < 0)
+                DefaultTextColor = Color.Red;
+            else if (Percentage > 0)
+                DefaultTextColor = Color.Green;
+            else
+                DefaultTextColor = Color.Black;
         }
 
         /// <summary>
@@ -41,21 +62,6 @@ namespace CluelessControl.Cheques
                 throw new ArgumentOutOfRangeException(nameof(percentage), $"Minus percentage mustn't be less than {GameConstants.MIN_PERCENTAGE}%!");
 
             return new PercentageCheque(percentage);
-        }
-
-        public override string ToValueString()
-        {
-            return Utils.PercentageToString(Percentage);
-        }
-
-        public override Color GetDefaultTextColor()
-        {
-            if (Percentage < 0)
-                return Color.Red;
-            else if (Percentage > 0)
-                return Color.Green;
-            else
-                return Color.Black;
         }
 
         public override BaseCheque CloneCheque()

@@ -2,6 +2,7 @@
 using CluelessControl.Constants;
 using CluelessControl.EnvelopeColorStates;
 using CluelessControl.Envelopes;
+using CluelessControl.Prizes;
 using CluelessControl.Questions;
 using CluelessControl.Sounds;
 
@@ -563,11 +564,22 @@ namespace CluelessControl
 
             foreach (BaseCheque cheque in chequeList)
             {
-                EnvelopeSettingsListBox.Items.Add($"{counter}. {cheque.ToValueString()}");
+                EnvelopeSettingsListBox.Items.Add($"{counter}. {cheque.ValueString}");
                 ++counter;
             }
 
             EnvelopeSettingsCountLbl.Text = $"Kopert: {chequeList.Count}";
+        }
+
+        private void EnvelopeSettingsUpdatePrizeComboBox()
+        {
+            EnvelopeSettingsPrizeComboBox.Items.Clear();
+
+            string[]? prizeKeys = GameState.Instance.PrizeList?.PrizeDictionary.Keys.ToArray();
+            if (prizeKeys is not null)
+            {
+                EnvelopeSettingsPrizeComboBox.Items.AddRange(prizeKeys);
+            }
         }
 
         private void EnvelopeSettingsUpdateButtons()
@@ -589,6 +601,7 @@ namespace CluelessControl
         private void EnvelopeSettingsUpdateAll()
         {
             EnvelopeSettingsUpdateListBox();
+            EnvelopeSettingsUpdatePrizeComboBox();
             EnvelopeSettingsUpdateButtons();
         }
 
@@ -596,11 +609,26 @@ namespace CluelessControl
         {
             BaseCheque createdCheque;
             if (EnvelopeSettingsCashRadio.Checked)
-                createdCheque = ChequeFactory.CreateCashCheque(decimal.Parse(EnvelopeSettingsCashTxtBox.Text));
+            {
+                decimal cash = decimal.Parse(EnvelopeSettingsCashTxtBox.Text.Trim());
+                createdCheque = ChequeFactory.CreateCashCheque(cash);
+            }
             else if (EnvelopeSettingsPercentageRadio.Checked)
-                createdCheque = ChequeFactory.CreatePercentageCheque(decimal.Parse(EnvelopeSettingsPercentageTxtBox.Text));
+            {
+                decimal percentage = decimal.Parse(EnvelopeSettingsPercentageTxtBox.Text.Trim());
+                createdCheque = ChequeFactory.CreatePercentageCheque(percentage);
+            }
+            else if (EnvelopeSettingsPrizeRadio.Checked)
+            {
+                int selectedIndex = EnvelopeSettingsPrizeComboBox.SelectedIndex;
+                string selectedItemCode = EnvelopeSettingsPrizeComboBox.Items[selectedIndex]?.ToString() ?? string.Empty;
+                decimal quantity = decimal.Parse(EnvelopeSettingsPrizeCountTxtBox.Text.Trim());
+                createdCheque = ChequeFactory.CreatePrizeCheque(selectedItemCode, quantity);
+            }
             else
+            {
                 throw new NotSupportedException($"Not recognised envelope type selected.");
+            }
             return createdCheque;
         }
 
@@ -622,6 +650,14 @@ namespace CluelessControl
                     if (!EnvelopeSettingsPercentageRadio.Checked)
                         return true;
                     return percentageCheque.Percentage != decimal.Parse(EnvelopeSettingsPercentageTxtBox.Text);
+                case PrizeCheque prizeCheque:
+                    if (!EnvelopeSettingsPrizeRadio.Checked)
+                        return true;
+                    if (prizeCheque.PrizeQuantity != decimal.Parse(EnvelopeSettingsPrizeCountTxtBox.Text))
+                        return true;
+                    if (prizeCheque.PrizeCode != (EnvelopeSettingsPrizeComboBox.SelectedItem?.ToString() ?? string.Empty))
+                        return true;
+                    return false;
                 default:
                     throw new NotSupportedException($"Not recognised envelope type selected.");
             }
@@ -631,9 +667,13 @@ namespace CluelessControl
         {
             EnvelopeSettingsCashTxtBox.Enabled = true;
             EnvelopeSettingsPercentageTxtBox.Enabled = false;
+            EnvelopeSettingsPrizeCountTxtBox.Enabled = false;
+            EnvelopeSettingsPrizeComboBox.Enabled = false;
+            EnvelopeSettingsPrizesBtn.Enabled = false;
 
             EnvelopeSettingsCashTxtBox.Text = "0";
             EnvelopeSettingsPercentageTxtBox.Clear();
+            EnvelopeSettingsPrizeCountTxtBox.Clear();
 
             _envelopeSettingsEdited = true;
         }
@@ -665,9 +705,13 @@ namespace CluelessControl
         {
             EnvelopeSettingsCashTxtBox.Enabled = false;
             EnvelopeSettingsPercentageTxtBox.Enabled = true;
+            EnvelopeSettingsPrizeCountTxtBox.Enabled = false;
+            EnvelopeSettingsPrizeComboBox.Enabled = false;
+            EnvelopeSettingsPrizesBtn.Enabled = false;
 
             EnvelopeSettingsCashTxtBox.Clear();
             EnvelopeSettingsPercentageTxtBox.Text = "0";
+            EnvelopeSettingsPrizeCountTxtBox.Clear();
 
             _envelopeSettingsEdited = true;
         }
@@ -695,6 +739,36 @@ namespace CluelessControl
             _envelopeSettingsEdited = true;
         }
 
+        private void EnvelopeSettingsPrizeRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            EnvelopeSettingsCashTxtBox.Enabled = false;
+            EnvelopeSettingsPercentageTxtBox.Enabled = false;
+            EnvelopeSettingsPrizeCountTxtBox.Enabled = true;
+            EnvelopeSettingsPrizeComboBox.Enabled = true;
+            EnvelopeSettingsPrizesBtn.Enabled = true;
+
+            EnvelopeSettingsCashTxtBox.Clear();
+            EnvelopeSettingsPercentageTxtBox.Clear();
+            EnvelopeSettingsPrizeCountTxtBox.Text = "0";
+
+            _envelopeSettingsEdited = true;
+        }
+
+        private void EnvelopeSettingsPrizesBtn_Click(object sender, EventArgs e)
+        {
+            var prizeListForm = new PrizeListForm(GameState.Instance.PrizeList);
+            prizeListForm.ShowDialog();
+
+            string selectedCode = EnvelopeSettingsPrizeComboBox.SelectedText;
+            PrizeList prizeList = prizeListForm.ConvertToPrizeList();
+
+            GameState.Instance.LoadPrizeList(prizeList);
+
+            EnvelopeSettingsPrizeComboBox.Items.Clear();
+            EnvelopeSettingsPrizeComboBox.Items.AddRange(prizeList.PrizeDictionary.Keys.ToArray());
+            EnvelopeSettingsPrizeComboBox.SelectedIndex = EnvelopeSettingsPrizeComboBox.Items.IndexOf(selectedCode);
+        }
+
         private void EnvelopeSettingsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_envelopeSettingsSkipIndexChange)
@@ -712,10 +786,13 @@ namespace CluelessControl
                 {
                     chequeList[_envelopeSettingsLastSelectedIndex] = EnvelopeSettingsCreateChequeFromRadios();
 
-                    EnvelopeSettingsUpdateAll();
+                    EnvelopeSettingsUpdateListBox();
 
                     _envelopeSettingsSkipIndexChange = true;
                     EnvelopeSettingsListBox.SelectedIndex = selectedIndex;
+                    _envelopeSettingsSkipIndexChange = false;
+
+                    EnvelopeSettingsUpdateButtons();
                 }
                 catch (Exception)
                 {
@@ -740,13 +817,22 @@ namespace CluelessControl
 
             if (selectedIndex == NO_ITEM_INDEX)
             {
+                EnvelopeSettingsCashRadio.Checked = false;
                 EnvelopeSettingsCashRadio.Enabled = false;
                 EnvelopeSettingsCashTxtBox.Enabled = false;
                 EnvelopeSettingsCashTxtBox.Clear();
 
+                EnvelopeSettingsPercentageRadio.Checked = false;
                 EnvelopeSettingsPercentageRadio.Enabled = false;
                 EnvelopeSettingsPercentageTxtBox.Enabled = false;
                 EnvelopeSettingsPercentageTxtBox.Clear();
+
+                EnvelopeSettingsPrizeRadio.Checked = false;
+                EnvelopeSettingsPrizeRadio.Enabled = false;
+                EnvelopeSettingsPrizeCountTxtBox.Enabled = false;
+                EnvelopeSettingsPrizeCountTxtBox.Clear();
+                EnvelopeSettingsPrizeComboBox.Items.Clear();
+                EnvelopeSettingsPrizesBtn.Enabled = false;
 
                 return;
             }
@@ -762,13 +848,18 @@ namespace CluelessControl
                     EnvelopeSettingsPercentageRadio.Checked = true;
                     EnvelopeSettingsPercentageTxtBox.Text = percentageCheque.Percentage.ToString();
                     break;
+                case PrizeCheque prizeCheque:
+                    EnvelopeSettingsPrizeRadio.Checked = true;
+                    EnvelopeSettingsPrizeCountTxtBox.Text = prizeCheque.PrizeQuantity.ToString();
+                    EnvelopeSettingsPrizeComboBox.SelectedIndex = EnvelopeSettingsPrizeComboBox.Items.IndexOf(prizeCheque.PrizeCode);
+                    break;
                 default:
                     throw new NotSupportedException($"Not recognised envelope type selected.");
             }
 
             EnvelopeSettingsCashRadio.Enabled = true;
             EnvelopeSettingsPercentageRadio.Enabled = true;
-
+            EnvelopeSettingsPrizeRadio.Enabled = true;
             EnvelopeSettingsUpdateButtons();
 
             _envelopeSettingsEdited = false;
@@ -917,7 +1008,7 @@ namespace CluelessControl
 
             try
             {
-                GameState.Instance.LoadChequeSettingsFromFile(EnvelopeSettingsOpen.FileName);
+                GameState.Instance.LoadAllSettingsFromFile(EnvelopeSettingsOpen.FileName);
 
                 EnvelopeSettingsUpdateAll();
 
@@ -927,6 +1018,13 @@ namespace CluelessControl
 
                 EnvelopeSettingsListBox.SelectedIndex = NO_ITEM_INDEX;
                 EnvelopeSettingsListBox_SelectedIndexChanged(this, e);
+
+                EnvelopeSettingsPrizeComboBox.SelectedIndex = -1;
+                EnvelopeSettingsPrizeComboBox.Items.Clear();
+                if (GameState.Instance.PrizeList is not null)
+                {
+                    EnvelopeSettingsPrizeComboBox.Items.AddRange(GameState.Instance.PrizeList.PrizeDictionary.Keys.ToArray());
+                }
 
                 ShowOkMessage("Wczytywanie zakończono pomyślnie!");
             }
@@ -961,7 +1059,10 @@ namespace CluelessControl
 
                 _envelopeSettingsSkipIndexChange = false;
 
-                GameState.Instance.ChequeSettings.SaveToFile(EnvelopeSettingsSave.FileName);
+                var prizeList = GameState.Instance.PrizeList;
+                var chequeSettings = GameState.Instance.ChequeSettings;
+                var allSettings = AllSettings.Create(chequeSettings, prizeList);
+                allSettings.SaveToFile(EnvelopeSettingsSave.FileName);
 
                 ShowOkMessage("Zapisywanie zakończono pomyślnie!");
             }
@@ -1530,7 +1631,7 @@ namespace CluelessControl
             // If there is an error, display it
             if (string.IsNullOrEmpty(errorMessage) && envelope is not null)
             {
-                valueLabel.Text = envelope.Cheque.ToValueString();
+                valueLabel.Text = envelope.Cheque.ValueString;
                 valueLabel.ForeColor = Color.Black;
             }
             else
@@ -1631,7 +1732,7 @@ namespace CluelessControl
             {
                 gameStateInstance.EnvelopeTable.DeleteEnvelope(envelope);
             }
-            
+
             gameStateInstance.SortEnvelopesByNumber();
             gameStateInstance.ShowEnvelopesAfterQuestion();
 
@@ -2372,13 +2473,13 @@ namespace CluelessControl
 
             decimal cashWhenAccepted = gameStateInstance.ContestantCash + gameStateInstance.CashOffer;
 
-            decimal currentPrize = EnvelopeCalculator.CalculateFinalPrize(gameStateInstance.GameSettings,
+            string currentPrize = EnvelopeCalculator.DetermineTotalPrize(
                 gameStateInstance.ContestantEnvelopeSet.Envelopes,
                 gameStateInstance.ContestantCash);
 
             TradingCashLbl.Text = Utils.AmountToString(gameStateInstance.ContestantCash);
             TradingCashWhenAcceptedLbl.Text = Utils.AmountToString(cashWhenAccepted);
-            TradingCurrentPrizeLbl.Text = Utils.AmountToString(currentPrize);
+            TradingCurrentPrizeLbl.Text = currentPrize;
         }
 
         public void TradingUpdateContestantPages()

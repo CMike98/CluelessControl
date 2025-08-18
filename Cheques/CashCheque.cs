@@ -10,6 +10,18 @@
             get;
         }
 
+        public override Color DefaultTextColor
+        {
+            get;
+            init;
+        }
+
+        public override string ValueString
+        {
+            get;
+            init;
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -18,6 +30,13 @@
             : base()
         {
             CashAmount = amount;
+
+            ValueString = Utils.AmountToString(CashAmount);
+
+            if (CashAmount < 0)
+                DefaultTextColor = Color.Red;
+            else
+                DefaultTextColor = Color.Black;
         }
 
         /// <summary>
@@ -28,19 +47,6 @@
         internal static CashCheque Create(decimal amount)
         {
             return new CashCheque(amount);
-        }
-
-        public override string ToValueString()
-        {
-            return Utils.AmountToString(CashAmount);
-        }
-
-        public override Color GetDefaultTextColor()
-        {
-            if (CashAmount < 0)
-                return Color.Red;
-            else
-                return Color.Black;
         }
 
         public override BaseCheque CloneCheque()

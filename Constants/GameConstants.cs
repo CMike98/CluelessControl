@@ -110,7 +110,10 @@ namespace CluelessControl.Constants
                 new JsonChequeConverter(),
                 new JsonChequeSettingsConverter(),
                 new JsonQuestionConverter(),
-                new JsonQuestionSetConverter()
+                new JsonQuestionSetConverter(),
+                new JsonPrizeDataConverter(),
+                new JsonPrizeListConverter(),
+                new AllSettingsConverter()
             },
             Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
             WriteIndented = true

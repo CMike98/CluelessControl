@@ -129,7 +129,7 @@ namespace CluelessControl.Envelopes
             else
                 sb.AppendLine(string.Format("#{0}", EnvelopeNumber));
 
-            sb.Append(Cheque.ToValueString());
+            sb.Append(Cheque.ValueString);
             
             return sb.ToString();
         }
