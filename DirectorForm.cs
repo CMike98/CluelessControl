@@ -229,6 +229,14 @@ namespace CluelessControl
 
         #endregion
 
+        #region About Author
+        private void AboutAuthorFormButton_Click(object sender, EventArgs e)
+        {
+            var aboutAuthorForm = new AboutAuthorForm();
+            aboutAuthorForm.ShowDialog();
+        }
+        #endregion
+
         #region Messages
         public void ShowErrorMessage(string message)
         {

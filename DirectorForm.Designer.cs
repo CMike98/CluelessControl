@@ -229,6 +229,7 @@
             VolumeLabel = new Label();
             VolumeTrackBar = new TrackBar();
             MuteCheckBox = new CheckBox();
+            AboutAuthorFormButton = new Button();
             DirectorTabControl.SuspendLayout();
             BeforeTheShowTab.SuspendLayout();
             GameSettingsTab.SuspendLayout();
@@ -2588,12 +2589,24 @@
             MuteCheckBox.UseVisualStyleBackColor = true;
             MuteCheckBox.CheckedChanged += MuteCheckBox_CheckedChanged;
             // 
+            // AboutAuthorFormButton
+            // 
+            AboutAuthorFormButton.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            AboutAuthorFormButton.Location = new Point(943, 10);
+            AboutAuthorFormButton.Name = "AboutAuthorFormButton";
+            AboutAuthorFormButton.Size = new Size(157, 50);
+            AboutAuthorFormButton.TabIndex = 4;
+            AboutAuthorFormButton.Text = "O autorze";
+            AboutAuthorFormButton.UseVisualStyleBackColor = true;
+            AboutAuthorFormButton.Click += AboutAuthorFormButton_Click;
+            // 
             // DirectorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(1116, 542);
+            Controls.Add(AboutAuthorFormButton);
             Controls.Add(MuteCheckBox);
             Controls.Add(VolumeTrackBar);
             Controls.Add(VolumeLabel);
@@ -2836,5 +2849,6 @@
         private Label EnvelopeSettingsPrizeTimesLbl;
         private TextBox EnvelopeSettingsPrizeCountTxtBox;
         private Button EnvelopeSettingsPrizesBtn;
+        private Button AboutAuthorFormButton;
     }
 }
