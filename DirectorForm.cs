@@ -121,6 +121,10 @@ namespace CluelessControl
             PreShowPrepare();
             ShowAllForms();
 
+            // Clear cheque list
+            GameState.Instance.ChequeSettings.ClearChequeList();
+            EnvelopeSettingsUpdateAll();
+
             SettingsRoundingMethodComboBox.SelectedIndex = 0;
         }
 
@@ -265,10 +269,6 @@ namespace CluelessControl
             // Clear player name
             PreShowNameTxtBox.Clear();
 
-            // Clear cheque list
-            gameStateInstance.ChequeSettings.ClearChequeList();
-            EnvelopeSettingsUpdateAll();
-
             // Clear the last selected envelope index
             _envelopeSettingsLastSelectedIndex = NO_ITEM_INDEX;
 
@@ -403,7 +403,7 @@ namespace CluelessControl
                 else
                     throw new InvalidOperationException("No \"Show on TV\" radio checked.");
 
-                RoundingMethod roundingMethod = (RoundingMethod) SettingsRoundingMethodComboBox.SelectedIndex;
+                RoundingMethod roundingMethod = (RoundingMethod)SettingsRoundingMethodComboBox.SelectedIndex;
 
                 result = GameSettings.Create(startEnvelopeCount, decimalPlaces, onlyWorstMinusCounts, onlyBestPlusCounts, showAmountsOnTv, roundingMethod);
                 return true;
