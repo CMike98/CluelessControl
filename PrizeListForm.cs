@@ -228,7 +228,7 @@ namespace CluelessControl
 
                     RefreshButtons();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     var answer = MessageBox.Show(
                             "Nie można zapisać nagrody - przejście spowoduje utratę danych!",
