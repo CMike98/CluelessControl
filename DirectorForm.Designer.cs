@@ -230,6 +230,7 @@
             VolumeTrackBar = new TrackBar();
             MuteCheckBox = new CheckBox();
             AboutAuthorFormButton = new Button();
+            DisclaimerLbl = new Label();
             DirectorTabControl.SuspendLayout();
             BeforeTheShowTab.SuspendLayout();
             GameSettingsTab.SuspendLayout();
@@ -2583,7 +2584,7 @@
             MuteCheckBox.Font = new Font("Arial", 18F);
             MuteCheckBox.Location = new Point(407, 10);
             MuteCheckBox.Name = "MuteCheckBox";
-            MuteCheckBox.Size = new Size(161, 48);
+            MuteCheckBox.Size = new Size(119, 48);
             MuteCheckBox.TabIndex = 3;
             MuteCheckBox.Text = "Wycisz";
             MuteCheckBox.UseVisualStyleBackColor = true;
@@ -2600,12 +2601,23 @@
             AboutAuthorFormButton.UseVisualStyleBackColor = true;
             AboutAuthorFormButton.Click += AboutAuthorFormButton_Click;
             // 
+            // DisclaimerLbl
+            // 
+            DisclaimerLbl.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            DisclaimerLbl.Location = new Point(532, 10);
+            DisclaimerLbl.Name = "DisclaimerLbl";
+            DisclaimerLbl.Size = new Size(405, 50);
+            DisclaimerLbl.TabIndex = 5;
+            DisclaimerLbl.Text = "Oprogramowanie nieoficjalne - niewspierane przez ATM Grupa i Telewizję Polsat. Do celów edukacyjnych i rozrywkowych.";
+            DisclaimerLbl.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // DirectorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(1116, 542);
+            Controls.Add(DisclaimerLbl);
             Controls.Add(AboutAuthorFormButton);
             Controls.Add(MuteCheckBox);
             Controls.Add(VolumeTrackBar);
@@ -2850,5 +2862,6 @@
         private TextBox EnvelopeSettingsPrizeCountTxtBox;
         private Button EnvelopeSettingsPrizesBtn;
         private Button AboutAuthorFormButton;
+        private Label DisclaimerLbl;
     }
 }
