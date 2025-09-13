@@ -38,6 +38,7 @@
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1924, 1011);
             DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "TVScreenForm";
             SizeGripStyle = SizeGripStyle.Hide;

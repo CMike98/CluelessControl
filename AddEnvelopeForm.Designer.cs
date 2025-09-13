@@ -99,6 +99,7 @@
             Controls.Add(AddEnvelopeSelectListBox);
             Controls.Add(AddEnvelopeChooseEnvelopeLbl);
             DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "AddEnvelopeForm";

@@ -543,6 +543,7 @@
             Controls.Add(AnswerALabel);
             Controls.Add(QuestionLabel);
             DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "HostScreenForm";
             SizeGripStyle = SizeGripStyle.Hide;
