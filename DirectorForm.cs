@@ -1055,7 +1055,10 @@ namespace CluelessControl
             {
                 int selectedIndex = EnvelopeSettingsListBox.SelectedIndex;
 
-                GameState.Instance.ChequeSettings.ChequeList[selectedIndex] = EnvelopeSettingsCreateChequeFromRadios();
+                if (selectedIndex != -1)
+                {
+                    GameState.Instance.ChequeSettings.ChequeList[selectedIndex] = EnvelopeSettingsCreateChequeFromRadios();
+                }
 
                 EnvelopeSettingsUpdateAll();
 
@@ -1496,7 +1499,10 @@ namespace CluelessControl
             {
                 int selectedIndex = QuestionEditorListBox.SelectedIndex;
 
-                GameState.Instance.QuestionSet.QuestionList[selectedIndex] = QuestionEditorGetQuestionFromForm();
+                if (selectedIndex != -1)
+                {
+                    GameState.Instance.QuestionSet.QuestionList[selectedIndex] = QuestionEditorGetQuestionFromForm();
+                }
 
                 QuestionEditorUpdateList();
 
