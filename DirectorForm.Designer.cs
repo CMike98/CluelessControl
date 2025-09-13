@@ -2608,7 +2608,7 @@
             DisclaimerLbl.Name = "DisclaimerLbl";
             DisclaimerLbl.Size = new Size(405, 50);
             DisclaimerLbl.TabIndex = 5;
-            DisclaimerLbl.Text = "Oprogramowanie nieoficjalne - niewspierane przez ATM Grupa i Telewizję Polsat. Do celów edukacyjnych i rozrywkowych.";
+            DisclaimerLbl.Text = "Oprogramowanie nieoficjalne niekomercyjne - niewspierane przez ATM Grupa i Telewizję Polsat. Do celów edukacyjnych i rozrywkowych.";
             DisclaimerLbl.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // DirectorForm
