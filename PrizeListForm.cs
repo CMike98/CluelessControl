@@ -197,7 +197,9 @@ namespace CluelessControl
                 return true;
             if (item.PrizeData.PrizeName != PrizeListNameTxtBox.Text.Trim())
                 return true;
-            if (item.PrizeData.RoundingUnit != decimal.Parse(PrizeListRoundingUnitTxtBox.Text.Trim()))
+            if (!decimal.TryParse(PrizeListRoundingUnitTxtBox.Text.Trim(), out decimal roundingUnit))
+                return true;
+            if (item.PrizeData.RoundingUnit != roundingUnit)
                 return true;
             if ((int) item.PrizeData.RoundingMethod != PrizeListRoundingMethodComboBox.SelectedIndex)
                 return true;
