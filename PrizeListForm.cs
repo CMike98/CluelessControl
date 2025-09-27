@@ -187,11 +187,22 @@ namespace CluelessControl
         {
             int selectedIndex = PrizeListSelectListBox.SelectedIndex;
             if (selectedIndex < 0)
-            {
                 return false;
-            }
 
-            return true;
+            PrizeDataListItem item = _prizeDataList[selectedIndex];
+
+            if (item.Code != PrizeListCodeTxtBox.Text.Trim())
+                return true;
+            if (item.PrizeData is null)
+                return true;
+            if (item.PrizeData.PrizeName != PrizeListNameTxtBox.Text.Trim())
+                return true;
+            if (item.PrizeData.RoundingUnit != decimal.Parse(PrizeListRoundingUnitTxtBox.Text.Trim()))
+                return true;
+            if ((int) item.PrizeData.RoundingMethod != PrizeListRoundingMethodComboBox.SelectedIndex)
+                return true;
+
+            return false;
         }
 
         private void PrizeListSelectListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -216,7 +227,6 @@ namespace CluelessControl
                 {
                     if (!TryToSavePrizeData(selectedIndex, out string errorMessage))
                     {
-                        ShowErrorMessage(string.Format("Błąd przy zapisywaniu: {0}", errorMessage));
                         throw new Exception(errorMessage);
                     }
 
