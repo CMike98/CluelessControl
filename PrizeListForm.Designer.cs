@@ -205,6 +205,7 @@
             Controls.Add(PrizeListSelectListBox);
             Controls.Add(PrizeListPrizeCountLbl);
             Font = new Font("Arial", 12F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;

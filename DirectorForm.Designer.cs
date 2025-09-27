@@ -2624,6 +2624,7 @@
             Controls.Add(VolumeLabel);
             Controls.Add(DirectorTabControl);
             DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "DirectorForm";
             SizeGripStyle = SizeGripStyle.Hide;
