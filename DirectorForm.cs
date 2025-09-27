@@ -180,7 +180,7 @@ namespace CluelessControl
 
         private void DirectorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (EditedBeforeSave)
+            if (e.CloseReason == CloseReason.UserClosing && EditedBeforeSave)
             {
                 var closingResult = MessageBox.Show(
                     text: "Masz niezapisane zmiany! Jeżeli wyjdziesz, one przepadną! Na pewno chcesz wyjść?",
