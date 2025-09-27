@@ -17,8 +17,6 @@
         {
             if (prizes is null)
                 throw new ArgumentNullException(nameof(prizes));
-            if (prizes.Count == 0)
-                throw new ArgumentException("PrizeData dictionary is empty.", nameof(prizes));
             if (prizes.Keys.Any(string.IsNullOrWhiteSpace))
                 throw new ArgumentException("At least one prize key is null or empty.", nameof(prizes));
             if (prizes.Values.Any(val => val is null))
