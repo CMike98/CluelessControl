@@ -183,11 +183,12 @@ namespace CluelessControl
             return true;
         }
 
-        private bool HasPrizeDataChanged()
+        private bool HasPrizeDataChanged(int selectedIndex)
         {
-            int selectedIndex = PrizeListSelectListBox.SelectedIndex;
             if (selectedIndex < 0)
-                return false;
+                throw new ArgumentOutOfRangeException(nameof(selectedIndex), $"Index must not be negative!");
+            if (selectedIndex >= _prizeDataList.Count)
+                throw new ArgumentOutOfRangeException(nameof(selectedIndex), $"Index must be less than the number of prizes ({_prizeDataList.Count})!");
 
             PrizeDataListItem item = _prizeDataList[selectedIndex];
 
@@ -220,14 +221,14 @@ namespace CluelessControl
                 return;
 
             // Has the prize selected changed? (and the last prize doesn't happen to be "NOTHING")
-            if (HasPrizeDataChanged() && _lastSelectedIndex >= 0)
+            if (_lastSelectedIndex >= 0 && HasPrizeDataChanged(_lastSelectedIndex))
             {
                 // If so, save the changes, if you can.
                 // If you can't, let the user know, and ask if they want
                 // to make changes or to destroy the faulty data and move on.
                 try
                 {
-                    if (!TryToSavePrizeData(selectedIndex, out string errorMessage))
+                    if (!TryToSavePrizeData(_lastSelectedIndex, out string errorMessage))
                     {
                         throw new Exception(errorMessage);
                     }
