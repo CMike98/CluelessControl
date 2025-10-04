@@ -318,10 +318,10 @@ namespace CluelessControl
             _prizeDataList.RemoveAt(selectedIndex);
 
             RefreshPrizeList();
-
             PrizeListSelectListBox_SelectedIndexChanged(this, e);
-
             RefreshButtons();
+
+            _lastSelectedIndex = -1;
         }
 
         private void PrizeListSaveBtn_Click(object sender, EventArgs e)
