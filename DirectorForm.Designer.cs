@@ -1659,7 +1659,7 @@
             // QuestionGameCommentLbl
             // 
             QuestionGameCommentLbl.BorderStyle = BorderStyle.FixedSingle;
-            QuestionGameCommentLbl.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            QuestionGameCommentLbl.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 238);
             QuestionGameCommentLbl.Location = new Point(15, 276);
             QuestionGameCommentLbl.Name = "QuestionGameCommentLbl";
             QuestionGameCommentLbl.Size = new Size(225, 159);

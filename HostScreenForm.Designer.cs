@@ -181,7 +181,7 @@
             // 
             ExplanationLabel.BackColor = Color.Black;
             ExplanationLabel.BorderStyle = BorderStyle.FixedSingle;
-            ExplanationLabel.Font = new Font("Lato", 23.9999962F);
+            ExplanationLabel.Font = new Font("Lato", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
             ExplanationLabel.ForeColor = Color.White;
             ExplanationLabel.Location = new Point(560, 459);
             ExplanationLabel.Name = "ExplanationLabel";
