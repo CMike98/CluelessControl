@@ -2227,7 +2227,7 @@ namespace CluelessControl
             _soundManager.PlaySingleSound(shredderSound);
         }
 
-        private void TradingGameOver(bool bigWin = false)
+        private void TradingGameOver(bool bigWin)
         {
             // Music
             var bigWinSound = new Sound("snd/big-win.wav", _volumeLevel);
@@ -2244,6 +2244,7 @@ namespace CluelessControl
 
             // Game Over
             GameState.Instance.GameOver();
+            TradingLockButtons();
             GameOverUnlockButtons();
             DirectorTabControl.SelectTab("GameOverTab");
         }
