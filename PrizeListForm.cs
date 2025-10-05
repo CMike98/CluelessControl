@@ -1,7 +1,6 @@
 ﻿using CluelessControl.Constants;
 using CluelessControl.Prizes;
 using System.Data;
-using System.DirectoryServices.ActiveDirectory;
 
 namespace CluelessControl
 {
