@@ -103,6 +103,7 @@ namespace CluelessControl
 
         private void GameState_EventStartTrading(object? sender, EventArgs e)
         {
+            RefreshOffer();
             PrepareTrading();
         }
 
